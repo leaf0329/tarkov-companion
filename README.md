@@ -1,4 +1,4 @@
-# leaf0329 · 塔科夫个人助手
+塔科夫个人助手
 
 Windows 官方 PvE 本地任务树、截图定位地图及置顶浮窗。本仓库为独立应用。
 
@@ -33,10 +33,8 @@ npm run package:portable
 
 开发服务默认监听本机 127.0.0.1:18765；可用 TARKOV_PORT、TARKOV_STATE_PATH、TARKOV_LOGS_PATH、TARKOV_SCREENSHOTS_PATH 覆盖。也可使用启动助手.cmd。npm run refresh 更新公开任务数据，成功后重启服务。
 
-打包使用 JavaScript Obfuscator 与 AES-256-GCM 加密运行资源，运行时解密到临时目录，正常退出清理。它增加静态提取难度，不保证无法逆向。便携包按白名单排除个人数据。EXE 的 --smoke-test 使用隔离临时数据，输出 portable-smoke-result.json；不会读取真实游戏日志。
-
 ## 验证与来源
 
 20 项自动测试覆盖日志、截图、浮窗、任务数据、分层选择、目录与链接桥接、统一设置。发布 EXE 的启动自检通过，包括原生浮窗、不透明度、设置同步和固定关闭按钮。系统目录窗口的人工选取及默认浏览器实际弹出未进行人工交互验收。
 
-地图、头像、Wiki 和社区数据保留原作者权利；加密与 leaf0329 标识不改变第三方许可。详细来源及许可见 [PORTABLE-NOTICES.md](desktop/PORTABLE-NOTICES.md)，复用代码许可随 vendor 保留。
+地图、头像、Wiki 和社区数据保留原作者权利；详细来源及许可见 [PORTABLE-NOTICES.md](desktop/PORTABLE-NOTICES.md)，复用代码许可随 vendor 保留。
