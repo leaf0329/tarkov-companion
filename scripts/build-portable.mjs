@@ -39,12 +39,13 @@ const encrypted=Buffer.concat([encrypt.update(compressed),encrypt.final()]);
 fs.writeFileSync(path.join(staging,'payload.bin'),Buffer.concat([iv,encrypt.getAuthTag(),encrypted]));
 const entry=fs.readFileSync(path.join(root,'desktop/portable-entry.cjs'),'utf8').replace('__PAYLOAD_KEY__',key.toString('base64'));
 fs.writeFileSync(path.join(staging,'main.cjs'),JavaScriptObfuscator.obfuscate(entry,{...options,target:'node',stringArrayThreshold:1}).getObfuscatedCode());
-fs.writeFileSync(path.join(staging,'package.json'),JSON.stringify({name:'tarkov-personal-portable',version:'1.0.2',description:'Local PvE task and map companion',author:'Personal Companion',main:'main.cjs',private:true}));
+fs.writeFileSync(path.join(staging,'package.json'),JSON.stringify({name:'tarkov-personal-portable',version:'1.0.2',description:'Local PvE task and map companion',author:'leaf0329',license:'SEE LICENSE IN LICENSE',main:'main.cjs',private:true}));
 fs.copyFileSync(path.join(root,'desktop/PORTABLE-NOTICES.md'),path.join(staging,'PORTABLE-NOTICES.md'));
+fs.copyFileSync(path.join(root,'LICENSE'),path.join(staging,'LICENSE'));
 console.log(`Encrypted ${Object.keys(files).length} runtime files; no user state, logs, screenshots, or local settings.`);
 await build({targets:Platform.WINDOWS.createTarget(['portable'],Arch.x64),config:{
   appId:'local.tarkov.personal.portable',productName:'TarkovPersonal',electronVersion:'44.5.1',electronDist:path.join(root,'node_modules/electron/dist'),
-  directories:{app:staging,output:path.join(root,'dist')},files:['main.cjs','payload.bin','package.json','PORTABLE-NOTICES.md','!node_modules/**/*'],asar:true,npmRebuild:false,
+  directories:{app:staging,output:path.join(root,'dist')},files:['main.cjs','payload.bin','package.json','PORTABLE-NOTICES.md','LICENSE','!node_modules/**/*'],asar:true,npmRebuild:false,
   win:{target:['portable'],signAndEditExecutable:false,artifactName:'leaf0329-Tarkov-Companion-1.0.2.exe'},
   portable:{requestExecutionLevel:'user'},compression:'normal'
 }});
