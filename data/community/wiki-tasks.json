@@ -1,0 +1,1268 @@
+{
+  "reviewedAt": "2026-10-04T04:50:20.282Z",
+  "tasks": [
+    {
+      "id": "wiki:invasive-therapy",
+      "name": "侵入性疗法",
+      "englishName": "Invasive Therapy",
+      "normalizedName": "invasive-therapy",
+      "trader": "Therapist",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "灯塔",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Invasive_Therapy",
+        "englishName": "Invasive Therapy",
+        "note": "",
+        "guide": [
+          "准备 3 支 Obdolbos 或 Obdolbos 2 注射器，放置物与上交物分开准备。",
+          "上层别墅：医疗区在地下室；客厅物资在一楼主入口旁。下层别墅：弹药堆在一楼餐厅、壁炉对面。",
+          "需要上交的 P22 与 xTG-12 必须具有战局中找到标记；xTG-12 可在医疗站 2 级制作。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Invasive_Therapy",
+      "taskRequirements": [],
+      "traderRequirements": [
+        {
+          "trader": {
+            "id": "Therapist",
+            "name": "Therapist"
+          },
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3
+        }
+      ],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:invasive-therapy:c9b5baa7fcdafd85",
+          "type": "reference",
+          "description": "上交 5 支战局中找到的 P22 兴奋剂",
+          "original": "Hand over 5 found in raid P22 (Product 22) stimulant injectors",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:invasive-therapy:b527b76c1b5a1479",
+          "type": "reference",
+          "description": "（可选）在战局中找到 5 支 P22 兴奋剂",
+          "original": "(Optional) Find 5 P22 (Product 22) stimulant injectors in raid",
+          "optional": true,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:invasive-therapy:b62977ad6a754658",
+          "type": "reference",
+          "description": "上交 5 支战局中找到的 xTG-12 解毒剂",
+          "original": "Hand over 5 found in raid XTG-12 antidote injectors",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:invasive-therapy:79a27a281829310e",
+          "type": "reference",
+          "description": "（可选）在战局中找到 5 支 xTG-12 解毒剂",
+          "original": "(Optional) Find 5 xTG-12 antidote injectors in raid",
+          "optional": true,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:invasive-therapy:fa07590c0880033b",
+          "type": "reference",
+          "description": "在灯塔上层游荡者别墅的医疗区藏匿任意 Obdolbos 鸡尾酒注射器",
+          "original": "Stash any Obdolbos cocktail injector in the med bay at the upper Rogue chalet on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:invasive-therapy:c3fe4362fccb49bf",
+          "type": "reference",
+          "description": "在灯塔上层游荡者别墅客厅的物资区藏匿任意 Obdolbos 鸡尾酒注射器",
+          "original": "Stash any Obdolbos cocktail injector in the guest hall supplies at the upper Rogue chalet on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:invasive-therapy:a0aea4562c9feb20",
+          "type": "reference",
+          "description": "在灯塔下层游荡者别墅的弹药储备处藏匿任意 Obdolbos 鸡尾酒注射器",
+          "original": "Stash any Obdolbos cocktail injector in the ammo stockpile at the lower Rogue chalet on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:stimulating-demand",
+      "name": "刺激需求",
+      "englishName": "Stimulating Demand",
+      "normalizedName": "stimulating-demand",
+      "trader": "Skier",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "灯塔",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Stimulating_Demand",
+        "englishName": "Stimulating Demand",
+        "note": "",
+        "guide": [
+          "货物包裹位于灯塔南侧黑色别墅的地下室，绿色金属桌下。任务接取后才会生成。",
+          "包裹进入任务物品栏；未能带着它成功撤离会丢失，需要重新拾取。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Stimulating_Demand",
+      "taskRequirements": [],
+      "traderRequirements": [
+        {
+          "trader": {
+            "id": "Skier",
+            "name": "Skier"
+          },
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3
+        }
+      ],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:stimulating-demand:9492f68a5ca2637d",
+          "type": "reference",
+          "description": "在灯塔使用 7.62×54R 口径武器击杀 5 名游荡者或三男团成员",
+          "original": "Eliminate 5 Rogues or The Goons with 7.62x54R caliber weapons on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:stimulating-demand:4ddd74a772791447",
+          "type": "reference",
+          "description": "在灯塔游荡者别墅找到并取得货物包裹",
+          "original": "Locate and obtain the cargo package at the Rogue chalets on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:stimulating-demand:8ac4ec27dec02be1",
+          "type": "reference",
+          "description": "上交包裹",
+          "original": "Hand over the package",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-trust-but-verify",
+      "name": "通往灯塔 — 信任但要核实",
+      "englishName": "To the Light - Trust but Verify",
+      "normalizedName": "to-the-light-trust-but-verify",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "实验室",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Trust_but_Verify",
+        "englishName": "To the Light - Trust but Verify",
+        "note": "通过主线 Tour 解锁灯塔直接进入权限，并向机械师询问与灯塔商人合作。官方 1.1.5 公告要求除黑商与裁判外的商人达到 LL3；Wiki 当前只列出其中六名商人。社区另有黑商声望 2.0 的反馈，该项未获当前公告或游戏数据确认。",
+        "guide": [
+          "在实验室第一层的主工作区 O11 服务器处放置机械师提供的硬盘。",
+          "随后必须在同一战局从通风管道撤离；该撤离点要求不装备背包。社区反馈普通撤离会导致任务失败，因此不能把可选字样理解为任意撤离。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Trust_but_Verify",
+      "taskRequirements": [],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-trust-but-verify:f994d652bec7bdb4",
+          "type": "reference",
+          "description": "在同一战局中，将伪造数据硬盘藏在实验室武器测试区附近的服务器机房",
+          "original": "Stash the Hard drive with false data in the server room near the weapon testing area in The Lab (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "实验室"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-trust-but-verify:cf1245b1d0705ac1",
+          "type": "reference",
+          "description": "（可选）随后从通风管道撤离",
+          "original": "(Optional) After that, extract through the Ventilation Shaft",
+          "optional": true,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:to-the-light-trust-but-verify:862b6fc380608b1d",
+          "type": "reference",
+          "description": "在同一战局中从实验室通风管道撤离",
+          "original": "Extract from The Lab through the Ventilation Shaft (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "实验室"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-false-call",
+      "name": "通往灯塔 — 假警报",
+      "englishName": "To the Light - False Call",
+      "normalizedName": "to-the-light-false-call",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "海关",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_False_Call",
+        "englishName": "To the Light - False Call",
+        "note": "",
+        "guide": [
+          "带 Wi-Fi 摄像头和黄色信号弹，在海关同一战局的 21:00–06:00 完成击杀、放置和发射目标。",
+          "摄像头放在主桥附近便利店的空调处。通往海岸线的转移区位于 Scav 狙击路障撤离点后方，在巴士附近向天空发射黄色信号弹。",
+          "信号弹必须达到足够高度；可使用手持黄色 RSP-30，或 SP-81 信号枪配黄色 26×75 弹药。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_False_Call",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-trust-but-verify",
+            "name": "通往灯塔 — 信任但要核实"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 600,
+      "availableDelaySecondsMax": 1800,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-false-call:aa9b353ff3333158",
+          "type": "reference",
+          "description": "同一战局，在海关 21:00–06:00 击杀 5 名 Scav",
+          "original": "Eliminate 5 Scavs during 21:00-06:00 on Customs (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海关"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-false-call:ee21c33a1e241f72",
+          "type": "reference",
+          "description": "同一战局，在海关 21:00–06:00 击杀 1 名 PMC",
+          "original": "Eliminate 1 PMC operative during 21:00-06:00 on Customs (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海关"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-false-call:56fdc15c04f9173b",
+          "type": "reference",
+          "description": "同一战局，在海关桥边便利店的空调处藏匿 Wi-Fi 摄像头",
+          "original": "Hide a Wi-Fi camera at the AC unit at the convenience store near the bridge on Customs (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海关"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-false-call:23bea1a06c78eae9",
+          "type": "reference",
+          "description": "同一战局，在海关通往海岸线的转移点发射黄色信号弹",
+          "original": "Launch a yellow signal flare at the Shoreline transit on Customs (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海关"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-someone-called",
+      "name": "通往灯塔 — 有人来电？",
+      "englishName": "To the Light - Someone Called?",
+      "normalizedName": "to-the-light-someone-called",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "海关",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Someone_Called?",
+        "englishName": "To the Light - Someone Called?",
+        "note": "",
+        "guide": [
+          "返回游戏菜单即可完成返回藏身处目标。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Someone_Called?",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-false-call",
+            "name": "通往灯塔 — 假警报"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-someone-called:1c3fa3ca754fa4ec",
+          "type": "reference",
+          "description": "返回藏身处",
+          "original": "Return to the Hideout",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-clip-their-wings",
+      "name": "通往灯塔 — 折断羽翼",
+      "englishName": "To the Light - Clip Their Wings",
+      "normalizedName": "to-the-light-clip-their-wings",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "森林 / 海关 / 海岸线",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Clip_Their_Wings",
+        "englishName": "To the Light - Clip Their Wings",
+        "note": "本页前置栏与上一任务的后续栏均指向“假警报”；Wiki 正文仍将等待时间写在“信任但要核实”之后，存在冲突。暂按前置链展示 10–15 分钟，游戏内接取时间优先。",
+        "guide": [
+          "准备 4 个信号干扰器，按森林 → 海关 → 海岸线连续转移。",
+          "森林：山顶气象站、锯木厂警卫室各放置一个；海关：路边建筑工地二楼；海岸线：疗养院行政楼二楼西侧档案室。",
+          "全部目标完成前普通撤离会导致从头重做；这条路线需要连续转移，不是分三次战局。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Clip_Their_Wings",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-false-call",
+            "name": "通往灯塔 — 假警报"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 600,
+      "availableDelaySecondsMax": 900,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-clip-their-wings:b6f27140c372569e",
+          "type": "reference",
+          "description": "同一连续战局，在森林山顶气象站安装信号干扰器",
+          "original": "Plant a Signal jammer at the weather station on the mountain on Woods (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "森林"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-clip-their-wings:0e4ca198d58b0222",
+          "type": "reference",
+          "description": "同一连续战局，在森林锯木厂警卫室安装信号干扰器",
+          "original": "Plant a Signal jammer at the sawmill guardhouse on Woods (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "森林"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-clip-their-wings:d7deba8983b24c8d",
+          "type": "reference",
+          "description": "同一连续战局，从森林转移至海关",
+          "original": "Use the transit from Woods to Customs (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "森林",
+            "海关"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-clip-their-wings:878703e3ba004941",
+          "type": "reference",
+          "description": "同一连续战局，在海关路边建筑工地二楼安装信号干扰器",
+          "original": "Plant a Signal jammer on the second floor of the roadside construction site on Customs (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海关"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-clip-their-wings:18cb6ef5ea6dadb4",
+          "type": "reference",
+          "description": "同一连续战局，从海关转移至海岸线",
+          "original": "Use the transit from Customs to Shoreline (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海关",
+            "海岸线"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-clip-their-wings:1344bdae3f27adb8",
+          "type": "reference",
+          "description": "同一连续战局，在海岸线疗养院行政楼二楼档案室安装信号干扰器",
+          "original": "Plant a Signal jammer at the second floor archives in the Health Resort admin building on Shoreline (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "海岸线"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-fallen-bird",
+      "name": "通往灯塔 — 坠落之鸟",
+      "englishName": "To the Light - Fallen Bird",
+      "normalizedName": "to-the-light-fallen-bird",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "任意地图",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Fallen_Bird",
+        "englishName": "To the Light - Fallen Bird",
+        "note": "",
+        "guide": [
+          "完成折断羽翼后会自动接取；离开战局、返回菜单后提交。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Fallen_Bird",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-clip-their-wings",
+            "name": "通往灯塔 — 折断羽翼"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-fallen-bird:1c3fa3ca754fa4ec",
+          "type": "reference",
+          "description": "返回藏身处",
+          "original": "Return to the Hideout",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-dangerous-ambitions",
+      "name": "通往灯塔 — 危险的野心",
+      "englishName": "To the Light - Dangerous Ambitions",
+      "normalizedName": "to-the-light-dangerous-ambitions",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "任意地图",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Dangerous_Ambitions",
+        "englishName": "To the Light - Dangerous Ambitions",
+        "note": "",
+        "guide": [
+          "取得灯塔商人的护身符后，将它交给美商的铩羽而归任务；这也会完成机械师的对应目标。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Dangerous_Ambitions",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-fallen-bird",
+            "name": "通往灯塔 — 坠落之鸟"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-dangerous-ambitions:35cc36b131649734",
+          "type": "reference",
+          "description": "将灯塔商人的护身符交给美商",
+          "original": "Hand over the Amulet from Lightkeeper to Peacekeeper",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-bite-the-dust",
+      "name": "通往灯塔 — 铩羽而归",
+      "englishName": "To the Light - Bite the Dust",
+      "normalizedName": "to-the-light-bite-the-dust",
+      "trader": "Peacekeeper",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "任意地图",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Bite_the_Dust",
+        "englishName": "To the Light - Bite the Dust",
+        "note": "",
+        "guide": [
+          "上交机械师危险的野心任务提供的灯塔商人护身符。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_Bite_the_Dust",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-fallen-bird",
+            "name": "通往灯塔 — 坠落之鸟"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-bite-the-dust:255e9e44a87c3606",
+          "type": "reference",
+          "description": "上交指向幕后破坏者的证据：灯塔商人的护身符",
+          "original": "Hand over the evidence implicating the person behind the disruptions",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-a-time-to-throw-stones",
+      "name": "通往灯塔 — 抛石之时",
+      "englishName": "To the Light - A Time to Throw Stones",
+      "normalizedName": "to-the-light-a-time-to-throw-stones",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "实验室",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_A_Time_to_Throw_Stones",
+        "englishName": "To the Light - A Time to Throw Stones",
+        "note": "",
+        "guide": [],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_A_Time_to_Throw_Stones",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-bite-the-dust",
+            "name": "通往灯塔 — 铩羽而归"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-a-time-to-throw-stones:5dec6ba6dfa930af",
+          "type": "reference",
+          "description": "在实验室同一战局内击杀 2 名 PMC",
+          "original": "Eliminate 2 PMC operatives within one raid in The Lab",
+          "optional": false,
+          "relatedMaps": [
+            "实验室"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-a-time-to-gather-stones",
+      "name": "通往灯塔 — 拾石之时",
+      "englishName": "To the Light - A Time to Gather Stones",
+      "normalizedName": "to-the-light-a-time-to-gather-stones",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "任意地图",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_A_Time_to_Gather_Stones",
+        "englishName": "To the Light - A Time to Gather Stones",
+        "note": "",
+        "guide": [],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_A_Time_to_Gather_Stones",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-a-time-to-throw-stones",
+            "name": "通往灯塔 — 抛石之时"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-a-time-to-gather-stones:b65f59bc1791b03b",
+          "type": "reference",
+          "description": "上交 3 枚战局中找到的 30 级或以上 PMC 狗牌",
+          "original": "Hand over 3 found in raid PMC dogtags (Level 30 or higher)",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:to-the-light-the-other-side",
+      "name": "通往灯塔 — 另一边",
+      "englishName": "To the Light - The Other Side",
+      "normalizedName": "to-the-light-the-other-side",
+      "trader": "Mechanic",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "储备站 / 街区 / 海关",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_The_Other_Side",
+        "englishName": "To the Light - The Other Side",
+        "note": "",
+        "guide": [
+          "准备 3 份 TerraGroup 蓝色文件夹，储备站、街区、海关各放置一份。每张地图只需选一个符合要求的邪教房。",
+          "储备站可选 RB-BK、RB-PKPM 或 RB-VO；街区可选废弃工厂或神秘房间；海关使用宿舍 314。提前准备对应钥匙。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/To_the_Light_-_The_Other_Side",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:to-the-light-a-time-to-gather-stones",
+            "name": "通往灯塔 — 拾石之时"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:to-the-light-the-other-side:a44bde0a5e747f13",
+          "type": "reference",
+          "description": "在储备站任意邪教房藏匿 TerraGroup 蓝色文件夹",
+          "original": "Stash the TerraGroup \"Blue Folders\" materials in any marked room on Reserve",
+          "optional": false,
+          "relatedMaps": [
+            "储备站"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-the-other-side:f1f7cd0cb1d79d2b",
+          "type": "reference",
+          "description": "在街区任意邪教房藏匿 TerraGroup 蓝色文件夹",
+          "original": "Stash the TerraGroup \"Blue Folders\" materials in any marked room on Streets of Tarkov",
+          "optional": false,
+          "relatedMaps": [
+            "街区"
+          ]
+        },
+        {
+          "id": "wiki:to-the-light-the-other-side:01ba2c718ec63e48",
+          "type": "reference",
+          "description": "在海关任意邪教房藏匿 TerraGroup 蓝色文件夹",
+          "original": "Stash the TerraGroup \"Blue Folders\" materials in any marked room on Customs",
+          "optional": false,
+          "relatedMaps": [
+            "海关"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:cant-drink-away-skill",
+      "name": "本事喝不走",
+      "englishName": "Can't Drink Away Skill",
+      "normalizedName": "cant-drink-away-skill",
+      "trader": "Ragman",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "任意地图",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Can't_Drink_Away_Skill",
+        "englishName": "Can't Drink Away Skill",
+        "note": "",
+        "guide": [],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Can't_Drink_Away_Skill",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "66d9cbb67b491f9d5304f6e6",
+            "name": "Is This a Reference?"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:cant-drink-away-skill:63f349a680a2cf76",
+          "type": "reference",
+          "description": "在战局中找到 10 条金项链",
+          "original": "Find 10 Golden neck chains in raid",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:e3f88e73cab12eb1",
+          "type": "reference",
+          "description": "上交 10 条金项链",
+          "original": "Hand over the items",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:f847b0dc49b8de25",
+          "type": "reference",
+          "description": "在战局中找到 5 个金公鸡雕像",
+          "original": "Find 5 Golden rooster figurines in raid",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:e3f88e73cab12eb1",
+          "type": "reference",
+          "description": "上交 5 个金公鸡雕像",
+          "original": "Hand over the items",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:22b55fe88674bffa",
+          "type": "reference",
+          "description": "在战局中找到 5 部金色 1GPhone 手机",
+          "original": "Find 5 Golden 1GPhone smartphones in raid",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:e3f88e73cab12eb1",
+          "type": "reference",
+          "description": "上交 5 部金色 1GPhone 手机",
+          "original": "Hand over the items",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:cfb5e4cfe0528204",
+          "type": "reference",
+          "description": "在战局中找到 10 个普通钱包",
+          "original": "Find 10 Simple wallets in raid",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:e3f88e73cab12eb1",
+          "type": "reference",
+          "description": "上交 10 个普通钱包",
+          "original": "Hand over the items",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:0558d17a46fa01a7",
+          "type": "reference",
+          "description": "在战局中找到 5 个 WZ 钱包",
+          "original": "Find 5 WZ Wallets in raid",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:cant-drink-away-skill:e3f88e73cab12eb1",
+          "type": "reference",
+          "description": "上交 5 个 WZ 钱包",
+          "original": "Hand over the items",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:pay-the-fare",
+      "name": "买票上船！",
+      "englishName": "Pay the Fare!",
+      "normalizedName": "pay-the-fare",
+      "trader": "Ragman",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "任意地图",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Pay_the_Fare!",
+        "englishName": "Pay the Fare!",
+        "note": "在 Boreas 主线中，告诉机械师你找到了前往破冰船的交通工具。",
+        "guide": [],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Pay_the_Fare!",
+      "taskRequirements": [],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:pay-the-fare:a5cd9ef95e3b56d7",
+          "type": "reference",
+          "description": "在战局中找到管钳",
+          "original": "Find the item in raid: Pipe grip wrench",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:pay-the-fare:7bcd9726e8be5aa7",
+          "type": "reference",
+          "description": "上交管钳",
+          "original": "Hand over the item",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:pay-the-fare:873713fa25687f2c",
+          "type": "reference",
+          "description": "在战局中找到棘轮扳手",
+          "original": "Find the item in raid: Ratchet wrench",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:pay-the-fare:7bcd9726e8be5aa7",
+          "type": "reference",
+          "description": "上交棘轮扳手",
+          "original": "Hand over the item",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:pay-the-fare:6f413567841d7eeb",
+          "type": "reference",
+          "description": "在战局中找到电钻",
+          "original": "Find the item in raid: Electric drill",
+          "optional": false,
+          "relatedMaps": []
+        },
+        {
+          "id": "wiki:pay-the-fare:7bcd9726e8be5aa7",
+          "type": "reference",
+          "description": "上交电钻",
+          "original": "Hand over the item",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:akimbo",
+      "name": "双手插袋",
+      "englishName": "Akimbo",
+      "normalizedName": "akimbo",
+      "trader": "Ragman",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "灯塔",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Akimbo",
+        "englishName": "Akimbo",
+        "note": "",
+        "guide": [],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Akimbo",
+      "taskRequirements": [],
+      "traderRequirements": [
+        {
+          "trader": {
+            "id": "Ragman",
+            "name": "Ragman"
+          },
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3
+        }
+      ],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:akimbo:7d7ac3463a129bae",
+          "type": "reference",
+          "description": "同一战局，在灯塔用 7.62×39 武器命中胸部或腹部，击杀任意 3 个目标",
+          "original": "Eliminate any 3 targets with Thorax or Stomach shots using 7.62x39 caliber weapons on Lighthouse (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:akimbo:cb1cc95af3bd5159",
+          "type": "reference",
+          "description": "同一战局，在灯塔用 7.62×51 武器命中胸部或腹部，击杀任意 3 个目标",
+          "original": "Eliminate any 3 targets with Thorax or Stomach shots using 7.62x51 caliber weapons on Lighthouse (In one raid)",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:sisyphus",
+      "name": "西西弗斯",
+      "englishName": "Sisyphus",
+      "normalizedName": "sisyphus",
+      "trader": "Ragman",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "森林 / 储备站 / 灯塔",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Sisyphus",
+        "englishName": "Sisyphus",
+        "note": "完成藏匿目标后才会出现装甲列车撤离目标。",
+        "guide": [
+          "第一箱在森林 ZB-014 地堡；带到储备站火车库西侧警卫亭旁的木板处藏匿。",
+          "第二箱在森林 USEC 检查站的移动厕所旁；带到灯塔北部火车站台、装有乌拉尔卡车的车厢内藏匿。",
+          "货箱仅接取任务后出现，拾取后进入任务物品栏，未成功带出会丢失。放置后再完成灯塔或储备站装甲列车撤离目标。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Sisyphus",
+      "taskRequirements": [],
+      "traderRequirements": [
+        {
+          "trader": {
+            "id": "Ragman",
+            "name": "Ragman"
+          },
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3
+        }
+      ],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:sisyphus:17affbcf9abac84c",
+          "type": "reference",
+          "description": "在森林 ZB-014 地堡取得第一个走私货箱",
+          "original": "Locate and obtain the first smuggler case in the ZB-014 bunker on Woods",
+          "optional": false,
+          "relatedMaps": [
+            "森林"
+          ]
+        },
+        {
+          "id": "wiki:sisyphus:cb5599702a1ade13",
+          "type": "reference",
+          "description": "将第一个货箱藏在储备站通往森林的转移点附近警卫亭",
+          "original": "Stash the first case in the guard booth near the Woods transit on Reserve",
+          "optional": false,
+          "relatedMaps": [
+            "森林",
+            "储备站"
+          ]
+        },
+        {
+          "id": "wiki:sisyphus:4b0ab4a0a5d556e9",
+          "type": "reference",
+          "description": "在森林 USEC 检查站的小屋后取得第二个走私货箱",
+          "original": "Locate and obtain the second smuggler case behind the shack at the USEC checkpoint on Woods",
+          "optional": false,
+          "relatedMaps": [
+            "森林"
+          ]
+        },
+        {
+          "id": "wiki:sisyphus:ac371ed8bf5e2212",
+          "type": "reference",
+          "description": "将第二个货箱藏在灯塔火车站台装有乌拉尔卡车的车厢内",
+          "original": "Stash the second case in the railcar with the Ural truck at the train platform on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:sisyphus:5dcf150224176a72",
+          "type": "reference",
+          "description": "从灯塔或储备站乘装甲列车撤离",
+          "original": "Extract from Lighthouse or Reserve through the Armored Train",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔",
+            "储备站"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wiki:honest-review",
+      "name": "真实评价",
+      "englishName": "Honest Review",
+      "normalizedName": "honest-review",
+      "trader": "BTR Driver",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "灯塔",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/Honest_Review",
+        "englishName": "Honest Review",
+        "note": "",
+        "guide": [
+          "侦察灯塔 BTR 的联合国检查站、村庄交叉路口、水处理厂 2 号楼停车场三个停靠点。"
+        ],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Honest_Review",
+      "taskRequirements": [],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:honest-review:d4f4e980b5d4277e",
+          "type": "reference",
+          "description": "侦察灯塔村庄内的交叉路口",
+          "original": "Scout the intersection at the village on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:honest-review:8013085bb2ea087e",
+          "type": "reference",
+          "description": "侦察灯塔主路上的联合国检查站",
+          "original": "Scout the UN checkpoint at the main road on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:honest-review:53ac4081058c22d0",
+          "type": "reference",
+          "description": "侦察灯塔水处理厂两座主楼之间的停车场",
+          "original": "Scout the parking between the two main buildings at the water treatment plant on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:honest-review:fb00deab5825d648",
+          "type": "reference",
+          "description": "向 BTR 司机反馈",
+          "original": "Share your feedback with the BTR Driver",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    },
+    {
+      "id": "wiki:im-something-of-a-btr-myself",
+      "name": "我也算半个 BTR",
+      "englishName": "I'm Something of a BTR Myself",
+      "normalizedName": "im-something-of-a-btr-myself",
+      "trader": "BTR Driver",
+      "kind": "reference",
+      "minPlayerLevel": 0,
+      "map": "灯塔",
+      "reference": {
+        "manualOnly": true,
+        "source": "https://escapefromtarkov.fandom.com/wiki/I'm_Something_of_a_BTR_Myself",
+        "englishName": "I'm Something of a BTR Myself",
+        "note": "",
+        "guide": [],
+        "coordinates": "unverified",
+        "translatedTitle": true,
+        "lifecycle": "regular",
+        "reviewedAt": "2026-10-04",
+        "gameVersion": "1.1.5.1"
+      },
+      "wikiLink": "https://escapefromtarkov.fandom.com/wiki/I'm_Something_of_a_BTR_Myself",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "wiki:honest-review",
+            "name": "真实评价"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "traderRequirements": [],
+      "availableDelaySecondsMin": 0,
+      "availableDelaySecondsMax": 0,
+      "objectives": [
+        {
+          "id": "wiki:im-something-of-a-btr-myself:d10748cfb9ade221",
+          "type": "reference",
+          "description": "在灯塔使用任意 7.62×54R 口径武器击杀 15 名 Scav",
+          "original": "Eliminate 15 Scavs with any 7.62x54R caliber weapon on Lighthouse",
+          "optional": false,
+          "relatedMaps": [
+            "灯塔"
+          ]
+        },
+        {
+          "id": "wiki:im-something-of-a-btr-myself:95fb7432de83576d",
+          "type": "reference",
+          "description": "向 BTR 司机汇报",
+          "original": "Report back to the BTR Driver",
+          "optional": false,
+          "relatedMaps": []
+        }
+      ]
+    }
+  ]
+}

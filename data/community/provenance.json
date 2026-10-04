@@ -1,0 +1,14 @@
+{
+  "mode": "pve",
+  "fetchedAt": "2026-10-04T04:24:17.122Z",
+  "overlayCommit": "d3941924568541d43d8e5eb03120e3b5ec14e248",
+  "overlayVersion": "1.121",
+  "overlayRepository": "https://github.com/tarkovtracker-org/tarkov-data-overlay",
+  "license": "MIT",
+  "sources": [
+    "https://json.tarkov.dev/pve/tasks",
+    "https://json.tarkov.dev/pve/tasks_zh",
+    "https://json.tarkov.dev/pve/tasks_en",
+    "https://json.tarkov.dev/pve/maps_zh"
+  ]
+}

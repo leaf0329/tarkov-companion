@@ -1,0 +1,13 @@
+node_modules/
+build/
+dist/
+助手数据/
+inspection/
+*.log
+*.pid
+data/state.json*
+data/overlay-runtime/
+data/backups/
+data/refresh-*/
+data/refresh-errors.json
+data/community/bundle.previous.json
