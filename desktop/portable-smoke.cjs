@@ -16,6 +16,20 @@ module.exports=async({mainWindow,origin,dataDir,BrowserWindow})=>{
     await until(()=>overlayPage.webContents.executeJavaScript("document.getElementById('connectionDot').classList.contains('connected')"));
     assert.equal(await overlayPage.webContents.executeJavaScript("getComputedStyle(document.querySelector('.map-hud')).display"),'none');
     checks.push('overlay position status panel hidden');
+    await overlayPage.webContents.executeJavaScript("document.getElementById('overlayAutoShot').click()");
+    await until(()=>js("document.getElementById('toggleAutoShot').getAttribute('aria-pressed')==='true'"));
+    assert.equal((await get()).settings.autoScreenshotEnabled,true);
+    await until(()=>fs.existsSync(path.join(dataDir,'state.json')) && JSON.parse(fs.readFileSync(path.join(dataDir,'state.json'),'utf8')).settings.autoScreenshotEnabled===true);
+    await js("document.getElementById('toggleAutoShot').click()");
+    await until(()=>overlayPage.webContents.executeJavaScript("document.getElementById('overlayAutoShot').getAttribute('aria-pressed')==='false'"));
+    assert.equal((await get()).runtime.autoScreenshot.phase,'off');
+    await until(()=>JSON.parse(fs.readFileSync(path.join(dataDir,'state.json'),'utf8')).settings.autoScreenshotEnabled===false);
+    for(const width of [360,720]){
+      overlayPage.setSize(width,620);
+      await wait(100);
+      assert.ok(await overlayPage.webContents.executeJavaScript("(()=>{const b=document.getElementById('overlayAutoShot').getBoundingClientRect(),c=document.getElementById('hideOverlay').getBoundingClientRect();return b.width>0 && b.left>=0 && b.right<=innerWidth && c.right<=innerWidth;})()"));
+    }
+    checks.push('overlay auto screenshot switch synchronizes both ways, persists and stops worker; narrow toolbar fits');
     await overlayPage.webContents.executeJavaScript("document.getElementById('overlayFollow').click()");
     await until(()=>js("!document.getElementById('followPlayer').checked"));assert.equal((await get()).settings.followPlayer,false);
     checks.push('overlay follow switch synchronizes to main window and disk');

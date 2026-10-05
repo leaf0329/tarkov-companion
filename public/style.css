@@ -34,3 +34,6 @@
 #detailContent{min-height:0;overflow:auto;overscroll-behavior:contain;padding:14px 22px 24px}.mini #detailContent{padding:12px 16px 24px}
 .owner-signature{color:#a99c7b;font-size:10px;white-space:nowrap}.overlay-bar{gap:6px}.overlay-opacity{display:flex;align-items:center;gap:4px;-webkit-app-region:no-drag;font-size:10px}.overlay-opacity input{width:60px;padding:0;accent-color:var(--gold)}.overlay-opacity output{min-width:29px}.overlay-bar strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 @media(max-width:620px){.overlay-opacity span{display:none}.overlay-bar{gap:3px}.overlay-bar button,.overlay-bar select{padding:3px 4px}.overlay-opacity input{width:42px}.owner-signature{font-size:9px}}
+.overlay-bar{flex-wrap:wrap;height:auto;min-height:34px}.overlay-bar button{white-space:nowrap;flex-shrink:0}
+/* Re-raster the map at its current scale instead of keeping a stale compositor texture. */
+#mapStage{will-change:auto}

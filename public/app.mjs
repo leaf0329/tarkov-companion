@@ -113,6 +113,7 @@ async function loadMap(fit=true) {
   if(image.getAttribute('src')!==source) {
     await new Promise(resolve=>{image.onload=resolve;image.onerror=()=>{toast('地图底图加载失败');resolve();};image.src=source;});
   }
+  if(image.naturalWidth)await image.decode().catch(()=>{});
   if(generation!==mapGeneration)return;
   $('mapStage').style.width=image.naturalWidth+'px';$('mapStage').style.height=image.naturalHeight+'px';
   if(fit)fitMap();renderMarkers();renderList();updatePosition();
@@ -369,8 +370,13 @@ $('findTree').addEventListener('click',searchTree);$('treeSearch').addEventListe
 function renderAutoScreenshot() {
   const auto=state.runtime.autoScreenshot;
   const enabled=state.settings.autoScreenshotEnabled,seconds=state.settings.autoScreenshotInterval;
-  $('toggleAutoShot').textContent=`自动截图：${enabled?seconds+'秒':'关'}`;
-  $('toggleAutoShot').classList.toggle('auto-shot-on',enabled);
+  for(const id of ['toggleAutoShot','overlayAutoShot']) {
+    const button=$(id);
+    button.textContent=`自动截图：${enabled?seconds+'秒':'关'}`;
+    button.classList.toggle('auto-shot-on',enabled);
+    button.setAttribute('aria-pressed',String(enabled));
+    button.title=enabled?'点击停止自动发送 Insert':'点击按设定间隔自动发送 Insert';
+  }
   $('autoShotHud').textContent=`Insert · ${auto?.message || '自动截图已关闭'}${enabled?' · 每 '+seconds+' 秒':''}`;
   $('autoShotStatus').textContent=(auto?.message || '自动截图已关闭')+(auto?.error?'：'+auto.error:'')+(auto?.lastPressAt?'；最近按键：'+new Date(auto.lastPressAt).toLocaleTimeString('zh-CN'):'')+(state.runtime.position?'；最近定位截图：'+new Date(state.runtime.position.at).toLocaleTimeString('zh-CN'):'');
 }
@@ -381,7 +387,12 @@ function renderOverlay() {
   $('toggleOverlay').title=state.settings.overlayHotkeyEnabled?`全局快捷键 ${hotkey}`:'点击打开独立置顶地图';
   $('overlayStatus').textContent=overlay?.error?'浮窗提示：'+overlay.error:overlay?.ready?`桌面组件已连接 · ${overlay.visible?'浮窗已显示':'浮窗已隐藏'} · ${overlay.shortcutRegistered?'全局快捷键 '+hotkey+' 已注册':'全局快捷键已关闭'}`:'正在连接桌面浮窗组件';
 }
-$('toggleAutoShot').addEventListener('click',action(async()=>{await post('auto-screenshot',{enabled:!state.settings.autoScreenshotEnabled,intervalSeconds:state.settings.autoScreenshotInterval});toast('自动截图设置已保存');}));
+for(const id of ['toggleAutoShot','overlayAutoShot'])$(id).addEventListener('click',action(async()=>{
+  const buttons=['toggleAutoShot','overlayAutoShot'].map($);
+  for(const button of buttons)button.disabled=true;
+  try{await post('auto-screenshot',{enabled:!state.settings.autoScreenshotEnabled,intervalSeconds:state.settings.autoScreenshotInterval});toast('自动截图设置已保存');}
+  finally{for(const button of buttons)button.disabled=false;}
+}));
 function showSettings() {
   $('overlayHotkeyEnabled').checked=state.settings.overlayHotkeyEnabled;
   $('overlayHotkey').value=state.settings.overlayHotkey || 'F8';renderOverlay();
