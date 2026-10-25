@@ -1,0 +1,180 @@
+name: PR Checks
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+# Jobs opt into the write scopes they need; the workflow default stays read-only.
+permissions:
+  contents: read
+jobs:
+  pr-meta:
+    name: PR Meta
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    # PR title format is checked by `pr-title.yml`, which also re-runs when the title is edited.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Auto-label PR
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Calculate and apply size label
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100,
+            });
+            const additions = files.reduce((sum, file) => sum + file.additions, 0);
+            const deletions = files.reduce((sum, file) => sum + file.deletions, 0);
+            const total = additions + deletions;
+            let label = 'size/S';
+            if (total > 1000) label = 'size/XXL';
+            else if (total > 500) label = 'size/XL';
+            else if (total > 250) label = 'size/L';
+            else if (total > 100) label = 'size/M';
+            const { data: existingLabels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const sizeLabels = existingLabels
+              .map(l => l.name)
+              .filter(name => name.startsWith('size/'));
+            if (sizeLabels.length === 1 && sizeLabels[0] === label) {
+              console.log(`Size label ${label} already correct, skipping`);
+              return;
+            }
+            for (const name of sizeLabels) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  name,
+                });
+              } catch (error) {
+                if (error.status !== 404) throw error;
+              }
+            }
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [label],
+            });
+  lighthouse-scope:
+    name: Lighthouse scope
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
+    outputs:
+      run_lighthouse: ${{ steps.lighthouse-gate.outputs.run_lighthouse }}
+    steps:
+      - name: Detect Lighthouse scope
+        id: lighthouse-gate
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const labels = context.payload.pull_request.labels.map(({ name }) => name);
+            const labelMatch = labels.includes('performance') || labels.includes('ui');
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100,
+            });
+            const pathMatch = files.some(({ filename }) =>
+              filename === '.github/lighthouserc.json' ||
+              filename === '.github/workflows/pr-checks.yml' ||
+              filename.startsWith('app/components/') ||
+              filename.startsWith('app/features/')
+            );
+            const runLighthouse = labelMatch || pathMatch;
+            core.setOutput('run_lighthouse', runLighthouse ? 'true' : 'false');
+            console.log(`Lighthouse gate ${runLighthouse ? 'enabled' : 'skipped'}`);
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: lighthouse-scope
+    if: |
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      needs.lighthouse-scope.outputs.run_lighthouse == 'true'
+    env:
+      API_ALLOWED_HOSTS: localhost,127.0.0.1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+      - name: Build Cloudflare Pages app
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+          APP_URL: http://localhost:3000
+          SUPABASE_URL: ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY || secrets.SUPABASE_ANON_KEY }}
+          # Disable the promoted Twitch embed so audits measure the app itself.
+          # The embed loads a heavy third-party iframe whose impact (script eval,
+          # layout shift, third-party cookies) varies with the streamer's live
+          # status, which made the Lighthouse gate non-deterministic.
+          NUXT_PUBLIC_PROMOTED_TWITCH_ENABLED: 'false'
+      - name: Start preview server
+        run: |
+          pnpm exec wrangler pages dev dist \
+            --port 3000 \
+            --ip 127.0.0.1 \
+            --local-protocol http \
+            --show-interactive-dev-session=false \
+            --log-level error &
+          echo $! > /tmp/server.pid
+          deadline=$((SECONDS + 120))
+          for url in \
+            http://localhost:3000 \
+            http://localhost:3000/api/tarkov/cache-meta \
+            'http://localhost:3000/api/tarkov/bootstrap?lang=en' \
+            http://localhost:3000/tasks \
+            http://localhost:3000/hideout; do
+            while :; do
+              remaining=$((deadline - SECONDS))
+              if (( remaining <= 0 )); then
+                echo "::error::Timed out waiting for $url"
+                exit 1
+              fi
+              if curl -fsS -o /dev/null --max-time $((remaining < 20 ? remaining : 20)) "$url"; then
+                break
+              fi
+              sleep 2
+            done
+          done
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # 12.6.2
+        with:
+          configPath: .github/lighthouserc.json
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/tasks
+            http://localhost:3000/hideout
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+      - name: Stop preview server
+        if: always()
+        run: |
+          if [ -f /tmp/server.pid ]; then
+            kill "$(cat /tmp/server.pid)" 2>/dev/null || true
+            rm -f /tmp/server.pid
+          fi

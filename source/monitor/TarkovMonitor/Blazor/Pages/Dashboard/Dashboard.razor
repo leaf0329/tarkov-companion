@@ -1,0 +1,44 @@
+﻿@page "/"
+@page "/app"
+@using System.Diagnostics
+@inject GameWatcher eft
+@inject MessageLog messageLog
+@inject LocalizationService LocalizationService
+@layout AppLayout
+@implements IDisposable
+
+<MudGrid Class="dashboard-page-grid pa-0" Spacing="0">
+	<MudItem Class="dashboard-page-item" xs="12">
+        <MessageBoard>
+        </MessageBoard>
+	</MudItem>
+</MudGrid>
+
+@code {
+    [CascadingParameter(Name="AppLayout")]
+    public AppLayout AppLayout { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            AppLayout.SetTitle(LocalizationService.GetString("Dashboard"));
+        }
+    }
+
+	public void Dispose()
+	{
+	}
+
+}

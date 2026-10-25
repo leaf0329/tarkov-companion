@@ -1,0 +1,44 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+module.exports=async({main,overlay,store,dataDir,until})=>{
+ const checks=[],js=code=>main.webContents.executeJavaScript(code);
+ await until(()=>store.runtime.mode==='pvp' && store.runtime.raid==='raid');
+ assert.equal(store.runtime.profile,'bbbbbbbbbbbbbbbbbbbbbbbb');assert.equal(store.disk.selectedProfile,'aaaaaaaaaaaaaaaaaaaaaaaa');
+ for(const win of [main,overlay]){
+  await until(()=>win.webContents.executeJavaScript("document.querySelector('[data-testid=companion-game-mode]')?.textContent==='PvP' && document.querySelectorAll('.leaflet-container').length>0"));
+  assert.equal(await win.webContents.executeJavaScript("document.querySelectorAll('.companion-task-marker').length"),0);
+ }
+ assert.equal(await js("document.querySelectorAll('aside').length"),0);
+ checks.push('native Regular logs select the PvP map in both windows and hide PvE task controls');
+ const shot='2026-10-18[22-00]_102.30, 2.96, -5.91_0.0, 0.0, 0.0, 1.0 (12).png';
+ fs.writeFileSync(path.join(store.disk.settings.screenshotsPath,shot),'fixture');
+ await until(()=>store.runtime.position?.filename===shot);
+ assert.equal(store.runtime.position.mode,'pvp');assert.equal(store.runtime.position.x,102.3);assert.equal(store.runtime.position.z,-5.91);
+ for(const win of [main,overlay])await until(()=>win.webContents.executeJavaScript("document.querySelectorAll('.companion-player').length===1"));
+ checks.push('native screenshot filenames with multi-digit suffixes update the PvP player arrow in both maps');
+ await js("document.querySelector('[data-testid=companion-capture-toggle]').click()");
+ await until(()=>['dry-run','paused-background','paused-keys'].includes(store.runtime.capture.phase));
+ assert.equal(store.runtime.capture.sentCount,0);
+ await overlay.webContents.executeJavaScript("document.querySelector('[data-testid=companion-capture-toggle]').click()");
+ await until(()=>store.runtime.capture.phase==='off');
+ checks.push('PvP auto capture passes mode checks and both map buttons work without sending actual keys');
+ const session=path.join(store.disk.settings.logsPath,fs.readdirSync(store.disk.settings.logsPath)[0]);
+ const stamp=text=>new Date().toISOString().replace('T',' ').replace('Z',' +00:00')+'|1.2.5.0.48146|Info|application|'+text+'\n';
+ const message={type:'new_message',message:{type:12,dt:Math.floor(Date.now()/1000),templateId:'5b4795fb86f7745876267770 successMessageText'}};
+ fs.appendFileSync(path.join(session,'push-notifications_000.log'),stamp('Got notification | ChatMessageReceived')+JSON.stringify(message,null,2)+'\n');
+ await new Promise(resolve=>setTimeout(resolve,500));
+ assert.deepEqual(Object.keys(store.disk.profiles),['aaaaaaaaaaaaaaaaaaaaaaaa']);
+ const scene=JSON.parse(fs.readFileSync(path.resolve(dataDir,'../maps.json'))).data.maps['56f40101d2720b2a4d8b45d6'].scenePath;
+ fs.appendFileSync(path.join(session,'application_000.log'),stamp('Session mode: Pve')+stamp('PrepareSelectedProfileLocally ProfileId:aaaaaaaaaaaaaaaaaaaaaaaa AccountId:123')+stamp('scene preset path:'+scene)+stamp('GameStarted:10(0) real:10(0) diff:0'));
+ await until(()=>store.runtime.mode==='pve');
+ assert.equal(store.runtime.position,null);assert.equal(store.profile().tasks['5b4795fb86f7745876267770'].status,'active');
+ assert.deepEqual(Object.keys(store.disk.profiles),['aaaaaaaaaaaaaaaaaaaaaaaa']);
+ for(const win of [main,overlay])await until(()=>win.webContents.executeJavaScript("document.querySelector('[data-testid=companion-game-mode]')?.textContent==='PvE' && document.querySelectorAll('.companion-player').length===0"));
+ await until(()=>js("document.querySelectorAll('aside a').length===1"));
+ checks.push('live mode switching clears stale PvP coordinates and preserves the PvE task record');
+ const pveShot=shot.replace('(12)','(13)');fs.writeFileSync(path.join(store.disk.settings.screenshotsPath,pveShot),'fixture');
+ await until(()=>store.runtime.position?.filename===pveShot);
+ assert.equal(store.runtime.position.mode,'pve');
+ for(const win of [main,overlay])await until(()=>win.webContents.executeJavaScript("document.querySelectorAll('.companion-player').length===1"));
+ checks.push('PvE screenshot positioning continues after returning from PvP');
+ return {ok:true,checks,at:new Date().toISOString()};
+};

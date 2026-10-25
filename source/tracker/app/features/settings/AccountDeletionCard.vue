@@ -1,0 +1,783 @@
+<script setup lang="ts">
+  import LoginRequiredAlert from '@/components/ui/LoginRequiredAlert.vue';
+  import {
+    recordDeviceDataRemovalOutcome,
+    removeAccountDeviceData,
+    requestDeviceDataRemoval,
+  } from '@/stores/tarkov/deviceData';
+  import { resetTarkovSync } from '@/stores/useTarkov';
+  import { logger } from '@/utils/logger';
+  import { refreshSupabaseSession } from '@/utils/supabaseAuth';
+  import { isSupabaseSessionChangedError } from '@/utils/supabaseAuthFence';
+  defineOptions({
+    inheritAttrs: false,
+  });
+  const { $supabase } = useNuxtApp();
+  const { t } = useI18n({ useScope: 'global' });
+  const toast = useToast();
+  const showConfirmationDialog = ref(false);
+  const showSuccessDialog = ref(false);
+  const confirmationOwner = ref<string | null>(null);
+  const deletedAccountOwner = ref<string | null>(null);
+  let accountRevision = 0;
+  let confirmationRevision = 0;
+  let deletedAccountRevision = 0;
+  const confirmationText = ref('');
+  const confirmationError = ref(false);
+  const deleteError = ref('');
+  const isDeleting = ref(false);
+  const clearDeletionConfirmation = (): void => {
+    showConfirmationDialog.value = false;
+    confirmationOwner.value = null;
+    confirmationText.value = '';
+    confirmationError.value = false;
+    deleteError.value = '';
+  };
+  watch(
+    () => $supabase.user.id,
+    () => {
+      accountRevision += 1;
+      if (!isDeleting.value) clearDeletionConfirmation();
+    },
+    { flush: 'sync' }
+  );
+  const ownsDeletionSession = (owner: string | null, revision: number): boolean =>
+    Boolean(owner) && $supabase.user.id === owner && accountRevision === revision;
+  const assertDeletionSession = (owner: string | null, revision: number): void => {
+    if (!ownsDeletionSession(owner, revision))
+      throw new Error(t('settings.account_data.session_changed'));
+  };
+  const assertRefreshedDeletionOwner = (
+    session: NonNullable<Awaited<ReturnType<typeof refreshSupabaseSession>>>,
+    owner: string | null
+  ): void => {
+    if (session.user.id !== owner) throw new Error(t('settings.account_data.session_changed'));
+  };
+  const canResetDeletedSession = (owner: string, revision: number): boolean =>
+    ownsDeletionSession(owner, revision) ||
+    ($supabase.user.id === null && accountRevision === revision + 1);
+  const accountIdCopied = ref(false);
+  const cleanupScheduled = ref(false);
+  const deviceCleanupFailed = ref(false);
+  const sessionEndFailed = ref(false);
+  const isRetryingDeviceCleanup = ref(false);
+  const showUsername = ref(false);
+  const showEmail = ref(false);
+  const showAccountId = ref(false);
+  const attrs = useAttrs();
+  type CssClassValue = string | string[] | Record<string, boolean> | undefined;
+  const rootClass = computed<CssClassValue>(() => attrs.class as CssClassValue);
+  const maskedUsername = computed(() => {
+    const username = $supabase?.user?.username;
+    if (!username) return 'N/A';
+    if (showUsername.value) return username;
+    if (username.length <= 3) return '***';
+    return username.slice(0, 2) + '***';
+  });
+  const maskedEmail = computed(() => {
+    const email = $supabase?.user?.email;
+    if (!email) return 'N/A';
+    if (showEmail.value) return email;
+    const atIndex = email.indexOf('@');
+    if (atIndex <= 0) return '***';
+    const localPart = email.slice(0, atIndex);
+    const domain = email.slice(atIndex);
+    const visibleChars = Math.min(2, localPart.length);
+    return localPart.slice(0, visibleChars) + '***' + domain;
+  });
+  const maskedAccountId = computed(() => {
+    const id = $supabase?.user?.id;
+    if (!id) return 'N/A';
+    if (showAccountId.value) return id;
+    if (id.length <= 4) return '***';
+    return '***' + id.slice(-4);
+  });
+  const isLoggedIn = computed(() => {
+    return Boolean($supabase?.user?.loggedIn);
+  });
+  type AuthProvider = 'discord' | 'twitch' | 'google' | 'github';
+  interface UserWithProviders {
+    providers?: string[] | null;
+    provider?: string | null;
+  }
+  const providers = computed<AuthProvider[]>(() => {
+    if (!$supabase?.user) return [];
+    const user = $supabase.user as UserWithProviders;
+    const providersList = user.providers || [];
+    if (providersList.length > 0) {
+      return providersList.filter(
+        (p: string): p is AuthProvider =>
+          p === 'discord' || p === 'twitch' || p === 'google' || p === 'github'
+      );
+    }
+    const providerValue = user.provider;
+    if (
+      providerValue === 'discord' ||
+      providerValue === 'twitch' ||
+      providerValue === 'google' ||
+      providerValue === 'github'
+    ) {
+      return [providerValue];
+    }
+    return [];
+  });
+  const getProviderIcon = (provider: AuthProvider) => {
+    if (provider === 'discord') return 'i-mdi-discord';
+    if (provider === 'twitch') return 'i-mdi-twitch';
+    if (provider === 'google') return 'i-mdi-google';
+    if (provider === 'github') return 'i-mdi-github';
+    return 'i-mdi-account';
+  };
+  const PROVIDER_BADGE_CLASSES: Record<AuthProvider, string> = {
+    google: 'ring-surface-600 text-surface-900 ring-1 light:text-black',
+    github: 'ring-surface-600 text-white ring-1',
+    discord: 'text-white ring-1 ring-white/10',
+    twitch: 'text-white ring-1 ring-white/10',
+  };
+  const getProviderBadgeClass = (provider: AuthProvider) => {
+    return PROVIDER_BADGE_CLASSES[provider];
+  };
+  const getProviderBadgeStyle = (provider: AuthProvider) => {
+    if (provider === 'discord') return { backgroundColor: 'var(--color-discord)' };
+    if (provider === 'twitch') return { backgroundColor: 'var(--color-twitch)' };
+    if (provider === 'google') return { backgroundColor: 'white' };
+    if (provider === 'github') return { backgroundColor: 'var(--color-github)' };
+    return {};
+  };
+  const getProviderLabel = (provider: AuthProvider) => {
+    return provider.charAt(0).toUpperCase() + provider.slice(1);
+  };
+  const authMethodLabel = computed(() =>
+    providers.value.length > 1
+      ? t('settings.account_data.auth_methods_label')
+      : t('settings.account_data.auth_method_label')
+  );
+  const confirmationPhrase = computed(() => t('settings.account_data.confirm_phrase_value'));
+  const canDelete = computed(() => {
+    return (
+      confirmationText.value.trim().toUpperCase() === confirmationPhrase.value.trim().toUpperCase()
+    );
+  });
+  const openDeletionConfirmation = (): void => {
+    if (!isLoggedIn.value || !$supabase.user.id) return;
+    clearDeletionConfirmation();
+    confirmationOwner.value = $supabase.user.id;
+    confirmationRevision = accountRevision;
+    showConfirmationDialog.value = true;
+  };
+  const completeDeletion = (
+    owner: string,
+    revision: number,
+    data: { cleanupScheduled?: boolean; message?: string }
+  ): void => {
+    deletedAccountOwner.value = owner;
+    deletedAccountRevision = revision;
+    clearDeletionConfirmation();
+    cleanupScheduled.value = Boolean(data.cleanupScheduled);
+    if (data.cleanupScheduled) logger.info('Account deleted, cleanup scheduled:', data.message);
+    showSuccessDialog.value = true;
+  };
+  const formatDate = (dateString: string | null | undefined) => {
+    if (!dateString) return 'Unknown';
+    return new Date(dateString).toLocaleDateString();
+  };
+  const copyAccountId = async () => {
+    try {
+      await navigator.clipboard.writeText($supabase.user.id || '');
+      accountIdCopied.value = true;
+      setTimeout(() => {
+        accountIdCopied.value = false;
+      }, 2000);
+    } catch (error) {
+      toast.add({
+        title: t('settings.account_data.copy_failed'),
+        color: 'error',
+      });
+      logger.error('Failed to copy account ID:', error);
+    }
+  };
+  const deleteAccount = async (openingOwner: string | null, openingRevision: number) => {
+    if (openingOwner !== confirmationOwner.value || openingRevision !== confirmationRevision)
+      return;
+    if (
+      !showConfirmationDialog.value ||
+      !openingOwner ||
+      !ownsDeletionSession(openingOwner, openingRevision)
+    ) {
+      clearDeletionConfirmation();
+      return;
+    }
+    if (!canDelete.value) {
+      confirmationError.value = true;
+      return;
+    }
+    isDeleting.value = true;
+    deleteError.value = '';
+    const requestedOwner = openingOwner;
+    const requestedRevision = openingRevision;
+    try {
+      assertDeletionSession(requestedOwner, requestedRevision);
+      const { data: sessionData, error: sessionError } = await $supabase.client.auth.getSession();
+      assertDeletionSession(requestedOwner, requestedRevision);
+      if (sessionError) {
+        logger.error('Session error:', sessionError);
+        throw new Error(`Session error: ${sessionError.message}`);
+      }
+      if (!sessionData.session) {
+        throw new Error('You must be logged in to delete your account.');
+      }
+      let refreshedSession: Awaited<ReturnType<typeof refreshSupabaseSession>>;
+      try {
+        refreshedSession = await refreshSupabaseSession($supabase.client);
+      } catch (error) {
+        logger.error('Account deletion session refresh failed:', error);
+        throw new Error('Your session has expired. Please refresh the page and try again.', {
+          cause: error,
+        });
+      }
+      if (!refreshedSession) {
+        throw new Error('Unable to verify your session. Please refresh the page and try again.');
+      }
+      assertDeletionSession(requestedOwner, requestedRevision);
+      assertRefreshedDeletionOwner(refreshedSession, requestedOwner);
+      const { data, error } = await $supabase.client.functions.invoke('account-delete', {
+        headers: { Authorization: `Bearer ${refreshedSession.access_token}` },
+      });
+      if (data?.success && !ownsDeletionSession(requestedOwner, requestedRevision)) {
+        deviceCleanupFailed.value = !(await forgetAccountOnDevice(requestedOwner));
+        completeDeletion(requestedOwner, requestedRevision, data);
+        return;
+      }
+      assertDeletionSession(requestedOwner, requestedRevision);
+      if (error) {
+        logger.error('Edge function error:', error);
+        let errorMessage = 'Failed to delete account. Please try again.';
+        const applyBodyError = (body: unknown) => {
+          if (!body) return false;
+          if (typeof body === 'string' && body.trim()) {
+            errorMessage = body;
+            return true;
+          }
+          if (typeof body === 'object' && 'error' in body) {
+            const bodyError = (body as { error?: unknown }).error;
+            if (bodyError) {
+              errorMessage = String(bodyError);
+              return true;
+            }
+          }
+          return false;
+        };
+        const getErrorContext = (err: unknown): unknown => {
+          if (err && typeof err === 'object' && 'context' in err) {
+            return (err as { context?: unknown }).context;
+          }
+          return undefined;
+        };
+        const getErrorMessage = (err: unknown): string | undefined => {
+          if (err && typeof err === 'object' && 'message' in err) {
+            const message = (err as { message?: unknown }).message;
+            return typeof message === 'string' ? message : undefined;
+          }
+          return undefined;
+        };
+        const context = getErrorContext(error);
+        if (context instanceof Response) {
+          try {
+            const body = await context.clone().json();
+            applyBodyError(body);
+          } catch (parseError) {
+            try {
+              const text = await context.clone().text();
+              applyBodyError(text);
+            } catch (textError) {
+              logger.warn('Failed to parse account deletion error response', {
+                parseError,
+                textError,
+              });
+            }
+          }
+        } else if ((context as { body?: { error?: string } }).body?.error) {
+          errorMessage = (context as { body?: { error?: string } }).body?.error || errorMessage;
+        }
+        if (
+          errorMessage === 'Failed to delete account. Please try again.' &&
+          getErrorMessage(error)
+        ) {
+          errorMessage = getErrorMessage(error) || errorMessage;
+        } else if (
+          typeof error === 'string' &&
+          errorMessage === 'Failed to delete account. Please try again.'
+        ) {
+          errorMessage = error;
+        }
+        if (errorMessage.includes('Too many deletion requests')) {
+          const match = errorMessage.match(/wait (\d+) seconds/);
+          if (match) {
+            errorMessage = `Rate limit exceeded. Please wait ${match[1]} seconds before trying again.`;
+          }
+        }
+        throw new Error(errorMessage);
+      }
+      if (data?.success) {
+        deviceCleanupFailed.value = !(await forgetAccountOnDevice(requestedOwner));
+        completeDeletion(requestedOwner, requestedRevision, data);
+      } else {
+        throw new Error('Failed to delete account.');
+      }
+    } catch (error) {
+      logger.error('Account deletion error:', error);
+      if (!ownsDeletionSession(requestedOwner, requestedRevision)) {
+        clearDeletionConfirmation();
+        toast.add({ title: t('settings.account_data.session_changed'), color: 'warning' });
+      } else {
+        deleteError.value =
+          (error as Error).message || 'Failed to delete account. Please try again.';
+      }
+    } finally {
+      isDeleting.value = false;
+    }
+  };
+  const deletionAction = computed(() => {
+    const openingOwner = confirmationOwner.value;
+    const openingRevision = confirmationRevision;
+    return () => deleteAccount(openingOwner, openingRevision);
+  });
+  const resetClientState = () => {
+    resetTarkovSync('account deleted');
+  };
+  /** A deleted account keeps no recovery copy on this device; other accounts keep theirs. */
+  const forgetAccountOnDevice = async (userId: string | null): Promise<boolean> => {
+    if (!userId) return false;
+    let removed = false;
+    try {
+      removed = await removeAccountDeviceData(userId);
+      if (!removed) logger.warn('Some deleted account data could not be removed from this device.');
+    } catch (error) {
+      logger.error('Failed to remove deleted account data from this device:', error);
+    }
+    recordDeviceDataRemovalOutcome(userId, removed);
+    return removed;
+  };
+  /** The deleted account has no server session left; clear this browser's copy directly. */
+  const endDeletedSession = async (owner: string): Promise<void> => {
+    try {
+      await $supabase.signOut(owner, 'local');
+    } catch (error) {
+      if (isSupabaseSessionChangedError(error) || $supabase.user.id !== owner) return;
+      logger.warn('Local sign-out of the deleted account failed; clearing this device', error);
+      await $supabase.signOutThisDevice(owner);
+    }
+  };
+  const signOutDeletedSession = async (owner: string, revision: number): Promise<void> => {
+    if (!ownsDeletionSession(owner, revision)) return;
+    requestDeviceDataRemoval(owner);
+    await endDeletedSession(owner);
+  };
+  const resetDeletedSession = (owner: string, revision: number): void => {
+    if (canResetDeletedSession(owner, revision)) resetClientState();
+  };
+  const redirectToHome = async (allowRemainingDeviceData = false) => {
+    const deletedUserId = deletedAccountOwner.value;
+    if (!deletedUserId) return;
+    // A may sign out and sign back in while deletion is in flight. If the deleted account is
+    // current at redirect time, fence the sign-out against that current session revision.
+    const revision = $supabase.user.id === deletedUserId ? accountRevision : deletedAccountRevision;
+    logger.info('Signing out user and redirecting to dashboard...');
+    try {
+      await signOutDeletedSession(deletedUserId, revision);
+      logger.info('Successfully signed out, performing hard reload...');
+    } catch (error) {
+      logger.error('Failed to sign out and redirect:', error);
+    }
+    // Never leave while this browser still holds the deleted account's session.
+    sessionEndFailed.value = $supabase.user.id === deletedUserId;
+    if (sessionEndFailed.value) return;
+    deviceCleanupFailed.value = !(await forgetAccountOnDevice(deletedUserId));
+    if (deviceCleanupFailed.value && !allowRemainingDeviceData) return;
+    resetDeletedSession(deletedUserId, revision);
+    showSuccessDialog.value = false;
+    window.location.href = '/';
+  };
+  const retryDeviceCleanup = async () => {
+    const deletedUserId = deletedAccountOwner.value;
+    if (!deletedUserId) return;
+    isRetryingDeviceCleanup.value = true;
+    try {
+      deviceCleanupFailed.value = !(await forgetAccountOnDevice(deletedUserId));
+    } finally {
+      isRetryingDeviceCleanup.value = false;
+    }
+  };
+</script>
+<template>
+  <div :class="rootClass">
+    <GenericCard
+      icon="mdi-account-circle"
+      icon-color="info"
+      highlight-color="info"
+      :title="$t('settings.account_data.title')"
+      title-classes="text-lg font-semibold"
+    >
+      <template #content>
+        <div class="p-4">
+          <template v-if="!isLoggedIn">
+            <LoginRequiredAlert
+              :title="$t('settings.account_data.login_required_delete')"
+              redirect-path="/settings#account"
+            />
+          </template>
+          <template v-else>
+            <div class="border-surface-700 bg-surface-800/50 mb-6 rounded-lg border p-4">
+              <div class="mb-3 text-base font-bold">
+                {{ $t('settings.account_data.account_info_title') }}
+              </div>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <div class="mb-2 flex items-center">
+                    <UIcon name="i-mdi-account" class="text-surface-400 mr-2 h-4.5 w-4.5" />
+                    <span class="text-sm">
+                      <span class="text-surface-400">
+                        {{ $t('settings.account_data.username_label') }}:
+                      </span>
+                      <span class="ml-1 font-mono font-medium">{{ maskedUsername }}</span>
+                    </span>
+                    <AppTooltip :text="showUsername ? $t('common.hide') : $t('common.show')">
+                      <UButton
+                        size="xs"
+                        variant="ghost"
+                        :icon="showUsername ? 'i-mdi-eye-off' : 'i-mdi-eye'"
+                        color="neutral"
+                        class="ml-1"
+                        :aria-label="
+                          showUsername
+                            ? $t('settings.account_data.hide_username')
+                            : $t('settings.account_data.show_username')
+                        "
+                        @click="showUsername = !showUsername"
+                      />
+                    </AppTooltip>
+                  </div>
+                  <div class="mb-2 flex items-center">
+                    <UIcon name="i-mdi-email" class="text-surface-400 mr-2 h-4.5 w-4.5" />
+                    <span class="text-sm">
+                      <span class="text-surface-400">
+                        {{ $t('settings.account_data.email_label') }}:
+                      </span>
+                      <span class="ml-1 font-mono font-medium">{{ maskedEmail }}</span>
+                    </span>
+                    <AppTooltip :text="showEmail ? $t('common.hide') : $t('common.show')">
+                      <UButton
+                        size="xs"
+                        variant="ghost"
+                        :icon="showEmail ? 'i-mdi-eye-off' : 'i-mdi-eye'"
+                        color="neutral"
+                        class="ml-1"
+                        :aria-label="
+                          showEmail
+                            ? $t('settings.account_data.hide_email')
+                            : $t('settings.account_data.show_email')
+                        "
+                        @click="showEmail = !showEmail"
+                      />
+                    </AppTooltip>
+                  </div>
+                </div>
+                <div>
+                  <div class="mb-2 flex items-center">
+                    <UIcon name="i-mdi-login" class="text-surface-400 mr-2 h-4.5 w-4.5" />
+                    <span class="flex flex-wrap items-center gap-1 text-sm">
+                      <span class="text-surface-400 mr-1">{{ authMethodLabel }}:</span>
+                      <template v-if="providers.length > 0">
+                        <UBadge
+                          v-for="p in providers"
+                          :key="p"
+                          size="xs"
+                          variant="solid"
+                          :style="getProviderBadgeStyle(p)"
+                          :class="getProviderBadgeClass(p)"
+                        >
+                          <UIcon :name="getProviderIcon(p)" class="mr-1 h-4 w-4" />
+                          {{ getProviderLabel(p) }}
+                        </UBadge>
+                      </template>
+                      <span v-else class="text-surface-500">
+                        {{ $t('common.unknown') }}
+                      </span>
+                    </span>
+                  </div>
+                  <div class="flex items-center">
+                    <UIcon name="i-mdi-calendar" class="text-surface-400 mr-2 h-4.5 w-4.5" />
+                    <span class="text-sm">
+                      <span class="text-surface-400">
+                        {{ $t('settings.account_data.member_since_label') }}:
+                      </span>
+                      <span class="ml-1 font-medium">
+                        {{ formatDate($supabase.user.createdAt) }}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="border-surface-700 my-3 border-t"></div>
+              <div class="flex items-center">
+                <UIcon name="i-mdi-identifier" class="text-surface-400 mr-2 h-4.5 w-4.5" />
+                <span class="text-surface-400 mr-2 text-sm">
+                  {{ $t('settings.account_data.account_id_label') }}:
+                </span>
+                <code class="bg-surface-700 rounded px-2 py-1 text-xs">{{ maskedAccountId }}</code>
+                <AppTooltip :text="showAccountId ? $t('common.hide') : $t('common.show')">
+                  <UButton
+                    size="xs"
+                    variant="ghost"
+                    :icon="showAccountId ? 'i-mdi-eye-off' : 'i-mdi-eye'"
+                    color="neutral"
+                    class="ml-1"
+                    :aria-label="
+                      showAccountId
+                        ? $t('settings.account_data.hide_account_id')
+                        : $t('settings.account_data.show_account_id')
+                    "
+                    @click="showAccountId = !showAccountId"
+                  />
+                </AppTooltip>
+                <AppTooltip
+                  :text="
+                    accountIdCopied
+                      ? $t('settings.account_data.account_id_copied')
+                      : $t('settings.account_data.copy_account_id')
+                  "
+                >
+                  <UButton
+                    size="xs"
+                    variant="ghost"
+                    :icon="accountIdCopied ? 'i-mdi-check' : 'i-mdi-content-copy'"
+                    :color="accountIdCopied ? 'success' : 'primary'"
+                    class="ml-1"
+                    :aria-label="
+                      accountIdCopied
+                        ? $t('settings.account_data.account_id_copied')
+                        : $t('settings.account_data.copy_account_id')
+                    "
+                    @click="copyAccountId"
+                  />
+                </AppTooltip>
+              </div>
+            </div>
+            <div class="border-error-500/25 bg-error-950/15 mt-6 space-y-4 rounded-lg border p-4">
+              <div class="flex items-start gap-2">
+                <UIcon name="i-mdi-account-remove" class="text-error-400 mt-0.5 h-4 w-4 shrink-0" />
+                <div class="space-y-0.5">
+                  <p class="text-error-300 text-sm font-semibold">
+                    {{ $t('settings.account_data.account_deletion_title') }}
+                  </p>
+                </div>
+              </div>
+              <div class="flex justify-center">
+                <UButton
+                  color="error"
+                  variant="solid"
+                  size="lg"
+                  icon="i-mdi-delete-forever"
+                  :loading="isDeleting"
+                  :disabled="isDeleting"
+                  class="px-6 py-3 font-semibold shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                  @click="openDeletionConfirmation"
+                >
+                  {{ $t('settings.account.begin_deletion') }}
+                </UButton>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+    </GenericCard>
+  </div>
+  <UModal :key="confirmationOwner ?? 'closed'" v-model:open="showConfirmationDialog" prevent-close>
+    <template #title>
+      <div class="text-error-500 light:text-error-800 flex items-center text-xl font-medium">
+        <UIcon name="i-mdi-alert-circle" class="text-error-500 light:text-error-800 mr-2 h-6 w-6" />
+        {{ $t('settings.account_data.confirm_delete_title') }}
+      </div>
+    </template>
+    <template #description>
+      <span class="sr-only">
+        {{ $t('settings.account_data.confirm_delete_sr_only') }}
+      </span>
+    </template>
+    <template #body>
+      <div class="space-y-4">
+        <UAlert
+          color="error"
+          variant="solid"
+          :title="$t('settings.account_data.irreversible_title')"
+          :description="$t('settings.account_data.irreversible_description')"
+        />
+        <UAlert
+          icon="i-mdi-alert-circle"
+          color="error"
+          variant="soft"
+          :title="$t('settings.account_data.what_deleted_title')"
+        >
+          <template #description>
+            <ul class="ml-4 list-disc text-sm">
+              <li>
+                {{ $t('settings.account_data.delete_item_progress') }}
+              </li>
+              <li>
+                {{ $t('settings.account_data.delete_item_teams') }}
+              </li>
+              <li>
+                {{ $t('settings.account_data.delete_item_tokens') }}
+              </li>
+              <li>
+                {{ $t('settings.account_data.delete_item_personal') }}
+              </li>
+            </ul>
+            <div class="mt-2 text-sm font-bold">
+              {{ $t('settings.account_data.not_affect_tarkov') }}
+            </div>
+          </template>
+        </UAlert>
+        <UAlert
+          icon="i-mdi-account-group"
+          color="warning"
+          variant="soft"
+          :title="$t('settings.account_data.team_transfer_title')"
+        >
+          <template #description>
+            <div class="text-sm">
+              {{ $t('settings.account_data.team_transfer_description') }}
+            </div>
+          </template>
+        </UAlert>
+        <div>
+          <div class="mb-2 text-base font-medium">
+            {{ $t('settings.account_data.security_confirmation_title') }}
+          </div>
+          <div class="text-surface-400 mb-3 text-sm">
+            {{ $t('settings.account_data.security_confirmation_description') }}
+          </div>
+        </div>
+        <div>
+          <div class="mb-2 text-base font-medium">
+            {{
+              $t('settings.account_data.confirm_phrase_label', {
+                phrase: $t('settings.account_data.confirm_phrase_value'),
+              })
+            }}
+          </div>
+          <UInput
+            v-model="confirmationText"
+            :placeholder="$t('settings.account_data.confirm_phrase_value')"
+            :color="confirmationError ? 'error' : 'neutral'"
+            @input="confirmationError = false"
+          />
+          <div v-if="confirmationError" class="text-error-500 light:text-error-800 mt-1 text-xs">
+            {{
+              $t('settings.account_data.confirm_phrase_error', {
+                phrase: $t('settings.account_data.confirm_phrase_value'),
+              })
+            }}
+          </div>
+        </div>
+        <UAlert v-if="deleteError" color="error" variant="soft" :title="deleteError" />
+      </div>
+    </template>
+    <template #footer="{ close }">
+      <div class="flex justify-end">
+        <UButton variant="ghost" color="neutral" :disabled="isDeleting" @click="close">
+          {{ $t('common.cancel') }}
+        </UButton>
+        <UButton
+          color="error"
+          variant="solid"
+          :loading="isDeleting"
+          :disabled="!canDelete || isDeleting"
+          class="ml-3"
+          @click="deletionAction"
+        >
+          {{ $t('settings.account_data.delete_forever') }}
+        </UButton>
+      </div>
+    </template>
+  </UModal>
+  <UModal v-model:open="showSuccessDialog" prevent-close>
+    <template #title>
+      <div class="text-success-500 light:text-success-800 flex items-center text-xl font-medium">
+        <UIcon
+          name="i-mdi-check-circle"
+          class="text-success-500 light:text-success-800 mr-2 h-6 w-6"
+        />
+        {{ $t('settings.account_data.delete_success_title') }}
+      </div>
+    </template>
+    <template #description>
+      <span class="sr-only">
+        {{
+          $t(
+            deviceCleanupFailed
+              ? 'settings.account_data.delete_success_cleanup_failed_sr_only'
+              : 'settings.account_data.delete_success_sr_only'
+          )
+        }}
+      </span>
+    </template>
+    <template #body>
+      <div class="space-y-3">
+        <div class="text-base">
+          {{
+            $t(
+              $supabase.user.id === deletedAccountOwner
+                ? 'settings.account_data.delete_success_description'
+                : 'settings.account_data.other_session_deleted_description'
+            )
+          }}
+        </div>
+        <div v-if="cleanupScheduled" class="text-surface-400 text-sm">
+          <UIcon name="i-mdi-information" class="mr-1 inline h-4 w-4" />
+          {{ $t('settings.account_data.cleanup_pending') }}
+        </div>
+        <div v-if="deviceCleanupFailed" class="text-error-400 text-sm" role="alert">
+          {{ $t('settings.account_data.device_cleanup_failed') }}
+        </div>
+        <div v-if="sessionEndFailed" class="text-error-400 text-sm" role="alert">
+          {{ $t('settings.account_data.session_end_failed') }}
+        </div>
+        <div v-if="!deviceCleanupFailed" class="text-surface-400 text-sm">
+          {{ $t('settings.account_data.redirect_message') }}
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <div class="flex justify-end">
+        <UButton
+          v-if="deviceCleanupFailed"
+          color="neutral"
+          variant="outline"
+          :loading="isRetryingDeviceCleanup"
+          :disabled="isRetryingDeviceCleanup"
+          @click="retryDeviceCleanup"
+        >
+          {{ $t('settings.account_data.retry_device_cleanup') }}
+        </UButton>
+        <UButton
+          v-if="deviceCleanupFailed"
+          color="warning"
+          variant="solid"
+          :disabled="isRetryingDeviceCleanup"
+          @click="redirectToHome(true)"
+        >
+          {{ $t('settings.account_data.continue_with_device_data_remaining') }}
+        </UButton>
+        <UButton
+          color="primary"
+          variant="solid"
+          :disabled="deviceCleanupFailed || isRetryingDeviceCleanup"
+          @click="redirectToHome()"
+        >
+          {{ $t('settings.account_data.go_to_dashboard') }}
+        </UButton>
+      </div>
+    </template>
+  </UModal>
+</template>

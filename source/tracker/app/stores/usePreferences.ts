@@ -1,0 +1,1140 @@
+import { defineStore } from 'pinia';
+import 'pinia-plugin-persistedstate';
+import {
+  normalizeNeededItemsCardStyle,
+  normalizeNeededItemsFilterType,
+  normalizeNeededItemsFirFilter,
+  normalizeNeededItemsSortBy,
+  normalizeNeededItemsSortDirection,
+  normalizeNeededItemsViewMode,
+} from '@/features/neededitems/neededItemsFilterNormalization';
+import {
+  clonePreferencesSnapshot,
+  isPersistedPreferencesStateRecord,
+  normalizeOptionalStringSelection,
+  normalizeOptionalTaskPrimaryView,
+  normalizeOptionalTaskSortDirection,
+  parseLegacyPersistedPreferencesState,
+  requiresLegacyPreferencesMigration,
+  sanitizePersistedPreferencesState,
+  type PersistedPreferencesState,
+  type PersistedPreferencesStateWithLegacy,
+} from '@/stores/preferences/sanitizers';
+import {
+  isDeviceDataRemovalPending,
+  registerDeviceDataRemovalCleanup,
+} from '@/stores/tarkov/deviceData';
+import {
+  isValidPrimaryView,
+  type TaskPrimaryView,
+  type TaskSecondaryView,
+} from '@/types/taskFilter';
+import { clearPreferencesStorage } from '@/utils/clientStorage';
+import { TRADER_SORT_DIRECTIONS, TRADER_SORT_MODES } from '@/utils/constants';
+import { DEFAULT_KEYBINDS, LEGACY_OMNIBAR_KEYBIND, sanitizeKeybind } from '@/utils/keybinds';
+import { logger } from '@/utils/logger';
+import { STORAGE_KEYS } from '@/utils/storageKeys';
+import {
+  getTaskSecondaryViewForPrimaryView,
+  normalizeSecondaryView,
+  normalizeSortMode,
+} from '@/utils/taskFilterNormalization';
+import {
+  MAP_MARKER_COLORS,
+  migrateLegacyMapMarkerColors,
+  normalizeMapMarkerColors,
+  type MapMarkerColorKey,
+  type MapMarkerColors,
+} from '@/utils/theme-colors';
+import {
+  getCurrentSupabaseUserId,
+  parseUserScopedStorage,
+  serializeUserScopedStorage,
+} from '@/utils/userScopedStorage';
+import type {
+  NeededItemsFirFilter,
+  NeededItemsFilterType,
+} from '@/features/neededitems/neededitems-constants';
+import type { TaskSortDirection, TaskSortMode } from '@/types/taskSort';
+import type { SkillSortMode, TraderSortMode, TraderSortDirection } from '@/utils/constants';
+export type { PersistedPreferencesState };
+export type TaskFilterSettings = {
+  taskPrimaryView: TaskPrimaryView | null;
+  taskMapView: string | null;
+  taskTraderView: string | null;
+  taskSecondaryView: TaskSecondaryView | null;
+  taskUserView: string | null;
+  taskSortMode: TaskSortMode | null;
+  taskSortDirection: TaskSortDirection | null;
+  taskSharedByAllOnly: boolean;
+  hideGlobalTasks: boolean;
+  hideNonKappaTasks: boolean;
+  showNonSpecialTasks: boolean;
+  showLightkeeperTasks: boolean;
+  onlyTasksWithRequiredKeys: boolean;
+  respectTaskFiltersForImpact: boolean;
+  showAllFilter: boolean;
+  showAvailableFilter: boolean;
+  showLockedFilter: boolean;
+  showCompletedFilter: boolean;
+  showFailedFilter: boolean;
+};
+export type TaskFilterPreset = {
+  id: string;
+  name: string;
+  settings: TaskFilterSettings;
+};
+// Define the state structure
+export interface PreferencesState {
+  streamerMode: boolean;
+  profileSharePvpPublic: boolean;
+  profileSharePvePublic: boolean;
+  teamHide: Record<string, boolean>;
+  taskTeamHideAll: boolean;
+  itemsTeamHideAll: boolean;
+  itemsTeamHideNonFIR: boolean;
+  itemsTeamHideHideout: boolean;
+  mapTeamHideAll: boolean;
+  taskPrimaryView: string | null;
+  taskMapView: string | null;
+  taskTraderView: string | null;
+  taskSecondaryView: string | null;
+  taskUserView: string | null;
+  taskSortMode: TaskSortMode | null;
+  taskSortDirection: TaskSortDirection | null;
+  taskSharedByAllOnly: boolean;
+  neededTypeView: NeededItemsFilterType | null;
+  neededItemsViewMode: 'list' | 'grid' | null;
+  neededItemsFirFilter: NeededItemsFirFilter | null;
+  neededItemsGroupByItem: boolean;
+  neededItemsHideNonFirSpecialEquipment: boolean;
+  neededItemsKappaOnly: boolean;
+  neededItemsSortBy: 'priority' | 'name' | 'category' | 'count' | null;
+  neededItemsSortDirection: 'asc' | 'desc' | null;
+  neededItemsHideOwned: boolean;
+  neededItemsCardStyle: 'compact' | 'expanded' | null;
+  itemsHideNonFIR: boolean;
+  hideGlobalTasks: boolean;
+  hideNonKappaTasks: boolean;
+  hideCompletedMapObjectives: boolean;
+  hideoutPrimaryView?: string | null;
+  hideoutCollapseCompleted: boolean;
+  hideoutSortReadyFirst: boolean;
+  hideoutRequireStationLevels: boolean;
+  hideoutRequireSkillLevels: boolean;
+  hideoutRequireTraderLoyalty: boolean;
+  tasksRequireTraderLevels: boolean;
+  localeOverride: string | null;
+  // External links
+  wikiUseAntifandom: boolean;
+  // Task filter settings
+  showNonSpecialTasks: boolean;
+  showLightkeeperTasks: boolean;
+  onlyTasksWithRequiredKeys: boolean;
+  respectTaskFiltersForImpact: boolean;
+  // Task appearance settings
+  showRequiredLabels: boolean;
+  showExperienceRewards: boolean;
+  showNextQuests: boolean;
+  showPreviousQuests: boolean;
+  taskCollapseDefault: boolean;
+  hideTaskRewards: boolean;
+  enableManualTaskFail: boolean;
+  hideCompletedTaskObjectives: boolean;
+  showAllFilter: boolean;
+  showAvailableFilter: boolean;
+  showLockedFilter: boolean;
+  showCompletedFilter: boolean;
+  showFailedFilter: boolean;
+  // XP and Level settings
+  useAutomaticLevelCalculation: boolean;
+  dashboardNoticeDismissed: boolean;
+  // Map display settings
+  showMapExtracts: boolean;
+  mapShowKeyRooms: boolean;
+  mapMarkerColors: MapMarkerColors;
+  mapZoomSpeed: number;
+  mapPanSpeed: number;
+  mapZoneOpacity: number;
+  mapTooltipDensity: 'default' | 'compact';
+  pinnedTaskIds: string[];
+  // Quests the user hid from the Tasks map (#918); persisted locally only, not synced to Supabase
+  mapHiddenTaskIds: string[];
+  mapShowSelfObjectives: boolean;
+  mapShowPinnedObjectives: boolean;
+  mapShowTeamObjectives: boolean;
+  // Skills settings
+  skillSortMode: SkillSortMode | null;
+  traderSortMode: TraderSortMode | null;
+  traderSortDirection: TraderSortDirection | null;
+  taskFilterPresets: TaskFilterPreset[];
+  keybindOmnibar: string;
+  keybindUndo: string;
+  saving?: {
+    streamerMode: boolean;
+    hideGlobalTasks: boolean;
+    hideNonKappaTasks: boolean;
+    hideCompletedMapObjectives: boolean;
+  };
+}
+// Export the default state with type annotation
+export const preferencesDefaultState: PreferencesState = {
+  streamerMode: false,
+  profileSharePvpPublic: false,
+  profileSharePvePublic: false,
+  teamHide: {},
+  taskTeamHideAll: false,
+  itemsTeamHideAll: false,
+  itemsTeamHideNonFIR: false,
+  itemsTeamHideHideout: false,
+  mapTeamHideAll: false,
+  taskPrimaryView: null,
+  taskMapView: null,
+  taskTraderView: null,
+  taskSecondaryView: null,
+  taskUserView: null,
+  taskSortMode: null,
+  taskSortDirection: null,
+  taskSharedByAllOnly: false,
+  neededTypeView: null,
+  neededItemsViewMode: null,
+  neededItemsFirFilter: null,
+  neededItemsGroupByItem: false,
+  neededItemsHideNonFirSpecialEquipment: false,
+  neededItemsKappaOnly: false,
+  neededItemsSortBy: 'priority',
+  neededItemsSortDirection: 'desc',
+  neededItemsHideOwned: false,
+  neededItemsCardStyle: 'expanded',
+  itemsHideNonFIR: false,
+  hideGlobalTasks: false,
+  hideNonKappaTasks: false,
+  hideCompletedMapObjectives: false,
+  hideoutPrimaryView: null,
+  hideoutCollapseCompleted: false,
+  hideoutSortReadyFirst: false,
+  hideoutRequireStationLevels: true,
+  hideoutRequireSkillLevels: true,
+  hideoutRequireTraderLoyalty: true,
+  tasksRequireTraderLevels: true,
+  localeOverride: null,
+  // External links
+  wikiUseAntifandom: false,
+  // Task filter settings (all shown by default)
+  showNonSpecialTasks: true,
+  showLightkeeperTasks: true,
+  onlyTasksWithRequiredKeys: false,
+  respectTaskFiltersForImpact: true,
+  // Task appearance settings
+  showRequiredLabels: true,
+  showExperienceRewards: true,
+  showNextQuests: true,
+  showPreviousQuests: true,
+  taskCollapseDefault: false,
+  hideTaskRewards: false,
+  enableManualTaskFail: false,
+  hideCompletedTaskObjectives: true,
+  showAllFilter: true,
+  showAvailableFilter: true,
+  showLockedFilter: true,
+  showCompletedFilter: true,
+  showFailedFilter: true,
+  // XP and Level settings
+  useAutomaticLevelCalculation: false,
+  dashboardNoticeDismissed: false,
+  // Map display settings
+  showMapExtracts: true,
+  mapShowKeyRooms: false,
+  mapMarkerColors: { ...MAP_MARKER_COLORS },
+  mapZoomSpeed: 1,
+  mapPanSpeed: 1,
+  mapZoneOpacity: 0.24,
+  mapTooltipDensity: 'default',
+  pinnedTaskIds: [],
+  mapHiddenTaskIds: [],
+  mapShowSelfObjectives: true,
+  mapShowPinnedObjectives: true,
+  mapShowTeamObjectives: true,
+  // Skills settings
+  skillSortMode: null,
+  traderSortMode: null,
+  traderSortDirection: null,
+  taskFilterPresets: [],
+  keybindOmnibar: DEFAULT_KEYBINDS.omnibar,
+  keybindUndo: DEFAULT_KEYBINDS.undo,
+  saving: {
+    streamerMode: false,
+    hideGlobalTasks: false,
+    hideNonKappaTasks: false,
+    hideCompletedMapObjectives: false,
+  },
+};
+// Per-toggle saving state (not persisted)
+const initialSavingState = {
+  streamerMode: false,
+  hideGlobalTasks: false,
+  hideNonKappaTasks: false,
+  hideCompletedMapObjectives: false,
+};
+export type PersistedPreferencesSnapshot = {
+  ownerUserId: string | null;
+  persistedAt?: number | null;
+  state: PersistedPreferencesState;
+  requiresStorageMigration?: boolean;
+};
+let pendingResetPreferencesSnapshot: PersistedPreferencesSnapshot | null = null;
+export const getPersistedPreferencesState = (
+  state: Partial<PreferencesState>
+): PersistedPreferencesState => {
+  const clonedState = clonePreferencesSnapshot(state) as PersistedPreferencesStateWithLegacy;
+  if ('saving' in clonedState) {
+    delete clonedState.saving;
+  }
+  return sanitizePersistedPreferencesState(clonedState);
+};
+const buildPreferencesState = (
+  persistedState: PersistedPreferencesStateWithLegacy = {}
+): PreferencesState => {
+  const state = clonePreferencesSnapshot(preferencesDefaultState);
+  Object.assign(state, sanitizePersistedPreferencesState(persistedState));
+  state.mapMarkerColors = normalizeMapMarkerColors(state.mapMarkerColors);
+  state.saving = { ...initialSavingState };
+  return state;
+};
+const replacePreferencesState = (state: PreferencesState, nextState: PreferencesState): void => {
+  for (const key of Object.keys(state) as (keyof PreferencesState)[]) {
+    Reflect.deleteProperty(state, key);
+  }
+  Object.assign(state, nextState);
+};
+export const readPersistedPreferencesSnapshot = (
+  userId: string | null = getCurrentSupabaseUserId()
+): PersistedPreferencesSnapshot | null => {
+  if (!import.meta.client) {
+    return null;
+  }
+  let rawPersistedState: string | null;
+  try {
+    rawPersistedState = localStorage.getItem(STORAGE_KEYS.preferences);
+  } catch (error) {
+    logger.warn('[PreferencesStore] Failed to access local preferences:', error);
+    return null;
+  }
+  if (!rawPersistedState) {
+    return null;
+  }
+  const wrapped = parseUserScopedStorage<Record<string, unknown>>(rawPersistedState);
+  if (wrapped) {
+    if (wrapped._userId !== userId || !isPersistedPreferencesStateRecord(wrapped.data)) {
+      return null;
+    }
+    const persistedStateWithLegacy = wrapped.data as PersistedPreferencesStateWithLegacy;
+    const requiresStorageMigration = requiresLegacyPreferencesMigration(persistedStateWithLegacy);
+    return {
+      ownerUserId: wrapped._userId,
+      persistedAt: wrapped._timestamp ?? null,
+      state: sanitizePersistedPreferencesState(persistedStateWithLegacy),
+      requiresStorageMigration: requiresStorageMigration || undefined,
+    };
+  }
+  const legacyState = parseLegacyPersistedPreferencesState(rawPersistedState);
+  if (!legacyState) {
+    return null;
+  }
+  return {
+    ownerUserId: userId,
+    persistedAt: null,
+    state: sanitizePersistedPreferencesState(legacyState),
+    requiresStorageMigration: true,
+  };
+};
+export const readPendingResetPreferencesSnapshot = (
+  userId: string | null
+): PersistedPreferencesSnapshot | null => {
+  if (pendingResetPreferencesSnapshot?.ownerUserId !== userId) {
+    return null;
+  }
+  return {
+    ownerUserId: pendingResetPreferencesSnapshot.ownerUserId,
+    persistedAt: pendingResetPreferencesSnapshot.persistedAt ?? null,
+    state: getPersistedPreferencesState(pendingResetPreferencesSnapshot.state),
+  };
+};
+export const clearPendingResetPreferencesSnapshot = (userId?: string | null): void => {
+  if (userId === undefined || pendingResetPreferencesSnapshot?.ownerUserId === userId) {
+    pendingResetPreferencesSnapshot = null;
+  }
+};
+registerDeviceDataRemovalCleanup(clearPendingResetPreferencesSnapshot);
+const serializePersistedPreferencesSnapshot = (
+  state: PersistedPreferencesState,
+  userId: string | null,
+  persistedAt?: number | null
+): string => {
+  return typeof persistedAt === 'number'
+    ? serializeUserScopedStorage(state, userId, persistedAt)
+    : serializeUserScopedStorage(state, userId);
+};
+export const usePreferencesStore = defineStore('preferences', {
+  state: (): PreferencesState => {
+    const persistedSnapshot = import.meta.client ? readPersistedPreferencesSnapshot() : null;
+    const persistedState: PersistedPreferencesState = persistedSnapshot
+      ? getPersistedPreferencesState(persistedSnapshot.state)
+      : {};
+    const state = buildPreferencesState(persistedState);
+    if (import.meta.client) {
+      try {
+        if (persistedSnapshot) {
+          let shouldPersistMigratedState = persistedSnapshot.requiresStorageMigration === true;
+          if ('mapMarkerColors' in persistedState) {
+            const migratedMapColors = migrateLegacyMapMarkerColors(persistedState.mapMarkerColors);
+            if (migratedMapColors) {
+              state.mapMarkerColors = migratedMapColors;
+              persistedState.mapMarkerColors = migratedMapColors;
+              shouldPersistMigratedState = true;
+            } else {
+              state.mapMarkerColors = normalizeMapMarkerColors(persistedState.mapMarkerColors);
+            }
+          }
+          if (shouldPersistMigratedState) {
+            localStorage.setItem(
+              STORAGE_KEYS.preferences,
+              serializePersistedPreferencesSnapshot(
+                persistedState,
+                persistedSnapshot.ownerUserId,
+                persistedSnapshot.persistedAt
+              )
+            );
+          }
+          if (
+            typeof persistedState.keybindOmnibar === 'string' &&
+            persistedState.keybindOmnibar === LEGACY_OMNIBAR_KEYBIND
+          ) {
+            state.keybindOmnibar = DEFAULT_KEYBINDS.omnibar;
+            persistedState.keybindOmnibar = DEFAULT_KEYBINDS.omnibar;
+            localStorage.setItem(
+              STORAGE_KEYS.preferences,
+              serializePersistedPreferencesSnapshot(
+                persistedState,
+                persistedSnapshot.ownerUserId,
+                persistedSnapshot.persistedAt
+              )
+            );
+          }
+        }
+      } catch (_error) {
+        logger.warn('[PreferencesStore] Failed to migrate local preferences:', _error);
+      }
+    }
+    // Always reset saving state on store creation
+    state.saving = { ...initialSavingState };
+    return state;
+  },
+  getters: {
+    getStreamerMode(state) {
+      return state.streamerMode ?? false;
+    },
+    teamIsHidden: (state) => {
+      return (teamId: string): boolean => {
+        // Always show self unless explicitly hidden (though self shouldn't be hidden usually)
+        // But definitely don't let "Hide All" hide self
+        if (teamId === 'self') {
+          return state.teamHide?.[teamId] || false;
+        }
+        const isHidden = state.taskTeamHideAll || state.teamHide?.[teamId] || false;
+        if (isHidden) {
+          logger.debug('[PreferencesStore] Teammate is hidden:', {
+            teamId,
+            taskTeamHideAll: state.taskTeamHideAll,
+            individuallyHidden: state.teamHide?.[teamId],
+          });
+        }
+        return isHidden;
+      };
+    },
+    taskTeamAllHidden: (state) => {
+      return state.taskTeamHideAll ?? false;
+    },
+    itemsTeamAllHidden: (state) => {
+      return state.itemsTeamHideAll ?? false;
+    },
+    itemsTeamNonFIRHidden: (state) => {
+      return state.itemsTeamHideAll || state.itemsTeamHideNonFIR || false;
+    },
+    itemsTeamHideoutHidden: (state) => {
+      return state.itemsTeamHideAll || state.itemsTeamHideHideout || false;
+    },
+    mapTeamAllHidden: (state) => {
+      return state.mapTeamHideAll ?? false;
+    },
+    // Add default values for views using nullish coalescing
+    getTaskPrimaryView: (state) => {
+      return normalizeOptionalTaskPrimaryView(state.taskPrimaryView) ?? 'all';
+    },
+    getTaskMapView: (state) => {
+      return normalizeOptionalStringSelection(state.taskMapView) ?? 'all';
+    },
+    getTaskTraderView: (state) => {
+      return normalizeOptionalStringSelection(state.taskTraderView) ?? 'all';
+    },
+    getTaskSecondaryView: (state) => {
+      return getTaskSecondaryViewForPrimaryView(
+        state.taskPrimaryView,
+        state.taskSecondaryView ?? 'available'
+      );
+    },
+    getTaskUserView: (state) => {
+      return normalizeOptionalStringSelection(state.taskUserView) ?? 'self';
+    },
+    getTaskSortMode: (state) => {
+      return normalizeSortMode(state.taskSortMode ?? 'impact');
+    },
+    getTaskSortDirection: (state) => {
+      const sortMode = state.taskSortMode ?? 'impact';
+      return (
+        normalizeOptionalTaskSortDirection(state.taskSortDirection) ??
+        (sortMode === 'impact' ? 'desc' : 'asc')
+      );
+    },
+    getTaskSharedByAllOnly: (state) => {
+      return state.taskSharedByAllOnly ?? false;
+    },
+    getNeededTypeView: (state) => {
+      return normalizeNeededItemsFilterType(state.neededTypeView);
+    },
+    getNeededItemsViewMode: (state) => {
+      return normalizeNeededItemsViewMode(state.neededItemsViewMode);
+    },
+    getNeededItemsFirFilter: (state) => {
+      return normalizeNeededItemsFirFilter(state.neededItemsFirFilter);
+    },
+    getNeededItemsGroupByItem: (state) => {
+      return state.neededItemsGroupByItem ?? false;
+    },
+    getNeededItemsHideNonFirSpecialEquipment: (state) => {
+      return state.neededItemsHideNonFirSpecialEquipment ?? false;
+    },
+    getNeededItemsKappaOnly: (state) => {
+      return state.neededItemsKappaOnly ?? false;
+    },
+    getNeededItemsSortBy: (state) => {
+      return normalizeNeededItemsSortBy(state.neededItemsSortBy);
+    },
+    getNeededItemsSortDirection: (state) => {
+      return normalizeNeededItemsSortDirection(state.neededItemsSortDirection);
+    },
+    getNeededItemsHideOwned: (state) => {
+      return state.neededItemsHideOwned ?? false;
+    },
+    getNeededItemsCardStyle: (state) => {
+      return normalizeNeededItemsCardStyle(state.neededItemsCardStyle);
+    },
+    getHideGlobalTasks: (state) => {
+      return state.hideGlobalTasks ?? false;
+    },
+    getHideNonKappaTasks: (state) => {
+      return state.hideNonKappaTasks ?? false;
+    },
+    getHideCompletedMapObjectives: (state) => {
+      return state.hideCompletedMapObjectives ?? false;
+    },
+    getHideoutPrimaryView: (state) => {
+      return state.hideoutPrimaryView ?? 'available';
+    },
+    getHideoutSortReadyFirst: (state) => {
+      return state.hideoutSortReadyFirst ?? false;
+    },
+    getHideoutRequireStationLevels: (state) => {
+      return state.hideoutRequireStationLevels ?? true;
+    },
+    getHideoutRequireSkillLevels: (state) => {
+      return state.hideoutRequireSkillLevels ?? true;
+    },
+    getHideoutRequireTraderLoyalty: (state) => {
+      return state.hideoutRequireTraderLoyalty ?? true;
+    },
+    getTasksRequireTraderLevels: (state) => {
+      return state.tasksRequireTraderLevels ?? true;
+    },
+    getMapZoomSpeed: (state) => {
+      return state.mapZoomSpeed ?? 1;
+    },
+    getMapPanSpeed: (state) => {
+      return state.mapPanSpeed ?? 1;
+    },
+    getMapZoneOpacity: (state) => {
+      return state.mapZoneOpacity ?? 0.24;
+    },
+    getMapTooltipDensity: (state) => {
+      return state.mapTooltipDensity ?? 'default';
+    },
+    getLocaleOverride: (state) => {
+      return state.localeOverride ?? null;
+    },
+    /** Whether wiki links should open on the antifandom.com mirror. */
+    getWikiUseAntifandom: (state) => {
+      return state.wikiUseAntifandom ?? false;
+    },
+    // Task filter getters
+    getShowNonSpecialTasks: (state) => {
+      return state.showNonSpecialTasks ?? true;
+    },
+    getShowLightkeeperTasks: (state) => {
+      return state.showLightkeeperTasks ?? true;
+    },
+    getOnlyTasksWithRequiredKeys: (state) => {
+      return state.onlyTasksWithRequiredKeys ?? false;
+    },
+    getRespectTaskFiltersForImpact: (state) => {
+      return state.respectTaskFiltersForImpact ?? true;
+    },
+    // Task appearance getters
+    getShowRequiredLabels: (state) => {
+      return state.showRequiredLabels ?? true;
+    },
+    getShowExperienceRewards: (state) => {
+      return state.showExperienceRewards ?? true;
+    },
+    getShowNextQuests: (state) => {
+      return state.showNextQuests ?? true;
+    },
+    getShowPreviousQuests: (state) => {
+      return state.showPreviousQuests ?? true;
+    },
+    getTaskCollapseDefault: (state) => {
+      return state.taskCollapseDefault ?? false;
+    },
+    getHideTaskRewards: (state) => {
+      return state.hideTaskRewards ?? false;
+    },
+    getEnableManualTaskFail: (state) => {
+      return state.enableManualTaskFail ?? false;
+    },
+    getHideCompletedTaskObjectives: (state) => {
+      return state.hideCompletedTaskObjectives ?? true;
+    },
+    getShowAllFilter: (state) => {
+      return state.showAllFilter ?? true;
+    },
+    getShowAvailableFilter: (state) => {
+      return state.showAvailableFilter ?? true;
+    },
+    getShowLockedFilter: (state) => {
+      return state.showLockedFilter ?? true;
+    },
+    getShowCompletedFilter: (state) => {
+      return state.showCompletedFilter ?? true;
+    },
+    getShowFailedFilter: (state) => {
+      return state.showFailedFilter ?? true;
+    },
+    getUseAutomaticLevelCalculation: (state) => {
+      return state.useAutomaticLevelCalculation ?? false;
+    },
+    // Map display getters
+    getShowMapExtracts: (state) => {
+      return state.showMapExtracts ?? true;
+    },
+    getMapMarkerColors: (state) => {
+      return normalizeMapMarkerColors(state.mapMarkerColors);
+    },
+    getPinnedTaskIds: (state) => {
+      return state.pinnedTaskIds ?? [];
+    },
+    getMapHiddenTaskIds: (state) => {
+      return state.mapHiddenTaskIds ?? [];
+    },
+    getMapShowSelfObjectives: (state) => {
+      return state.mapShowSelfObjectives ?? true;
+    },
+    getMapShowKeyRooms: (state) => {
+      return state.mapShowKeyRooms ?? false;
+    },
+    getMapShowPinnedObjectives: (state) => {
+      return state.mapShowPinnedObjectives ?? true;
+    },
+    getMapShowTeamObjectives: (state) => {
+      return state.mapShowTeamObjectives ?? true;
+    },
+    // Skills getters
+    getSkillSortMode: (state) => {
+      return state.skillSortMode ?? 'priority';
+    },
+    getTraderSortMode: (state): TraderSortMode => {
+      return state.traderSortMode && TRADER_SORT_MODES.includes(state.traderSortMode)
+        ? state.traderSortMode
+        : 'default';
+    },
+    getTraderSortDirection: (state): TraderSortDirection => {
+      return state.traderSortDirection && TRADER_SORT_DIRECTIONS.includes(state.traderSortDirection)
+        ? state.traderSortDirection
+        : 'desc';
+    },
+    getKeybindOmnibar: (state) => {
+      return state.keybindOmnibar ?? DEFAULT_KEYBINDS.omnibar;
+    },
+    getKeybindUndo: (state) => {
+      return state.keybindUndo ?? DEFAULT_KEYBINDS.undo;
+    },
+  },
+  actions: {
+    resetToDefaults() {
+      this.$patch((state) => {
+        replacePreferencesState(state, buildPreferencesState());
+      });
+    },
+    replacePersistedState(state: PersistedPreferencesState) {
+      this.$patch((currentState) => {
+        replacePreferencesState(currentState, buildPreferencesState(state));
+      });
+    },
+    setStreamerMode(mode: boolean) {
+      this.streamerMode = mode;
+    },
+    setDashboardNoticeDismissed(dismissed: boolean) {
+      this.dashboardNoticeDismissed = dismissed;
+    },
+    setProfileSharePvpPublic(value: boolean) {
+      this.profileSharePvpPublic = value;
+    },
+    setProfileSharePvePublic(value: boolean) {
+      this.profileSharePvePublic = value;
+    },
+    setKeybindOmnibar(keybind: string) {
+      this.keybindOmnibar = sanitizeKeybind(keybind, DEFAULT_KEYBINDS.omnibar);
+    },
+    setKeybindUndo(keybind: string) {
+      this.keybindUndo = sanitizeKeybind(keybind, DEFAULT_KEYBINDS.undo);
+    },
+    toggleHidden(teamId: string) {
+      if (!this.teamHide) {
+        this.teamHide = {};
+      }
+      this.teamHide[teamId] = !this.teamHide[teamId];
+    },
+    setQuestTeamHideAll(hide: boolean) {
+      this.taskTeamHideAll = hide;
+    },
+    setItemsTeamHideAll(hide: boolean) {
+      this.itemsTeamHideAll = hide;
+    },
+    setItemsTeamHideNonFIR(hide: boolean) {
+      this.itemsTeamHideNonFIR = hide;
+    },
+    setItemsTeamHideHideout(hide: boolean) {
+      this.itemsTeamHideHideout = hide;
+    },
+    setMapTeamHideAll(hide: boolean) {
+      this.mapTeamHideAll = hide;
+    },
+    setTaskPrimaryView(view: string) {
+      this.taskPrimaryView = isValidPrimaryView(view) ? view : 'all';
+    },
+    setMapZoomSpeed(speed: number) {
+      if (!Number.isFinite(speed)) {
+        this.mapZoomSpeed = 1;
+        return;
+      }
+      const clamped = Math.min(3, Math.max(0.5, speed));
+      this.mapZoomSpeed = clamped;
+    },
+    setMapPanSpeed(speed: number) {
+      if (!Number.isFinite(speed)) {
+        this.mapPanSpeed = 1;
+        return;
+      }
+      const clamped = Math.min(3, Math.max(0.5, speed));
+      this.mapPanSpeed = clamped;
+    },
+    setMapZoneOpacity(opacity: number) {
+      if (!Number.isFinite(opacity)) {
+        this.mapZoneOpacity = 0.24;
+        return;
+      }
+      const clamped = Math.min(0.5, Math.max(0.05, opacity));
+      this.mapZoneOpacity = clamped;
+    },
+    // Called as `preferences.setMapTooltipDensity(...)` inside
+    // useLeafletMapControls, whose `preferences` parameter is a structural
+    // interface rather than the store type. The action is reached through that
+    // interface, so no reference to this store member exists to detect, and the
+    // composable boundary is deliberate: it keeps the map controls unit-testable
+    // with a plain object instead of a live Pinia store.
+    // fallow-ignore-next-line unused-store-member -- not actionable: invoked through a structural interface parameter, not the store
+    setMapTooltipDensity(density: 'default' | 'compact') {
+      this.mapTooltipDensity = density;
+    },
+    setTaskMapView(view: string) {
+      this.taskMapView = normalizeOptionalStringSelection(view) ?? 'all';
+    },
+    setTaskTraderView(view: string) {
+      this.taskTraderView = normalizeOptionalStringSelection(view) ?? 'all';
+    },
+    setTaskSecondaryView(view: string) {
+      this.taskSecondaryView = normalizeSecondaryView(view);
+    },
+    setTaskUserView(view: string) {
+      this.taskUserView = normalizeOptionalStringSelection(view) ?? 'self';
+    },
+    setTaskSortMode(mode: TaskSortMode) {
+      this.taskSortMode = normalizeSortMode(mode);
+    },
+    setTaskSortDirection(direction: TaskSortDirection) {
+      this.taskSortDirection =
+        normalizeOptionalTaskSortDirection(direction) ??
+        (this.getTaskSortMode === 'impact' ? 'desc' : 'asc');
+    },
+    setTaskSharedByAllOnly(enabled: boolean) {
+      this.taskSharedByAllOnly = enabled;
+    },
+    setNeededTypeView(view: NeededItemsFilterType) {
+      this.neededTypeView = normalizeNeededItemsFilterType(view);
+    },
+    setNeededItemsViewMode(mode: 'list' | 'grid') {
+      this.neededItemsViewMode = normalizeNeededItemsViewMode(mode);
+    },
+    setNeededItemsFirFilter(filter: NeededItemsFirFilter) {
+      this.neededItemsFirFilter = normalizeNeededItemsFirFilter(filter);
+    },
+    setNeededItemsGroupByItem(groupBy: boolean) {
+      this.neededItemsGroupByItem = groupBy;
+    },
+    setNeededItemsHideNonFirSpecialEquipment(hide: boolean) {
+      this.neededItemsHideNonFirSpecialEquipment = hide;
+    },
+    setNeededItemsKappaOnly(kappaOnly: boolean) {
+      this.neededItemsKappaOnly = kappaOnly;
+    },
+    setNeededItemsSortBy(sortBy: 'priority' | 'name' | 'category' | 'count') {
+      this.neededItemsSortBy = normalizeNeededItemsSortBy(sortBy);
+    },
+    setNeededItemsSortDirection(direction: 'asc' | 'desc') {
+      this.neededItemsSortDirection = normalizeNeededItemsSortDirection(direction);
+    },
+    setNeededItemsHideOwned(hide: boolean) {
+      this.neededItemsHideOwned = hide;
+    },
+    setNeededItemsCardStyle(style: 'compact' | 'expanded') {
+      this.neededItemsCardStyle = normalizeNeededItemsCardStyle(style);
+    },
+    setHideGlobalTasks(hide: boolean) {
+      this.hideGlobalTasks = hide;
+      // Persistence handled automatically by plugin
+      this.saving = this.saving ?? { ...initialSavingState };
+      this.saving.hideGlobalTasks = true;
+    },
+    setHideNonKappaTasks(hide: boolean) {
+      this.hideNonKappaTasks = hide;
+      // Persistence handled automatically by plugin
+      this.saving = this.saving ?? { ...initialSavingState };
+      this.saving.hideNonKappaTasks = true;
+    },
+    setHideCompletedMapObjectives(hide: boolean) {
+      this.hideCompletedMapObjectives = hide;
+      // Persistence handled automatically by plugin
+      this.saving = this.saving ?? { ...initialSavingState };
+      this.saving.hideCompletedMapObjectives = true;
+    },
+    setHideoutPrimaryView(view: string) {
+      this.hideoutPrimaryView = view;
+    },
+    setHideoutRequireStationLevels(enabled: boolean) {
+      this.hideoutRequireStationLevels = enabled;
+    },
+    setHideoutRequireSkillLevels(enabled: boolean) {
+      this.hideoutRequireSkillLevels = enabled;
+    },
+    setHideoutRequireTraderLoyalty(enabled: boolean) {
+      this.hideoutRequireTraderLoyalty = enabled;
+    },
+    setTasksRequireTraderLevels(enabled: boolean) {
+      this.tasksRequireTraderLevels = enabled;
+    },
+    setLocaleOverride(locale: string | null) {
+      this.localeOverride = locale;
+    },
+    /** Toggle whether wiki links open on the antifandom.com mirror. */
+    setWikiUseAntifandom(enabled: boolean) {
+      this.wikiUseAntifandom = enabled;
+    },
+    // Task filter actions
+    setShowNonSpecialTasks(show: boolean) {
+      this.showNonSpecialTasks = show;
+    },
+    setShowLightkeeperTasks(show: boolean) {
+      this.showLightkeeperTasks = show;
+    },
+    setOnlyTasksWithRequiredKeys(onlyWithRequiredKeys: boolean) {
+      this.onlyTasksWithRequiredKeys = onlyWithRequiredKeys;
+    },
+    setRespectTaskFiltersForImpact(enabled: boolean) {
+      this.respectTaskFiltersForImpact = enabled;
+    },
+    // Task appearance actions
+    setShowRequiredLabels(show: boolean) {
+      this.showRequiredLabels = show;
+    },
+    setShowExperienceRewards(show: boolean) {
+      this.showExperienceRewards = show;
+    },
+    setShowNextQuests(show: boolean) {
+      this.showNextQuests = show;
+    },
+    setShowPreviousQuests(show: boolean) {
+      this.showPreviousQuests = show;
+    },
+    setTaskCollapseDefault(collapse: boolean) {
+      this.taskCollapseDefault = collapse;
+    },
+    setHideTaskRewards(hide: boolean) {
+      this.hideTaskRewards = hide;
+    },
+    setEnableManualTaskFail(enable: boolean) {
+      this.enableManualTaskFail = enable;
+    },
+    setHideCompletedTaskObjectives(hide: boolean) {
+      this.hideCompletedTaskObjectives = hide;
+    },
+    setShowAllFilter(show: boolean) {
+      this.showAllFilter = show;
+    },
+    setShowAvailableFilter(show: boolean) {
+      this.showAvailableFilter = show;
+    },
+    setShowLockedFilter(show: boolean) {
+      this.showLockedFilter = show;
+    },
+    setShowCompletedFilter(show: boolean) {
+      this.showCompletedFilter = show;
+    },
+    setShowFailedFilter(show: boolean) {
+      this.showFailedFilter = show;
+    },
+    setMapShowSelfObjectives(show: boolean) {
+      this.mapShowSelfObjectives = show;
+    },
+    setMapShowKeyRooms(show: boolean) {
+      this.mapShowKeyRooms = show;
+    },
+    setMapShowPinnedObjectives(show: boolean) {
+      this.mapShowPinnedObjectives = show;
+    },
+    setMapShowTeamObjectives(show: boolean) {
+      this.mapShowTeamObjectives = show;
+    },
+    setUseAutomaticLevelCalculation(use: boolean) {
+      this.useAutomaticLevelCalculation = use;
+    },
+    // Map display actions
+    setShowMapExtracts(show: boolean) {
+      this.showMapExtracts = show;
+    },
+    setMapMarkerColor(key: MapMarkerColorKey, color: string) {
+      if (typeof color !== 'string' || color.trim().length === 0) return;
+      this.mapMarkerColors = {
+        ...this.getMapMarkerColors,
+        [key]: color.trim(),
+      };
+    },
+    resetMapMarkerColors() {
+      this.mapMarkerColors = { ...MAP_MARKER_COLORS };
+    },
+    togglePinnedTask(taskId: string) {
+      const current = this.pinnedTaskIds ?? [];
+      const index = current.indexOf(taskId);
+      if (index === -1) {
+        this.pinnedTaskIds = [...current, taskId];
+      } else {
+        this.pinnedTaskIds = current.filter((id) => id !== taskId);
+      }
+    },
+    toggleMapHiddenTask(taskId: string) {
+      const hidden = this.mapHiddenTaskIds ?? [];
+      this.mapHiddenTaskIds = hidden.includes(taskId)
+        ? hidden.filter((id) => id !== taskId)
+        : [...hidden, taskId];
+    },
+    /** Hides every other quest on the current map and shows this one. */
+    showOnlyMapTask(taskId: string, mapTaskIds: readonly string[]) {
+      const hidden = new Set([...(this.mapHiddenTaskIds ?? []), ...mapTaskIds]);
+      hidden.delete(taskId);
+      this.mapHiddenTaskIds = [...hidden];
+    },
+    /** Shows the given quests again, or every hidden quest when omitted. */
+    clearMapTaskVisibility(taskIds?: readonly string[]) {
+      if (!taskIds) {
+        this.mapHiddenTaskIds = [];
+        return;
+      }
+      const clearSet = new Set(taskIds);
+      this.mapHiddenTaskIds = (this.mapHiddenTaskIds ?? []).filter((id) => !clearSet.has(id));
+    },
+    // Skills actions
+    setSkillSortMode(mode: SkillSortMode) {
+      this.skillSortMode = mode;
+    },
+    setTraderSortMode(mode: TraderSortMode) {
+      this.traderSortMode = mode;
+    },
+    setTraderSortDirection(direction: TraderSortDirection) {
+      this.traderSortDirection = direction;
+    },
+  },
+  // Enable automatic localStorage persistence
+  persist: {
+    key: STORAGE_KEYS.preferences, // LocalStorage key for user preference data
+    storage: typeof window !== 'undefined' ? localStorage : undefined,
+    // Use serializer instead of paths for selective persistence
+    serializer: {
+      serialize: (value) => serializeUserScopedStorage(value),
+      deserialize: (value) => {
+        const currentUserId = getCurrentSupabaseUserId();
+        const wrapped = parseUserScopedStorage<Record<string, unknown>>(value);
+        if (wrapped) {
+          if (
+            wrapped._userId !== currentUserId ||
+            !isPersistedPreferencesStateRecord(wrapped.data)
+          ) {
+            return {};
+          }
+          return wrapped.data;
+        }
+        const legacyState = parseLegacyPersistedPreferencesState(value);
+        if (!legacyState) {
+          return {};
+        }
+        return legacyState;
+      },
+    },
+    // Pick specific properties to persist (excluding transient state)
+    pick: [
+      'streamerMode',
+      'profileSharePvpPublic',
+      'profileSharePvePublic',
+      'teamHide',
+      'taskTeamHideAll',
+      'itemsTeamHideAll',
+      'itemsTeamHideNonFIR',
+      'itemsTeamHideHideout',
+      'mapTeamHideAll',
+      'taskPrimaryView',
+      'taskMapView',
+      'taskTraderView',
+      'taskSecondaryView',
+      'taskUserView',
+      'taskSortMode',
+      'taskSortDirection',
+      'taskSharedByAllOnly',
+      'neededTypeView',
+      'neededItemsViewMode',
+      'neededItemsFirFilter',
+      'neededItemsGroupByItem',
+      'neededItemsHideNonFirSpecialEquipment',
+      'neededItemsKappaOnly',
+      'neededItemsSortBy',
+      'neededItemsSortDirection',
+      'neededItemsHideOwned',
+      'neededItemsCardStyle',
+      'itemsHideNonFIR',
+      'hideGlobalTasks',
+      'hideNonKappaTasks',
+      'hideCompletedMapObjectives',
+      'hideoutPrimaryView',
+      'localeOverride',
+      'wikiUseAntifandom',
+      // Task filter settings
+      'showNonSpecialTasks',
+      'showLightkeeperTasks',
+      'onlyTasksWithRequiredKeys',
+      'respectTaskFiltersForImpact',
+      // Task appearance settings
+      'showRequiredLabels',
+      'showExperienceRewards',
+      'showNextQuests',
+      'showPreviousQuests',
+      'taskCollapseDefault',
+      'hideTaskRewards',
+      'enableManualTaskFail',
+      'hideCompletedTaskObjectives',
+      'showAllFilter',
+      'showAvailableFilter',
+      'showLockedFilter',
+      'showCompletedFilter',
+      'showFailedFilter',
+      'mapShowSelfObjectives',
+      'mapShowPinnedObjectives',
+      'mapShowTeamObjectives',
+      'useAutomaticLevelCalculation',
+      'dashboardNoticeDismissed',
+      'hideoutCollapseCompleted',
+      'hideoutSortReadyFirst',
+      'hideoutRequireStationLevels',
+      'hideoutRequireSkillLevels',
+      'hideoutRequireTraderLoyalty',
+      'tasksRequireTraderLevels',
+      'showMapExtracts',
+      'mapShowKeyRooms',
+      'mapMarkerColors',
+      'mapZoomSpeed',
+      'mapPanSpeed',
+      'mapZoneOpacity',
+      'pinnedTaskIds',
+      'mapHiddenTaskIds',
+      'taskFilterPresets',
+      'skillSortMode',
+      'traderSortMode',
+      'traderSortDirection',
+      'keybindOmnibar',
+      'keybindUndo',
+    ],
+  },
+});
+const getPreservedPreferencesStorageValue = (previousUserId: string | null): string | null => {
+  if (!import.meta.client || !previousUserId || getCurrentSupabaseUserId() !== null) {
+    return null;
+  }
+  let rawPersistedState: string | null;
+  try {
+    rawPersistedState = localStorage.getItem(STORAGE_KEYS.preferences);
+  } catch (error) {
+    logger.warn('[PreferencesStore] Failed to access local preferences:', error);
+    return null;
+  }
+  if (!rawPersistedState) {
+    return null;
+  }
+  const wrapped = parseUserScopedStorage<Record<string, unknown>>(rawPersistedState);
+  if (wrapped?._userId !== previousUserId) {
+    return null;
+  }
+  if (!isPersistedPreferencesStateRecord(wrapped.data)) {
+    return rawPersistedState;
+  }
+  return serializeUserScopedStorage(
+    sanitizePersistedPreferencesState(wrapped.data as PersistedPreferencesStateWithLegacy),
+    wrapped._userId,
+    wrapped._timestamp
+  );
+};
+export const resetPreferencesStoreForSessionTransition = (
+  previousUserId: string | null = null
+): void => {
+  const preferencesStore = usePreferencesStore();
+  const preservedState = getPreservedPreferencesStorageValue(previousUserId);
+  pendingResetPreferencesSnapshot =
+    previousUserId && !isDeviceDataRemovalPending(previousUserId)
+      ? readPersistedPreferencesSnapshot(previousUserId)
+      : null;
+  preferencesStore.resetToDefaults();
+  if (!import.meta.client) {
+    return;
+  }
+  // An explicit device-data removal keeps no preferences copy for the previous owner.
+  if (preservedState && !isDeviceDataRemovalPending(previousUserId)) {
+    localStorage.setItem(STORAGE_KEYS.preferences, preservedState);
+    return;
+  }
+  clearPreferencesStorage();
+};
+export type PreferencesStore = ReturnType<typeof usePreferencesStore>;
+export type { TaskSortDirection, TaskSortMode } from '@/types/taskSort';

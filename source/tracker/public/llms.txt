@@ -1,0 +1,55 @@
+# TarkovTracker
+
+> Track Escape from Tarkov tasks, hideout upgrades, Kappa requirements, storyline quests, and needed items across PvP, PvE, and Seasonal modes.
+
+TarkovTracker is a browser application with optional account sync and team collaboration. Private account, settings, authentication, team, and profile pages are not indexable.
+
+UI locales: `cs`, `de`, `en`, `es`, `fr`, `it`, `ja`, `ko`, `pl`, `pt`, `ru`, `uk`, `zh`.
+
+Authentication-required areas include `/account`, `/profile`, `/team`, `/settings`, and authenticated team APIs.
+
+## Public pages
+
+- [Escape from Tarkov Progress Tracker](https://tarkovtracker.org/): Track Escape from Tarkov tasks, hideout upgrades, Kappa requirements, storyline quests, and needed items across PvP, PvE, and Seasonal modes.
+- [Tarkov Quest Tracker · TarkovTracker.org](https://tarkovtracker.org/tasks): Track Tarkov quests, objectives, rewards, and prerequisites across PvP, PvE, and Seasonal.
+- [Escape from Tarkov Hideout Tracker](https://tarkovtracker.org/hideout): Plan hideout upgrades and track module requirements and construction progress.
+- [Escape from Tarkov Needed Items](https://tarkovtracker.org/needed-items): Find the items you still need for quests and hideout upgrades in one list.
+- [Kappa & Lightkeeper Tracker · TarkovTracker.org](https://tarkovtracker.org/kappa): Track Kappa and Lightkeeper quest requirements and your remaining progression.
+- [Escape from Tarkov Storyline Tracker](https://tarkovtracker.org/storyline): Follow Escape from Tarkov storyline quests and track your progression.
+- [Escape from Tarkov Tools and Guides](https://tarkovtracker.org/resources): Explore community tools and guides for TarkovTracker, TarkovMonitor, RatScanner, and Tarkov.dev.
+- [About TarkovTracker](https://tarkovtracker.org/about): Learn about TarkovTracker and its community project for tracking Escape from Tarkov progression.
+- [TarkovTracker Credits](https://tarkovtracker.org/credits): Meet the contributors and community projects behind TarkovTracker.
+- [TarkovTracker Changelog](https://tarkovtracker.org/changelog): Read the latest TarkovTracker releases, improvements, and fixes.
+- [Support TarkovTracker.org](https://tarkovtracker.org/supporter): Help fund hosting and development. Explore supporter tiers and ways to contribute.
+- [TarkovTracker Privacy Policy](https://tarkovtracker.org/privacy): Read how TarkovTracker handles account information and progression data.
+- [TarkovTracker Terms of Service](https://tarkovtracker.org/terms-of-service): Read the terms governing your use of TarkovTracker.
+- [TarkovTracker.org and TarkovTracker.io Guide](https://tarkovtracker.org/resources/tarkovtracker_org_vs_io): Understand the differences between TarkovTracker.org and TarkovTracker.io and how to get started.
+- [TarkovMonitor Setup Guide](https://tarkovtracker.org/resources/tarkovmonitor): Install TarkovMonitor and connect it to TarkovTracker to synchronize raid and quest progress.
+- [RatScanner Setup Guide](https://tarkovtracker.org/resources/ratscanner): Install RatScanner and connect item scanning with your TarkovTracker progression.
+- [Tarkov.dev Data Guide](https://tarkovtracker.org/resources/tarkovdev): Learn how Tarkov.dev JSON data feeds support Escape from Tarkov tools and progression tracking.
+- [Cultist Circle Calculator Guide](https://tarkovtracker.org/resources/cultistcircle): Learn how to use the Cultist Circle calculator to explore sacrifice recipes and rewards.
+
+## Public JSON Feeds
+
+- [Contributors](https://tarkovtracker.org/api/contributors): Contributor listing.
+- [Changelog API](https://tarkovtracker.org/api/changelog): Changelog data feed. Accepts `limit` (1-50, default 10) and `releases` (1-10, default 3).
+
+## Markdown Docs
+
+- [Project README](https://raw.githubusercontent.com/tarkovtracker-org/TarkovTracker/main/README.md): High-level project summary and setup.
+- [Architecture](https://raw.githubusercontent.com/tarkovtracker-org/TarkovTracker/main/docs/architecture.md): System architecture and feature design.
+- [API Documentation](https://raw.githubusercontent.com/tarkovtracker-org/TarkovTracker/main/docs/api.md): Route-level API behavior, params, and auth notes.
+- [Runbook](https://raw.githubusercontent.com/tarkovtracker-org/TarkovTracker/main/docs/runbook.md): Operational and incident procedures.
+- [Documentation Index](https://raw.githubusercontent.com/tarkovtracker-org/TarkovTracker/main/docs/README.md): Navigation for technical docs.
+
+## Data and integration
+
+- [Progression API](https://api.tarkovtracker.org/): Supported integration API for progression.
+
+Game data comes from the public Tarkov.dev JSON feeds. Internal `/api/tarkov/*` routes are not a supported integration API; use `json.tarkov.dev` for game-data integrations. The supported progression API is [api.tarkovtracker.org](https://api.tarkovtracker.org/).
+
+Crawl directives and canonical discovery are available in [robots.txt](https://tarkovtracker.org/robots.txt) and [sitemap.xml](https://tarkovtracker.org/sitemap.xml).
+
+## Optional
+
+- [Source repository](https://github.com/tarkovtracker-org/TarkovTracker): Source code and contribution workflow.

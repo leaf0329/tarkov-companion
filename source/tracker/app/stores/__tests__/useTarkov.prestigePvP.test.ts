@@ -1,0 +1,524 @@
+// @vitest-environment happy-dom
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { createPinia, setActivePinia } from 'pinia';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+  clearAcknowledgedModes,
+  noteRemoteProgressApplied,
+  recordAcknowledgedModes,
+} from '@/stores/tarkov/acknowledgedModes';
+import { syncProgressState } from '@/stores/tarkov/progressPersistence';
+import { useTarkovStore } from '@/stores/useTarkov';
+const { rpc, supabaseContext } = vi.hoisted(() => {
+  const rpc = vi.fn(
+    async (
+      _name: string,
+      _args: Record<string, unknown>
+    ): Promise<{ data: null; error: { message: string } | null }> => ({
+      data: null,
+      error: null,
+    })
+  );
+  const supabaseContext = {
+    user: {
+      id: 'user-1',
+      loggedIn: true,
+    },
+    client: {
+      rpc,
+    },
+  };
+  return { rpc, supabaseContext };
+});
+mockNuxtImport('useNuxtApp', () => () => ({
+  $supabase: supabaseContext,
+}));
+vi.mock('@/utils/logger', () => ({
+  logger: {
+    debug: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
+  },
+}));
+describe('useTarkov prestigePvP', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+    clearAcknowledgedModes();
+    supabaseContext.user.id = 'user-1';
+    supabaseContext.user.loggedIn = true;
+    rpc.mockResolvedValue({ data: null, error: null });
+  });
+  it('archives and resets progress through one rpc call', async () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.currentGameMode = 'pvp';
+      state.tarkovUid = 12345;
+      state.gameEdition = 3;
+      state.pvp = {
+        ...state.pvp,
+        displayName: 'Raider',
+        level: 42,
+        pmcFaction: 'BEAR',
+        prestigeLevel: 2,
+        progressEpoch: 7,
+        taskCompletions: {
+          'task-1': {
+            complete: true,
+            failed: false,
+            timestamp: 1000,
+          },
+        },
+      };
+      state.pve = {
+        ...state.pve,
+        level: 9,
+        progressEpoch: 4,
+      };
+    });
+    await store.prestigePvP();
+    expect(rpc).toHaveBeenCalledWith(
+      'archive_prestige_run_and_reset_progress',
+      expect.objectContaining({
+        p_archived_progress: expect.objectContaining({
+          level: 42,
+          pmcFaction: 'BEAR',
+          prestigeLevel: 2,
+          progressEpoch: 7,
+        }),
+        p_current_game_mode: 'pvp',
+        p_game_edition: 3,
+        p_mode: 'pvp',
+        p_prestige_from: 2,
+        p_prestige_to: 3,
+        p_pve_data: expect.objectContaining({
+          level: 9,
+          progressEpoch: 4,
+        }),
+        p_pvp_data: expect.objectContaining({
+          displayName: 'Raider',
+          level: 1,
+          pmcFaction: 'BEAR',
+          prestigeLevel: 3,
+          progressEpoch: 8,
+        }),
+        p_tarkov_uid: 12345,
+      })
+    );
+    expect(store.pvp.level).toBe(1);
+    expect(store.pvp.prestigeLevel).toBe(3);
+    expect(store.pvp.progressEpoch).toBe(8);
+    expect(store.pve.level).toBe(9);
+  });
+  it('does not patch local progress when the rpc fails', async () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.currentGameMode = 'pvp';
+      state.pvp.level = 20;
+      state.pvp.prestigeLevel = 1;
+      state.pvp.progressEpoch = 4;
+    });
+    rpc.mockResolvedValueOnce({
+      data: null,
+      error: { message: 'rpc failed' },
+    });
+    await expect(store.prestigePvP()).rejects.toThrow(
+      'Failed to update prestige progress: rpc failed'
+    );
+    expect(store.pvp.level).toBe(20);
+    expect(store.pvp.prestigeLevel).toBe(1);
+    expect(store.pvp.progressEpoch).toBe(4);
+  });
+  it('archives PvP progress even when the active tab is set to PvE', async () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.currentGameMode = 'pve';
+      state.pvp.level = 18;
+      state.pvp.prestigeLevel = 1;
+      state.pvp.progressEpoch = 3;
+      state.pve.level = 27;
+      state.pve.progressEpoch = 8;
+    });
+    await store.prestigePvP();
+    expect(rpc).toHaveBeenCalledWith(
+      'archive_prestige_run_and_reset_progress',
+      expect.objectContaining({
+        p_current_game_mode: 'pve',
+        p_mode: 'pvp',
+        p_prestige_from: 1,
+        p_prestige_to: 2,
+      })
+    );
+    expect(store.pvp.level).toBe(1);
+    expect(store.pvp.prestigeLevel).toBe(2);
+    expect(store.pve.level).toBe(27);
+    expect(store.pve.progressEpoch).toBe(8);
+  });
+});
+describe('useTarkov PvE prestige', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+    clearAcknowledgedModes();
+    supabaseContext.user.id = 'user-1';
+    supabaseContext.user.loggedIn = true;
+    rpc.mockResolvedValue({ data: null, error: null });
+  });
+  it('archives and resets only PvE progress', async () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.currentGameMode = 'pve';
+      state.pvp = { ...state.pvp, level: 30, prestigeLevel: 2, progressEpoch: 5 };
+      state.pve = {
+        ...state.pve,
+        displayName: 'Offline',
+        level: 44,
+        pmcFaction: 'USEC',
+        prestigeLevel: 1,
+        progressEpoch: 3,
+      };
+    });
+    await store.prestigeMode('pve');
+    expect(rpc).toHaveBeenCalledWith(
+      'archive_prestige_run_and_reset_progress',
+      expect.objectContaining({
+        p_archived_progress: expect.objectContaining({ level: 44, prestigeLevel: 1 }),
+        p_mode: 'pve',
+        p_prestige_from: 1,
+        p_prestige_to: 2,
+        p_pve_data: expect.objectContaining({
+          displayName: 'Offline',
+          level: 1,
+          prestigeLevel: 2,
+          progressEpoch: 4,
+        }),
+        p_pvp_data: expect.objectContaining({ level: 30, prestigeLevel: 2, progressEpoch: 5 }),
+      })
+    );
+    expect(store.pve.level).toBe(1);
+    expect(store.pve.prestigeLevel).toBe(2);
+    expect(store.pvp.level).toBe(30);
+    expect(store.pvp.prestigeLevel).toBe(2);
+  });
+  it('refuses to archive past the sixth PvE prestige', async () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.pve.prestigeLevel = 6;
+    });
+    await expect(store.prestigeMode('pve')).rejects.toThrow('Maximum prestige level reached.');
+    expect(rpc).not.toHaveBeenCalled();
+  });
+  it('syncs the PvE prestige level without touching PvP', async () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.pvp.prestigeLevel = 3;
+      state.pve.prestigeLevel = 0;
+      state.pve.progressEpoch = 2;
+    });
+    await store.syncPrestigeLevel('pve', 9);
+    expect(rpc).toHaveBeenCalledWith(
+      'sync_user_game_mode_progress',
+      expect.objectContaining({
+        p_modes: expect.objectContaining({
+          pve: expect.objectContaining({ prestigeLevel: 6, progressEpoch: 2 }),
+          pvp: expect.objectContaining({ prestigeLevel: 3 }),
+        }),
+      })
+    );
+    expect(store.pve.prestigeLevel).toBe(6);
+    expect(store.pvp.prestigeLevel).toBe(3);
+  });
+});
+describe('useTarkov prestigeMode seasonal', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+    clearAcknowledgedModes();
+    supabaseContext.user.id = 'user-1';
+    supabaseContext.user.loggedIn = true;
+    rpc.mockResolvedValue({ data: null, error: null });
+  });
+  const seedModes = () => {
+    const store = useTarkovStore();
+    store.$patch((state) => {
+      state.currentGameMode = 'seasonal';
+      state.gameEdition = 3;
+      state.pvp = { ...state.pvp, level: 42, progressEpoch: 7 };
+      state.pve = { ...state.pve, level: 9, progressEpoch: 4 };
+      state.seasonal = {
+        ...state.seasonal,
+        level: 30,
+        prestigeLevel: 1,
+        progressEpoch: 2,
+        taskCompletions: { 'task-s': { complete: true, failed: false, timestamp: 1000 } },
+      };
+    });
+    return store;
+  };
+  const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+  const snapshotModes = (store: ReturnType<typeof useTarkovStore>) =>
+    clone({ pve: store.pve, pvp: store.pvp, seasonal: store.seasonal });
+  it('refuses to prestige Seasonal PvP and leaves every mode untouched', async () => {
+    const store = seedModes();
+    const before = snapshotModes(store);
+    await expect(store.prestigeMode('seasonal')).rejects.toThrow(
+      'Prestige is not supported for Seasonal PvP.'
+    );
+    expect(rpc).not.toHaveBeenCalled();
+    expect(snapshotModes(store)).toEqual(before);
+  });
+  it('refuses to sync a Seasonal prestige level and leaves every mode untouched', async () => {
+    const store = seedModes();
+    const before = snapshotModes(store);
+    await expect(store.syncPrestigeLevel('seasonal', 2)).rejects.toThrow(
+      'Prestige is not supported for Seasonal PvP.'
+    );
+    expect(rpc).not.toHaveBeenCalled();
+    expect(snapshotModes(store)).toEqual(before);
+  });
+  it('archives a PvP prestige without sending seasonal data', async () => {
+    const store = seedModes();
+    const seasonalBefore = clone(store.seasonal);
+    const pveBefore = clone(store.pve);
+    await store.prestigeMode('pvp');
+    expect(rpc).toHaveBeenCalledWith(
+      'archive_prestige_run_and_reset_progress',
+      expect.objectContaining({ p_mode: 'pvp' })
+    );
+    const [, args] = rpc.mock.calls[0] as unknown as [string, Record<string, unknown>];
+    expect(args).not.toHaveProperty('p_seasonal_data');
+    expect(args).not.toHaveProperty('p_season_number');
+    expect(clone(store.seasonal)).toEqual(seasonalBefore);
+    expect(clone(store.pve)).toEqual(pveBefore);
+  });
+});
+const pendingRpc = () => {
+  let resolve!: () => void;
+  const promise = new Promise<void>((done) => {
+    resolve = done;
+  });
+  return { promise, resolve };
+};
+const cloneProgress = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+const seedLargeProgress = () => {
+  const store = useTarkovStore();
+  const objectives = Object.fromEntries(
+    Array.from({ length: 2500 }, (_, i) => [
+      `objective-${i}`.padEnd(40, 'x'),
+      { complete: true, count: 1 },
+    ])
+  );
+  store.$patch((state) => {
+    state.pvp.level = 42;
+    state.pvp.taskObjectives = objectives;
+    state.pve.level = 9;
+    state.pve.taskObjectives = cloneProgress(objectives);
+    state.seasonal.level = 30;
+  });
+  return store;
+};
+describe('prestige persistence ordering', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+    clearAcknowledgedModes();
+    supabaseContext.user.id = 'user-1';
+    supabaseContext.user.loggedIn = true;
+    rpc.mockResolvedValue({ data: null, error: null });
+  });
+  it('waits for the active split batch and archives the newest PvE progress next', async () => {
+    const store = seedLargeProgress();
+    const seasonal = cloneProgress(store.seasonal);
+    recordAcknowledgedModes('user-1', { seasonal });
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const background = syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    expect(rpc).toHaveBeenCalledTimes(1);
+    expect(Object.keys(rpc.mock.calls[0]![1].p_modes as object)).toEqual(['pvp']);
+    store.pve.level = 27;
+    const archive = store.prestigePvP();
+    expect(rpc).toHaveBeenCalledTimes(1);
+    pending.resolve();
+    const [backgroundResult] = await Promise.all([background, archive]);
+    expect(backgroundResult.error).toEqual({ message: 'Progress sync superseded by newer state' });
+    expect(rpc.mock.calls.map(([name]) => name)).toEqual([
+      'sync_user_game_mode_progress',
+      'archive_prestige_run_and_reset_progress',
+    ]);
+    expect(rpc.mock.calls[1]![1].p_pve_data).toEqual(expect.objectContaining({ level: 27 }));
+    expect(store.pve.level).toBe(27);
+    expect(store.pvp.level).toBe(1);
+    expect(cloneProgress(store.seasonal)).toEqual(seasonal);
+    await syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    expect(rpc.mock.calls[2]![1].p_modes).toEqual({});
+  });
+  it('dispatches a queued archive after the active batch echoes before its response', async () => {
+    const store = seedLargeProgress();
+    recordAcknowledgedModes('user-1', { seasonal: cloneProgress(store.seasonal) });
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const background = syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    const archive = store.prestigePvP();
+    const pvp = cloneProgress((rpc.mock.calls[0]![1].p_modes as { pvp: typeof store.pvp }).pvp);
+    noteRemoteProgressApplied({ remote: { pvp }, applied: { pvp } });
+    pending.resolve();
+    await Promise.all([background, archive]);
+    expect(rpc.mock.calls.map(([name]) => name)).toEqual([
+      'sync_user_game_mode_progress',
+      'archive_prestige_run_and_reset_progress',
+    ]);
+    expect(store.pvp.level).toBe(1);
+    expect(store.pvp.prestigeLevel).toBe(1);
+  });
+  it('cancels a queued archive when its session ends before dispatch', async () => {
+    const store = seedLargeProgress();
+    const before = cloneProgress(store.$state);
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const background = syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    const archive = store.prestigePvP();
+    const rejected = expect(archive).rejects.toThrow();
+    supabaseContext.user.loggedIn = false;
+    clearAcknowledgedModes();
+    pending.resolve();
+    await Promise.all([background, rejected]);
+    expect(rpc).toHaveBeenCalledTimes(1);
+    expect(cloneProgress(store.$state)).toEqual(before);
+  });
+  it('does not patch replacement account progress after an archive was dispatched', async () => {
+    const store = seedLargeProgress();
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const archive = store.prestigePvP();
+    const rejected = expect(archive).rejects.toThrow();
+    expect(rpc).toHaveBeenCalledTimes(1);
+    supabaseContext.user.id = 'user-2';
+    clearAcknowledgedModes();
+    store.$reset();
+    store.pvp.level = 12;
+    const replacement = cloneProgress(store.$state);
+    pending.resolve();
+    await rejected;
+    expect(cloneProgress(store.$state)).toEqual(replacement);
+  });
+  it('accepts its matching progress and metadata echo before the archive response', async () => {
+    const store = seedLargeProgress();
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async (_name, args) => {
+      const echo = {
+        pvp: args.p_pvp_data as typeof store.pvp,
+        pve: args.p_pve_data as typeof store.pve,
+        currentGameMode: args.p_current_game_mode as typeof store.currentGameMode,
+        gameEdition: args.p_game_edition as typeof store.gameEdition,
+        tarkovUid: args.p_tarkov_uid as typeof store.tarkovUid,
+      };
+      noteRemoteProgressApplied({ remote: echo, applied: cloneProgress(echo) });
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const archive = store.prestigePvP();
+    pending.resolve();
+    await archive;
+    expect(store.pvp.level).toBe(1);
+    expect(store.pvp.prestigeLevel).toBe(1);
+  });
+  it('keeps Seasonal edits and concurrent PvE edits pending after dispatch', async () => {
+    const store = seedLargeProgress();
+    recordAcknowledgedModes('user-1', { seasonal: cloneProgress(store.seasonal) });
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const archive = store.prestigePvP();
+    store.seasonal.level = 31;
+    store.pve.level = 28;
+    pending.resolve();
+    await archive;
+    expect(store.seasonal.level).toBe(31);
+    expect(store.pve.level).toBe(28);
+    await syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    const sentModes = Object.assign({}, ...rpc.mock.calls.slice(1).map(([, args]) => args.p_modes));
+    expect(Object.keys(sentModes).sort()).toEqual(['pve', 'seasonal']);
+    expect(sentModes.pve.level).toBe(28);
+    expect(sentModes.seasonal.level).toBe(31);
+  });
+  it('does not patch progress after an unrelated remote update supersedes the archive', async () => {
+    const store = seedLargeProgress();
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const archive = store.prestigePvP();
+    const rejected = expect(archive).rejects.toThrow();
+    store.pvp.level = 43;
+    const pvp = cloneProgress(store.pvp);
+    noteRemoteProgressApplied({ remote: { pvp }, applied: { pvp } });
+    pending.resolve();
+    await rejected;
+    expect(store.pvp.level).toBe(43);
+    expect(store.pvp.prestigeLevel).toBe(0);
+  });
+  it('preserves a remote Seasonal update without interrupting the persistent-mode archive', async () => {
+    const store = seedLargeProgress();
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const archive = store.prestigePvP();
+    const seasonal = { ...cloneProgress(store.seasonal), level: 35 };
+    store.seasonal = seasonal;
+    recordAcknowledgedModes('user-1', { seasonal });
+    noteRemoteProgressApplied({ remote: { seasonal }, applied: { seasonal } });
+    pending.resolve();
+    await archive;
+    expect(store.pvp.level).toBe(1);
+    expect(store.pvp.prestigeLevel).toBe(1);
+    expect(cloneProgress(store.seasonal)).toEqual(seasonal);
+    await syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    expect(rpc.mock.calls[1]![1].p_modes).toEqual({});
+  });
+  it('applies a dispatched archive and supersedes a direct sync started during it', async () => {
+    const store = seedLargeProgress();
+    const pending = pendingRpc();
+    rpc.mockImplementationOnce(async () => {
+      await pending.promise;
+      return { data: null, error: null };
+    });
+    const archive = store.prestigePvP();
+    store.pve.level = 28;
+    const direct = syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    pending.resolve();
+    const [, directResult] = await Promise.all([archive, direct]);
+    expect(store.pvp.level).toBe(1);
+    expect(store.pvp.prestigeLevel).toBe(1);
+    expect(directResult.error).toEqual({ message: 'Progress sync superseded by newer state' });
+    expect(rpc).toHaveBeenCalledTimes(1);
+    await syncProgressState(supabaseContext.client, 'user-1', store.$state);
+    const sent = rpc.mock.calls[1]![1].p_modes as Record<string, { level: number }>;
+    expect(sent).not.toHaveProperty('pvp');
+    expect(sent.pve!.level).toBe(28);
+  });
+  it('leaves progress untouched when the archive request throws', async () => {
+    const store = seedLargeProgress();
+    const before = cloneProgress(store.$state);
+    rpc.mockRejectedValueOnce(new Error('network unavailable'));
+    await expect(store.prestigePvP()).rejects.toThrow('network unavailable');
+    expect(cloneProgress(store.$state)).toEqual(before);
+  });
+});

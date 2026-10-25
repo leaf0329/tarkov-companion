@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const file='source/monitor/TarkovMonitor/GameWatcher.cs';
+let text=fs.readFileSync(file,'utf8');
+const original='return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Escape From Tarkov", "Screenshots");';
+assert.ok(text.includes(original));
+text=text.replace(original,'return string.IsNullOrWhiteSpace(Properties.Settings.Default.customScreenshotsPath) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Escape From Tarkov", "Screenshots") : Properties.Settings.Default.customScreenshotsPath;');
+fs.writeFileSync(file,text);
+const types='source/monitor/TarkovMonitor/LogMessageTypes.cs';
+text=fs.readFileSync(types,'utf8');
+text=text.replace('public string templateId { get; set; }','public string templateId { get; set; }\n        public long dt { get; set; }');
+fs.writeFileSync(types,text);

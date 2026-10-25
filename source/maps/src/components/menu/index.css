@@ -1,0 +1,545 @@
+:root {
+    --nav-height: 64px;
+    --glass-bg: rgb(18 18 18 / 0.85);
+    --glass-border: rgb(210 175 120 / 0.15);
+    --accent-gold: #d2af78;
+    --accent-gold-hover: #e6c58c;
+    --text-main: #f0f0f0;
+    --text-muted: #a0a0a0;
+    --bg-dark: #0a0a0a;
+}
+
+.navigation {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    height: var(--nav-height);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.nav-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex: 1;
+    min-width: 0;
+    transition: gap 0.3s ease;
+}
+
+@media (width <= 1100px) {
+    .nav-left {
+        gap: 15px;
+    }
+}
+
+.branding {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo {
+    height: 32px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+    display: block;
+}
+
+.branding:hover .logo {
+    transform: scale(1.02);
+}
+
+.desktop-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
+    flex: 1;
+    align-items: center;
+    min-width: 0;
+}
+
+.ghost-menu {
+    position: absolute !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    z-index: -1000 !important;
+    opacity: 0 !important;
+
+    /* Ensure it takes up vertical space for measurement if needed, but here we just need width */
+    white-space: nowrap !important;
+}
+
+.category-menu-wrapper {
+    position: relative;
+    padding: 10px 0;
+}
+
+.category-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.category-trigger:hover {
+    background: rgb(255 255 255 / 0.05);
+    color: var(--accent-gold);
+}
+
+.category-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.chevron {
+    transition: transform 0.2s ease;
+    color: var(--text-muted);
+}
+
+.chevron.rotated {
+    transform: rotate(180deg);
+    color: var(--accent-gold);
+}
+
+.category-dropdown {
+    position: absolute;
+    top: calc(100% - 5px);
+    left: 0;
+    background: #111;
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+    min-width: 220px;
+    max-height: calc(100vh - var(--nav-height) - 20px);
+    overflow-y: auto;
+    padding: 10px 0;
+    list-style: none;
+    z-index: 1001;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-gold) transparent;
+}
+
+.category-dropdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.category-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.category-dropdown::-webkit-scrollbar-thumb {
+    background-color: var(--accent-gold);
+    border-radius: 20px;
+}
+
+.category-dropdown.mega-menu {
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 0;
+    left: 0;
+    transform: none;
+}
+
+/* Dropdown list items */
+.category-dropdown li {
+    margin: 0;
+    padding: 0;
+}
+
+.category-dropdown a {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Nested categories */
+.nested-category {
+    padding: 5px 0;
+    margin-bottom: 5px;
+    flex: 1 1 100%;
+}
+
+.nested-title {
+    display: block;
+    padding: 12px 20px 8px 20px;
+    font-size: 11px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    border-bottom: 1px solid rgb(210 175 120 / 0.1);
+    margin-bottom: 4px;
+    background: rgb(210 175 120 / 0.03);
+}
+
+.nested-items {
+    list-style: none;
+    padding: 0;
+}
+
+/* Right side content */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.nav-icon-link {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.nav-icon-link:hover {
+    color: var(--accent-gold);
+    background: rgb(255 255 255 / 0.05);
+}
+
+.mobile-menu-toggle {
+    display: none !important;
+    color: var(--text-main) !important;
+}
+
+/* Mobile Drawer & Backdrop */
+.mobile-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1999;
+}
+
+.mobile-menu-drawer {
+    background: #0f0f0f !important;
+    border-left: 1px solid var(--glass-border);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 70vw;
+    height: 100vh;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgb(0 0 0 / 0.5);
+    padding: 0 !important;
+}
+
+.mobile-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgb(0 0 0 / 0.3);
+    flex-shrink: 0;
+}
+
+.mobile-drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-drawer-title {
+    color: var(--accent-gold);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.mobile-close-button {
+    background: rgb(255 255 255 / 0.05) !important;
+    border: 1px solid rgb(210 175 120 / 0.2) !important;
+}
+
+.mobile-close-button:hover {
+    background: rgb(210 175 120 / 0.1) !important;
+}
+
+.mobile-menu-list {
+    padding: 20px;
+    list-style: none;
+    margin: 0;
+}
+
+.mobile-category {
+    margin-bottom: 30px;
+    list-style: none;
+}
+
+.mobile-category-title {
+    color: var(--accent-gold);
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgb(210 175 120 / 0.2);
+    padding-bottom: 5px;
+}
+
+.mobile-category-items {
+    list-style: none;
+    padding-left: 0;
+}
+
+.mobile-nested-section {
+    margin: 15px 0 20px 0;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+}
+
+.mobile-nested-title {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+.mobile-nested-items {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.mobile-nested-items a {
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 16px;
+    background: rgb(255 255 255 / 0.03);
+    border-radius: 4px;
+}
+
+.mobile-category-items > li > a {
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 16px;
+    background: rgb(255 255 255 / 0.03);
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+
+.category-dropdown a:hover {
+    background: rgb(210 175 120 / 0.1);
+    color: var(--accent-gold);
+    padding-left: 24px;
+}
+
+.item-icon {
+    transition: transform 0.2s ease;
+}
+
+.category-dropdown a:hover .item-icon {
+    transform: scale(1.1);
+    opacity: 1 !important;
+}
+
+/* Responsive */
+@media (width <= 640px) {
+    .desktop-menu {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: inline-flex !important;
+    }
+
+    .nav-content {
+        padding: 0 15px;
+    }
+}
+
+/* Branding & Toggle */
+.branding-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.game-mode-toggle {
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    user-select: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.game-mode-toggle.regular {
+    background: rgb(125 88 46 / 0.2);
+    color: #c7a981;
+    border-color: rgb(125 93 46 / 0.3);
+}
+
+.game-mode-toggle.regular:hover {
+    background: rgb(46 125 50 / 0.3);
+    border-color: #81c784;
+}
+
+.game-mode-toggle.pve {
+    background: rgb(2 136 209 / 0.2);
+    color: #4fc3f7;
+    border-color: rgb(2 136 209 / 0.3);
+}
+
+.game-mode-toggle.pve:hover {
+    background: rgb(2 136 209 / 0.3);
+    border-color: #4fc3f7;
+}
+
+.game-mode-toggle.pvp-season {
+    background: rgb(46 125 50 / 0.2);
+    color: #81c784;
+    border-color: rgb(46 125 50 / 0.3);
+}
+
+.game-mode-toggle.pvp-season:hover {
+    background: rgb(46 125 50 / 0.3);
+    border-color: #81c784;
+}
+
+.game-mode-button.regular {
+    color: #c7a981;
+}
+
+.game-mode-button.regular:hover {
+    background-color: #332b21;
+}
+
+.game-mode-button.pve {
+    color: #4fc3f7;
+}
+
+.game-mode-button.pve:hover {
+    background-color: #122c38;
+}
+
+.game-mode-button.pvp-season {
+    color: #81c784;
+}
+
+.game-mode-button.pvp-season:hover {
+    background-color: #223523;
+}
+
+.game-mode-button.active {
+    font-weight: 800;
+    border-bottom: 2px solid currentcolor;
+}
+
+@media (width >= 641px) {
+    .mobile-menu-drawer {
+        display: none !important;
+    }
+}
+
+/* Ultra-Narrow Support */
+@media (width <= 500px) {
+    .game-mode-toggle {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+}
+
+@media (width <= 400px) {
+    .nav-content {
+        padding: 0 10px;
+    }
+
+    .nav-right {
+        gap: 6px;
+    }
+
+    .nav-left {
+        gap: 8px;
+    }
+
+    .branding-section {
+        gap: 6px;
+    }
+}
+
+@media (width <= 320px) {
+    .logo {
+        height: 20px;
+    }
+
+    .nav-content {
+        padding: 0 4px;
+    }
+
+    .branding {
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .branding-section {
+        gap: 4px;
+    }
+
+    .nav-right {
+        gap: 4px;
+    }
+}
+
+@media (width < 180px) {
+    .game-mode-toggle {
+        display: none !important;
+    }
+}

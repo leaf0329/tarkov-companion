@@ -1,0 +1,2676 @@
+{
+  "admin": {
+    "verifying_access": "Ověřování přístupu správce...",
+    "error_title": "Chyba připojení",
+    "load_error_description": "Načtení administrativních dat selhalo. Obnovte stránku nebo kontaktujte podporu. Referenční číslo: {reference}",
+    "no_reference": "Nedostupné",
+    "error": {
+      "cache_purge_failed": "Nelze odstranit mezipaměť. Zkuste to prosím znovu.",
+      "invalid_purge_type": "Vyberte platný typ čištění mezipaměti.",
+      "method_not_allowed": "Tato metoda požadavku není podporována.",
+      "admin_privileges_required": "Nemáte oprávnění k provedení této akce.",
+      "authentication_required": "Pro pokračování musíte být přihlášeni.",
+      "invalid_channel": "Zadejte platný název kanálu Twitch.",
+      "invalid_display_name": "Zadejte platné zobrazované jméno.",
+      "invalid_enabled_flag": "Povolená hodnota je neplatná.",
+      "invalid_request_body": "Tělo požadavku je neplatné.",
+      "invalid_target_user_id": "Zadejte platné ID uživatele.",
+      "invalid_tier": "Vyberte platnou vrstvu podporovatele.",
+      "service_config_missing": "Administrátorská služba není nakonfigurována.",
+      "supabase_request_failed": "Nelze dokončit požadavek administrátorem.",
+      "supporter_update_failed": "Nelze aktualizovat přístup podporovatele.",
+      "twitch_config_update_failed": "Nelze aktualizovat konfiguraci Twitch."
+    },
+    "access_warning_title": "Přístup správce",
+    "access_warning_description": "Akce provedené zde ovlivní všechny uživatele. Přihlášeno jako {user}.",
+    "cache_management_title": "Správa mezipaměti",
+    "last_purge_description": "Poslední vymazání: {type} v {timestamp}",
+    "tarkov_data_cache_label": "Mezipaměť dat Tarkova",
+    "tarkov_data_cache_description": "Vymaže data hry uložená v mezipaměti (úkoly, skrytí, předměty). Uživatelé si načtou čerstvá data z API tarkov.dev.",
+    "purge_game_data_button": "Vymazat data hry",
+    "full_cache_purge_label": "Vymazat celou mezipaměť",
+    "full_cache_purge_description": "Vymaže VŠECHNY položky uložené v mezipaměti, včetně statických assetů. Používejte jen zřídka – zvyšuje zátěž zdrojového serveru.",
+    "purge_everything_button": "Vymazat vše",
+    "cache_behavior_title": "Chování mezipaměti",
+    "cache_info_description": "Po vymazání vyvolá další požadavek uživatele nové načtení dat z tarkov.dev. Nová data se poté uloží do mezipaměti pro všechny uživatele.",
+    "confirm_full_cache_purge_title": "Potvrdit vymazání celé mezipaměti",
+    "confirm_full_cache_purge_description": "Tímto vymažete VŠECHNY položky uložené v mezipaměti na Cloudflare, včetně statických assetů, fontů a sad JavaScriptu. Může to dočasně prodloužit načítání všem uživatelům.",
+    "confirm_purge_button": "Potvrdit vymazání",
+    "all_cache_label": "Celá mezipaměť",
+    "tarkov_data_label": "Data Tarkova",
+    "unauthorized_title": "Neautorizováno",
+    "admin_privileges_required": "Pro tuto akci jsou potřebná oprávnění správce.",
+    "cache_purged_title": "Mezipaměť vymazána",
+    "tarkov_cache_purged_description": "Mezipaměť dat Tarkova byla vymazána. Uživatelé obdrží čerstvá data.",
+    "full_cache_purged_title": "Celá mezipaměť vymazána",
+    "full_cache_purged_description": "Všechen obsah uložený v mezipaměti byl z Cloudflare odstraněn.",
+    "purge_failed_title": "Vymazání selhalo",
+    "purge_failed_description": "Mezipaměť se nepodařilo vymazat",
+    "audit_log_title": "Protokol auditu správce",
+    "refresh_button": "Aktualizovat",
+    "audit_log_login_required": "Neautorizováno: Pro pokračování se přihlaste.",
+    "audit_log_admin_required": "Neautorizováno: Ke zobrazení auditních protokolů jsou potřebná oprávnění správce.",
+    "audit_log_table_not_found": "Tabulka auditního protokolu nebyla nalezena.",
+    "audit_log_table_not_found_description": "Spusťte migraci SQL a vytvořte tabulku admin_audit_log.",
+    "audit_log_fetch_failed": "Auditní protokoly se nepodařilo načíst",
+    "no_actions_recorded": "Zatím nebyly zaznamenány žádné akce správce",
+    "audit_log_by": "od",
+    "supporter_override_title": "Přístup podporovatele",
+    "supporter_override_description": "Nastavte stav podporovatele uživatele pro produkční testování bez vytvoření platby ve Stripe.",
+    "supporter_target_user_label": "ID uživatele",
+    "supporter_target_user_placeholder": "UUID uživatele v Supabase Auth",
+    "supporter_tier_label": "Úroveň",
+    "supporter_override_saved_title": "Přístup podporovatele byl aktualizován",
+    "supporter_override_enabled_description": "Přístup podporovatele na úrovni {tier} byl povolen.",
+    "supporter_override_disabled_description": "Aktivní přístup podporovatele byl zablokován.",
+    "twitch_config_title": "Stream Twitch",
+    "twitch_config_description": "Nastavte kanál Twitch povýšený v rohu webu. Návštěvníci si tuto změnu vyzvednou během několika minut.",
+    "twitch_channel_label": "Kanál",
+    "twitch_channel_placeholder": "Název kanálu Twitch",
+    "twitch_display_name_label": "Zobrazovaný název",
+    "twitch_display_name_placeholder": "Název zobrazení kanálu",
+    "twitch_config_saved_title": "Nastavení Twitch aktualizováno",
+    "twitch_config_saved_description": "Propagovaný stream je nyní {channel}.",
+    "twitch_config_saved_with_warning_title": "Nastavení Twitch uloženo",
+    "twitch_config_saved_with_warning_description": "Konfigurace byla uložena, ale návštěvníci v mezipaměti mohou stále vidět předchozí hodnotu.",
+    "twitch_config_load_failed_title": "Nastavení Twitch není k dispozici",
+    "twitch_config_load_failed_description": "Nelze načíst aktuální konfiguraci Twitch."
+  },
+  "alerts": {
+    "no_map_data": "Pro tento výběr nejsou k dispozici žádná mapová data."
+  },
+  "app_bar": {
+    "error_loading": "Chyba při načítání Tarkov dat",
+    "loading": "Načítání Tarkov dat",
+    "logout_failed": "Nelze se odhlásit. Zkuste to prosím znovu.",
+    "logout_unreachable": "Nelze se připojit k serveru, takže jste stále přihlášeni. Můžete se odhlásit pouze na toto zařízení; server nebude slyšet, takže relace zůstane aktivní, dokud neuplyne nebo se odhlásíte z jiného zařízení.",
+    "logout_this_device": "Odhlásit se pouze na tomto zařízení",
+    "logout_this_device_done": "Odhlášen pouze na tomto zařízení. Relace na serveru zůstává aktivní, dokud nevyprší platnost nebo se odhlásíte z jiného zařízení.",
+    "logout_local_only": "Odhlášen na tomto zařízení. Server nemohl být dosažen, takže vaše ostatní relace mohou být stále přihlášeny.",
+    "hidden_label": "Hidden",
+    "user_label": "Uživatel",
+    "user_avatar_alt": "Avatar uživatele",
+    "supporter_badge_aria": "Spravujte své předplatné podporovatele ({tier})",
+    "help_community_aria": "Nápověda a komunita",
+    "community_section": "Komunita",
+    "keyboard_shortcuts": "Klávesové zkratky",
+    "report_problem": "Nahlásit problém",
+    "login_aria": "Přihlaste se ke svému účtu",
+    "switch_to_light_theme": "Přepnout na světlý motiv",
+    "switch_to_dark_theme": "Přepnout na tmavý motiv"
+  },
+  "progress_save_status": {
+    "indicator_aria": "Stav uložení: {status}",
+    "cloud_pending_label": "Ukládání pokroku do cloudu",
+    "cloud_retrying_label": "Cloudové ukládání se opakuje",
+    "cloud_failed_label": "Uložení do cloudu se nezdařilo",
+    "local_failed_label": "Průběh nebyl uložen v tomto prohlížeči",
+    "cloud_pending_description": "Vaše poslední změny pokroku zatím nebyly uloženy do cloudu.",
+    "cloud_retrying_description": "Uložení posledních změn do cloudu selhalo. Sledování můžete pokračovat automaticky.",
+    "cloud_failed_description": "Automatické pokusy o uložení posledních změn v cloudu byly zastaveny. Změny stále čekají na uložení a můžete sledovat a opakovat pokus kdykoli.",
+    "local_failed_description": "Vaše poslední změny postupu nelze uložit v tomto prohlížeči. Můžete pokračovat ve sledování, ale změny, které nejsou uloženy jinde, mohou být ztraceny, pokud znovu načtete, zavřete tuto záložku nebo odhlásíte.",
+    "local_saved_note": "Tyto změny jsou uloženy v tomto prohlížeči.",
+    "cloud_also_pending_note": "Ani nebyly uloženy do cloudu. Exportujte svůj postup pro uchovávání kopie.",
+    "retry_scheduled": "Automatické opakování {attempt} z {total} je naplánováno.",
+    "cause_offline": "Příčina: toto zařízení se zdá být offline.",
+    "cause_rate_limited": "Příčina: služba oblačnosti dočasně omezuje úspory.",
+    "cause_auth": "Příčina: vaše přihlašovací relace nemohla být ověřena.",
+    "cause_quota": "Příčina: Úložiště tohoto prohlížeče pro TarkovTracker je plné.",
+    "cause_unavailable": "Příčina: tento prohlížeč blokuje úložiště webu například z důvodu nastavení soukromí.",
+    "cause_unknown": "Příčina tohoto selhání není známa.",
+    "quota_guidance": "Vymazání dat tohoto webu nebo opětovné načítání může odstranit vaši jedinou kopii těchto změn. Před odstraněním dat exportujte váš pokrok.",
+    "retry_button": "Opakovat ukládání do cloudu",
+    "retry_succeeded": "Změny vašeho postupu byly uloženy do cloudu.",
+    "retry_failed": "Uložení do cloudu se nezdařilo. Vaše změny stále čekají na uložení.",
+    "export_button": "Exportovat pokrok",
+    "export_hint": "Exportovat aktuální postup stahování jako záložní soubor, i když se uložení nezdařilo."
+  },
+  "sign_out_confirm": {
+    "title": "Odhlásit se s neuloženými změnami?",
+    "risk": "Vaše poslední změny postupu nejsou uloženy v tomto prohlížeči nebo v cloudu. Pokud se nyní odhlásíte, budou ztraceny.",
+    "options": "Můžete zůstat přihlášeni a zkusit znovu uložit nebo exportovat váš aktuální průběh před rozhodnutím.",
+    "stay_signed_in": "Zůstaňte přihlášeni",
+    "discard_and_sign_out": "Odhlásit a zahodit změny",
+    "retry_succeeded": "Vaše změny byly uloženy do cloudu. Můžete se bezpečně odhlásit."
+  },
+  "omnibar": {
+    "title": "Hledat",
+    "description": "Hledat úkoly, potřebné předměty a stanice ve skrytí",
+    "trigger_label": "Hledat...",
+    "open_aria": "Otevřít globální vyhledávání",
+    "aria_label": "Globální vyhledávání",
+    "placeholder": "Hledat úkoly, potřebné předměty, skrytí...",
+    "hint_min_chars": "Zadejte alespoň 2 znaky pro vyhledávání...",
+    "no_results": "Pro \"{query}\" nebyly nalezeny žádné výsledky.",
+    "group_tasks": "Úkoly / mise",
+    "group_hideout": "Stanice ve skrytí"
+  },
+  "activity_log": {
+    "unread_indicator": "Máte nepřečtenou aktivitu",
+    "mark_read": "Označit jako přečtené",
+    "clear": "Vymazat",
+    "empty": "Zatím nebyla zaznamenána žádná aktivita.",
+    "badge_api": "Synchronizace API",
+    "api_synced": "Pokrok synchronizován přes API",
+    "more_count": "+{count} další",
+    "entry": {
+      "completed": "Dokončený úkol: {name}",
+      "uncompleted": "Nedokončený úkol: {name}",
+      "failed": "Selhaný úkol: {name}",
+      "reset_failed": "Zrušení stavu selhání úkolu: {name}",
+      "available": "Odemčený úkol: {name}",
+      "undo_completed": "Zrušení dokončení úkolu: {name}",
+      "undo_uncompleted": "Zrušení označení úkolu jako nedokončený: {name}",
+      "undo_reset_failed": "Obnovení stavu selhání úkolu: {name}",
+      "undo_failed": "Zrušení označení úkolu jako selhaný: {name}"
+    }
+  },
+  "promoted_stream": {
+    "close": "Zavřít stream",
+    "expand": "Otevřít stream",
+    "open_channel": "Přejít na kanál Twitch",
+    "player_title": "{streamer} – přenos na Twitchi",
+    "region_label": "Promovaný přenos na Twitchi pro {streamer}",
+    "reopen": "Znovu otevřít stream",
+    "shrink": "Zmenšit stream",
+    "title": "{streamer} živě"
+  },
+  "buttons": {},
+  "errors": {
+    "generic_fallback": "Neočekávaná chyba. Zkuste to prosím znovu.",
+    "chunk_load_blocked": "Požadovaný soubor aplikace se nepodařilo načíst. Opakujte akci. Pokud se tak stane, může váš ISP nebo region blokovat přístup.",
+    "network_access_denied": "Požadovaný síťový požadavek byl zablokován. Zkuste to prosím znovu. Pokud se nedaří, zkuste VPN nebo Cloudflare WARP."
+  },
+  "error": {
+    "return_home": "Návrat domů",
+    "show_details": "Zobrazit podrobnosti",
+    "hide_details": "Skrýt podrobnosti",
+    "technical_details": "Technické podrobnosti",
+    "copy_details": "Kopírovat podrobnosti",
+    "copy_success": "Zkopírováno",
+    "status_prefix": "Chyba",
+    "page_not_found_description": "Hledaná stránka neexistuje.",
+    "access_blocked": "Přístup zablokován",
+    "service_unavailable": "Služba není k dispozici",
+    "something_went_wrong": "Něco se pokazilo",
+    "unexpected_description": "Při zpracování požadavku došlo k neočekávané chybě.",
+    "invalid_host_hint": "Tento náhled hostitele API zablokován. Přidejte náhled hostitele do API_ALLOWED_HOSTS nebo jej odvodte z CF_PAGES_URL.",
+    "supabase_config_hint": "V tomto nasazení chybí veřejná konfigurace Supabas. Nastavte NUXT_PUBLIC_SUPABASE_URL a NUXT_PUBLIC_SUPABASE_ANON_KEY pro náhledy nebo povolte náhled sestavení v offline režimu.",
+    "request_blocked_hint": "Požadavek vyžadovaný k vykreslení této stránky byl zablokován. Otevřete technické detaily a vložte URL neúspěšného požadavku při hlášení problému."
+  },
+  "toast": {
+    "hideout_updated": {
+      "title": "Skrývat byl aktualizován",
+      "description": "Odstraněno vylepšení stanice {count} , která již nesplňují předpoklady."
+    },
+    "api_updated": {
+      "title": "Aktualizovat z API",
+      "description_fallback": "Váš pokrok byl aktualizován prostřednictvím API.",
+      "label": {
+        "single": "Úkol byl aktualizován",
+        "plural": "Úkoly aktualizovány"
+      },
+      "state": {
+        "active": "aktivní",
+        "completed": "dokončeno",
+        "failed": "selhalo",
+        "uncompleted": "nedokončeno"
+      },
+      "more": ", +{count} další"
+    },
+    "local_ignored": {
+      "title": "Průběh místního prohlížeče přeskočeno",
+      "other_account": "Tento prohlížeč uložil pokrok z jiného účtu, takže byl přeskočen, aby se zabránilo přepsání vašeho cloudového pokroku.",
+      "unsaved": "Na této kartě došlo k dočasnému pokroku v paměti, ale žádná uložená kopie prohlížeče (obvykle po obnovení/pádu), takže postup v cloudu byl zachován.",
+      "guest": "Tento prohlížeč stále čekal na postup před přihlášením, takže váš postup v cloudu byl zachován."
+    },
+    "progress_merged": {
+      "title": "Postup v cloudu synchronizován",
+      "description": "Synchronizoval průběh z jiné karty/zařízení a sloučil {count} lokální rozdíly."
+    },
+    "tarkov_uid_conflict": {
+      "title": "Profil Tarkov není propojen",
+      "description": "Tarkov UID {uid} je již propojen s jiným účtem TarkovTracker, takže nebyl propojen s tímto účtem. Váš pokrok byl stále uložen. Odpojte jej z jiného účtu nebo importujte svůj vlastní profil."
+    },
+    "load_failed": {
+      "title": "Nelze načíst průběh",
+      "description": "Zjistili jsme problém při načítání dat vašeho účtu. Aktualizujte prosím stránku nebo kontaktujte podporu."
+    },
+    "count_edit_updated": {
+      "title": "Koncept byl aktualizován",
+      "description": "Vaše hodnota postupu byla aktualizována na {value}."
+    },
+    "clipboard_copied": {
+      "title": "Zkopírováno!",
+      "description": "{value}"
+    },
+    "clipboard_error": {
+      "title": "Kopírování se nezdařilo",
+      "description": "Nelze zkopírovat \"{value}\" do schránky."
+    },
+    "action_undone": {
+      "title": "Akce byla zrušena: {description}"
+    },
+    "action_undo_failed": {
+      "title": "Akci se nepodařilo zrušit: {description}"
+    }
+  },
+  "common": {
+    "cancel": "Zrušit",
+    "close": "Zavřít",
+    "click": "Click",
+    "previous": "Předchozí",
+    "next": "Další",
+    "finish": "Dokončit",
+    "back_to_top": "Zpět nahoru",
+    "refresh_button": "Zkuste to znovu",
+    "opens_in_new_tab": "Otevře se v nové kartě",
+    "available": "Dostupné",
+    "enabled": "Povoleno",
+    "disabled": "Zakázáno",
+    "update_failed": "Aktualizace se nezdařila",
+    "tasks": "Úkoly",
+    "level": "Úrovně",
+    "locked": "Uzamčeno",
+    "all": "Vše",
+    "completed": "Dokončeno",
+    "status_completed": "dokončeno",
+    "hideout": "Hideout",
+    "unknown": "Neznámý",
+    "failed": "Selhalo",
+    "status_failed": "selhalo",
+    "complete": "Complete",
+    "pvp": "PvP",
+    "pve": "PvE",
+    "seasonal_pvp": "Sezónní PvP",
+    "pvp_description": "Hráč proti hráči (standardní)",
+    "pve_description": "Hráč proti prostředí (Co-op)",
+    "seasonal_pvp_description": "Sezóna {season}",
+    "retry": "Opakovat",
+    "open_tasks": "Otevřené úkoly",
+    "view_on_tarkov_dev": "Zobrazit na Tarkov.dev",
+    "reset": "Reset",
+    "scav": "Šcav",
+    "apply": "Použít",
+    "more": "Více",
+    "needed_items": "Potřebné položky",
+    "task": "Úkol",
+    "lightkeeper": "Držák blesku",
+    "kappa": "Kappa",
+    "storyline": "Storylin",
+    "mark_complete": "Označit jako kompletní",
+    "maps": "Mapy",
+    "clear_search": "Vymazat hledání",
+    "settings": "Nastavení",
+    "about": "O aplikaci",
+    "credits": "Kredity",
+    "support": "Podpora",
+    "privacy_policy": "Ochrana osobních údajů",
+    "terms_of_service": "Podmínky služby",
+    "streamer_tools": "Nástroje pro streamování",
+    "prestige": "Prestige",
+    "backup_restore": "Zálohování a obnovení",
+    "confirm_import": "Potvrdit import",
+    "admin_panel": "Admin panel",
+    "supporter": "Podporovatel",
+    "timmy": "Timmy",
+    "chad": "Čad",
+    "activity_log": "Záznam aktivit",
+    "manual": "Ruční",
+    "page_not_found": "Stránka nenalezena",
+    "open_hideout": "Otevřít skryt",
+    "zoom_speed": "Rychlost přiblížení",
+    "pan_speed": "Rychlost panelu",
+    "zone_opacity": "Neprůhlednost zóny",
+    "default": "Výchozí",
+    "compact": "Kompaktní",
+    "pmc_spawn": "PMC Spawn",
+    "pmc_extract": "Extrakt PMC",
+    "scav_extract": "Scav extrakt",
+    "dashboard": "Nástěnka",
+    "objectives": "Cíle",
+    "kappa_tasks": "Kappa úkoly",
+    "getting_started": "Začněme",
+    "progress": "Průběh",
+    "blocked": "Blokované",
+    "optional": "Nepovinné",
+    "lv": "Lv",
+    "kappa_lightkeeper": "Kappa & Lightkeeper",
+    "list": "Seznam",
+    "traders": "Obchodníci",
+    "clear_focus": "Vyčistit zaostření",
+    "lvl_level": "Lvl {level}",
+    "impact": "Dopad",
+    "appearance": "Vzhled",
+    "requires": "Vyžaduje",
+    "view_on_wiki": "Zobrazit na Wiki",
+    "item": "Položka",
+    "reset_failed": "Obnovení selhalo",
+    "was_status": "byl {status}",
+    "fail": "Neuspěl",
+    "accept": "Přijmout",
+    "ready_to_hand_over": "Připraveno k předání",
+    "objective": "Cíl",
+    "maxed": "Maxed",
+    "found_in_raid_required": "Nalezeno v požadované pomoci",
+    "fir": "FYR",
+    "priority": "Priorita",
+    "team": "Tým",
+    "show": "Zobrazit",
+    "hide": "Skrýt",
+    "login": "Přihlásit se",
+    "overview": "Přehled",
+    "api_documentation": "API dokumentace",
+    "api": "API",
+    "game_settings": "Nastavení hry",
+    "custom_scale": "Vlastní měřítko",
+    "self_contained": "Samostatný",
+    "progress_track": "Sledování průběhu",
+    "account": "Účet",
+    "preferences": "Předvolby",
+    "game_edition": "Herní edice",
+    "reset_pvp_data": "Resetovat PvP data",
+    "reset_pve_data": "Resetovat PvE data",
+    "reset_seasonal_data": "Obnovit sezonní data PvP",
+    "reset_all_data": "Resetovat všechna data",
+    "import_failed": "Import se nezdařil",
+    "delete_archived_run": "Odstranit archivovaný běh",
+    "validation_error": "Chyba ověření",
+    "got_it": "Rozumím"
+  },
+  "page_help": {
+    "button": "Nápověda",
+    "launcher": {
+      "title": "Pomoc a zapojení",
+      "summary": "Vyberte rychlý průvodce pro tuto stránku nebo cestu úplného nastavení.",
+      "page_guide": "Průvodce touto stránkou",
+      "page_guide_unavailable": "Zatím zde není žádný průvodce stránkami. Použij místo toho zapojení",
+      "onboarding": "Zapojení nového uživatele",
+      "onboarding_description": "Začněte importem, dokončete základy, pak ověřte úkoly.",
+      "keyboard_shortcuts_error": "Klávesové zkratky se nepodařilo otevřít. Zkuste to prosím znovu."
+    },
+    "onboarding": {
+      "title": "Načítání nastavení",
+      "summary": "Toto je doporučený první zápis pro nové nebo vracející se uživatele. Použijte akční tlačítka pro skákání na skutečné stránky.",
+      "actions": {
+        "account": "Založit účet",
+        "login": "Přihlásit se"
+      },
+      "steps": {
+        "import": {
+          "title": "Nejprve importovat průběh",
+          "description": "Používejte importy před klepnutím na ruční nastavení. Jsou nejrychlejším způsobem, jak většinu vašeho trackeru dostat do použitelného stavu.",
+          "bullets": {
+            "one": "Importujte svůj tarkov.dev profil, když ho máte. Obvykle vyplňuje většinu základů účtu a sleduje pokrok.",
+            "two": "Importujte vaše protokoly EFT. To může naplnit úkoly a další postup téměř bez ručního klepnutí.",
+            "three": "Pokud oba importují půdu čistě, ruční nastavení se stane rychlým ověřovacím průchodem místo přestavby všeho ručně."
+          },
+          "actions": {
+            "open": "Otevřít importy"
+          }
+        },
+        "profile": {
+          "title": "Dokončit základy",
+          "description": "Po importu uzamkněte v polích jádra profilu a rozhodněte, zda chcete synchronizovat váš postup s účtem.",
+          "bullets": {
+            "one": "Nastavte svůj herní režim, editaci, úroveň, frakci a zobrazte název tak, aby filtry a odemkly požadavky s vaším skutečným účtem.",
+            "two": "Přihlašování v odemknutých týmech, funkce podporované API a cloudové úložiště, takže je snazší zachovat postup napříč zařízeními.",
+            "three": "Pokud ještě nejste připraveni se přihlásit, můžete stále nejdříve sledovat lokálně a připojit tento postup k účtu později."
+          },
+          "actions": {
+            "settings": "Otevřít nastavení"
+          }
+        },
+        "tasks": {
+          "title": "Úkoly spojené s kontrolou Sanity",
+          "description": "Poslední velký úklid je dostupnost úkolů. Jakmile je to přesné, zbytek webu bude mnohem spolehlivější.",
+          "bullets": {
+            "one": "Na stránce úkolů označte úkoly, které máte aktuálně k dispozici ve hře pro každého obchodníka. To zaostává za nezbytnými řetězci mnohem rychleji než ručně dokončit staré úkoly jeden po druhém.",
+            "two": "Když něco vypadá špatně, použijte menu s úlohou karty k nahlášení problému s daty místo toho, abyste váš tracker donutili do špatného stavu.",
+            "three": "Po tomto zadání použijte tlačítko nápovědy na libovolné podporované stránce k opětovnému otevření průvodce stránkami nebo tohoto příchozího toku."
+          }
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Průvodce nástěnkou",
+      "summary": "Pomocí nástěnky zjistíte svůj nejlepší další krok, zkontrolujte průběh a skákněte na stránky, které vyžadují pozornost.",
+      "hint": "Získejte rychlý přehled o tom, co se dashboard zobrazuje a kam kliknout na další.",
+      "sections": {
+        "focus": {
+          "title": "Nejlepší další krok",
+          "description": "Horní karta zvýrazňuje nejjednodušší okamžitý pokrok založený na aktuálních filtrech a sledovaném pokroku.",
+          "bullet_one": "Používejte v případě, že chcete jedno důrazné doporučení namísto prohlížení celého seznamu úkolů.",
+          "bullet_two": "Pokud to vypadá špatně, zkontrolujte nejprve filtraci úkolů, protože skryté úkoly mohou změnit doporučení."
+        },
+        "progress": {
+          "title": "Progresivní karty",
+          "description": "Karty postupu jsou zkratky na úkoly a potřebné položky s vašimi aktuálními částkami již v kontextu.",
+          "bullet_one": "Úkol a objektivní karty skočí zpět do vašeho seznamu úkolů.",
+          "bullet_two": "Karty položky skočí přímo do odpovídajícího zobrazení potřebných položek pro úkoly nebo skrýt."
+        },
+        "review": {
+          "title": "Přezkum v dlouhodobém horizontu",
+          "description": "Sekce obchodník a milníky slouží ke kontrole širšího pokroku, nikoli pouze vašeho dalšího kliknutí.",
+          "bullet_one": "Pomocí obchodníků zjistíte, které řádky hledání stále zbývají nejvíc práce.",
+          "bullet_two": "Pomocí milníků zkontrolujte Kappa, Lightkeeper, a celkové dokončení na pohled."
+        }
+      },
+      "actions": {
+        "needed_items": "Otevřít potřebné položky"
+      }
+    },
+    "tasks": {
+      "title": "Příručka pro úkoly",
+      "summary": "Použijte stránku úkolů k procházení dostupné práce, přepnutí perspektivy a zúžení seznamu přesně na to, na co se chcete zaměřit.",
+      "hint": "Získejte rychlé vysvětlení zobrazení úkolů, filtrů a místa, kde žijí důležitá nastavení.",
+      "sections": {
+        "views": {
+          "title": "Vybrat zobrazení",
+          "description": "Horní řádek mění, jak jsou úkoly seskupeny, takže můžete procházet podle seznamu, obchodníka, mapy nebo grafu.",
+          "bullet_one": "Zobrazení seznamu je nejlepší pro normální kontroly průběhu a rychlé vyhledávání.",
+          "bullet_two": "Pokud již znáte úhel, který chcete zkontrolovat, je lepší zobrazení obchodníka, mapy a grafů."
+        },
+        "filters": {
+          "title": "Oříznout seznam",
+          "description": "Stavové filtry se mohou zaměřit na to, co je dostupné, uzamčené, nebo neúspěšné, aniž byste opustili stránku.",
+          "bullet_one": "Hledání funguje napříč názvy úloh a pomáhá v případě, že se seznam cítí příliš velký.",
+          "bullet_two": "Pokud se počet zdá nižší, než se očekávalo, jeden ze stavů nebo filtry se obvykle skrývá výsledky."
+        },
+        "settings": {
+          "title": "Upravit chování",
+          "description": "Cog otevírá předvolby zobrazování a filtrování, které mění způsob chování seznamu úkolů napříč relacemi.",
+          "bullet_one": "Použít nastavení, pokud chcete jiné výchozí filtry, typovou viditelnost nebo chování mapy.",
+          "bullet_two": "Pokud se stránka cítí vypnutá, je to první místo, kde se zkontroluje, než se předpokládá, že data chybí."
+        }
+      },
+      "actions": {
+        "needed_items": "Položky úkolu"
+      }
+    },
+    "needed_items": {
+      "title": "Potřebný návod k položkám",
+      "summary": "Používejte potřebné položky pro kombinování úkolů a skrytých materiálů, pak zužte seznam na přesné položky, o které se stále zajímáte.",
+      "hint": "Získejte rychlé vysvětlení karet, režimů zobrazení a filtrů za ozubením.",
+      "sections": {
+        "scopes": {
+          "title": "Zvolte rozsah",
+          "description": "Karty v horním přepínači mezi všemi položkami, pouze na úkoly, a splněnými potřebami.",
+          "bullet_one": "Používejte pouze úkoly v případě, že máte výhrady a nechcete skrývat smíchané materiály.",
+          "bullet_two": "Používejte v případě, že chcete zkontrolovat, co jste již spokojeni, místo toho, co stále chybí."
+        },
+        "views": {
+          "title": "Změnit rozložení",
+          "description": "Seznam, mřížka a kombinované zobrazení zobrazují stejná data, ale jsou optimalizovány pro různé styly prohlížení.",
+          "bullet_one": "Zobrazení seznamu je nejrychlejší pro skenování počtu a názvů.",
+          "bullet_two": "Kombinované skupiny zobrazení opakovaly položky dohromady, když se zajímáte více o celkové částky než o jednotlivé zdroje."
+        },
+        "filters": {
+          "title": "Upřesnit seznam",
+          "description": "Seznam nastavení ovládá viditelnost vlastníka-položky, pravidla FIR, potřeby týmu a další vysoce rázové filtry.",
+          "bullet_one": "Pokud se položka neočekávaně zmizí, je obvykle důvod filtru zásuvky.",
+          "bullet_two": "Řazení podle priority je nejlépe, když chcete nejvíc dopadu."
+        }
+      }
+    },
+    "hideout": {
+      "title": "Skrývat průvodce",
+      "summary": "Pomocí stránky s skrýtem, abyste viděli, které stanice jsou připraveny, co je blokováno a jaké materiály stále záleží na nadcházejících aktualizacích.",
+      "hint": "Získejte rychlé vysvětlení stavu skrýt, pravidel dostupnosti a kde najít propojené materiály.",
+      "sections": {
+        "statuses": {
+          "title": "Přečtěte si stav",
+          "description": "Hlavní filtry rozdělují stanice do všech, dostupné, uzamčené a maximální, takže se můžete soustředit na pravou fázi.",
+          "bullet_one": "Dostupné je nejrychlejší způsob, jak zjistit, co můžete právě stavět.",
+          "bullet_two": "Uzamčené je užitečné, když chcete pochopit, jaké požadavky stále chybí."
+        },
+        "requirements": {
+          "title": "Ovládací blokátory",
+          "description": "Menu nastavení může vynutit požadavky na stanice, dovednosti a obchodníky, takže dostupnost odpovídá tomu, jak přísně chcete tuto stránku mít.",
+          "bullet_one": "Zapněte požadované filtry, pokud chcete pouze vylepšení, která jsou nyní plně sestavitelná.",
+          "bullet_two": "Vypněte je, když chcete širší zobrazení plánování, co brzy přijde."
+        },
+        "materials": {
+          "title": "Sledujte materiály",
+          "description": "V každé kartě stanice jsou zobrazeny položky a předpoklady následující aktualizace s odkazy zpět na širší pracovní postup položek.",
+          "bullet_one": "Použijte karty stanice, pokud chcete provést aktualizaci bez opuštění stránky.",
+          "bullet_two": "Přeskočit na potřebné položky, pokud chcete úplný seznam nákupů mezi stanicemi pro skrýt."
+        }
+      },
+      "actions": {
+        "needed_items": "Skrývající předměty"
+      }
+    }
+  },
+  "maps": {
+    "tooltip_density": "Tooltipy",
+    "map_settings": "Nastavení mapy",
+    "not_available_title": "Mapa není k dispozici",
+    "not_available_description": "Interaktivní mapa pro {mapName} ještě není k dispozici. Čekáme na vytvoření kompatibilní mapy.",
+    "placeholder": "tato poloha",
+    "floors": "Podlahy",
+    "extract_names": {
+      "scav_underboat_hideout": "Skrývat ve fázi přistání"
+    },
+    "factions": {
+      "pmc": "PMC"
+    },
+    "layers": {
+      "pmc_spawns": "PMC Spawns"
+    },
+    "legend": {
+      "regular": "Běžný",
+      "pinned": "Připnuté",
+      "shared_extract": "Sdílený extrakt (frakce buď)",
+      "coop_extract": "Koop extrakt (PMC + Scav)"
+    },
+    "tooltips": {
+      "zoom_in": "Přiblížit",
+      "zoom_out": "Oddálit",
+      "reset_view": "Obnovit zobrazení",
+      "open_fullscreen": "Otevřít mapu na celé obrazovce",
+      "exit_fullscreen": "Ukončit celou obrazovku",
+      "drag_to_resize": "Přetažením změníte velikost mapy",
+      "switch_floor": "Přepínací podlaha (Ctrl + Scroll)"
+    },
+    "help": {
+      "title": "Ovládání mapy",
+      "groups": {
+        "navigate": "Navigate",
+        "floors": "Podlahy",
+        "interact": "Interakce",
+        "view": "Zobrazit"
+      },
+      "pan": "{keys} nebo přetáhněte k pánvi",
+      "zoom": "{keys} pro přiblížení",
+      "reset": "{key} pro obnovení zobrazení",
+      "cycle_floors": "{keys} k cyklování podlaží",
+      "floor_panel": "Nebo použijte podlahovou desku.",
+      "click_at_cursor": "{key} klikněte na kurzor",
+      "click_marker": "Pro podrobnosti klikněte na značku.",
+      "fullscreen": "Použijte tlačítko na celou obrazovku v ovládacích prvcích mapy.",
+      "resize": "Přetažením dolního okraje mapy změníte velikost."
+    },
+    "hint": {
+      "title": "Ovládání rychlých map",
+      "summary": "Přetažením posouvat · Shift + posunutím přiblížit",
+      "summary_multi_floor": "Přetažením prstu · Shift + Posunutím přiblížíte · Ctrl + Posunutím změnit podlahu",
+      "all_controls": "Všechny ovládací prvky"
+    },
+    "aria": {
+      "tooltip_density": "Hustota tooltipů"
+    },
+    "tooltip": {
+      "go_to": "Přejít na cíl",
+      "go_to_in_task_list": "Přejít na cíl v seznamu úkolů",
+      "complete": "Úplný cíl",
+      "uncomplete": "Neúplný cíl",
+      "objective_unavailable": "Cíl není k dispozici.",
+      "stacked_objectives": "Zde jsou {count} cíle"
+    }
+  },
+  "page": {
+    "dashboard": {
+      "changelog": {
+        "title": "Co je nového",
+        "show": "Zobrazit aktualizace",
+        "hide": "Skrýt aktualizace",
+        "loading": "Načítání aktualizací...",
+        "error": "Nelze načíst aktualizace.",
+        "empty": "Zatím žádné aktualizace.",
+        "view_all": "Zobrazit vše"
+      },
+      "focus": {
+        "title": {
+          "default": "Co mám dělat dál?",
+          "multiple": "Několik dobrých dalších kroků",
+          "blocked": "V tuto chvíli není nic připraveno",
+          "complete": "Byl jsi zachycen"
+        },
+        "heading": {
+          "start": "Začít {task}",
+          "continue": "Pokračovat v úkolu {task}",
+          "finish": "Dokončit {task}",
+          "review_filters": "Zkontrolovat filtry úkolů",
+          "closest_unlock": "Nejvíce odemknutí: {task}",
+          "caught_up": "Všechno viditelné je hotovo"
+        },
+        "summary": {
+          "unlock_trader": "{task} je krok pro odemknutí {trader}.",
+          "impact": "{task} má největší po sobě následující výplatu ve vaší aktuální frontě.",
+          "close": "{task} je jedním z vašich nejbližších dokončených úkolů.",
+          "kappa": "{task} je právě váš nejčistší krok Kappa.",
+          "lightkeeper": "{task} je tvůj nejčistší krok Lightkeeper.",
+          "default": "{task} je nejčistší výhra na vaší nástěnce.",
+          "filter_hidden_one": "Váš aktuální filtr skryje 1 dostupný úkol.",
+          "filter_hidden_other": "Vaše aktuální filtry skrývají {count} dostupné úkoly.",
+          "blocked_requirement": "{task} je zablokován svými požadavky.",
+          "complete": "Dokončili jste každý viditelný úkol v rámci tohoto rozsahu řídicího panelu."
+        },
+        "stat": {
+          "why": "Proč zvítězila",
+          "status": "Stav",
+          "secondary": "Další dobré možnosti",
+          "secondary_actionable": "Použijte je, pokud primární plán není vhodný.",
+          "secondary_blocked": "Toto jsou další nejbližší odemknutí ve vaší frontě.",
+          "secondary_empty": "To je právě teď nejjasnější další krok."
+        },
+        "reason": {
+          "unlock_trader": "Odemkne {trader}",
+          "impact_one": "Otevře 1 navazující úkol",
+          "impact_other": "Otevře sledované úkoly {count}",
+          "close": "Jedno z vašich nejbližších dokončených",
+          "kappa": "Pokročilá Kappa",
+          "lightkeeper": "Zásuvka",
+          "trader": "Zálohy {trader}",
+          "filters": "Aktuální filtry skrývají životaschopné úkoly",
+          "complete": "Všechno viditelné je kompletní",
+          "default": "Okamžitý pokrok"
+        },
+        "proof": {
+          "unlock_trader_one": "Nejvyšší priorita odemknutí: odemkne {trader} s 1 zbývajícím cílem.",
+          "unlock_trader_other": "Nejvyšší priorita odemknutí: odemkne {trader} s cíli {count}.",
+          "impact_one": "Nejvyšší výplata: otevře 1 následný úkol.",
+          "impact_other": "Nejvyšší výplata: otevře {count} návazné úkoly.",
+          "close_one": "Nejrychleji dostupný: zbývá pouze 1 cíl.",
+          "close_other": "Nejrychleji dostupný: zbývá pouze {count} cílů.",
+          "ready_one": "Nejlepší k dispozici: zbývá 1 cíl.",
+          "ready_other": "Nejlepší k dispozici: Zbývá {count} cílů.",
+          "ready_zero": "Nejlepší k dispozici: připravte se k zapnutí nyní.",
+          "kappa_one": "Nejlepší vývoj speciálního řetězce: Kappa pokračuje s 1 cílem.",
+          "kappa_other": "Nejlepší postup speciálního řetězce: Zbývá pokrok Kappa s cíli {count}.",
+          "lightkeeper_one": "Nejlepší vývoj speciálního řetězce: Zbývá Lightkeeper s 1 cílem.",
+          "lightkeeper_other": "Zbývá nejlepší vývoj speciálního řetězce: Zbývá Lightkeeper s cíli {count}.",
+          "filters_one": "Žádné viditelné možnosti: ve vašich filtrech je skryt 1 dostupný úkol.",
+          "filters_other": "Žádné viditelné možnosti: {count} dostupné úkoly jsou skryty vašimi filtry.",
+          "complete": "V tomto rozsahu hlavního panelu nezůstává žádná viditelná díla."
+        },
+        "status": {
+          "ready_one": "Nyní je připraveno. Zbývá 1 cíl.",
+          "ready_other": "Nyní je připraveno. Zbývá {count} cílů.",
+          "ready_no_objectives": "Připraveno nyní.",
+          "filters": "Upravte své filtry úkolů, abyste odhalili skryté možnosti.",
+          "complete": "Žádné blokování. Nic viditelné není vráceno."
+        },
+        "badge": {
+          "based_on_filters": "Na základě aktuálních filtrů",
+          "hidden_available_one": "Filtry skrývají 1 dostupný úkol",
+          "hidden_available_other": "Filtry skrývají {count} dostupné úkoly"
+        },
+        "cta": {
+          "open_task": "Otevřít úkol",
+          "open_tasks": "Otevřít seznam úkolů"
+        }
+      },
+      "progress": {
+        "title": "Rozdělení postupu",
+        "items": "Položky úkolu",
+        "hideout_items": "Skrývající předměty",
+        "filtered_status_active": "Filtrováno podle nastavení úloh",
+        "filtered_status_inactive": "Použití všech typů úkolů",
+        "filtered_warning_tooltip": "Tyto statistiky sledují vaše nastavení filtru úloh (Kappa, Lightkeeper, i jiné než speciální úkoly)."
+      },
+      "progress_card": {
+        "view_details": "Zobrazit podrobnosti pro {label}",
+        "progress_label": "Průběh {label}"
+      },
+      "milestones": {
+        "title": "Milestones",
+        "halfway": "V polovině cesty",
+        "veteran": "Téměř hotovo",
+        "kappa": {
+          "subtitle": "Získaný kontejner"
+        },
+        "lightkeeper": {
+          "subtitle": "Odemknutí obchodníka"
+        }
+      },
+      "traders": {
+        "title": "Pokrok obchodníka",
+        "view_tasks": "Zobrazit úkoly z {name}",
+        "tasks": "úkoly",
+        "loyalty_level": "Úroveň věrnosti",
+        "reputation": "Reputace",
+        "reputation_input_label": "Reputace vstup",
+        "set_loyalty_level": "Nastavte věrnostní úroveň {level}",
+        "rep_progress_label": "→ LL{level}",
+        "scav_karma": "Scav Karma",
+        "unlock_required": "Vyžadováno odemknutí:",
+        "locked_summary": "Počet uzamčených obchodníků: {count}",
+        "sort": {
+          "aria_label": "Řadit obchodníky",
+          "direction_aria_label": "Přepnout směr řazení"
+        }
+      }
+    },
+    "changelog": {
+      "title": "Seznam změn",
+      "description": "Zobrazit nejnovější aktualizace a změny TarkovTracker.",
+      "loading": "Načítání seznamu změn...",
+      "error": "Nelze načíst seznam změn.",
+      "empty": "Zatím žádné záznamy o změnách.",
+      "load_more": "Načíst více",
+      "types": {
+        "added": "Přidáno",
+        "fixed": "Fixní",
+        "improved": "Vylepšené",
+        "updated": "Aktualizováno",
+        "changed": "Změněno"
+      }
+    },
+    "storyline": {
+      "subtitle": "Sledujte svůj pokrok prostřednictvím kapitol Tarkov příběhů.",
+      "chapters_complete": "kapitoly kompletní",
+      "wip_title": "Probíhá práce",
+      "wip_badge": "WIP",
+      "wip_description": "Tato funkce je stále vytvářena. Obsah a funkce budou rozšiřovány a upravovány v průběhu času, jak budeme pokračovat v organizaci dat. Díky za trpělivost!",
+      "no_data": "Nejsou k dispozici žádné údaje kapitoly storylinu.",
+      "mark_incomplete": "Označit jako nedokončené",
+      "endings": "Koncovky",
+      "ending_progress": "{completed}/{total} známé cíle",
+      "ending_evidence_pending": "Zatím nejsou žádné cíle mapované k tomuto konci.",
+      "partial_data": "Částečné údaje",
+      "partial_data_hint": "Data příběhů na začátku této kapitoly jsou neúplná, takže může existovat více cílů, než je uvedeno v seznamu.",
+      "quest_route_exclusive": "Dokončování jedné z těchto tras je pravidlem druhé.",
+      "quest_route_known_steps_done": "Všechny známé kroky dokončeny",
+      "quest_route_evidence_pending": "Zatím nebyly zachyceny žádné kroky",
+      "quest_route_conflict": "Více než jedna trasa čte jako dokončená; pouze jedna je ve hře možná.",
+      "quest_route_progress": "{completed}/{total} kroky",
+      "stale_progress_one": "1 uložená objektivní známka se již neshoduje s aktuálními daty příběhu a vyžaduje překontrolu.",
+      "stale_progress_other": "{count} Uložené objekty již neodpovídají aktuálním datům příběhu a je třeba je znovu zkontrolovat.",
+      "route_choice": "Volba trasy",
+      "route_chosen": "Trasa vybrána",
+      "route_blocks": "Bloky: {objectives}",
+      "route_blocked_by": "Zablokováno: {objectives}",
+      "route_decision": "Rozhodnutí {index}",
+      "route_choose_one": "Vyberte jednu",
+      "route_required_steps": "Požadované kroky",
+      "route_optional_steps": "Volitelné kroky",
+      "route_selected_hint": "Tato trasa je aktivní.",
+      "route_switch_hint": "Chcete-li přepnout trasy, zrušte zaškrtnutí vybrané trasy.",
+      "route_unlocks_here": "Odemkne zde",
+      "route_unlocks_chapter": "Obuv se zevní podešví z kaučuku nebo plastů",
+      "route_unlocks_estimated": "Odhadované načasování",
+      "route_unlock_map": "Mapa: {name}",
+      "route_unlock_trader": "Obchodník: {name}",
+      "route_unlock_reward": "Odměna: {name}"
+    },
+    "kappa": {
+      "subtitle": "Sledujte svůj postup ke kontejneru Kappa a úkolům Lightkeeper.",
+      "row": {
+        "level_met_aria": "Požadovaná úroveň {required}, vaše úroveň je {current}",
+        "level_unmet_aria": "Vyžaduje úroveň {required}, vaše úroveň je {current}",
+        "level_title": "Požadovaná úroveň {required} (vaše úroveň je {current})",
+        "level_summary": "Úrov. {required} (vaše úroveň je {current})",
+        "trader_level": "{trader} Úrov.{level}",
+        "action_uncomplete": "Označit jako nedokončené",
+        "action_reset_failed": "Zrušit stav selhání",
+        "locked_by": "Vyžaduje: {task}"
+      },
+      "empty": "V tomto seznamu zatím nejsou žádné úkoly.",
+      "summary": {
+        "complete": "dokončeno",
+        "final_goal": "Konečný cíl Kappa"
+      },
+      "trader_selector": {
+        "label": "Vyberte obchodníka"
+      },
+      "trader": {
+        "other": "Ostatní"
+      }
+    },
+    "supporter": {
+      "title": "Podpořit TarkovTracker",
+      "subtitle": "Pomozte udržet chod webu. Každý příspěvek jde přímo na nájemné, vývoj a běžný provoz.",
+      "billing_monthly": "Měsíčně",
+      "billing_6month": "6 měsíců",
+      "billing_yearly": "Ročně",
+      "most_popular": "Nejoblíbenější",
+      "tier_cta": "Přihlásit se k odběru",
+      "tier_login_cta": "Pro odběr se přihlaste",
+      "tier_change_cta": "Změnit tarif v portálu pro správu plateb",
+      "current_tier_badge": "Aktuální úroveň",
+      "tier_scav_name": "Šcav",
+      "tier_scav_tagline": "Jen se snažím uživit",
+      "tier_timmy_name": "Timmy",
+      "tier_timmy_tagline": "Učím se tomu",
+      "tier_chad_name": "Chad",
+      "tier_chad_tagline": "Skutečný podporovatel-veterán",
+      "perk_badge": "Odznak podporovatele",
+      "perk_discord": "Role podporovatele na Discordu (propojte účet a připojte se k našemu serveru)",
+      "perk_tier_role": "Role úrovně {tier} na Discordu",
+      "perk_early_access": "Předčasný přístup k novým funkcím",
+      "perk_priority_support": "Prioritní podpora",
+      "perk_feature_voting": "Priorita při hlasování o funkcích",
+      "one_time_title": "Jednorázový příspěvek",
+      "one_time_subtitle": "Nechcete se přihlásit k odběru? Pošlete jednorázový dar ve výši {min}.",
+      "one_time_cover_fees": "Pokrýt poplatky Stripe",
+      "one_time_fee_amount": "Poplatky ve výši {fees}",
+      "one_time_amount_field_label": "Částka příspěvku",
+      "one_time_min_error": "Minimum {min}",
+      "one_time_invalid_error": "Zadejte platnou částku",
+      "one_time_max_error": "Maximum {max}",
+      "one_time_give_cta": "Přispět {total}",
+      "one_time_login_cta": "Pro příspěvek se přihlaste",
+      "one_time_net_note": "Po odečtení poplatků se k nám dostane {net}",
+      "one_time_perks_heading": "Zahrnuje výhody podporovatele",
+      "one_time_fee_transparency": "Poplatky Stripe (2.9% + $0.30) se zobrazí před platbou.",
+      "perk_api_rate_limit": "Vyšší denní kvóty čtení a zápisu přes API",
+      "perk_subscription_retention": "Osvobození od rutinního vyčištění při aktivním kvalifikovaném předplatném",
+      "perk_one_time_retention": "Jednoleté neaktivitní okno s kvalifikovanou podporou",
+      "billing_summary": "Předplatné se automaticky obnovují ve vybraném intervalu. Zrušte budoucí obnovení kdykoliv. Jednorázové příspěvky se neobnovují.",
+      "policies_title": "Podpora na pohled",
+      "terms_summary": "Podpořte tento bezplatný projekt. Perky se mohou změnit a nejsou zaručeny. Platby jsou obecně nevratné, s výhradou platných právních předpisů.",
+      "payment_terms_link": "Podmínky platby, zrušení a vrácení peněz",
+      "retention_summary": "Kvalifikovaná podpora rozšiřuje okno rutinní nečinnosti; aktivní kvalifikované předplatitelé jsou osvobozeni. Náhrady a náboje ovlivňují způsobilost. Toto není záruka uložení nebo ochrany před smazáním jiného účtu.",
+      "retention_terms_link": "Úplné podmínky pro uchovávání účtu",
+      "privacy_summary": "Stripe zpracovává platby. Uchováváme omezené záznamy plateb a podporujících pro správu vaší podpory. Naše Zásady ochrany osobních údajů vysvětlují používání dat, uchovávání dat a vaše práva.",
+      "login_required_warning": "Pro získání výhod podporovatele musíte být přihlášeni.",
+      "price_to_us": "Připadne nám",
+      "price_per_month_suffix": "/měs.",
+      "price_stripe_fees": "Poplatky Stripe",
+      "billed_every_label": "Účtováno každých {label}",
+      "savings_note": "Ušetříte {amount} oproti měsíční platbě",
+      "kofi_deprecation_title": "Ko-fi (záložní možnost)",
+      "kofi_deprecation_detail": "Předplatná a jednorázové příspěvky výše nyní probíhají přes Stripe, což znamená nižší poplatky a větší část vaší podpory se dostane přímo k nám. Ko-fi zůstává k dispozici jako záloha pouze pro jednorázová přání.",
+      "alt_payments_title": "Další způsoby plateb již brzy",
+      "alt_payments_coming_soon": "Pracujeme na přidání dalších možností plateb, aby každý mohl přispět způsobem, který mu nejlépe vyhovuje.",
+      "alt_payment_crypto": "Kryptoměny",
+      "alt_payment_gift_cards": "Dárkové karty",
+      "alt_payments_more": "A další",
+      "checkout_error_title": "Platební transakce selhala",
+      "checkout_error_generic": "Platbu se nepodařilo zahájit. Zkuste to prosím za okamžik.",
+      "manage_subscription_cta": "Spravovat předplatné",
+      "upgrade_cta": "Vyberte si úroveň",
+      "portal_error_title": "Platební portál se nepodařilo otevřít",
+      "portal_error_generic": "Platební portál se nepodařilo otevřít. Zkuste to prosím znovu.",
+      "status_active_subscription": "Aktivní předplatné",
+      "status_active_one_time": "Aktivní podporovatel",
+      "status_past_due": "Platba je po splatnosti",
+      "status_cancelled": "Předplatné zrušeno",
+      "status_expired": "Předplatné vypršelo",
+      "status_inactive": "Neaktivní podporovatel",
+      "status_summary_inactive": "Vaše podpora vypršela. Obnovte výhody výběrem úrovně níže.",
+      "status_summary_renews": "Obnovuje se {date}. Úroveň můžete kdykoli změnit nebo předplatné zrušit.",
+      "status_summary_cancelled_until": "Přístup pokračuje do {date}. Poté skončí.",
+      "status_summary_subscription": "Děkujeme, že nás podporujete. Platby můžete kdykoli spravovat.",
+      "status_summary_one_time": "Děkujeme za jednorázový příspěvek.",
+      "status_summary_one_time_until": "Výhody jsou aktivní do {date}.",
+      "thanks_subscription_title": "Vítejte mezi námi!",
+      "thanks_subscription_description": "Vaše předplatné se aktivuje. Odznak podporovatelské úrovně se brzy zobrazí.",
+      "thanks_one_time_title": "Děkujeme za vaši podporu!",
+      "thanks_one_time_description": "Váš příspěvek byl úspěšně zpracován. Může chvíli trvat, než se zobrazí na vašem účtu.",
+      "one_time_amount_label": "Částka jednorázového příspěvku v USD",
+      "billing_6month_interval": "6 měsíců",
+      "billing_yearly_interval": "rok"
+    },
+    "tasks": {
+      "primary_views": {
+        "graph": "Graf"
+      },
+      "graph": {
+        "focus_mode_active": "Zobrazuji řetězec závislosti pro {taskName}",
+        "isolate_chain": "Izolovaný řetězec",
+        "show_context": "Zobrazit kontext",
+        "no_tasks": "Pro tohoto obchodníka nebyly nalezeny žádné úkoly.",
+        "mobile_unavailable": "Graf má nejlepší zkušenosti na širší obrazovce.",
+        "legend": "Legenda",
+        "flow_start": "Spustit (bez prereqs)",
+        "flow_end": "Konec (bez následných kroků)",
+        "flow_direction": "Tok úkolů → konec",
+        "keyboard_controls_title": "Ovládání klávesnice",
+        "keyboard_pan": "Pancíř",
+        "keyboard_zoom": "Přiblížení",
+        "keyboard_reset": "Obnovit zobrazení",
+        "alpha_notice": "Zobrazení grafu je v alfě. Rozložení a funkce se mohou často měnit, jakmile ho vylepšíme.",
+        "resize_handle": "Změnit velikost grafu"
+      },
+      "user_views": {
+        "yourself": "Sám"
+      },
+      "search": {
+        "placeholder": "Hledat...",
+        "aria_label": "Hledat úkoly"
+      },
+      "sort": {
+        "none": "Výchozí objednávka",
+        "impact": "Dopad",
+        "alphabetical": "Abecedně",
+        "level": "Požadovaná úroveň",
+        "trader": "Příkaz obchodníka",
+        "teammates": "K dispozici pro týmové spolupracovníky",
+        "xp": "XP Odměna",
+        "ascending": "Vzestupně",
+        "descending": "sestupně",
+        "aria_label": "Třídit úkoly",
+        "progression": "Pokrok"
+      },
+      "settings": {
+        "title": "Nastavení úkolu",
+        "tabs": {
+          "filters": "Filtry úkolů",
+          "filter_bar": "Filtrovat lištu",
+          "advanced": "Rozšířené"
+        },
+        "filters": {
+          "hint": "Kontrola, které úkoly se zobrazují.",
+          "regular_tasks": "Běžné úkoly",
+          "kappa_required": "Vyžadována Kappa",
+          "lightkeeper_required": "Vyžadován maják",
+          "team_shared_only": "Pouze sdílený tým",
+          "has_required_keys": "Pouze úkoly s klíči",
+          "show_global_tasks": "Zobrazit globální úkoly na mapě",
+          "impact_respects_filters": "Filtry úloh při určování dopadu",
+          "hide_completed_map_objectives": "Skrýt vyplněné mapové úkoly"
+        },
+        "appearance": {
+          "hint": "Vyladit vzhled karet úkolů.",
+          "required_labels": "Štítky \"Povinné\"",
+          "experience_rewards": "Zkušenosti odměn",
+          "next_tasks": "Další úkoly",
+          "previous_tasks": "Předchozí úkoly",
+          "collapse_completed_objectives": "Sbalit cíle při dokončených úkolech"
+        },
+        "filter_bar": {
+          "hint": "Zvolte, zda zobrazit nebo schovat stavové filtry.",
+          "all_filter": "Všechny filtry",
+          "all_filter_hint": "Zobrazit všechny úkoly bez ohledu na stav.",
+          "available_filter": "Dostupný filtr",
+          "available_filter_hint": "Úkoly, které můžete na základě své úrovně a splněných podmínek začít ihned.",
+          "locked_filter": "Uzamčený filtr",
+          "locked_filter_hint": "Úkoly zablokované úrovní, reputací u obchodníka nebo předchozími úkoly.",
+          "completed_filter": "Dokončený filtr",
+          "completed_filter_hint": "Úkoly, které jste již dokončili.",
+          "failed_filter": "Filtr selhal",
+          "failed_filter_hint": "Úkoly, které selhaly kvůli nesplněným podmínkám."
+        },
+        "advanced": {
+          "manual_fail_actions": "Manuální neúspěšná akce",
+          "failed_tasks_label": "Neúspěšné úkoly",
+          "repair_failed": "Oprava selhala",
+          "repair_failed_confirm": "Oprava selhala odstraněním neúspěšných příznaků, které nejsou podporovány aktuálními podmínkami selhání?",
+          "repair_failed_done": "U úloh {count} se stav nezdařil.",
+          "repair_failed_error": "Nepodařilo se opravit úkoly",
+          "repair_failed_action": "Opravit"
+        }
+      },
+      "no_tasks_found": "Nebyly nalezeny žádné úkoly. Zkuste změnit filtry nebo aktualizovat úroveň.",
+      "no_tasks_found_description": "Upravte své filtry nebo požadavky na úroveň pro zobrazení dostupných úkolů.",
+      "loading": "Načítání úkolů",
+      "map": {
+        "resize_handle": "Změnit velikost výšky mapy",
+        "show_map": "Zobrazit mapu",
+        "hide_map": "Skrýt mapu",
+        "fullscreen_label": "Celá obrazovka",
+        "required_items": "Požadované položky",
+        "required_keys": "Požadované klíče",
+        "required_items_summary": "Požadované položky pro aktivní úkoly",
+        "required_keys_summary": "Požadované klíče pro aktivní úkoly",
+        "active_tasks_group": "Aktivní úkoly",
+        "time_period": {
+          "dawn": "Úsvit",
+          "day": "Den",
+          "dusk": "Dusek",
+          "night": "Noc",
+          "default": "Čas"
+        },
+        "map_complete_tasks_hidden": "{count} úkoly skryté na této mapě.",
+        "map_complete_tasks_showing": "Úlohy úplné {count} na mapě zobrazené na této mapě.",
+        "map_complete_tasks_toggle_show": "Zobrazit skryté",
+        "map_complete_tasks_toggle_hide": "Skrýt mapu kompletní",
+        "map_hidden_hint": "Mapa skrytá — klikněte pro zobrazení",
+        "raid_time_tooltip": "Aktuální čas nájezdu ve hře",
+        "raid_plan": {
+          "title": "Úkoly na mapě",
+          "summary_all": "Zobrazuji vše {total}",
+          "summary_hidden": "{hidden} z {total} skryto",
+          "choose_quests": "Vybrat úlohy",
+          "show_all": "Zobrazit vše",
+          "popover_description": "Zrušte zaškrtnutí úkolů, které nebudeš spouštět, abys je vymazal z mapy. \"Pouze skryje vše ostatní.",
+          "only": "Pouze",
+          "show_only_named": "Zobrazit pouze {name} na mapě",
+          "show_only_quest": "Zobrazit pouze tento úkol na mapě",
+          "hide_quest": "Skrýt z mapy",
+          "show_quest": "Zobrazit na mapě",
+          "all_hidden_hint": "Každý úkol na této mapě je skrytý. Použijte Zobrazit všechny, abyste je vrátili.",
+          "hidden_section_title": "Skrytý z mapy ({count})",
+          "hidden_section_description": "Stále sledováno, prostě není vykresleno na mapě.",
+          "hidden_section_expand": "Zobrazit skryté úkoly",
+          "hidden_section_collapse": "Sbalit skryté úlohy"
+        }
+      },
+      "pinned_tasks_section": "Připnuté úkoly",
+      "focused_task_section": "Zaměřený úkol",
+      "focused_task_description": "Otevřeno z odkazu úlohy, abyste přesně viděli, kde chcete pokračovat.",
+      "global_tasks_section": "Globální úkoly",
+      "questcard": {
+        "pin_task": "Připnout úkol",
+        "unpin_task": "Unpin task",
+        "level": "Úrovně: {count}",
+        "level_badge": "Lv {count}",
+        "fence_rep_badge": "Plot {rep}",
+        "fence_rep_tooltip": "Vyžaduje reputaci {rep}",
+        "trader_level_tooltip": "Vyžaduje {trader} úroveň věrnosti {level}",
+        "trader_level_badge": "{trader} LL{level}",
+        "wiki": "Wiki stránka",
+        "locked_before": "Opravit úkoly: {count}",
+        "unlocks_next": "Odemkne další",
+        "copy_task_link": "Kopírovat odkaz na úkol",
+        "copy_key_name": "Kopírovat název klíče",
+        "report_data_issue": "Nahlásit problém s daty",
+        "tarkov_dev_logo": "Tarkov.dev logo",
+        "view_task_on_wiki": "Zobrazit {name} na Wiki",
+        "hand_over": "bubble raider",
+        "hand_over_fir": "Ruka nalezena při útoku",
+        "decrease": "Snížit",
+        "increase": "Zvýšit",
+        "uncomplete": "Nedokončeno",
+        "not_completed": "Nedokončeno",
+        "of": "z",
+        "mark_failed": "Označení se nezdařilo",
+        "available_button": "Označit k dispozici",
+        "clear_availability_confirmation": "Vymazat potvrzení dostupnosti ve hře",
+        "uncomplete_button": "Označit jako nedokončené",
+        "reset_item_counts": "Resetovat počet položek",
+        "collapse_task": "Sbalit úkol",
+        "expand_task": "Rozbalit úkol",
+        "reset_item_counts_disabled_complete": "Nedokončete tento úkol pro resetování počtu položek",
+        "reset_item_counts_disabled_failed": "Označit tento úkol jako dostupný pro obnovení počtu položek",
+        "reset_item_counts_disabled_nothing_to_reset": "Neexistují žádné počty položek k obnovení",
+        "status_complete": "Označit {name} jako kompletní",
+        "status_uncomplete": "Označit {name} jako nedokončené",
+        "status_failed": "Označit {name} jako neúspěšný",
+        "status_reset_failed": "Obnovení stavu selhalo pro {name}",
+        "status_available": "Označit všechny předpoklady pro {name} jako dokončené",
+        "undo": "Zpět",
+        "undo_complete": "Nedokončeno {name}",
+        "undo_uncomplete": "Nedokončeno nedokončení {name}",
+        "undo_failed": "Nedošlo k selhání {name}",
+        "undo_reset_failed": "Obnovení stavu pro {name}",
+        "mark_failed_confirm": "Označit tento úkol jako neúspěšný? Toto je pouze pro datové problémy, není doporučeno a může blokovat řetězce úkolů.",
+        "reset_item_counts_confirm": "Obnovit všechny počty položek pro tento úkol?",
+        "failed_because": "Nezdařilo se, protože",
+        "failed_because_status_tooltip": "Automaticky selhalo, když \"{name}\" bylo {status}",
+        "failed_because_unknown": "Selhalo manuálně nebo chybí data",
+        "blocked_because": "Zablokováno, protože",
+        "blocked_because_status_tooltip": "Trvale blokováno — \"{name}\" bylo {status}",
+        "blocked_because_unknown": "Zablokováno předpoklady",
+        "keys_disclaimer_tooltip": "Na základě dat API a ne vždy vyžadovaných. Dveře již mohou být odemčeny. Před nákupem klíčů ověřte ve hře nebo na wiki.",
+        "keys_disclaimer_aria": "Odmítnutí vyžadovaných kláves",
+        "keys_or": "nebo",
+        "equipment_disclaimer_tooltip": "Zvláštní vybavení, které musí být zabrzděno, aby byl tento cíl naplněn.",
+        "equipment_disclaimer_aria": "Odmítnutí požadovaného vybavení",
+        "copy_equipment_name": "Kopírovat název zařízení",
+        "requirement_status_active": "aktivní/přijaté",
+        "requirement_status_available": "k dispozici",
+        "requirement_status_not_started": "není spuštěno",
+        "requires_must_be": "musí být {status}",
+        "requires_currently": "aktuálně {status}",
+        "requires_tooltip_action": "{action} \"{name}\" k odemčení tohoto úkolu",
+        "requires_tooltip_conflict": "\"{name}\" je {current} , ale potřebuje {expected} — tento úkol může být trvale uzamčen",
+        "requires_progress": "{completed} z {total} dokončených předpokladů",
+        "requires_progress_tooltip": "Další: {tasks}",
+        "requires_progress_tooltip_overflow": "Další: {tasks}a {count} další",
+        "objectives_hidden": "{count} cíle nejsou na této mapě ({uncompleted} nedokončeno)",
+        "needed_by": "Potřebuje: {names}",
+        "unlocks_next_tooltip": "Počet úkolů, které budou dostupné po dokončení tohoto úkolu",
+        "impact_tooltip": "Počet nedokončených úkolů, které závisejí na dokončení tohoto úkolu",
+        "reward_items": "Položky:",
+        "unlocks_purchase": "Odemkne nákup:",
+        "blocked_tooltip": "Tento úkol je trvale zablokován a nemůže být nikdy dokončen kvůli jiným úlohám",
+        "edition_exclusive_tooltip": "Tento úkol je dostupný pouze hráčům s edicí {editions}",
+        "any_map": "Jakýkoliv",
+        "global_task_tooltip": "Tento úkol lze dokončit na libovolné mapě",
+        "jump_to_map": "Přejít na mapu",
+        "any_location_tooltip": "Úkol může být dokončen na jakékoliv mapě",
+        "click_to_edit": "Kliknutím upravíte",
+        "find": "Najít",
+        "find_and_hand_over": "Najít a přejít",
+        "find_and_hand_over_fir": "Najít a objevit se při útoku",
+        "find_fir": "Najít v razii",
+        "items_count": "{count} položky",
+        "kappa_tooltip": "Tento úkol je vyžadován pro získání zabezpečené kontejneru Kappa",
+        "level_badge_tooltip": "Pro odemknutí tohoto úkolu je vyžadována minimální úroveň {level}",
+        "lightkeeper_tooltip": "Tento úkol je vyžadován k odemčení obchodníka Lightkeeper",
+        "alternatives_tooltip": "Tento úkol má alternativní možnosti ({count}) – dokončit stačí pouze jednu",
+        "alternatives_badge": "{count} alternativ",
+        "location_tooltip": "Cíle úkolu jsou na {map}",
+        "next_tasks": "Další úkol(y):",
+        "open_item_on_tarkov_dev": "Otevřít {name} na tarkov.dev",
+        "previous_tasks": "Předchozí úkol(y):",
+        "progress": "Postup {completed}/{total}",
+        "rewards": "Odměny",
+        "unlocks_count": "Odemkne {count}",
+        "trader_requirement_badge": "{trader} {kind} {comparison} {value}",
+        "loyalty_level": "LL",
+        "reputation": "Odpověď"
+      },
+      "blockers": {
+        "player_level": "Úroveň hráče {comparison} {required} je vyžadována (aktuální: {current}).",
+        "trader_level": "{trader} Věrnostní úroveň {comparison} {required} vyžadována (aktuální: {current}).",
+        "trader_reputation": "{trader} reputace {comparison} {required} vyžadována (aktuální: {current}).",
+        "prerequisite": "Seznamte se s požadovanými stavy úkolů: {tasks}.",
+        "story_route": "Seznamte se s požadovanými stavy úkolu pro {tasks}nebo postupujte v jedné z kapitol příběhu: {chapters}.",
+        "failed_branch": "Zablokováno selháním úkolu: {task}.",
+        "faction": "K dispozici na {faction} znaků.",
+        "trader_unlock": "Odemknout {trader} dokončením {task}.",
+        "prestige": "Vyžaduje Prestige {required} (aktuální: {current}).",
+        "global_variable": "Hodnota postupu serveru {comparison} {required} je vyžadována (aktuální: {current}).",
+        "global_variable_unknown": "Vyžaduje vývoj serveru {comparison} {required}. Vaše aktuální hodnota není k dispozici pro tracker. Použít označení k dispozici pouze v případě, že je tento úkol dostupný ve hře; žádné čítače nebudou označeny jako úplné.",
+        "task_counter": "Vyžaduje {comparison} {required} dokončených úkolů od tohoto obchodníka úrovně věrnosti (dokončeno: {current}). Pokud je tento úkol již k dispozici ve hře, použijte známku dostupnou.",
+        "dialogue": "Vyžaduje konverzaci obchodníka ve hře. Použijte známku k dispozici až po potvrzení tohoto úkolu ve hře.",
+        "story_objective": "Dokončete cíl příběhu \"{objective}\" ({chapter}).",
+        "unknown": "Data požadavků jsou nedostupná nebo nepodporovaná. Dostupnost nemůže být potvrzena.",
+        "cycle": "Předpokladový řetězec obsahuje cyklus. Dostupnost nemůže být potvrzena.",
+        "complete": "Tento úkol je dokončen.",
+        "failed": "Tento úkol se nezdařil.",
+        "disabled": "Tento úkol je zakázán.",
+        "task_status": "{task} ({status})",
+        "status_complete": "dokončeno",
+        "status_failed": "selhalo",
+        "status_active": "aktivní nebo přijaté",
+        "status_unknown": "neznámý stav",
+        "status_or": " nebo "
+      }
+    },
+    "hideout": {
+      "loading": "Načítání dat skrytí",
+      "station_link_label": "Přejít na {name}",
+      "no_stations_found": "Nebyly nalezeny žádné stanice. Zkuste změnit filtry.",
+      "collapse_completed": "Sbalit dokončené stanice",
+      "sort": {
+        "ready_first": "Řadit připraveno k první sestavení"
+      },
+      "prereq_filters": {
+        "title": "Požadavky na dostupnost",
+        "station_levels": "Vyžadovat úrovně stanice",
+        "skill_levels": "Požadovat úrovně dovedností",
+        "trader_loyalty": "Vyžadovat věrnost obchodníkovi",
+        "confirm_title": "Povolit požadavky na dostupnost?",
+        "confirm_description": "Povolením {requirement} mohou být odstraněny skryté aktualizace, které již nesplňují předpoklady.",
+        "confirm_confirm": "Povolit"
+      },
+      "stationcard": {
+        "level": "K dispozici pro sestavení | Úroveň {count} | Úroveň {count}",
+        "level_not_ready": "Není připraven ke stavbě",
+        "next_level": "Požadavky na další úroveň",
+        "max_level": "Dosáhli jste maximální úrovně stanice",
+        "upgrade_unavailable": "Upgrade není k dispozici",
+        "prerequisites": "Předpoklady",
+        "requirements": {
+          "station": "{stationname} úroveň {level}",
+          "skill": "{skillname} úroveň {level}",
+          "trader": "{tradername} LL{loyaltylevel}"
+        },
+        "game_edition_description": "Základní úroveň stash je určena podle verze hry, kterou vlastníte. Toto můžete změnit v nastavení Trackeru.",
+        "settings_button": "Navštívit nastavení",
+        "upgrade_button": "Sestavit | Úroveň sestavení {level} | Vylepšit na úroveň {level}",
+        "downgrade_button": "Odstranit stanici | Přejít na úroveň {level} | Přejít na úroveň {level}",
+        "status_upgraded": "Vylepšeno {name} na úroveň {level}",
+        "status_downgraded": "Snížení {name} z úrovně {level}",
+        "requirement": {
+          "mark_complete": "Označit jako kompletní ({count})",
+          "mark_incomplete": "Označit jako nedokončené",
+          "set_custom_amount": "Nastavit vlastní množství:"
+        }
+      }
+    },
+    "needed_items": {
+      "loading": "Načítání úkolů a skrytých dat",
+      "search_placeholder": "Hledat položky, úkoly nebo skrývací stanice...",
+      "items": "položky",
+      "empty": "Hledání neodpovídají žádné položky.",
+      "error": "Nelze načíst potřebné položky.",
+      "filters": {
+        "label": "Filtry",
+        "non_fir": "NON-FIR",
+        "hide_owned": "ZOBRAZIT VLASTNÍK",
+        "hide_non_fir_special_equipment_title": "Skrýt speciální zařízení jiné než FIR (např. značky MS2000, Wi-Fi kamery)",
+        "kappa_only": "KAPPA",
+        "kappa_only_tooltip": "Zobrazit pouze položky potřebné pro úkoly Kappa",
+        "kappa_only_disabled_tooltip": "Filtr Kappa se vztahuje pouze na úkoly.",
+        "hide_team_needs": "SKRÝT TEAM NEEDS"
+      },
+      "sort": {
+        "label": "Seřadit",
+        "name": "Název",
+        "category": "Kategorie",
+        "count": "Počet"
+      },
+      "view": {
+        "list": "Zobrazení seznamu",
+        "grid": "Zobrazení mřížky",
+        "combined": "Kombinovaný pohled"
+      },
+      "teammates_needed": "Partneři toto potřebují",
+      "settings": {
+        "title": "Nastavení požadovaných položek"
+      }
+    },
+    "settings": {
+      "card": {
+        "apitokens": {
+          "title": "API tokeny",
+          "new_token_expand": "Vytvořit token",
+          "submit_new_token": "Vytvořit token",
+          "open_api_documentation": "OpenAPI dokumentace",
+          "create_token_success": "Nový API token byl úspěšně vytvořen.",
+          "create_token_error": "Nepodařilo se vytvořit nový API token.",
+          "load_tokens_error": "Nepodařilo se načíst API tokeny.",
+          "copy_failed": "Kopírování tokenu se nezdařilo.",
+          "copy_token": "Kopírovat token",
+          "edit_name": "Upravit název tokenu",
+          "edit_name_aria": "Upravit název tokenu pro {name}",
+          "save_name": "Uložit název tokenu",
+          "cancel_name_edit": "Zrušit úpravu názvu tokenu",
+          "name_updated": "Název tokenu byl aktualizován",
+          "name_update_error": "Aktualizace názvu tokenu se nezdařila. Zkuste to prosím znovu.",
+          "token_created": "Token vytvořen",
+          "token_created_description": "Zkopírujte a uložte tento token nyní. Nebudete jej moci znovu zobrazit.",
+          "token_created_close": "Hotovo",
+          "token_copied": "Token zkopírován do schránky",
+          "hide_token": "Skrýt token",
+          "token_revoked": "Token revoked",
+          "token_revoke_error": "Nepodařilo se zrušit token. Zkuste to prosím znovu.",
+          "no_tokens": "Nemáte žádný TarkovTracker API tokeny.",
+          "not_logged_in": "Abyste mohli vytvořit API token, musíte být přihlášeni.",
+          "default_note": "Token bez názvu",
+          "show_token": "Zobrazit token",
+          "token_value_hidden": "Hodnota tokenu skryta v konfiguraci serveru",
+          "token_value_missing": "Hodnota tokenu není k dispozici",
+          "token_value_unavailable": "Zobrazení tokenu hodnoty není k dispozici",
+          "token_value_unavailable_desc": "Vaše aktuální API nezobrazuje hodnoty tokenu pro existující tokeny.",
+          "token_cap_reached": "Byl dosažen limit tokenů",
+          "token_cap_reached_desc": "Můžete mít nejvýše 3 aktivní tokeny API. Pro vytvoření nového zrušte některý stávající token.",
+          "revoke_button": "Revoke",
+          "report": {
+            "load_failed": "Načtení API tokenu se nezdařilo",
+            "create_failed": "Vytvoření API tokenu se nezdařilo",
+            "rename_failed": "Přejmenování tokenu API se nezdařilo",
+            "revoke_failed": "Zrušení API tokenu selhalo"
+          },
+          "list": {
+            "created": "Vytvořeno",
+            "last_used_tooltip": "Naposledy použito: {value}",
+            "never": "Nikdy",
+            "usage_count": "{count} použití",
+            "revoked": "Revoked"
+          },
+          "form": {
+            "gamemode_title": "Herní režim",
+            "permissions_title": "Práva",
+            "note_label": "Štítek nebo poznámka",
+            "note_placeholder": "např. překrytí streameru, klan bot, osobní aplikace"
+          }
+        }
+      }
+    },
+    "team": {
+      "page_description": "Pozvěte týmové spoluhráče, zvolte, jaký tým postupuje a sledujte společně.",
+      "invite": {
+        "title": "Odkaz na pozvání",
+        "subtitle": "Sdílejte svůj tým s důvěryhodnými týmovými spolupracovníky.",
+        "link_label": "URL pozvánky týmu",
+        "helper": "Kdokoli s tímto odkazem se může připojit k vašemu týmu.",
+        "show": "Zobrazit odkaz",
+        "hide": "Skrýt odkaz",
+        "copy": "Kopírovat odkaz",
+        "copied": "Zkopírováno!"
+      },
+      "members": {
+        "title": "Členové ({count})",
+        "no_members": "Zatím žádní členové tohoto týmu. Sdílejte svůj odkaz pro přidání týmových spolupracovníků.",
+        "alone": "Jste zde sami — sdílejte svůj pozvánkový odkaz pro přidání týmových spolupracovníků.",
+        "copy_invite": "Kopírovat pozvánku"
+      },
+      "visibility": {
+        "title": "Nastavení viditelnosti",
+        "description": "Kontrolujte průběh týmů na vašem trackeru.",
+        "items_section": "Položky",
+        "show_tasks": "Zobrazit úkoly členů týmu",
+        "show_items": "Zobrazit potřebné položky členů týmu",
+        "show_non_fir": "Zobrazit nevyžadované položky",
+        "show_hideout": "Zobrazit potřebné položky",
+        "show_maps": "Zobrazit mapové cíle členů týmu"
+      },
+      "danger_zone": {
+        "title": "Nebezpečná zóna",
+        "disband_description": "Zrušení odebere tým pro všechny členy. Tuto akci nelze vrátit zpět.",
+        "leave_description": "Necháte-li vás odebrat z tohoto týmu. Váš postup zůstává na vašem účtu.",
+        "disband": "Spárovat tým",
+        "leave": "Opustit tým",
+        "confirm_disband_title": "Zrušit tým?",
+        "confirm_disband_description": "Tím se odstraní tým a jeho členství pro všechny. Tuto akci nelze vrátit zpět.",
+        "confirm_leave_title": "Opustit týmu?",
+        "confirm_leave_description": "Opustíte tento tým a přestanete sdílet pokrok s jeho členy.",
+        "confirm_disband": "Ano, rozštěpovat tým",
+        "confirm_leave": "Ano, odejít z týmu",
+        "disband_success": "Tým úspěšně odstraněn.",
+        "disband_error": "Nepodařilo se rozptýlit tým.",
+        "action_error": "Nelze aktualizovat členství v týmu."
+      },
+      "card": {
+        "manageteam": {
+          "membercard": {
+            "this_is_you": "(Toto je vy)",
+            "owner": "Vlastník",
+            "taskscomplete": "{completed}/{total} úkoly dokončeny",
+            "kick_success": "Teamy úspěšně vyhozeny.",
+            "kick_error": "Chyba při vybírání týmového partnera.",
+            "level_badge_alt": "Úroveň {level} odznak",
+            "hide_progress": "Skrýt postup {name}od mě",
+            "show_progress": "Zobrazit postup {name}pro mě",
+            "enable_team_tasks": "Zobrazit úkoly členů týmu před změnou jednotlivého člena",
+            "remove_member": "Odstranit {name} z týmu"
+          }
+        },
+        "myteam": {
+          "create_new_team": "Vytvořit nový tým",
+          "create_team_success": "Nový tým byl úspěšně vytvořen.",
+          "create_team_error": "Nepodařilo se vytvořit nový tým.",
+          "create_team_error_ui_update": "Stav týmu se neaktualizoval. Prosím obnovte a uvidíte váš tým nebo to zkuste znovu.",
+          "leave_team_success": "Úspěšně opustil váš tým.",
+          "leave_team_error": "Nepodařilo se opustit váš tým.",
+          "already_in_team": "Již jste v týmu {mode} . Nechte svůj aktuální tým.",
+          "no_team": "V současné době nejste v týmu.",
+          "login_required": "Přihlaste se k vytvoření týmu nebo spravujte pozvánku vašeho týmu.",
+          "user_not_authenticated": "Uživatel není ověřen."
+        },
+        "teaminvite": {
+          "description": "Obdrželi jste pozvánku do TarkovTrackeru týmu",
+          "decline": "Odmítnout"
+        }
+      }
+    },
+    "credits": {
+      "sections": {
+        "original_creator": "Původní tvůrce projektu:",
+        "beta_testers": "Nuxt - Uzavřené Beta Testery:",
+        "contributors": "Open source přispěvatelé:"
+      },
+      "notes": {
+        "alphabetical": "Uvádí se abecedně; pořadí neodráží příspěvek.",
+        "contributors": "Přispěvatelé GitHub jsou seřazeni podle počtu příspěvků; účty botů jsou vyloučeny."
+      },
+      "contributors": {
+        "loading": "Načítání přispěvatelů...",
+        "error": "Momentálně nelze načíst přispěvatele.",
+        "empty": "Zatím nebyli nalezeni žádní přispěvatelé.",
+        "contributions": "{count} příspěvky",
+        "total": "{count} přispěvatel | {count} přispěvatelé"
+      },
+      "team_link": "Zachováno týmem TarkovTracker – setkejte se s nimi na stránce O"
+    },
+    "about": {
+      "title": "O TarkovTrackeru",
+      "intro": "TarkovTracker je zdarma, open source sledování pokroku pro útěk z Tarkovu. Udržuje tvůj proces a storyline pokrok, skrývá vylepšení a požadavky na předměty na jednom místě a zůstane aktuální s komunitně udržovanými herními daty. Projekt spravuje malý dobrovolnický tým s pomocí open source přispěvatelů.",
+      "team": {
+        "summary": "TarkovTracker.org je udržován malým dobrovolnickým týmem. Lidé níže udržují stránku běžet a podporují Discord komunitu.",
+        "core_heading": "Hlavní tým",
+        "support_heading": "Discord podpora"
+      },
+      "partners": {
+        "heading": "Partneři a ekosystém",
+        "summary": "TarkovTracker staví na komunitních projektech. Tito správci provozují nezávislé nástroje a zdroje dat, na které tracker spoléhá."
+      },
+      "help": {
+        "heading": "Jak získat pomoc",
+        "routing": "Pro nejrychlejší odpověď použijte workflow specifické podpory kanálu v našem Discordu namísto přímých zpráv pro členy týmu. Reprodukovatelné chyby a nápady patří do GitHubu a bezpečnostní zprávy procházejí naší soukromou bezpečnostní politikou.",
+        "discord": "Komunitní podpora na Discordu",
+        "github_issues": "Nahlásit chybu nebo požádat o funkci na GitHubu",
+        "security": "Nahlásit bezpečnostní problém (soukromý)",
+        "credits_link": "Beta testery a open source přispěvatelé – viz kredity"
+      },
+      "github_profile": "GitHub profile",
+      "roles": {
+        "core_owner": "Hlavní vlastník, správce a vývojář",
+        "discord_owner_developer": "Vlastník Discord serveru, vývojář a správce TrackerBot",
+        "core_support": "Hlavní podpůrný personál",
+        "discord_support": "Discord obecná podpora",
+        "tarkov_dev_maintainer": "Správce Tarkov.dev",
+        "ratscanner_maintainer": "Vlastník a správce RatScanner"
+      },
+      "projects": {
+        "tarkov_dev": "Tarkov.dev",
+        "ratscanner": "Skener hodnocení"
+      }
+    },
+    "login": {
+      "subtitle": "Pro přístup k vašemu účtu se přihlaste",
+      "continue_twitch": "Pokračovat přes Twitch",
+      "continue_discord": "Pokračovat s Discord",
+      "continue_google": "Pokračovat pomocí Google",
+      "continue_github": "Pokračovat s GitHub",
+      "popup_blocked_title": "Blokované vyskakovací okno",
+      "popup_blocked_description": "Váš prohlížeč zablokoval přihlašovací okno. Probíhá přesměrování nyní...",
+      "authenticating": "Ověřování identity...",
+      "authenticating_description": "Počkejte, dokud dokončíme přihlášení.",
+      "error_title": "Přihlášení se nezdařilo",
+      "error_description": "Ověření bylo zrušeno nebo se nezdařilo. Zkuste to prosím znovu.",
+      "success_title": "Přihlášen",
+      "success_description": "Přihlášen pomocí {provider}.",
+      "login_options": "Možnosti přihlášení"
+    },
+    "profile": {
+      "shared_player": "Sdílený hráč",
+      "shared_view": "Sdílené zobrazení",
+      "loading_shared_profile": "Načítání sdíleného profilu...",
+      "loading_data": "Načítání metadat pokroku...",
+      "shared_private": "Tento sdílený profil je soukromý.",
+      "shared_not_found": "Sdílený profil nebyl nalezen.",
+      "shared_unavailable": "Sdílený profil není momentálně k dispozici.",
+      "shared_load_failed": "Nepodařilo se načíst sdílený profil.",
+      "shared_mode_notice": "Zobrazení sdíleného postupu pro tento režim.",
+      "share_private_intro": "Tento režim je soukromý. Povolit sdílení v ",
+      "account_settings_link": "Nastavení účtu",
+      "share_private_outro": " zveřejnit tento odkaz.",
+      "share_public_enabled": "Tento režim je veřejný. Každý, kdo má odkaz, jej může zobrazit.",
+      "share_private_enabled": "Tento režim je soukromý.",
+      "mode_toggle_label": "Vyberte režim profilu",
+      "copy_snapshot": "Kopírovat snímek",
+      "view_tasks": "Otevřené úkoly",
+      "story_no_tasks": "Čekám na metadata úkolů, abyste vytvořili tvůj příběh.",
+      "story_start": "Profil {mode} je právě spuštěn.",
+      "story_complete": "Hlavní úložiště úkolů dokončeno.",
+      "story_late": "Vstupuji do oblouku postupu při pozdějším vymazání.",
+      "story_mid": "Vytvářejí se střední mazaná hybnost.",
+      "story_early": "Počáteční postup s konstantní hybností.",
+      "story_paragraph_empty": "{name} zatím nezaznamenal pokrok v čase {mode}.",
+      "story_paragraph": "{name} byl aktivní v {mode} asi po dobu {active_days} dní, s {journey_days} dny mezi prvním a nejnovějším sledovaným pokrokem.",
+      "next_milestone_done": "Dosáhli jsme všech milníků dokončení úkolů.",
+      "next_milestone_value": "{remaining}% zbývá dosáhnout dokončení úkolu {milestone}%.",
+      "no_date": "Zatím žádná data",
+      "level_meta": "Úroveň profilu {mode} a aktivní frakce ({faction})",
+      "tasks_meta": "{remaining} zbývá, {failed} selhalo větve",
+      "objectives_meta": "{completion_pct}% dokončení napříč sledovanými cíli",
+      "hideout_meta": "{completed_parts} dokončil skrytí položky",
+      "achievement_mainline": "Průběh hlavního úkolu",
+      "achievement_objectives": "Cíl dokončen",
+      "no_storyline": "Pro tento profil nejsou k dispozici žádná data o úložišti.",
+      "storyline_auto_start": "Automatické spuštění",
+      "storyline_discovered": "Objeveno",
+      "storyline_objectives_main": "Hlavní cíle",
+      "storyline_objectives_optional": "Nepovinné cíle",
+      "no_hideout": "Pro tento profil nejsou k dispozici žádná data skrýt.",
+      "hideout_item_fallback": "Hideout item",
+      "hideout_module_fallback": "Skrývat upgrade",
+      "level_prefix": "Lv.",
+      "no_tasks": "Pro tento profil nejsou k dispozici žádné úkoly.",
+      "no_objectives": "Žádné cíle",
+      "activity_timeline": "Časová osa činnosti",
+      "timeline_subtitle": "Nedávné události z časových schránek",
+      "timeline_task": "Úkol dokončen",
+      "timeline_failed": "Větev úkolu se nezdařila",
+      "timeline_hideout": "Skrýtovací modul dokončen",
+      "timeline_hideout_item": "Skryjte dodané materiály",
+      "started": "Začínáno",
+      "latest_activity": "Poslední aktivita",
+      "recent_momentum": "7denní Momentum",
+      "recent_momentum_value": "{count} úkoly dokončeny",
+      "no_timeline": "Pro tento režim zatím není nastavena žádná aktivita.",
+      "progress_overview": "Přehled průběhu",
+      "progress_overview_subtitle": "Přehled jízd a pacení",
+      "next_milestone": "Další milník",
+      "total_actions": "Sledované akce",
+      "total_actions_value": "Cíl {count} / položky zaznamenány",
+      "achievements": "Úspěchy",
+      "achievements_subtitle": "Kontrolní stanoviště velkého postupu",
+      "kappa_projection": "Kappa Timeline",
+      "kappa_projection_subtitle": "Ukončená doba trvání nebo odhadovaný čas příjezdu",
+      "kappa_unknown": "Kappa timeline unavailable",
+      "kappa_unknown_detail": "Pro tento profil nebyly zjištěny žádné úkoly Kappa.",
+      "kappa_done": "Kappa dokončena v tomto režimu",
+      "kappa_done_detail": "Dokončeno {total} Kappa úkolů za přibližně {days} dní.",
+      "kappa_done_detail_simple": "Všechny úkoly aplikace Kappa jsou v tomto profilu dokončeny.",
+      "kappa_insufficient": "ETA Kappa potřebuje více historie",
+      "kappa_insufficient_detail": "Dokončete další úkoly s časovým odstupem pro generování ETA.",
+      "kappa_pace_unavailable": "Nedostatek údajů o tempu k odhadnutí.",
+      "kappa_projected_headline": "Odhadovaný Kappa za asi {days_remaining} dní.",
+      "kappa_projected_detail": "Na základě dokončených {sample_count} za {sample_days} dní.",
+      "kappa_floor_note": "Předpoklad byl zvýšen k účtu {critical_path_floor} po sobě jdoucích předpokladů a úrovní bran.",
+      "confidence_high": "Vysoká důvěra",
+      "confidence_medium": "Střední důvěra",
+      "confidence_low": "Nízká důvěra",
+      "estimated_finish": "Odhadovaná konečná úprava",
+      "kappa_remaining": "Zbývá {count}"
+    },
+    "not_found": {
+      "not_found_description": "Omlouváme se, tuto stránku nelze najít!"
+    },
+    "terms_of_service": {
+      "table_of_contents": "Obsah",
+      "index_button": "Rejstřík"
+    },
+    "resources": {
+      "title": "Zdroje a příručky",
+      "subtitle": "Najděte doprovodné aplikace, komunitní nástroje, vývojářské zdroje a příručky, se kterými z TarkovTracker vytěžíte více.",
+      "search_placeholder": "Hledat nástroje a příručky...",
+      "clear_filters": "Zrušit filtry",
+      "no_results": "Vašemu hledání neodpovídají žádné zdroje.",
+      "results_count": "Nalezeno zdrojů: {count}",
+      "results_count_one": "Nalezen 1 zdroj",
+      "filter_label": "Filtrovat zdroje podle kategorie",
+      "more_actions": "Další akce",
+      "suggest_title": "Znáte nějaký užitečný zdroj?",
+      "suggest_description": "Navrhněte komunitní nástroj nebo příručku pro zahrnutí na tuto stránku.",
+      "suggest_cta": "Navrhnout zdroj",
+      "migration_banner": {
+        "title": "Přesouvání z TarkovTracker.io?",
+        "cta": "Přečtěte si návod k migraci"
+      },
+      "categories": {
+        "tarkovtracker_guides": "TarkovTracker.org návody",
+        "companion_apps": "Doprovodné aplikace",
+        "data_and_apis": "Datové a vývojářské nástroje",
+        "calculators_and_reference": "Kalkulačky a reference"
+      },
+      "category_badges": {
+        "tarkovtracker_guides": "Oficiální návod",
+        "companion_apps": "Aplikace pro počítač",
+        "data_and_apis": "Datová platforma",
+        "calculators_and_reference": "Reference"
+      },
+      "actions": {
+        "setup_guide": "Průvodce nastavením",
+        "read_guide": "Přečíst příručku",
+        "open_calculator": "Otevřít kalkulačku",
+        "view_changes": "Zobrazit změny",
+        "open_tool": "Otevřít nástroj",
+        "download_release": "Stáhnout nejnovější verzi"
+      },
+      "back_to_hub": "Zpět ke zdrojům",
+      "breadcrumb": "Navigace na cestě",
+      "guide_label": "Příručka",
+      "on_this_page": "Na této stránce",
+      "compatibility_label": "Kompatibilita",
+      "guide_not_found": "Příručka nebyla nalezena. Při hledaném zdroji možná ještě nemá příručku.",
+      "meta": {
+        "official_guide": "Oficiální průvodce",
+        "maintained_by_team": "Zachováno týmem TarkovTracker.org",
+        "windows": "Windows",
+        "setup_time": "Nastavení za 5 minut",
+        "community_data": "Spravováno komunitou",
+        "web_tool": "Webový nástroj",
+        "companion_app": "Doprovodná aplikace"
+      },
+      "link_types": {
+        "website": "Otevřít web",
+        "project_website": "Web projektu",
+        "github": "Zobrazit zdrojový kód",
+        "discord": "Komunitní podpora",
+        "download": "Stáhnout"
+      },
+      "guide_sections": {
+        "video_walkthrough": "Video průvodce",
+        "troubleshooting": "Řešení potíží",
+        "tips": "Tipy a triky",
+        "faq": "Časté dotazy"
+      },
+      "items": {
+        "tarkovtracker_org_vs_io": {
+          "name": "TarkovTracker.org vs TarkovTracker.io",
+          "description": "Které stránky TarkovTrackeru byste měli použít? Jak se TarkovTracker.org vztahuje k originálnímu webu .io a jak přesunout váš pokrok."
+        },
+        "tarkovdev": {
+          "name": "Tarkov.dev",
+          "description": "Komunitně spravovaná data předmětů, úkolů, obchodníků a trhu pro hráče i vývojáře."
+        },
+        "tarkovmonitor": {
+          "name": "TarkovMonitor",
+          "description": "Číst živá data o raidech a automaticky synchronizovat podporovaný pokrok v TarkovTrackeru."
+        },
+        "ratscanner": {
+          "name": "RatScanner",
+          "description": "Skenovat popisky předmětů ve hře a zobrazit tržní hodnotu, využití při výměnách a souvislost s úkoly."
+        },
+        "cultistcircle": {
+          "name": "CultistCircle",
+          "description": "Vypočítat možné odměny z Kultovního kruhu za předměty, které přidáte."
+        },
+        "tarkovchanges": {
+          "name": "Změny Tarkova",
+          "description": "Prohlédnout změny předmětů, úkolů a herních mechanik mezi aktualizacemi Tarkova."
+        }
+      },
+      "guides": {
+        "tarkovtracker_org_vs_io": {
+          "overview": "TarkovTracker existuje na dvou doménách. TarkovTracker.io je původní lokalita vytvořená zakladatelem projektu TarkovTracker a hostí originální kódovou základnu. TarkovTracker. rg je aktivně udržovaná kontinuita vykonávaná dlouhodobým přispěvatelem a bývalým správcem původního projektu, jako volné a open-source vidlice pod stejnou licencí GNU GPLv3. Tato příručka vysvětluje rozdíly a podporované způsoby, jak obnovit váš pokrok na TarkovTracker.org.",
+          "step_1_title": "Vytvořte si nebo se přihlaste ke svému účtu TarkovTracker.org",
+          "step_1_desc": "Vytvořte si účet TarkovTracker.org nebo se přihlaste k účtu, kde chcete sledovat váš současný postup mazání.",
+          "step_2_title": "Importovat metadata profilu Tarkov.dev",
+          "step_2_desc": "Otevřete Nastavení, vyberte Importy a pomocí importu profilu Tarkov.dev obnovíte podporované detaily profilu, jako je úroveň, frakce a dovednosti.",
+          "step_3_title": "Importujte herní logy EFT",
+          "step_3_desc": "Na téže záložce Importy vyberte složku EFT protokolů pro obnovení startu výpravy a dokončení událostí, které jsou stále přítomny ve vašich místních logech.",
+          "step_4_title": "Ověřit úkoly a skrýt pokrok",
+          "step_4_desc": "Zkontrolujte svůj seznam úkolů a skryjte a pak ručně obnovte postup, který Tarkov.dev a vaše dostupné herní logy nelze obnovit.",
+          "step_5_title": "Připojit podporované doprovodné nástroje",
+          "step_5_desc": "Nastavte TarkovMonitor s novým tokenem čtení z TarkovTracker.org , takže budoucí podporované aktualizace pokroku jdou na váš účet .org.",
+          "faq_1_q": "Jaký je rozdíl mezi TarkovTracker.io a TarkovTracker.org?",
+          "faq_1_a": "TarkovTracker.io je původní stránka. Je poměrně stabilní, ale má známé problémy a není nadále udržována - jeho poslední nasazení bylo v srpnu 2024 a žádný aktivní rozvoj ani podpora neexistuje. TarkovTracker. rg je aktivně udržované fórum: přijímá pravidelné aktualizace, podporuje změny hry po EFT 0.15 a přidává nové funkce. Protože je v aktivním vývoji, může občas mít chyby nebo výpadky, a zatímco usilovně pracujeme na tom, abychom tomu zabránili, ztrátu dat nelze zcela vyloučit.",
+          "faq_2_q": "Které stránky mám použít?",
+          "faq_2_a": "Použít TarkovTracker.org. Je to jediná verze, která přijímá aktualizace, opravy chyb a podporu aktuálního úniku z obsahu Tarkovu. Nové účty by měly být vždy vytvořeny na TarkovTracker.org.",
+          "faq_3_q": "Jak migruji svůj pokrok z .io na .org?",
+          "faq_3_a": "TarkovTracker.org v současné době neposkytuje přímý import tokenu .io. Vytvořte nebo se přihlašte k vašemu . rg účet, pak použijte podporovaný tarkov.dev profil a EFT herní logy importů v Nastavení. Ověřte úkoly a skrýt pokrok ručně, protože tyto zdroje nemusí obsahovat vše zaznamenané na .io. Pokrok se mezi oběma stránkami nesynchronizuje.",
+          "faq_4_q": "Provozuje tým TarkovTracker.org TarkovTracker.io?",
+          "faq_4_a": "Č. Doména .io a nasazení jsou vlastněny a kontrolovány původním zakladatelem projektu. Nemáme přístup k němu a nemůžeme opravit, aktualizovat ani poskytovat podporu pro nic na .io."
+        },
+        "tarkovdev": {
+          "overview": "Tarkov.dev je páteří ekosystému komunitních dat. Udržuje open-source datovou sadu předmětů, úkolů, obchodníků, stanic ve skrytí a dalšího obsahu, ke které lze přistupovat prostřednictvím bezplatných statických koncových bodů JSON na adrese json.tarkov.dev. Samotný TarkovTracker tyto koncové body využívá k tomu, aby měl aktuální herní data. Vytváříte nástroje, píšete příručky nebo pouze chcete vyhledat statistiky předmětů? Tarkov.dev je autoritativním zdrojem.",
+          "step_1_title": "Prohlížejte web",
+          "step_1_desc": "Navštivte tarkov.dev a vyhledávejte předměty, kontrolujte požadavky na úkoly, prohlížejte sortiment obchodníků a data stanic ve skrytí v přehledném rozhraní bez reklam.",
+          "step_2_title": "Používat JSON API",
+          "step_2_desc": "Jako vývojář nasměrujte svého HTTP klienta na json.tarkov.dev. Katalog koncových bodů najdete na json.tarkov.dev/endpoints. API je bezplatné, nevyžaduje pro čtecí dotazy autentizaci a vrací statické soubory JSON, které můžete lokálně ukládat do mezipaměti.",
+          "step_3_title": "Připojit se ke komunitě",
+          "step_3_desc": "Discord Hideout je centrem pro přispěvovatele dat, vývojáře nástrojů a hlášení chyb. Zde můžete upozornit na zastaralá data nebo k nim přispět.",
+          "tip_1": "JSON koncové body nemají limit požadavků. V produkčních aplikacích ukládejte odpovědi do mezipaměti na klientovi, abyste se vyhnuli redundantním požadavkům.",
+          "tip_2": "Data Tarkov.dev se během sezón resetů často aktualizují. Pokud něco vypadá špatně, může být oprava již v nejnovější datové sadě.",
+          "faq_1_q": "Je API Tarkov.dev zdarma k používání?",
+          "faq_1_a": "Ano, JSON koncové body jsou pro čtecí dotazy zcela zdarma. Běžné používání nevyžaduje API klíč ani ověření.",
+          "faq_2_q": "Jak často se data aktualizují?",
+          "faq_2_a": "Data spravují komunitní přispěvatelé a aktualizují se, jakmile se ve hře objeví změny. Během aktivních resetů mohou být aktualizace i několikrát denně."
+        },
+        "tarkovmonitor": {
+          "overview": "TarkovMonitor je aplikace pro počítač od týmu The Hideout, která sleduje soubory protokolů Escape from Tarkov a dokáže automaticky označit dokončené úkoly v TarkovTrackeru. Také nabízí zvuková upozornění, místní statistiky a volitelnou integraci s webem Tarkov.dev.",
+          "compatibility": "Nechte TarkovMonitor běžet při hraní, aby mohl sledovat nové záznamy v herních protokolech. Nečte paměť hry.",
+          "step_1_title": "Stáhnout TarkovMonitor",
+          "step_1_desc": "Stáhněte nejnovější archiv ZIP systému Windows z oficiální stránky GitHub Releases.",
+          "step_2_title": "Rozbalit a spustit",
+          "step_2_desc": "Rozbalte archiv do trvalého složky a poté spusťte TarkovMonitor.exe. Program nespouštějte přímo uvnitř souboru ZIP.",
+          "step_3_title": "Připojit účet TarkovTracker",
+          "step_3_desc": "V nastavení TarkovMonitoru otevřete sekci integrace s TarkovTracker. V nastavení TarkovTrackeru vytvořte token API s právem čtení a zápisu a vložte jej do TarkovMonitoru.",
+          "step_4_title": "Hrát s otevřeným TarkovMonitorem",
+          "step_4_desc": "Hrajte běžně, zatímco TarkovMonitor zůstává otevřený. Když hra zapíše podporovanou událost o dokončení úkolu do svých protokolů, TarkovMonitor může označit úkol v TarkovTrackeru jako dokončený.",
+          "troubleshooting_1_title": "Pokrok se nesynchronizuje",
+          "troubleshooting_1_desc": "Ujistěte se, že token API má práva čtení a zápisu, nevypršel a TarkovMonitor používá nejnovější verzi.",
+          "troubleshooting_2_title": "Chybí dřívější pokrok",
+          "troubleshooting_2_desc": "V úvodním nastavení použijte možnost Read Past Logs a poté vyberte správný reset a breakpoint profilu.",
+          "troubleshooting_3_title": "Herní režim vypadá nesprávně",
+          "troubleshooting_3_desc": "Nastavte herní režim v TarkovTrackeru podle režimu, ve kterém hrajete, tedy PvP nebo PvE.",
+          "tip_1": "Vygenerujte token API s právem čtení a zápisu v nastavení TarkovTrackeru. Token pouze pro čtení nemůže aktualizovat pokrok.",
+          "tip_2": "Běžné monitorování zpracovává pouze nové protokoly zapsané, když TarkovMonitor běží.",
+          "faq_1_q": "Je používání TarkovMonitoru bezpečné?",
+          "faq_1_a": "TarkovMonitor sleduje soubory protokolů, které Escape from Tarkov zapisuje místně. Nečte paměť hry a protokoly se během raidu neaktualizují. Jakýkoli nástroj třetí strany s sebou nese určité riziko, proto jej používejte podle vlastního uvážení.",
+          "faq_2_q": "Funguje TarkovMonitor v režimu PvE?",
+          "faq_2_a": "Ano. Podporuje PvP i PvE. Nastavte herní režim v TarkovTrackeru podle režimu, ve kterém hrajete.",
+          "faq_3_q": "Potřebuji k používání TarkovTrackeru TarkovMonitor?",
+          "faq_3_a": "Ne. TarkovTracker funguje plně i s ručním zadáváním. TarkovMonitor pouze automatizuje podporované aktualizace pokroku."
+        },
+        "ratscanner": {
+          "overview": "RatScanner je open-source nástroj pro počítač, který rozpoznává předměty z Escape from Tarkov ze snímků obrazovky a zobrazuje jejich data v překryvu. Pracuje externě a neodkazuje se do paměti hry.",
+          "compatibility": "Použijte bezokenní režim nebo režim okna. Exkluzivní plná obrazovka může zabránit zobrazení překryvu.",
+          "step_1_title": "Stáhnout nejnovější ZIP",
+          "step_1_desc": "Stáhněte RatScanner.zip z oficiální stránky GitHub Releases. Web projektu může zaostávat za nejnovějším vydáním.",
+          "step_2_title": "Rozbalit a spustit",
+          "step_2_desc": "Rozbalte ZIP do trvalého složky a poté spusťte RatScanner.exe. Archiv nespouštějte přímo zevnitř.",
+          "step_3_title": "Nastavit překryv",
+          "step_3_desc": "Vyberte údaje předmětu zobrazené v překryvu, nastavte průhlednost a potvrďte klávesové zkratky skenování.",
+          "step_4_title": "Naskenovat předmět",
+          "step_4_desc": "Skenování podle názvu: otevřete okno inspekce předmětu a klikněte na lupu. Skenování ikony: podržte nastavenou modifikační klávesu a klikněte levým tlačítkem na předmět. RatScanner pořídí snímek předmětu a zobrazí jeho data.",
+          "troubleshooting_1_title": "RatScanner se nespouští",
+          "troubleshooting_1_desc": "Nejprve rozbalte celou složku vydání a poté spusťte spustitelný soubor z ní. Pokud jej Windows či antivirus zablokuje, ověřte, že pochází z oficiálního repozitáře.",
+          "troubleshooting_2_title": "Není rozpoznán žádný předmět",
+          "troubleshooting_2_desc": "Ujistěte se, že je rozhraní inspekce předmětu zcela viditelné, potom zkuste skenování podle názvu pomocí lupy nebo skenování ikony s nastavenou modifikační klávesou.",
+          "troubleshooting_3_title": "Překryv se nezobrazuje",
+          "troubleshooting_3_desc": "Přepněte Tarkov do bezokenního režimu nebo režimu okna. Exkluzivní plná obrazovka často skrývá překryvy.",
+          "troubleshooting_4_title": "Ceny vypadají zastaralé",
+          "troubleshooting_4_desc": "RatScanner načítá tržní data ze třetího zdroje, takže se hodnoty mohou opozďovat za aktuálními změnami na blešním trhu.",
+          "tip_1": "V nastavení vyberte údaje předmětu, které se mají zobrazovat, a upravte průhlednost překryvu.",
+          "tip_2": "Zobrazené tržní hodnoty mohou zaostávat za aktuálními změnami ve hře nebo na trhu.",
+          "faq_1_q": "Mohu kvůli RatScanneru dostat ban?",
+          "faq_1_a": "RatScanner čte popisky předmětů pomocí pořizování snímků obrazovky a nemění herního klienta ani nekomunikuje s herními servery. Stanovisko Battlestate Games k nástrojům třetích stran se může měnit, proto jej používejte na vlastní nebezpečí.",
+          "faq_2_q": "Funguje RatScanner s blešním trhem?",
+          "faq_2_a": "Ano. Zobrazuje aktuální ceny na blešním trhu a umožňuje porovnat hodnotu na blešním trhu s hodnotou u obchodníků.",
+          "faq_3_q": "Může RatScanner zobrazit předměty potřebné pro TarkovTracker?",
+          "faq_3_a": "Může zobrazit obecné informace o předmětu ze svého poskytovatele dat. Pro požadavky založené na vašem osobním pokroku v TarkovTrackeru použijte stránku Potřebné předměty.",
+          "faq_4_q": "Pracuje RatScanner s TarkovTracker.org?",
+          "faq_4_a": "Ano, nainstalujte RatScanner, otevřete TarkovTracker v jeho nastavení a před vstupem do tarkovtrackeru přepněte TarkovTracker backend z .io na .org. rg API token. Tým TarkovTracker.org nyní pomáhá udržovat RatScanner, takže integrace .org a výchozí nastavení se budou v budoucích verzích neustále zlepšovat."
+        },
+        "cultistcircle": {
+          "overview": "CultistCircle je bezplatná komunitní kalkulačka pro funkci Kultovní kruh v Escape from Tarkov. Umožňuje vyhledávat recepty — jaké předměty můžete obětovat a co za to získáte — bez experimentování ve hře. Vytvořil ji jediný komunitní vývojář a je užitečnou referencí pro efektivní plánování výměn v kruhu.",
+          "step_1_title": "Navštivte web",
+          "step_1_desc": "Přejděte na cultistcircle.com a otevřete kalkulačku. Účet ani stahování nejsou potřeba — funguje celý v prohlížeči.",
+          "step_2_title": "Hledat recepty",
+          "step_2_desc": "Pomocí vyhledávání nebo procházení najdete recepty podle vstupního předmětu či výsledku. Kalkulačka ukazuje poměry výměny a možné výsledky každé kombinace.",
+          "tip_1": "Než obětujete vzácné předměty, zkontrolujte kalkulačku — některé výměny mají mnohem lepší hodnotové poměry než jiné.",
+          "tip_2": "Data receptů mohou zaostávat za herními aktualizacemi. Pokud některý recept chybí nebo je chybný, zkontrolujte ho po aktualizaci webu.",
+          "faq_1_q": "Je CultistCircle zdarma k používání?",
+          "faq_1_a": "Ano, CultistCircle je zcela zdarma a běží celý ve vašem prohlížeči bez nutnosti účtu.",
+          "faq_2_q": "Je CultistCircle spojený s TarkovTrackerem?",
+          "faq_2_a": "Ne, CultistCircle je nezávislý projekt jediného komunitního vývojáře. Je uveden zde jako užitečný komunitní zdroj."
+        }
+      },
+      "video": {
+        "walkthrough_title": "{name} průvodce videem",
+        "caption": "Průvodce komunitním videem. Kroky se mohou od psaného průvodce mírně lišit.",
+        "play": "Přehrát video: {title}"
+      },
+      "official_guide_label": "Průvodce TarkovTracker.org"
+    },
+    "account_retention": {
+      "scope": "Tato pravidla se vztahují na rutinní výmaz účtu pro nečinnost, zatímco TarkovTracker funguje. Definují, kdy účet může být způsobilý pro sanaci, nikoli plánované datum výmazu.",
+      "standard": "Žádná kvalifikovaná podpora: účet může být po šesti po sobě jdoucích měsících smazán bez aktivity na účtu.",
+      "previous_supporter": "Dřívější podporovatel: účet s způsobilým příspěvkem, který je vůči němu zaznamenán, včetně jednorázového příspěvku nebo předchozího upisování, se může stát způsobilým pro výmaz jednoho roku po posledním zaznamenaném účtu a posledním zaznamenaném příspěvku.",
+      "active_subscriber": "Aktivní kvalifikované předplatné: účet je osvobozen od rutinního smazání nečinnosti, zatímco jeho předplatné podporovatele zůstává aktivní, a to i v případě, že účet není použit.",
+      "subscription_end": "Zrušením obnovení není ukončena tato výjimka, zatímco placený přístup k předplatnému pokračuje. Po ukončení přístupu k předplatnému, včetně doby odkladu účtování, kterou poskytneme, účet je způsobilý pro výmaz nečinnosti nejdříve po uplynutí jednoho roku od jeho poslední zaznamenané činnosti a konce posledního období pro přístup k předplatnému.",
+      "activity": "Hodnotíme neaktivitu pomocí dostupných záznamů o přihlášení, autentizovaném použití webu nebo API a uložených změnách údajů o účtech. Zobrazení veřejného profilu bez přihlášení se nezapočítává jako aktivita pro tento účet.",
+      "exceptions": "Plně vrácené příspěvky nejsou způsobilé pro podporu držení; ostatní platné příspěvky mohou být i nadále způsobilé. Nabíječ okamžitě odstraní všechny výhody podporovatele a historii uchování podporovatele, včetně výhod z dřívějších příspěvků. Účty s chargeback se řídí standardním šestiměsíčním pravidlem o nečinnosti. Tato ochrana se vztahuje pouze na rutinní sanaci nečinnosti. Nezabraňují smazání požadavku, akce z bezpečnostních důvodů, smazání vyžadované zákonem nebo smazání služby po jejím ukončení.",
+      "no_guarantee": "Podpora TarkovTrackeru nekoupí trvalé úložiště, záložní službu ani zaručenou dostupnost či obnovu. Údaje mohou být ztraceny v důsledku selhání, bezpečnostních incidentů nebo výpadků třetích stran a služba může být pozastavena nebo zrušena. Politika uchovávání nezaručuje, že údaje zůstanou k dispozici po určitou dobu.",
+      "backup": "Exportujte svůj postup z nastavení a udržujte si svou vlastní zálohu. Vývoz a zpětné získávání nemusí být k dispozici během výpadku nebo po ztrátě nebo smazání dat.",
+      "rights": "Nic v této politice nevylučuje ani neomezuje práva nebo opravné prostředky, které nemohou být zákonně vyloučeny nebo omezeny.",
+      "notice": "Pokud je to možné, vynaložíme přiměřené úsilí, abychom upozornili dotčené uživatele před rutinním odstraněním neaktivity. Podstatné změny těchto zásad budou sdělovány v souladu s podmínkami služby a rozhodným právem.",
+      "terms_summary": "Vyčištění rutinních nečinností se řídí pravidly pro uchovávání účtů v oddíle 7.3, včetně výjimky pro aktivní účastníky a jednoletého období pro předchozí příznivce.",
+      "perk_summary": "Ochrana před rutinním výmazem z účtu podle pravidel pro uchovávání účtů v oddíle 7.3, včetně jednorázových přispěvatelů a předchozích účastníků",
+      "liability": "Jakékoli vyloučení nebo omezení odpovědnosti za ztrátu údajů nebo za incidenty související s ochranou soukromí se vztahuje pouze v rozsahu povoleném platnými právními předpisy. Nic v této politice nevylučuje ani neomezuje práva nebo opravné prostředky, které nemohou být zákonně vyloučeny nebo omezeny.",
+      "liability_label": "Mezní hodnoty povolené zákonem:"
+    }
+  },
+  "footer": {
+    "call_to_action": {
+      "discord": "Discord",
+      "github": "GitHub"
+    },
+    "analytics_preferences": "Nastavení analytiky",
+    "game_attribution": "Úniky z Tarkov a související herní obsah a materiály jsou ochranné známky a autorská práva díla Battlestate Games Limited a jejích poskytovatelů. Všechna práva vyhrazena. TarkovTracker je neoficiální projekt fanoušků a není spojen s Battlestate nebo potvrzen.",
+    "tagline": "Sledujte svůj útěk od Tarkov úkolů, skryjte vylepšení a požadavky na předměty na jednom místě.",
+    "version_release_link": "Zobrazit poznámky k vydání pro verzi {version} na GitHubu",
+    "build_commit_link": "Zobrazit sestavení {commit} na GitHubu",
+    "sections": {
+      "explore": "Prozkoumat",
+      "project": "Projekt",
+      "legal": "Právní předpisy"
+    },
+    "links": {
+      "org_vs_io": ".org vs .io"
+    }
+  },
+  "navigation_drawer": {
+    "main_navigation": "Hlavní navigace",
+    "close_menu": "Zavřít nabídku",
+    "toggle": "Přepnout menu",
+    "brand_name": "TarkovTracker.org",
+    "login": "Přihlásit se",
+    "logout": "Odhlásit se",
+    "resources": "Zdroje",
+    "profile": "Profil",
+    "section_navigation": "Navigation",
+    "account_menu": "Menu účtu",
+    "mode_auto": "Automaticky",
+    "auto_level_enabled": "Automatický výpočet úrovně je povolen",
+    "level_display_auto": "Úroveň {level} (automatický výpočet povolen)",
+    "level_display_editable": "Úroveň {level}, klikněte nebo stiskněte Enter pro úpravu",
+    "increment_level": "Zvýšit úroveň",
+    "decrement_level": "Snížit úroveň",
+    "xp_progress": "Postup XP",
+    "xp_settings_link": "Zobrazit nastavení XP a úrovně"
+  },
+  "profile": {
+    "season_short": "S{season}"
+  },
+  "streamer_tools": {
+    "subtitle": "Generování odkazů v prohlížeči OBS, Streamlabs Desktop, XSplit a vMix pro zobrazení live Kappa pokroku.",
+    "manage_sharing": "Spravovat sdílení",
+    "login_required": "Přihlaste se pro generování osobních odkazů na překrytí streamu.",
+    "mode_private": "Tento herní režim je soukromý. Veřejné sdílení musí být povoleno, aby odkazy prohlížeče fungovaly.",
+    "open_account_settings": "Otevřít nastavení účtu",
+    "content_title": "Obsah",
+    "mode_label": "Herní režim",
+    "metric_label": "Widget",
+    "platform_obs": "OBS Studio / Streamlabs Desktop",
+    "platform_xsplit": "XSplit / vMix",
+    "customize_options": "Přizpůsobit možnosti překrytí",
+    "reset_defaults": "Obnovit výchozí hodnoty",
+    "layout_label": "Rozložení",
+    "accent_label": "zvýraznění",
+    "text_size": "Velikost textu",
+    "align_label": "Zarovnání",
+    "refresh_label": "Interval obnovení",
+    "background_label": "Pozadí",
+    "custom_background": "Vlastní pozadí",
+    "background_color": "Barva",
+    "background_opacity": "Neprůhlednost",
+    "background_transparent": "Průhledný",
+    "background_custom": "Vlastní barva",
+    "show_percent": "Zobrazit procenta",
+    "show_remaining": "Zobrazit zbývající",
+    "custom_label": "Vlastní popisek",
+    "custom_label_placeholder": "Volitelný název pro překryv",
+    "your_overlay_title": "Vaše překrytí",
+    "preview": "Náhled",
+    "preview_title": "Náhled Streameru",
+    "browser_source_url": "URL zdroje prohlížeče",
+    "copy_link": "Kopírovat odkaz",
+    "open_overlay": "Open Overlay",
+    "open_json": "Otevřít JSON",
+    "setup_title": "Nastavení platformy",
+    "setup_subtitle": "Nastavení zdroje prohlížeče, které jsou v souladu s OBS a hlavními streamovacími nástroji.",
+    "preview_dim_self": "Pouze widget",
+    "preview_help_self": "Zobrazí widget ve své přirozené velikosti. Umístěte tento zdroj kdekoli na scéně OBS/Streamlabs přetažením.",
+    "preview_help_canvas": "Zobrazuje, jak se překryv zobrazí ve zdroji prohlížeče přes celou obrazovku. Kontrolovaný vzor představuje průhlednost — nebude se zobrazovat na streamu.",
+    "setup_mode_canvas": "Režim scény plátno – zdroj plného rozlišení",
+    "setup_mode_canvas_desc": "Zdroj prohlížeče vyplňuje celý váš stream plátno. Widget je automaticky umístěn na základě výše uvedeného nastavení zarovnání. Nastavte zdrojové rozměry tak, aby odpovídaly rozlišení streamu.",
+    "setup_mode_self_contained": "Vlastní režim – zdroj velikosti widgetu",
+    "setup_mode_self_contained_desc": "Výstupy zdroje prohlížeče jsou pouze widget. Přetáhněte a změňte velikost zdroje kdekoliv na vaší scéně pro jeho umístění.",
+    "obs_step_1": "Ve vaší scéně klikněte + pod Zdrojem a vyberte prohlížeč.",
+    "obs_step_2": "Vložte URL zdroje prohlížeče výše do pole URL.",
+    "obs_step_3_prefix": "Nastavit šířku a výšku na",
+    "obs_step_3_canvas_note": "(musí odpovídat rozlišení streamu).",
+    "obs_step_3_self_note": "(nebo libovolná velikost, která odpovídá vašemu rozložení).",
+    "obs_step_4_canvas": "Použijte Upravit > Transform > Střed na obrazovce (nebo Ctrl+D) pro uprostřed zdroje ve vaší scéně.",
+    "obs_step_4_self": "Přetáhněte zdroj do požadované pozice v náhledu scény.",
+    "obs_step_5": "Doporučeno: zkontrolujte \"Vypnout zdroj, pokud není viditelný\" a \"Obnovit prohlížeč při aktivitě scény\".",
+    "xsplit_step_1": "Přidat vstupní zdroj webové stránky / prohlížeče.",
+    "xsplit_step_2": "Vložte URL zdroje prohlížeče shora.",
+    "xsplit_step_4": "Ujistěte se, že je ve zdrojových vlastnostech povolena transparentnost.",
+    "setup_scaling_warning_title": "Vyhněte se změně velikosti zdroje v OBS",
+    "setup_scaling_warning": "Přetažením zdrojových rukojetí, aby byly větší v OBS, se roztáhne obrázek a způsobí těžké rozostření. Chcete-li změnit velikost widgetu, použijte raději nastavení rozlišení, velikosti textu nebo vlastního měřítka - přeskakování překrytí v nativní kvalitě.",
+    "setup_transparency_note": "Pozadí překrytí je ve výchozím nastavení průhledné. Není potřeba žádné vlastní CSS nebo barevné filtry – OBS a Streamlaby podporují transparentní zdroje prohlížeče.",
+    "interval_60s": "Každých 60 sekund",
+    "interval_120s": "Každé 2 minuty",
+    "interval_300s": "Každých 5 minut",
+    "interval_600s": "Každých 10 minut",
+    "metric_tasks_desc": "Dokončené a zbývající úkoly vyžadované pro Kappa.",
+    "metric_items_desc": "Shromážděné a zbývající položky úkolu Kappa.",
+    "metric_items": "Položky Kappa",
+    "metric_summary_desc": "Úkoly a položky v jednom potahovém widgetu.",
+    "metric_summary": "Kombinovaný přehled",
+    "layout_card": "Celá karta",
+    "layout_minimal": "Minimální Pill",
+    "layout_text": "Pouze text",
+    "accent_kappa": "Červená",
+    "accent_info": "Azurová",
+    "accent_success": "Zelená",
+    "accent_warning": "Oranžová",
+    "accent_custom": "Vlastní",
+    "custom_accent": "Vlastní odstín",
+    "size_sm": "Malá",
+    "size_md": "Střední",
+    "size_lg": "Velký",
+    "align_top_left": "Vlevo nahoře",
+    "align_top_center": "Nahoře uprostřed",
+    "align_top_right": "Vpravo nahoře",
+    "align_center_left": "Uprostřed vlevo",
+    "align_center": "Střed",
+    "align_center_right": "Uprostřed vpravo",
+    "align_bottom_left": "Vlevo dole",
+    "align_bottom_center": "Dolní střed",
+    "align_bottom_right": "Vpravo dole",
+    "copy_success": "URL překrytí zkopírováno",
+    "copy_failed": "Adresa překryvu se nepodařilo zkopírovat",
+    "settings_reset": "Obnovení nastavení streameru",
+    "resolution_label": "Rozlišení",
+    "resolution_1080": "1080p",
+    "resolution_1440": "1440p",
+    "container_label": "Kontejner",
+    "container_canvas": "Scéna plátno",
+    "self_contained_hint": "Výstup pouze ohraničení widgetu. Přesuňte zdroj prohlížeče v OBS/Streamlabech místo změny zarovnání potahů.",
+    "custom_scale_percent": "Měřítko",
+    "font_label": "Font",
+    "show_title": "Zobrazit název",
+    "colors_label": "Barvy",
+    "colors_text": "Text",
+    "colors_card": "Karta",
+    "colors_border": "Border",
+    "text_color": "Barva textu",
+    "card_color": "Barva karty",
+    "card_opacity": "Průhlednost karet",
+    "border_color": "Barva ohraničení",
+    "border_opacity": "Hraniční neprůhlednost",
+    "track_opacity": "Průhlednost trasy"
+  },
+  "settings": {
+    "locale": "Jazyk",
+    "page_description": "Spravujte svůj účet, průběh hry a nastavení aplikací.",
+    "tabs": {
+      "progression": "Pokrok",
+      "imports": "Dovoz"
+    },
+    "tab_groups": {
+      "game_progress": "Průběh hry",
+      "app": "Aplikace",
+      "data": "Údaje",
+      "account": "Účet",
+      "tools_integrations": "Nástroje a integrace"
+    },
+    "account": {
+      "begin_deletion": "Zahájit odstranění účtu"
+    },
+    "debug_state": {
+      "title": "Stav ladění",
+      "description": "Vytvořte snímek JSON aktuálního stavu trackeru pro hlášení chyb. Zahrnuje režim hry, úroveň, stavy dokončení úkolů a řetězce předchozích podmínek.",
+      "copy_button": "Kopírovat stav ladění"
+    },
+    "general": {
+      "title": "Obecné předvolby",
+      "privacy_mode": "Streamovací režim",
+      "privacy_mode_hint": "Skryje citlivé informace během vysílání."
+    },
+    "appearance": {
+      "theme": "Téma",
+      "theme_hint": "Vyberte si mezi tmavým a světlým rozhraním. Vaše volba je pamatována na tomto zařízení.",
+      "theme_dark": "Tmavý",
+      "theme_light": "Světlý"
+    },
+    "interface": {
+      "tasks": {
+        "title": "Karty úkolů",
+        "show_required": "Zobrazit povinné štítky",
+        "show_xp": "Zobrazit XP odměny",
+        "show_next": "Zobrazit další úkoly",
+        "show_prev": "Zobrazit předchozí úkoly",
+        "collapse_by_default": "Sbalit úkoly ve výchozím nastavení",
+        "hide_rewards": "Skrýt odměny",
+        "require_trader_levels": "Pro dostupnost úkolů vyžadovat úroveň loajality a reputaci obchodníka",
+        "flags_section": "Zobrazení úloh",
+        "availability_section": "Dostupnost úkolu",
+        "view_defaults_section": "Výchozí zobrazení"
+      },
+      "maps": {
+        "show_extracts": "Ve výchozím nastavení zobrazit extrakty",
+        "zoom_speed": "Rychlost přiblížení",
+        "pan_speed": "Pantová rychlost",
+        "zone_opacity": "Neprůhlednost zóny",
+        "colors": {
+          "title": "Barvy mapy",
+          "description": "Nastavte barvy značky pro lepší čitelnost a dostupnost.",
+          "self_objective": "Váš cíl",
+          "pinned_objective": "Připnutý úkol",
+          "team_objective": "Týmový cíl",
+          "selected": "Připnutý cíl",
+          "shared_extract": "Sdílený extrakt",
+          "coop_extract": "Spoluop extrakt"
+        }
+      },
+      "links": {
+        "antifandom": "Používat antifandom.com",
+        "antifandom_hint": "Otevírat odkazy na wiki na antifandom.com, komunitně spravovaném a reklamami šetrném zrcadle Fandomu, místo na fandom.com."
+      }
+    },
+    "game_profile": {
+      "game_edition_with_value": "Editace {edition}"
+    },
+    "profile_sharing": {
+      "title": "Sdílení profilu",
+      "description": "Nastavte, který herní mód profil lze zobrazit ze sdíleného odkazu.",
+      "public": "Veřejnost",
+      "private": "Soukromé",
+      "toggle_label": "Přepnout sdílení profilu {mode}",
+      "copy_link": "Kopírovat odkaz na profil {mode}",
+      "load_failed": "Nelze načíst nastavení sdílení.",
+      "save_failed": "Nastavení sdílení nelze aktualizovat.",
+      "login_required": "Přihlaste se pro správu viditelnosti sdílení profilu."
+    },
+    "game_settings": {
+      "switch_mode_failed": "Přepnutí herního režimu se nezdařilo, zkuste to prosím znovu",
+      "switch_mode_fetch_failed": "Herní režim byl přepnut, ale nepodařilo se aktualizovat data, zkuste to prosím znovu"
+    },
+    "data_management": {
+      "reset_pvp_confirmation": "Jste si jisti, že chcete obnovit postup PvP?",
+      "reset_pvp_warning": "Tímto trvale smažete veškerý váš PvP pokrok, včetně úkolů, skrytí a úrovně. Vaše PvE data nebudou ovlivněna.",
+      "reset_pve_confirmation": "Jste si jisti, že chcete resetovat postup PvE?",
+      "reset_pve_warning": "Tímto bude trvale odstraněn veškerý váš PvE pokrok, včetně úkolů, skrytí a úrovně. Vaše PvP data nebudou ovlivněna.",
+      "reset_seasonal_confirmation": "Jste si jisti, že chcete obnovit sezonní postup PvP?",
+      "reset_seasonal_warning": "Tímto trvale smažete veškerý průběh sezony pro aktivní sezónu. Vaše trvalé údaje PvP a PvE nebudou ovlivněny.",
+      "reset_all_confirmation": "Jste si jisti, že chcete obnovit VŠECHNY váš pokrok?",
+      "reset_all_warning": "Tímto trvale smažete VŠECHNY váš postup pro PvP a PvE režimy. Tuto akci nelze vrátit zpět!",
+      "prestige_mode_warning": "Váš aktuální běh {mode} bude archivován a jeho postup se obnoví pro další úroveň prestiže. Ostatní režimy nejsou dotčeny.",
+      "reset_confirm": "Resetovat data",
+      "export_description": "Stáhněte si zálohu dat o průběhu jak pro PvP, tak pro PvE režimy.",
+      "export_button": "Export zálohy průběhu exportu",
+      "debug_export_button": "Exportovat ladící snímek",
+      "debug_export_description": "Stáhněte si snímek účtu pro ladění podpisových úloh. To nezahrnuje autentizační tokeny, emaily a profilové obrázky.",
+      "import_backup_button": "Importovat zálohu TarkovTrackeru",
+      "import_eft_logs_folder_button": "Importovat složku protokolů EFT",
+      "recommended_badge": "Doporučené",
+      "active_flow_blocked_title": "Nejprve dokončete aktuální tok dat",
+      "active_flow_blocked_description": "Dokončete nebo zrušíte {flow} před zahájením dalšího importu nebo zálohy.",
+      "flow_data": "aktuální tok dat",
+      "flow_tarkov_dev": "Import profilu Tarkov.dev",
+      "flow_eft_logs": "Importování protokolů EFT",
+      "flow_backup": "záloha obnovena",
+      "tarkov_dev_section_description": "Importovat metadata profilu včetně úrovně, frakce a dovedností",
+      "eft_logs_section_title": "Importování herních protokolů EFT",
+      "eft_logs_section_description": "Importovat průběh hledání zjištěný z vašich herních souborů",
+      "backup_restore_section_description": "Exportovat zálohu nebo obnovit z dříve exportovaného souboru",
+      "debug_section_title": "Debug Snapshot",
+      "import_backup_title": "Obnovit ze zálohy",
+      "import_backup_description": "Obnovit postup ze záložního souboru TarkovTracker",
+      "import_preview_exported_at": "Exportováno",
+      "import_preview_pvp_level": "Úroveň PvP",
+      "import_preview_pvp_tasks": "PvP úkoly",
+      "import_preview_pve_level": "PvE úroveň",
+      "import_preview_pve_tasks": "PvE úkoly",
+      "import_preview_seasonal_level": "Sezónní úroveň PvP",
+      "import_preview_seasonal_tasks": "Sezónní úkoly PvP",
+      "import_target_label": "Import Target",
+      "import_target_pvp": "Pouze PvP",
+      "import_target_pve": "Pouze PvE",
+      "import_target_all": "Vše k dispozici",
+      "import_success_title": "Záloha importována",
+      "import_success_description": "Vaše data o pokroku byla úspěšně obnovena.",
+      "import_error_title": "Import zálohy se nezdařil",
+      "import_error_description": "Vaši zálohu nelze importovat. Zkuste to prosím znovu.",
+      "export_error_title": "Export selhal",
+      "debug_export_error_title": "Export ladění se nezdařil",
+      "reset_title": "Obnovit průběh",
+      "danger_zone_title": "Nebezpečná zóna",
+      "danger_zone_hint": "Obnovení veškerého postupu trvale smaže vaše data pro PvP, PvE a Seasonal PvP. Tuto akci nelze vrátit zpět.",
+      "prestige_history_title": "Prestige History",
+      "prestige_history_loading": "Načítání historie prestiži...",
+      "prestige_history_empty": "Zatím neběží žádná archivovaná prestiž.",
+      "prestige_history_load_error": "Nepodařilo se načíst historii prestiže.",
+      "prestige_history_select": "Vybrat běh",
+      "prestige_history_option": "P{from} → P{to} • {when}",
+      "prestige_history_unknown_date": "Neznámé datum",
+      "prestige_history_completed_tasks": "Dokončené úkoly",
+      "prestige_history_failed_tasks": "Neúspěšné úkoly",
+      "prestige_history_completed_objectives": "Dokončené cíle",
+      "prestige_history_completed_hideout_modules": "Skrývající moduly",
+      "prestige_history_completed_story_chapters": "Kapitoly článku",
+      "prestige_history_duration": "Doba trvání spouštění",
+      "prestige_history_days_value": "{days} dnů",
+      "prestige_history_compare_title": "Porovnání s předchozím spuštěním",
+      "prestige_history_compare_subtitle": "Aktuální prestiž {from} ve srovnání s prestiží {to}"
+    },
+    "prestige_pvp": {
+      "success_title": "PvP Prestige Complete",
+      "success_description": "Váš PvP profil byl prestiž na úrovni {level}.",
+      "error_title": "Prestige selhala",
+      "error_description": "Prestiž PvP profilu se nezdařila. Zkuste to prosím znovu."
+    },
+    "reset_pvp": {
+      "success_title": "Obnovení PvP dat",
+      "success_description": "Váš PvP postup byl úspěšně obnoven.",
+      "error_description": "Obnovení dat PvP se nezdařilo. Zkuste to znovu."
+    },
+    "reset_pve": {
+      "success_title": "PvE reset dat",
+      "success_description": "Váš PvE postup byl úspěšně obnoven.",
+      "error_description": "Obnovení PvE dat se nezdařilo. Zkuste to znovu."
+    },
+    "reset_seasonal": {
+      "success_title": "Sezónní reset dat PvP",
+      "success_description": "Váš aktivní sezóna byl úspěšně obnoven.",
+      "error_description": "Obnovení sezonních dat PvP se nezdařilo. Zkuste to znovu."
+    },
+    "reset_all": {
+      "success_title": "Resetování všech dat",
+      "success_description": "Váš pokrok byl úspěšně obnoven.",
+      "error_description": "Obnovení dat se nezdařilo. Zkuste to prosím znovu."
+    },
+    "account_data": {
+      "title": "Správa účtu a dat",
+      "account_info_title": "Informace o účtu",
+      "username_label": "Uživatelské jméno",
+      "email_label": "E-mailová adresa",
+      "auth_method_label": "Metoda ověření",
+      "auth_methods_label": "Metody ověření",
+      "member_since_label": "Členem od",
+      "account_id_label": "ID účtu",
+      "account_deletion_title": "Smazání účtu",
+      "login_required_delete": "Pro smazání účtu se přihlaste",
+      "show_username": "Zobrazit uživatelské jméno",
+      "hide_username": "Skrýt uživatelské jméno",
+      "show_email": "Zobrazit e-mail",
+      "hide_email": "Hide email",
+      "show_account_id": "Zobrazit ID účtu",
+      "hide_account_id": "Skrýt ID účtu",
+      "copy_account_id": "Kopírovat ID účtu",
+      "copy_failed": "Kopírování ID účtu se nezdařilo",
+      "account_id_copied": "ID účtu zkopírováno",
+      "confirm_delete_title": "Potvrdit odstranění účtu",
+      "confirm_delete_sr_only": "Tato akce je nevratná a pro pokračování vyžaduje zadání potvrzovací fráze.",
+      "irreversible_title": "Tato akce je nevratná!",
+      "irreversible_description": "Všechna vaše data budou trvale odstraněna a nelze je obnovit.",
+      "what_deleted_title": "Co bude odstraněno",
+      "delete_item_progress": "Vaše údaje o sledování pokroku",
+      "delete_item_teams": "Členství v týmech a vlastněné týmy",
+      "delete_item_tokens": "API tokeny a nastavení",
+      "delete_item_personal": "Všechny osobní údaje",
+      "not_affect_tarkov": "Toto nemá vliv na váš únik z účtu Tarkov pouze na Tarkov Tracker.",
+      "team_transfer_title": "Převod vlastnictví týmu",
+      "team_transfer_description": "Pokud vlastníte jakékoli týmy, vlastnictví bude automaticky převedeno na nejstarší člena v každém týmu. Týmy bez ostatních členů budou odstraněny.",
+      "security_confirmation_title": "Potvrzení zabezpečení",
+      "security_confirmation_description": "Odstranění účtu vyžaduje zadání níže přesné potvrzovací fráze. Tato akce je trvalá a nelze ji vrátit zpět.",
+      "confirm_phrase_value": "VYTVOŘIT ÚČET",
+      "confirm_phrase_label": "Napište \"{phrase}\" pro potvrzení:",
+      "confirm_phrase_error": "Prosím, zadejte přesně: {phrase}",
+      "delete_forever": "Vymazat účet navždy",
+      "delete_success_title": "Účet úspěšně smazán",
+      "delete_success_sr_only": "Smazání účtu je dokončeno a budete přesměrováni na nástěnku.",
+      "delete_success_cleanup_failed_sr_only": "Váš účet byl smazán, ale některá data zůstávají na tomto zařízení. Můžete znovu vyčistit nebo pokračovat s těmito daty zde.",
+      "delete_success_description": "Váš účet a všechna související data byla trvale smazána.",
+      "other_session_deleted_description": "Účet který zahájil toto odstranění, byl odstraněn. Váš aktuální účet je stále přihlášený a nebyl změněn.",
+      "cleanup_pending": "Některá data čištění stále probíhají a brzy budou dokončena.",
+      "device_cleanup_failed": "Některá smazaná data účtu zůstávají na tomto zařízení. Opakujte čištění, nebo pokračujte a nechejte data zde.",
+      "session_end_failed": "Tento prohlížeč je stále přihlášený k odstraněnému účtu. Vyberte Přejít na řídicí panel a zkuste se znovu odhlásit.",
+      "retry_device_cleanup": "Opakovat čištění zařízení",
+      "continue_with_device_data_remaining": "Pokračovat se zbývajícími daty",
+      "redirect_message": "Děkujeme, že používáte TarkovTracker. Budete přesměrováni na nástěnku.",
+      "go_to_dashboard": "Přejít na nástěnku",
+      "session_changed": "Váš podepsaný účet byl změněn. V této relaci nebudou provedeny žádné další akce."
+    },
+    "discord_link": {
+      "title": "Účet Discord",
+      "description": "Propojte účet Discordu, získejte roli Linked a synchronizujte výhody podporovatele.",
+      "link_account": "Propojit účet Discordu",
+      "login_to_link": "Pro propojení s Discordem se přihlaste",
+      "linked_as": "Propojeno jako {username}",
+      "sync_roles": "Synchronizovat role",
+      "error_title": "Propojení Discordu není dostupné",
+      "not_in_guild_title": "Připojit se k serveru Discordu",
+      "not_in_guild": "Váš účet je propojen, ale před synchronizací rolí se musíte připojit k serveru TarkovTracker na Discordu.",
+      "load_error": "Propojení účtu Discordu se nepodařilo načíst.",
+      "link_error": "Propojování účtu Discordu se nepodařilo zahájit. Zkuste to prosím znovu.",
+      "unlink_account": "Zrušit propojení účtu Discordu",
+      "unlink_requires_login": "Před zrušením propojení jediné přihlašovací identity si přidejte další způsob přihlášení.",
+      "unlink_error": "Propojení účtu Discordu se nepodařilo zrušit. Propojení zůstává aktivní.",
+      "sync_error": "Váš účet je propozen, ale role Discordu se nepodařilo synchronizovat. Zkuste to prosím později."
+    },
+    "prestige": {
+      "persistent_mode_unsupported_title": "Prestige Unavailable",
+      "persistent_mode_unsupported": "Prestige není k dispozici pro trvalý PvE režim.",
+      "seasonal_mode_unsupported": "Prestige není k dispozici v Sezonním PvP.",
+      "current_level": "Současná úroveň Prestige",
+      "set_current": "Nastavit aktuální Prestige",
+      "set_current_hint": "Použijte tuto možnost, pokud jste již prestiž ve hře a potřebujete pouze sledovač pro shodu. To neobnovuje průběh nebo nevytvoří historii.",
+      "confirm_word": "PRESTIGE",
+      "confirm_instruction": "Pro potvrzení prestiž zadejte {word}:",
+      "login_required": "Přihlaste se pro prestiž svého profilu PvP.",
+      "max_reached": "Dosažen maximální prestiž.",
+      "lowering_warning": "Snížení prestiž trackeru z {current} na {next} mění pouze viditelnost. Neobnovuje archivované běhy ani neobnovuje průběh.",
+      "requirements_title": "Další požadavky Prestige",
+      "requirements_description": "Sledování zkontroluje vaši další skutečnou prestiž: Prestige {level}.",
+      "requirements_empty": "Pro tuto prestiž nejsou k dispozici žádné další požadavky na sledování.",
+      "archive_title": "Archivovat běh a začít další Prestige",
+      "archive_description_mode": "Používejte to pouze tehdy, když jste nyní opravdu prestižní. Váš aktuální běh {mode} bude archivován a jeho postup bude obnoven pro další úroveň prestiže.",
+      "archive_cta": "Spustit a spustit Prestige {level}",
+      "archive_cta_disabled": "Prestige Unavailable",
+      "archive_dialog_title_mode": "Archivovat aktuální spuštění {mode}",
+      "archive_sync_hint": "Pokud stačí, aby tracker odpovídal existující prestiž ve hře, použijte set Current Prestige výše.",
+      "archive_soft_gate_unmet": "Požadavky na sledování {count} stále vypadají neúplně. Přesto můžete pokračovat, pokud tracker chybí kontext.",
+      "archive_soft_gate_manual": "Požadavky {count} musí být stále zkontrolovány ručně ve hře.",
+      "archived_runs_description": "Zde se objeví pouze skutečné PvP archivované sledovače. Nastavení vaší aktuální prestiž později nevytváří historické záznamy.",
+      "delete_history_cta": "Odstranit vybraný běh",
+      "delete_history_warning": "Tím se odstraní pouze archivovaný záznam historie. Neobnovuje ani neobnovuje váš aktuální postup PvP.",
+      "delete_history_selected_label": "Vybraný běh",
+      "delete_history_success_title": "Archivovaný běh odstraněn",
+      "delete_history_success_description": "Vybraný záznam historie prestižů byl odstraněn.",
+      "delete_history_error_title": "Odstranění se nezdařilo",
+      "delete_history_error_description": "Nepodařilo se odstranit běh archivované prestiže. Zkuste to prosím znovu.",
+      "sync_success_title": "Prestige aktualizován",
+      "sync_success_description": "Prestiž Trackeru je nyní nastavena na {level}. Aktuální postup byl zachován.",
+      "sync_error_title": "Aktualizace Prestige selhala",
+      "sync_error_description": "Nepodařilo se aktualizovat prestiž trackeru. Zkuste to prosím znovu.",
+      "requirement_source": {
+        "tarkov_dev": "Tarkov.dev",
+        "overlay": "Overlay",
+        "wiki": "Wiki"
+      },
+      "requirement_source_tooltip": "Zdroj: {source}",
+      "requirement_state": {
+        "incomplete": "Nedokončené",
+        "manual": "Manuální kontrola"
+      },
+      "requirement_progress": "{current} / {required}",
+      "summary": {
+        "ready": "Připraveno",
+        "not_ready": "Upozornění",
+        "manual_check": "Ruční kontroly",
+        "max": "Max Prestige"
+      },
+      "summary_description_ready": "Všechny sledované požadavky jsou splněny.",
+      "summary_description_unmet": "Požadavky na sledování {count} jsou v trackeru stále neúplné.",
+      "summary_description_manual": "Požadavky {count} stále vyžadují ruční ověření ve hře."
+    },
+    "display_name": {
+      "explanation": "Zobrazované jméno je zobrazeno týmovým přátelům a navigaci. Každý herní režim (PVP/PVE) má samostatné zobrazovací jméno.",
+      "label": "Zobrazované jméno",
+      "placeholder": "Zadejte své zobrazovací jméno...",
+      "save": "Uložit",
+      "empty_error": "Zobrazovaný název nemůže být prázdný",
+      "max_error": "Zobrazované jméno nesmí přesáhnout {max} znaků",
+      "saved_title": "Zobrazované jméno uloženo",
+      "saved_description": "Vaše {mode} zobrazované jméno bylo aktualizováno",
+      "save_failed_title": "Uložení se nezdařilo",
+      "save_failed_description": "Nepodařilo se uložit zobrazované jméno. Zkuste to prosím znovu.",
+      "active_mode": "Aktivní",
+      "game_edition_hint": "Vyberte verzi hry, kterou vlastníte, aby sledování odpovídalo vašemu dostupnému obsahu."
+    },
+    "skills": {
+      "title": "Správa dovedností",
+      "explanation": "Odměny za úkol jsou počítány automaticky. Zadejte svou celkovou úroveň dovedností pro úpravu offsetu.",
+      "no_skills": "V datech hry nebyly nalezeny žádné dovednosti.",
+      "show_all": "Zobrazit vše",
+      "show_less": "Zobrazit méně",
+      "quest": "Úkol:",
+      "offset": "Odsazení:",
+      "req_count": "Req:",
+      "reward_count": "Odměna:",
+      "limit_exceeded": "Limit překročen",
+      "max_level": "Maximální úroveň dovednosti je 51.",
+      "valid_range": "Valid range: 0-51",
+      "sort": {
+        "ingame": "Ve hře"
+      },
+      "quest_tooltip": "Úroveň dovedností udělená automaticky dokončenými odměnami.",
+      "offset_tooltip": "Ruční nastavení nad úrovní odměny. Pozitivní znamená, že jste vyškolili dovednost nad odměnu za hledání práce.",
+      "collapsed_hint": "Zobrazení {shown} dovedností {total} . Ukaž vše a uvidíš všechny dovednosti."
+    },
+    "keybinds": {
+      "title": "Klávesové zkratky",
+      "omnibar_label": "Globální vyhledávání (Omnibar)",
+      "omnibar_description": "Stisknutím této zkratky otevřete paletu globálního vyhledávání.",
+      "undo_label": "Zrušit poslední akci",
+      "undo_description": "Stisknutím této zkratky vrátíte svou poslední změnu pokroku.",
+      "record_placeholder": "Klikněte pro záznam...",
+      "recording": "Stiskněte kombinaci kláves...",
+      "listening": "Poslouchám...",
+      "reset_aria": "Obnovit výchozí",
+      "conflict_omnibar": "Zkratka koliduje se zkratkou akce Zrušit poslední akci.",
+      "conflict_undo": "Zkratka koliduje se zkratkou akce Hledat.",
+      "conflict_rejected": "Již se používá pro {action}. Zkuste jinou kombinaci.",
+      "warn_system_omnibar": "Upozornění: Může kolidovat se systémovými zkratkami prohlížeče/OS (např. Ctrl+T, Ctrl+W, Alt+Tab).",
+      "warn_system_undo": "Upozornění: Může kolidovat se systémovými zkratkami prohlížeče/OS (např. Ctrl+W, Ctrl+T, Alt+Tab)."
+    },
+    "experience": {
+      "title": "Zkušenosti a úroveň",
+      "auto_level_title": "Automatický výpočet úrovně",
+      "auto_level_description": "Pokud je povoleno, vaše úroveň bude automaticky vypočítána na základě celkového počtu XP. Pokud je vypnuto, můžete ručně nastavit úroveň nezávisle na výpočtech XP.",
+      "current_level": "Aktuální úroveň",
+      "set_total_xp": "Nastavit celkový XP",
+      "manual_hint": "Zadejte celkovou hodnotu XP pro automatickou úpravu posunu.",
+      "xp_amount": "{amount} XP",
+      "xp_to_next": "{amount} do dalšího",
+      "reset_offset": "Resetovat odsazení XP",
+      "xp_progress_aria": "Zkus pokrok směrem k další úrovni",
+      "xp_progress_value": "{percent}% směrem k další úrovni"
+    },
+    "danger_zone": {
+      "confirm_instruction": "Zadejte {word} pro potvrzení resetování všech dat:",
+      "confirm_word": "ODSTRANIT"
+    },
+    "log_import": {
+      "reading_logs": "Čtení protokolů a příprava náhledu…",
+      "large_folder_hint": "Velké složky jsou čteny lokálně v chuncích. Ponechte tuto stránku otevřenou a můžete ji zrušit, zatímco se protokoly čtou.",
+      "upload_hint": "Vyberte únik ze složky Tarkov Logs pro import úkolu.",
+      "deleted_logs_hint": "Pokud byly staré relace smazány, nelze je importovat.",
+      "deleted_logs_hint_tooltip": "Protokol importu pouze pro čtení událostí v úkolu, které jsou stále přítomny ve vaší aktuální složce protokolů.",
+      "logs_folder_required": "Vyberte složku se záznamy nejvyšší úrovně, ne individuální složku log_* relace.",
+      "default_path_label": "Typická výchozí cesta:",
+      "default_path_value": "C:\\Battlestate Games\\Escape z Tarkov\\Logs",
+      "find_in_launcher_hint": "Nelze najít? Otevřete BSG Launcher -> Nastavení hry -> Protokoly a zkopírujte tuto cestu.",
+      "avoid_session_folder_label": "Nevybírat složku relace:",
+      "session_folder_example_path": "C:\\Battlestate Games\\Escape od Tarkov\\Logs\\log_2026.02.19_13-14-36_1.0.2.0.43037",
+      "version_filter_label": "Zahrnout logy",
+      "version_filter_hint": "Nejnovější hlavní verze je vybrána ve výchozím nastavení. Upravte tak, aby zahrnovala starší vymazání.",
+      "version_filter_tooltip": "Protokoly jsou seskupeny podle verze relace. Nejnovější hlavní je ve výchozím nastavení vybrán tak, aby nedocházelo ke směšování starých vymazaných dat.",
+      "version_unknown": "Neznámá verze",
+      "source_file": "Zdrojový soubor",
+      "selected_files": "Vybrané soubory",
+      "selected_files_count": "{count} vybrané soubory",
+      "logs_scanned": "Soubory protokolu byly analyzovány",
+      "logs_scanned_tooltip": "Soubory protokolů oznámení byly analyzovány po použití filtru verze.",
+      "entries_scanned": "Skenované archivy",
+      "entries_scanned_tooltip": "Celkem vybraných souborů nebo archivovaných položek naskenovaných při hledání EFT logů.",
+      "chat_messages": "Zprávy v chatu",
+      "chat_messages_tooltip": "Oznámení o chatu se vymaže ze zahrnutých protokolů oznámení.",
+      "completion_events": "Události dokončení úkolu",
+      "completion_events_tooltip": "Unikátní události dokončení úkolu po věnování opakovaných řádků protokolu.",
+      "started_events": "Zahájení úkolu",
+      "started_events_tooltip": "Unikátní startovací události po věnování opakovaných logů.",
+      "matched_tasks": "Odpovídající úkoly",
+      "matched_tasks_tooltip": "Unikátní ID úkolů, které odpovídají úkolům v aktuálním souboru dat TarkovTracker.",
+      "matched_started_tasks": "Odpovídající aktivní úkoly",
+      "matched_started_tasks_tooltip": "Unikátní ID úkolů, které odpovídají aktuálním úkolům, s výjimkou úkolů, které jsou již považovány za dokončené.",
+      "detected_mode": "Zjištěný režim",
+      "detected_mode_tooltip": "Zjištěno z backendu hostitele ve stejných relacích. Neznámé znamená žádný jasný signál PvP nebo PvE.",
+      "unknown_mode_events": "Neznámé události režimu",
+      "unknown_mode_events_tooltip": "Události ze sessions, kde logy backendu nemohly vyřešit PvP vs PvE režim.",
+      "unknown_mode_event_details": "Neznámé podrobnosti o události režimu",
+      "unknown_completion_events": "Dokončené úkoly (neznámý režim)",
+      "unknown_started_events": "Zahájené úkoly (neznámý režim)",
+      "import_unknown_to_mode": "Importovat neznámé události režimu do",
+      "import_unknown_to_mode_hint": "Známé události PvP/PvE jsou automaticky směrovány. To platí pouze pro nevyřešené události.",
+      "auto_mode_hint": "Směrování režimu bylo zjištěno z backendových protokolů a bude použito automaticky.",
+      "success_title": "EFT protokoly importovány",
+      "success_description": "Označeno {complete_count} úkoly a {active_count} úkoly jsou aktivní z herních protokolů.",
+      "error_title": "Import EFT protokolů selhal",
+      "cleared_logs_toast_title": "Staré logy byly pravděpodobně vymazány",
+      "cleared_logs_toast_description": "Import protokolu může číst pouze historii výprav, která je stále ve složce logů. Odstraněné relace nelze obnovit.",
+      "errors": {
+        "invalid_archive": "ZIP archiv je neúplný nebo obsahuje neplatný záznam logu. Nebyl importován žádný průběh.",
+        "budget_exceeded": "Vybrané protokoly překračují rozpočet bezpečného importu. Vyberte méně relací nebo rozbalte pouze příslušné soubory protokolů. Žádný postup nebyl importován.",
+        "record_too_large": "Individuální záznam v {path} je příliš velký na bezpečné zpracování. Žádný postup nebyl importován. Nahlaste prosím tento formát logu.",
+        "apply_import_failed": "Použití importovaných dat dokončení úkolu se nezdařilo.",
+        "no_files_selected": "Nebyly vybrány žádné soubory.",
+        "no_matching_tasks_found": "Úkolové události byly nalezeny, ale žádný neodpovídá aktuálním úkolům TarkovTrackeru.",
+        "no_notification_logs_found": "Ve vybraných souborech nebyly nalezeny žádné protokoly oznámení.",
+        "no_quest_events_found": "Ve vybraných záznamech nebyly nalezeny žádné start/dokončovací události.",
+        "parse_failed": "Nepodařilo se analyzovat protokoly EFT.",
+        "task_metadata_not_loaded": "Metadata úkolů ještě nejsou načtena. Prosím aktualizujte a zkuste to znovu.",
+        "invalid_mode": "Vyberte platný cílový herní režim.",
+        "outside_active_season": "Tyto protokoly obsahují události mimo aktivní sezónu nebo bez data použitelnosti. Před importem do sezony vyberte relace z aktivní sezóny."
+      },
+      "failed_tasks": "Odpovídající neúspěšné úkoly: {count}",
+      "unknown_failed_events": "Neúspěšné úkoly (neznámý režim)",
+      "skipped_malformed": {
+        "single": "Přeskočeno {count} chybné oznámení.",
+        "plural": "Přeskočeno {count} chybná oznámení."
+      },
+      "skipped_seasonal": {
+        "single": "Přeskočeno {count} Sezónní událost mimo aktivní sezónu nebo bez platného data.",
+        "plural": "Přeskočeno {count} Sezónní události mimo aktivní sezónu nebo bez platných dat."
+      }
+    },
+    "tarkov_dev_import": {
+      "title": "Import profilu Tarkov.dev",
+      "profile_url_label": "URL profilu Tarkov.dev",
+      "profile_url_placeholder": "https://tarkov.dev/players/regular/8560316",
+      "profile_url_hint": "Najděte si svůj profil v {link}, otevřete odpovídající PvP nebo PvE profil a pak vložte URL této stránky.",
+      "profile_url_hint_link": "tarkov.dev/hráči",
+      "profile_url_refresh_hint": "Tarkov.dev obnoví profil JSON poté, co tam otevřete profilovou stránku.",
+      "fetch_profile": "Načíst profil",
+      "nickname": "Přezdívka",
+      "faction": "Frakce",
+      "skills_count": "Zjištěno {count} dovedností",
+      "last_refreshed": "Údaje Tarkov.dev byly aktualizovány",
+      "last_refreshed_unknown": "Neznámý",
+      "data_age_warning": "Tento Tarkov.dev snímek je {days} dní starý. Pokud jste od té doby hráli, otevřete svůj profil na Tarkov.dev takže se obnoví, načíst znovu před importem.",
+      "cooldown_hint": "Nedávno importováno. Tento profil můžete znovu importovat do {minutes} min.",
+      "turnstile_hint": "Dokončete lidské ověření pro načtení vašeho profilu.",
+      "skills_details_toggle": "Zobrazit hodnoty dovedností",
+      "skills_details_skill": "Dovednost",
+      "edition_guess": "Editace (zjištěna)",
+      "import_to_mode": "Importovat do režimu",
+      "import_target_notice": "Tato data budou importována do vašeho profilu {mode}.",
+      "success_title": "Profil importován",
+      "success_description": "Váš tarkov.dev profil byl úspěšně importován.",
+      "linked_uid": "UID Tarkova",
+      "refetch_hint": "Nejprve otevřete svůj tarkov.dev profil, poté ho znovu otevřete zde.",
+      "refetch_mode_label": "Profil k obnovení",
+      "refetch_mode_arena": "Arena",
+      "refetch_mode_arena_unavailable": "Dovoz arény přichází brzy.",
+      "refetch_profile": "Obnovit profil",
+      "unlink_profile": "Odpojit",
+      "errors": {
+        "unexpected_profile_flow": "Při načítání profilu Tarkov.dev nastala chyba. Zkuste to znovu.",
+        "cooldown_active": "Tento profil jste nedávno importovali. Znovu jej můžete importovat přibližně za {minutes} min.",
+        "profile_stale": "Tarkov.dev tento profil naposledy obnovil před {days} dny, což je pro import příliš staré. Otevřete stránku profilu na Tarkov.dev, nechte ji načíst a poté jej znovu načtěte.",
+        "profile_not_generated": "Tarkov.dev zatím nemá žádný snímek pro tento profil. Otevřete profilovou stránku na Tarkov.dev jednou, nechte ji načíst, poté znovu načtěte.",
+        "rate_limited": "Příliš mnoho pokusů o import. Počkejte asi {minutes} min a zkuste to znovu.",
+        "verification_failed": "Lidské ověření se nezdařilo. Znovu načtěte stránku a zkuste to znovu.",
+        "fetch_failed": "Profil Tarkov.dev nelze načíst. Otevřete profil na Tarkov.dev, zkuste to znovu.",
+        "tarkov_uid_conflict": "Tento profil Tarkov je již propojen s jiným účtem TarkovTracker, takže zde nebyl propojen. Importovaný postup byl uložen. Odpojte jej od druhého účtu a poté importujte znovu.",
+        "save_failed": "Profil byl importován do tohoto zařízení, ale zatím nemohl být uložen na váš účet. Zkontrolujte připojení; import zůstane na tomto zařízení, dokud se nesynchronizuje."
+      }
+    },
+    "device_data": {
+      "title": "Data na tomto zařízení",
+      "description": "Odhlášení udržuje pokrok uložený na tomto účtu v tomto prohlížeči, aby změny, které ještě nedosáhly cloudu, mohly být synchronizovány, když se přihlásíte. Pokrok přemístěn resetováním nebo sezonním překlopením je pro vývoz zachován zvlášť. Odstranění dat tohoto zařízení smaže průběh tohoto účtu, obnova kopií a předvolby z tohoto prohlížeče a odhlásí vás.",
+      "cloud_unaffected": "Váš průběh cloudu není odstraněn. Data ostatních účtů na tomto zařízení nejsou dotčena.",
+      "superseded_available": "Změny průběhu {count} z resetování nebo sezónního překlopení jsou zachovány pouze pro export. Nebudou obnoveny ani synchronizovány automaticky.",
+      "superseded_export": "Export nahrazen",
+      "superseded_export_error": "Nelze exportovat nahrazený postup",
+      "remove_button": "Odstranit data tohoto účtu z tohoto zařízení",
+      "confirm_title": "Odstranit data tohoto účtu z tohoto zařízení?",
+      "confirm_description": "Průběh tohoto účtu, obnova kopie, nahrazené exporty pokroku a předvolby budou odstraněny z tohoto prohlížeče a budete odhlášeni. Váš průběh cloudu zůstane k dispozici, jakmile se znovu přihlásíte.",
+      "pending_warning": "Některé změny pokroku zatím nebyly uloženy do cloudu. Odebráním dat tohoto zařízení je trvale zahodíte. Nejprve jej exportujte, pokud chcete zachovat.",
+      "confirm_button": "Odstranit data a odhlásit se",
+      "removed": "Data tohoto účtu byla odstraněna z tohoto zařízení.",
+      "remove_error": "Některá data účtu nelze z tohoto zařízení odstranit. Zkuste to znovu před použitím jiného účtu.",
+      "remove_incomplete": "Některá data z účtu, který jste odstranili, jsou stále na tomto zařízení. Zkuste to znovu před použitím jiného účtu.",
+      "retry_removal": "Zkuste znovu odebrat",
+      "revocation_unavailable": "Nelze se připojit k serveru, takže jste stále přihlášeni. Můžete se odhlásit pouze na tomto zařízení a odstranit data; server nebude slyšet, takže relace zůstane aktivní, dokud neuplyne nebo se odhlásíte z jiného zařízení.",
+      "confirm_device_only_button": "Odhlaste se pouze na tomto zařízení a odstraňte data"
+    }
+  },
+  "hideout": {
+    "collapse": "Sbalit",
+    "expand": "Rozbalit"
+  },
+  "tasks": {
+    "view": {
+      "map": "Mapa"
+    }
+  },
+  "quest": {
+    "view_on_dev": "Zobrazit {name} na Tarkov.dev"
+  },
+  "needed_items": {
+    "total": "Celkem:",
+    "progress_format": "{current}/{total}",
+    "non": "Non",
+    "non_fir": "Non-FIR",
+    "task_kappa_req": "Vyžadováno pro Kappa",
+    "collected_items": "Shromážděné položky",
+    "smart_fill": "Chytré vyplnění",
+    "unknown_task": "Neznámý úkol",
+    "unknown_station": "Neznámá stanice",
+    "lvl": "Lvl",
+    "needed": "potřebný",
+    "view_details_for": "Zobrazit podrobnosti pro {name}",
+    "locked_before": "{count} před",
+    "switch_to_expanded": "Přepnout na rozšířené zobrazení",
+    "switch_to_compact": "Přepnout do kompaktního zobrazení",
+    "collected": "Shromážděno",
+    "mark_collected": "Označit jako shromážděné",
+    "handed_over": "Předáno",
+    "aria": {
+      "enter_count": "Zadejte počet položek",
+      "decrease_count": "Snížit počet",
+      "increase_count": "Zvýšit počet",
+      "click_to_enter_value": "Kliknutím zadejte hodnotu",
+      "mark_as_complete": "Označit jako 100% kompletní",
+      "mark_as_incomplete": "Označit jako nedokončené",
+      "decrease_fir": "Snížit počet FIR",
+      "increase_fir": "Zvýšit počet FIR",
+      "decrease_non_fir": "Snížit počet jiných než FIR",
+      "increase_non_fir": "Zvýšit počet jiných než FIR",
+      "decrease_objective_count": "Snížit počet cílů pro {task_name}",
+      "increase_objective_count": "Zvýšit počet cílů pro {task_name}",
+      "decrease_hideout_count": "Snížit počet skriptů pro {station_name}",
+      "increase_hideout_count": "Zvýšit počet skriptů pro {station_name}"
+    },
+    "any_of_items": "Platí libovolný z následujících předmětů (celkem {count})",
+    "any_of_items_short": "Alternativy: {count}",
+    "view_accepted_items": "Zobrazit všechny přijaté předměty ({count})",
+    "not_collected": "Nesbíráno",
+    "click_to_collect": "Kliknutím shromáždíte",
+    "click_to_uncollect": "Kliknutím zrušíte sběr",
+    "modal": {
+      "smart_fill_error": "Nelze použít chytré vyplnění",
+      "reset_error": "Nelze resetovat postup položky",
+      "unknown_error": "Došlo k neočekávané chybě"
+    }
+  },
+  "skills": {
+    "req": "Req (Automatic Translation)",
+    "required_for": "Potřebné pro: {items}",
+    "required_levels": "Požadované úrovně: {items}",
+    "elite_level": "Úroveň ELITU"
+  },
+  "game_settings": {
+    "select_game_mode_label": "Vyberte herní režim",
+    "select_faction_label": "Vyberte frakci",
+    "season_ends_in": "Sezóna {season} končí v {days}d {hours}h {minutes}m",
+    "season_ended": "Sezóna {season} skončila"
+  },
+  "oauth": {
+    "consent": {
+      "authorize": "Autorizovat aplikaci",
+      "loading": "Načítám...",
+      "error": "{error}",
+      "unknown": "Neznámá aplikace",
+      "requesting_access": "žádá o přístup k vašemu účtu TarkovTracker.",
+      "requested_permissions": "Požadovaná oprávnění:",
+      "redirect_to": "Bude přesměrováno na:",
+      "approve": "Schválit",
+      "deny": "Zamítnout"
+    }
+  },
+  "tarkov_access": {
+    "title": "Ověřit váš prohlížeč",
+    "checking": "Kontrola přístupu k webu…",
+    "description": "Tato stránka je chráněna před nadměrnými automatizovanými požadavky. Dokončete bezpečnostní kontrolu níže pro načtení herních dat Tarkov.",
+    "retry": "Zkuste to znovu",
+    "dismiss": "Nyní ne",
+    "dismissed_notice": "Herní data jsou pozastavena, dokud nedokončíte bezpečnostní kontrolu.",
+    "verify_now": "Ověřit nyní",
+    "verification_failed_retry": "Bezpečnostní kontrola nebyla dokončena. Můžete to zkusit znovu.",
+    "verifying": "Ověřování vašeho prohlížeče…",
+    "widget_hint": "Pro pokračování dokončete kontrolu.",
+    "failed": "Načítání Tarkov dat je momentálně nedostupné. Můžete to zkusit znovu.",
+    "blocked": "Přístup k datům Tarkov je momentálně zablokován pro vaši síť. Můžete to zkusit znovu nebo se vrátit později.",
+    "rate_limited": "Příliš mnoho kontrol za krátkou dobu. Počkejte chvilku a zkuste to znovu.",
+    "widget_unavailable": "Kontrola zabezpečení se nepodařilo načíst. Můžete to zkusit znovu."
+  },
+  "analytics_consent": {
+    "eyebrow": "Analytici",
+    "title": "Pomozte zlepšit Tarkov Tracker",
+    "title_answered": "Pomozte zlepšit Tarkov Tracker",
+    "description": "Povolit analýzu použití abychom pochopili, co funguje, opravit body bolesti a zlepšit Tarkov Tracker.",
+    "accepted": "Pomáháte zlepšit Tarkov Tracker pomocí analýzy využití tohoto prohlížeče.",
+    "declined": "Analytika použití je v tomto prohlížeči vypnuta.",
+    "badge_default_off": "Vypnout ve výchozím nastavení",
+    "badge_usage_stats": "Statistiky využití",
+    "badge_analytics_only": "Pouze Analytika",
+    "status_enabled": "Stav analytiky: Povoleno",
+    "status_disabled": "Analytický stav: Zakázáno",
+    "change_anytime": "Změňte kdykoliv z zápatí.",
+    "review_details": "Zkontrolujte podrobnosti v Zásadách ochrany osobních údajů",
+    "allow": "Pomozte nám zlepšit",
+    "decline": "Analytika vypnuta"
+  },
+  "prestige": {
+    "no_prestige": "No Prestige",
+    "prestige_n": "Prestige {n}"
+  },
+  "generic": {},
+  "seo": {
+    "site_name": "TarkovTracker",
+    "application_description": "Sledujte úkoly hry Escape from Tarkov, vylepšení skrytí, požadavky na Kappa, úkoly příběhové lině a potřebné předměty v režimech PvP, PvE a sezónních.",
+    "routes": {
+      "home": {
+        "title": "Sledovač postupu v Escape from Tarkov · TarkovTracker.org",
+        "description": "Sledujte úkoly hry Escape from Tarkov, vylepšení skrytí, požadavky na Kappa, úkoly příběhové lině a potřebné předměty v režimech PvP, PvE a sezónních.",
+        "heading": "Sledovač postupu v Escape from Tarkov"
+      },
+      "tasks": {
+        "title": "Sledovač úkolů v Tarkovu · TarkovTracker.org",
+        "description": "Sledujte úkoly v Tarkovu, cíle, odměny a prerekvizity v režimech PvP, PvE a sezónním."
+      },
+      "hideout": {
+        "title": "Sledovač skrytí v Tarkovu · TarkovTracker.org",
+        "description": "Plánujte vylepšení skrytí a sledujte požadavky na moduly a průběh výstavby."
+      },
+      "needed_items": {
+        "title": "Sledování potřebných předmětů v Tarku · TarkovTracker.org",
+        "description": "Najděte na jednom seznamu předměty, které stále potřebujete pro úkoly a vylepšení útočiště."
+      },
+      "kappa": {
+        "title": "Sledování úkolů Kappa a Lightkeeper · TarkovTracker.org",
+        "description": "Sledujte požadavky úkolů Kappa a Lightkeeper i svůj zbývající progres."
+      },
+      "storyline": {
+        "title": "Sledování děje v Tarku · TarkovTracker.org",
+        "description": "Postupujte přes úkoly s dějem ze hry Escape from Tarkov a sledujte svůj progres."
+      },
+      "resources": {
+        "title": "Nástroje a návody pro Escape from Tarkov",
+        "description": "Prozkoumejte komunitní nástroje a návody pro TarkovTracker, TarkovMonitor, RatScanner a Tarkov.dev."
+      },
+      "about": {
+        "title": "O TarkovTrackeru",
+        "description": "Zjistěte více o TarkovTracker a jeho komunitním projektu určeném ke sledování progresu v hře Escape from Tarkov."
+      },
+      "credits": {
+        "title": "Autoři TarkovTracker",
+        "description": "Seznamte se s přispěvateli i komunitními projekty, které stojí za TarkovTracker."
+      },
+      "changelog": {
+        "title": "Přehled změn TarkovTracker",
+        "description": "Přečtěte si nejnovější vydání, vylepšení a opravy TarkovTracker."
+      },
+      "supporter": {
+        "title": "Podpořte TarkovTracker.org",
+        "description": "Pomozte pokrýt náklady na hostování a vývoj. Prozkoumejte úrovně podpory a způsoby, jak přispět."
+      },
+      "privacy": {
+        "title": "Zásady ochrany soukromí TarkovTracker",
+        "description": "Zjistěte, jak TarkovTracker nakládá s údaji o účtu a datech o progresu."
+      },
+      "terms_of_service": {
+        "title": "Podmínky služby TarkovTracker",
+        "description": "Přečtěte si podmínky, které platí pro vaše používání TarkovTracker."
+      },
+      "tarkovtracker_org_vs_io": {
+        "title": "Průvodce TarkovTracker.org a TarkovTracker.io",
+        "description": "Zjistěte, jaké jsou rozdíly mezi TarkovTracker.org a TarkovTracker.io a jak s nimi začít."
+      },
+      "tarkovmonitor": {
+        "title": "Průvodce nastavením TarkovMonitor",
+        "description": "Nainstalujte TarkovMonitor a připojte jej k TarkovTracker, abyste synchronizovali progres v raidech a úkolech."
+      },
+      "ratscanner": {
+        "title": "Průvodce nastavením RatScanner",
+        "description": "Nainstalujte RatScanner a propojte skenování předmětů se svým progresem v TarkovTracker."
+      },
+      "tarkovdev": {
+        "title": "Průvodce daty z Tarkov.dev",
+        "description": "Zjistěte, jak zdroje dat JSON z Tarkov.dev podporují nástroje pro Escape from Tarkov a sledování progresu."
+      },
+      "cultistcircle": {
+        "title": "Průvodce kalkulačkou Cultist Circle",
+        "description": "Zjistěte, jak používat kalkulačku Cultist Circle a prozkoumat recepty pro oběti a odměny."
+      },
+      "settings": {
+        "title": "Nastavení · TarkovTracker.org",
+        "description": "Spravujte předvolby, importy, zálohy a integrace v TarkovTracker."
+      },
+      "progression": {
+        "title": "Nastavení progresu · TarkovTracker.org",
+        "description": "Spravujte v TarkovTracker nastavení úrovně, dovedností a progresu."
+      },
+      "prestige": {
+        "title": "Nastavení Prestige · TarkovTracker.org",
+        "description": "Spravujte svůj progres Prestige v TarkovTracker."
+      },
+      "preferences": {
+        "title": "Předvolby · TarkovTracker.org",
+        "description": "Přizpůsobte si jazyk, vzhled a předvolby sledování v TarkovTracker."
+      },
+      "account": {
+        "title": "Účet · TarkovTracker.org",
+        "description": "Spravujte účet v TarkovTracker a propojené služby."
+      },
+      "team": {
+        "title": "Tým · TarkovTracker.org",
+        "description": "Spravujte v TarkovTracker svůj tým a sdílený progres."
+      },
+      "admin": {
+        "title": "Správa · TarkovTracker.org",
+        "description": "Ovládací prvky pro správu TarkovTracker."
+      },
+      "profile": {
+        "title": "Profil hráče · TarkovTracker.org",
+        "description": "Zobrazte v TarkovTracker profil hráče a sdílený progres."
+      },
+      "login": {
+        "title": "Přihlášení · TarkovTracker.org",
+        "description": "Přihlaste se do TarkovTracker, synchronizujte svůj progres a spolupracujte se svým týmem."
+      },
+      "auth_callback": {
+        "title": "Zpětné volání přihlášení · TarkovTracker.org",
+        "description": "Dokončete přihlášení do TarkovTracker."
+      },
+      "oauth_consent": {
+        "title": "Autorizace aplikace · TarkovTracker.org",
+        "description": "Zkontrolujte žádost aplikace o přístup k vašemu účtu v TarkovTracker."
+      },
+      "not_found": {
+        "title": "Stránka nenalezena",
+        "description": "Požadovaná stránka v TarkovTracker se nenašla."
+      }
+    }
+  }
+}

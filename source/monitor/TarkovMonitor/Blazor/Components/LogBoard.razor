@@ -1,0 +1,44 @@
+﻿@using Humanizer
+@implements IDisposable
+@inject LogRepository logRepository
+<MudStack Justify="Justify.FlexStart" AlignItems="AlignItems.Stretch" Class="ma-2" Style="min-width: 0;">
+    @if (logRepository.Logs.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info">No new log entries since Tarkov Monitor started.</MudAlert>
+    }else{
+        @foreach (LogLine line in logRepository.Logs)
+        {
+            <div style="width: 100%; min-width: 0;">
+                <div class="d-block" style="min-width: 0;">
+                    <MudPaper Class="d-flex align-center py-1 px-3" Style="width: 100%; min-width: 0; background: transparent;" Elevation="0" Square>
+                        <span class="my-auto" style="min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere;">
+                            @line.Message
+                        </span>
+                    </MudPaper>
+                </div>
+                <div class="d-flex justify-end mt-1">
+                    <MudText Style="font-size: .8em">@line.Time.ToUniversalTime().Humanize()</MudText>
+                </div>
+            </div>
+        }
+    }
+</MudStack>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        logRepository.newLog += LogAdded;
+    }
+
+    private void LogAdded(object? sender, NewLogLineArgs e)
+    {
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    public void Dispose()
+    {
+        logRepository.newLog -= LogAdded;
+    }
+}

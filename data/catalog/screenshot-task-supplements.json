@@ -1,0 +1,157 @@
+{
+  "verifiedAt": "2026-10-17T08:43:00.907Z",
+  "scope": "Only tasks visible in the user-provided official PvE screenshots; retained on metadata refresh only while locally active or ready.",
+  "objectiveIds": "local.screenshot.* are local checklist identifiers, not official objective IDs.",
+  "sources": [
+    {
+      "url": "https://www.eftarkov.com/task",
+      "evidence": "Task IDs and names both match the public index and the local accepted-task records."
+    },
+    {
+      "url": "https://www.eftarkov.com/task/6a7637fed31fb1191903fc07",
+      "evidence": "Three stated objectives. Representative map point uses the existing official reconnaissance roof-zone position; BRDM and tower coordinates are not estimated."
+    },
+    {
+      "url": "https://www.eftarkov.com/task/6ac3bc49f3f4480654003d7a",
+      "evidence": "Single objective to locate the Factory-to-Lab transit; point is from the cached official Factory transit data."
+    }
+  ],
+  "tasks-core": [
+    {
+      "id": "6a7637fed31fb1191903fc07",
+      "name": "战争迷雾",
+      "trader": {
+        "id": "54cb50c76803fa8b248b4571",
+        "name": "Prapor",
+        "normalizedName": "prapor",
+        "imageLink": "https://assets.tarkov.dev/54cb50c76803fa8b248b4571.webp"
+      },
+      "map": {
+        "id": "5704e4dad2720bb55b8b4567",
+        "name": "灯塔"
+      },
+      "kappaRequired": false,
+      "experience": 10000,
+      "minPlayerLevel": 1,
+      "wikiLink": "https://www.eftarkov.com/task/6a7637fed31fb1191903fc07",
+      "objectives": [],
+      "failConditions": []
+    },
+    {
+      "id": "6ac3bc49f3f4480654003d7a",
+      "name": "Hidden Route",
+      "trader": {
+        "id": "54cb57776803fa99248b456e",
+        "name": "Therapist",
+        "normalizedName": "therapist",
+        "imageLink": "https://assets.tarkov.dev/54cb57776803fa99248b456e.webp"
+      },
+      "map": {
+        "id": "55f2d3fd4bdc2d5f408b4567",
+        "name": "工厂"
+      },
+      "kappaRequired": false,
+      "experience": 15000,
+      "minPlayerLevel": 1,
+      "wikiLink": "https://www.eftarkov.com/task/6ac3bc49f3f4480654003d7a",
+      "objectives": [],
+      "failConditions": []
+    }
+  ],
+  "tasks-objectives": [
+    {
+      "id": "6a7637fed31fb1191903fc07",
+      "objectives": [
+        {
+          "id": "local.screenshot.6a7637fed31fb1191903fc07.brdm",
+          "description": "在灯塔侦察污水处理厂北部 BRDM 装甲车周边的游荡者阵地",
+          "type": "visit",
+          "count": 1,
+          "optional": false,
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "灯塔"
+            }
+          ]
+        },
+        {
+          "id": "local.screenshot.6a7637fed31fb1191903fc07.tower",
+          "description": "在灯塔污水处理厂西南部侦察游荡者的警戒塔阵地",
+          "type": "visit",
+          "count": 1,
+          "optional": false,
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "灯塔"
+            }
+          ]
+        },
+        {
+          "id": "local.screenshot.6a7637fed31fb1191903fc07.roof",
+          "description": "在灯塔污水处理厂侦察任意一座厂房屋顶区域",
+          "type": "visit",
+          "count": 1,
+          "optional": false,
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "灯塔"
+            }
+          ],
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e4dad2720bb55b8b4567",
+                "name": "灯塔"
+              },
+              "positions": [
+                {
+                  "x": -63.62,
+                  "y": 31.04,
+                  "z": -673.22
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failConditions": []
+    },
+    {
+      "id": "6ac3bc49f3f4480654003d7a",
+      "objectives": [
+        {
+          "id": "local.screenshot.6ac3bc49f3f4480654003d7a.transit",
+          "description": "在工厂找到前往实验室的转移点",
+          "type": "visit",
+          "count": 1,
+          "optional": false,
+          "maps": [
+            {
+              "id": "55f2d3fd4bdc2d5f408b4567",
+              "name": "工厂"
+            }
+          ],
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "55f2d3fd4bdc2d5f408b4567",
+                "name": "工厂"
+              },
+              "positions": [
+                {
+                  "x": -27.01,
+                  "y": -3.09,
+                  "z": -42.75
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failConditions": []
+    }
+  ]
+}

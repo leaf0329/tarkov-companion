@@ -1,0 +1,11 @@
+import {spawn} from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+const command=process.argv[2] || 'build';
+if(command==='build')await import('./sync-map-landmarks.mjs');
+const log=fs.createWriteStream('data/build-'+command+'.log');
+const tracker=path.resolve('source/tracker'),nuxt=path.join(tracker,'node_modules/nuxt');
+const cli=path.join(nuxt,JSON.parse(fs.readFileSync(path.join(nuxt,'package.json'))).bin.nuxt);
+const child=spawn(path.resolve('runtime/electron/electron.exe'),[cli,command],{cwd:tracker,env:{...process.env,ELECTRON_RUN_AS_NODE:'1',CI:'true',NODE_ENV:command==='prepare'?'development':'production',NITRO_PRESET:'node-server',NUXT_PUBLIC_APP_URL:'http://127.0.0.1:18791',NUXT_PUBLIC_TARKOV_ACCESS_SITE_KEY:'',NUXT_TARKOV_ACCESS_ENABLED:'false'},windowsHide:true,stdio:['ignore','pipe','pipe']});
+child.stdout.pipe(log);child.stderr.pipe(log);
+child.on('exit',async code=>{if(code===0 && command==='build')await import('./complete-tracker-runtime.mjs');console.log('Nuxt '+command+' finished with exit '+code+'; full log: data/build-'+command+'.log');process.exitCode=code ?? 1;});

@@ -1,0 +1,359 @@
+﻿@using System.ComponentModel
+@using Humanizer
+@implements IDisposable
+@inject GameWatcher eft
+@inject MessageLog messageLog
+@inject LocalizationService LocalizationService
+
+<MudDialog Class="tm-dialog-shell tm-dialog-shell--read-past" TitleClass="tm-dialog-title" ContentClass="tm-dialog-content tm-dialog-content--read-past" ActionsClass="tm-dialog-actions">
+    <DialogContent>
+        <MudText>
+            @LocalizationService.GetString("LastProfileLoaded"):
+            @if (HasLastLoadedProfileRoute)
+            {
+                <MudLink Class="tm-profile-link" Href="@LastLoadedProfileUrl">@LastProfileName (@GetProfileTypeDisplayName(LastLoadedProfileType))</MudLink>
+            }
+            else
+            {
+                <span>No EFT profile loaded.</span>
+            }
+        </MudText>
+        <MudText>
+            @LocalizationService.GetString("IfYouWantToUpdateProgressForDifferentProfile")
+        </MudText>
+        @if (eft.IsGameRunning)
+        {
+            <MudAlert Severity="Severity.Warning" Dense="true" Class="mt-2">
+                Read Past Logs is unavailable while Escape from Tarkov is running. Close EFT before importing historical task updates.
+            </MudAlert>
+        }
+        @if (customWatcher.LogsPath != "")
+        {
+            if (breakpoints != null)
+            {
+                <MudSelect @bind-Value="selectedBreakpoint" Label="@LocalizationService.GetString("ReadPreviousLogsLabel")" RelativeWidth="DropdownWidth.Adaptive" HelperText="@LocalizationService.GetString("ChooseStartingPointHelperText")" OpenIcon="@Icons.Material.Filled.TextSnippet" AdornmentColor="Color.Secondary" PopoverFixed="false" Modal="false" MaxHeight="280" Margin="Margin.Dense" Dense="true" Class="tm-select tm-select--dialog" PopoverClass="tm-select-popover" ListClass="tm-select-list">
+                    @foreach (LogDetails breakpoint in breakpoints)
+                    {
+                        <MudSelectItem Value="@breakpoint">@breakpoint.Profile.DisplayName | @breakpoint.Version | @breakpoint.Date.ToLongDateString() - @breakpoint.Date.Humanize()</MudSelectItem>
+                    }
+                </MudSelect>
+                <p>@LocalizationService.GetString("SelectStartingPointDescription")</p>
+                <p><strong>@LocalizationService.GetString("WarningMessage")</strong></p>
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Info" Indeterminate="true" />
+            }
+            
+        }
+        else
+        {
+            <span>@LocalizationService.GetString("CouldNotFindEFTInstallation")</span>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Disabled="@IsProcessing">@LocalizationService.GetString("Cancel")</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit" Disabled="@(SubmitDisabled || IsProcessing || eft.IsGameRunning)">@LocalizationService.GetString("Ok")</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; }
+
+    private static string GetProfileTypeDisplayName(ProfileType profileType) => profileType switch
+    {
+        ProfileType.PVE => "PVE",
+        ProfileType.Regular => "PVP",
+        ProfileType.PvpSeason => "Seasonal PVP",
+        _ => profileType.ToString(),
+    };
+
+    internal GameWatcher customWatcher = new(historicalReplay: true);
+    LogDetails? _selectedBreakpoint;
+    LogDetails? selectedBreakpoint {
+        get
+        {
+            return _selectedBreakpoint;
+        }
+        set
+        {
+            SubmitDisabled = value == null;
+            _selectedBreakpoint = value;
+        }
+    }
+    List<LogDetails>? breakpoints;
+    bool SubmitDisabled { get; set; } = true;
+    bool IsProcessing { get; set; }
+
+    private string lastProfileName = TarkovDev.LastLoadedProfile?.AccountId
+        ?? "";
+    private Profile? LastLoadedProfile => TarkovDev.LastLoadedProfile;
+    private ProfileType LastLoadedProfileType => LastLoadedProfile?.Type ?? ProfileType.Unknown;
+    private string LastProfileName => lastProfileName;
+    private bool HasLastLoadedProfileRoute => LastLoadedProfile?.HasTarkovDevPlayerRoute == true;
+    private string LastLoadedProfileUrl => HasLastLoadedProfileRoute
+        ? $"https://tarkov.dev/players/{LastLoadedProfile!.TarkovDevPlayerMode}/{LastLoadedProfile.AccountId}"
+        : "";
+
+    private static bool ProfilesMatch(Profile left, Profile right)
+    {
+        return left.Type == right.Type
+            && left.SessionMode == right.SessionMode
+            && string.Equals(left.AccountId, right.AccountId, StringComparison.Ordinal)
+            && string.Equals(left.Id, right.Id, StringComparison.Ordinal);
+    }
+
+    private async Task UpdateProfileName()
+    {
+        var profile = TarkovDev.LastLoadedProfile;
+        if (profile == null || !profile.HasTarkovDevPlayerRoute)
+        {
+            lastProfileName = "";
+            return;
+        }
+
+        lastProfileName = profile.AccountId;
+        var profileName = await TarkovDev.GetPlayerName(profile);
+        var latestProfile = TarkovDev.LastLoadedProfile;
+        if (latestProfile != null && ProfilesMatch(latestProfile, profile))
+        {
+            lastProfileName = profileName;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Task.Run(GetBreakPoints);
+        _ = UpdateProfileName();
+
+        TarkovDev.ApiDataLoaded += OnTarkovDevDataLoaded;
+        Properties.Settings.Default.PropertyChanged += Settings_PropertyChanged;
+    }
+
+    private void OnTarkovDevDataLoaded(object? sender, EventArgs e)
+    {
+        _ = InvokeAsync(async () =>
+        {
+            await UpdateProfileName();
+            StateHasChanged();
+        });
+    }
+
+    private void GetBreakPoints()
+    {
+        breakpoints = customWatcher.GetLogBreakpoints();
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    void Cancel() => MudDialog.Cancel();
+
+    private async Task Submit()
+    {
+        var breakpoint = selectedBreakpoint;
+        if (breakpoint == null || IsProcessing)
+        {
+            return;
+        }
+        if (eft.IsGameRunning)
+        {
+            messageLog.AddMessage(
+                "Read Past Logs was not started because Escape from Tarkov is running. Close EFT before importing historical task updates.",
+                "warning");
+            return;
+        }
+        if (!breakpoint.Profile.HasIdentity || !breakpoint.Profile.SupportsTarkovTrackerWrites)
+        {
+            messageLog.AddMessage(
+                $"Tarkov Tracker does not support {breakpoint.Profile.DisplayName} historical task updates. No updates were sent.",
+                "warning");
+            return;
+        }
+        if (TarkovTracker.IsLegacyService)
+        {
+            messageLog.AddMessage(
+                "Read Past Logs requires TarkovTracker.org. Switch the Tarkov Tracker service in Settings and try again.",
+                "warning");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(TarkovTracker.GetTokenForProfile(breakpoint.Profile)))
+        {
+            messageLog.AddMessage(
+                $"A verified {breakpoint.Profile.DisplayName} TarkovTracker.org API token assigned to this exact EFT profile is required to read past logs.",
+                "warning");
+            return;
+        }
+
+        TarkovTracker.ProfileActivationLease? trackerLease = null;
+        var handlerAttached = false;
+        var taskMessages = new List<MonitorMessage>();
+        var updateTasks = new Dictionary<string, TarkovMonitor.TaskStatus>();
+        var totalTasks = 0;
+        var startedUtc = DateTime.UtcNow;
+        var observedTaskStatuses = new Dictionary<string, TarkovMonitor.TaskStatus>();
+        var observedTaskSequence = new Dictionary<string, int>();
+        var observedTaskLock = new object();
+        var nextObservedTaskSequence = 0;
+        EventHandler<LogContentEventArgs<TaskStatusMessageLogContent>>? taskHandler = null;
+        IsProcessing = true;
+        SubmitDisabled = true;
+        await InvokeAsync(StateHasChanged);
+        try
+        {
+            try
+            {
+                trackerLease = await TarkovTracker.AcquireProfileLease(breakpoint.Profile);
+                if (eft.IsGameRunning)
+                {
+                    messageLog.AddMessage(
+                        "Read Past Logs was cancelled because Escape from Tarkov started before historical processing began.",
+                        "warning");
+                    return;
+                }
+
+                var historicalTasks = await TarkovDev.GetTasks(breakpoint.Profile.Type);
+                GameWatcher.ReadingPastLogs = true;
+                taskHandler = (_, e) =>
+                {
+                    if (!string.Equals(e.Profile.AccountId, breakpoint.Profile.AccountId, StringComparison.Ordinal)
+                        || !string.Equals(e.Profile.Id, breakpoint.Profile.Id, StringComparison.Ordinal)
+                        || e.Profile.SessionMode != breakpoint.Profile.SessionMode)
+                    {
+                        return;
+                    }
+
+                    lock (observedTaskLock)
+                    {
+                        observedTaskStatuses[e.LogContent.TaskId] = e.LogContent.Status;
+                        observedTaskSequence[e.LogContent.TaskId] = nextObservedTaskSequence++;
+                    }
+                };
+                customWatcher.TaskModified += taskHandler;
+                handlerAttached = true;
+                await Task.Run(() => customWatcher.ProcessLogsFromBreakpoint(breakpoint));
+
+                KeyValuePair<string, TarkovMonitor.TaskStatus>[] observedTasks;
+                lock (observedTaskLock)
+                {
+                    observedTasks = observedTaskStatuses
+                        .OrderBy(item => observedTaskSequence[item.Key])
+                        .ToArray();
+                }
+                foreach (var kvp in observedTasks)
+                {
+                    if (kvp.Value == TarkovMonitor.TaskStatus.Started)
+                    {
+                        continue;
+                    }
+                    var task = historicalTasks.Find((t) => t.id == kvp.Key);
+                    if (task == null)
+                    {
+                        continue;
+                    }
+                    totalTasks++;
+                    TarkovMonitor.TaskStatus savedTaskStatus = TarkovMonitor.TaskStatus.None;
+                    var taskProgress = trackerLease.Progress.data.tasksProgress.Find((prog) => prog.id == kvp.Key);
+                    if (taskProgress != null)
+                    {
+                        if (taskProgress.failed)
+                        {
+                            savedTaskStatus = TarkovMonitor.TaskStatus.Failed;
+                        }
+                        if (taskProgress.complete)
+                        {
+                            savedTaskStatus = TarkovMonitor.TaskStatus.Finished;
+                        }
+                    }
+                    if (kvp.Value == savedTaskStatus)
+                    {
+                        continue;
+                    }
+                    updateTasks.Add(kvp.Key, kvp.Value);
+                    taskMessages.Add(new MonitorMessage(
+                        $"{kvp.Value} task: {task.name}.",
+                        "quest",
+                        $"https://tarkov.dev/task/{task.normalizedName}"));
+                }
+
+                if (eft.IsGameRunning)
+                {
+                    messageLog.AddMessage(
+                        "Read Past Logs was cancelled because Escape from Tarkov started before task updates were sent.",
+                        "warning");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                messageLog.AddException("Past-log task updates could not be compiled.", "TM-LOG-001", "CompileTaskUpdates", ex, "LogParser", "PastLogs", durationMilliseconds: DiagnosticsService.ElapsedMilliseconds(startedUtc));
+                return;
+            }
+
+            GameWatcher.ReadingPastLogs = false;
+            if (handlerAttached)
+            {
+                if (taskHandler != null)
+                {
+                    customWatcher.TaskModified -= taskHandler;
+                }
+                handlerAttached = false;
+            }
+
+            var updateStartedUtc = DateTime.UtcNow;
+            try
+            {
+                if (updateTasks.Count > 0)
+                {
+                    await TarkovTracker.SetTaskStatuses(updateTasks, trackerLease);
+                    messageLog.AddMessages(taskMessages, preserveDisplayOrder: true);
+                    messageLog.AddMessage(
+                        $"Updated {updateTasks.Count} of {totalTasks} tasks found in the selected logs.",
+                        "info");
+                }
+                else
+                {
+                    messageLog.AddMessage(
+                        $"Checked {totalTasks} tasks in the selected logs. Tarkov Tracker was already up to date.",
+                        "info");
+                }
+                MudDialog.Close(DialogResult.Ok(true));
+            }
+            catch (Exception ex)
+            {
+                messageLog.AddException("Past-log task updates could not be sent.", "TM-API-TRACKER-007", "UpdatePastLogTasks", ex, "TarkovTracker", "PastLogs", $"https://{Properties.Settings.Default.tarkovTrackerDomain}", DiagnosticsService.ElapsedMilliseconds(updateStartedUtc));
+            }
+        }
+        finally
+        {
+            if (handlerAttached)
+            {
+                if (taskHandler != null)
+                {
+                    customWatcher.TaskModified -= taskHandler;
+                }
+            }
+            GameWatcher.ReadingPastLogs = false;
+            if (trackerLease != null)
+            {
+                TarkovTracker.ReleaseProfileLease(trackerLease);
+            }
+            IsProcessing = false;
+            SubmitDisabled = selectedBreakpoint == null;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "customLogsPath")
+        {
+            customWatcher.LogsPath = Properties.Settings.Default.customLogsPath;
+            Task.Run(GetBreakPoints);
+        }
+    }
+
+    public void Dispose()
+    {
+        TarkovDev.ApiDataLoaded -= OnTarkovDevDataLoaded;
+        Properties.Settings.Default.PropertyChanged -= Settings_PropertyChanged;
+    }
+}

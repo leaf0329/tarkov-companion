@@ -1,0 +1,2676 @@
+{
+  "admin": {
+    "verifying_access": "Verificando acceso de administrador...",
+    "error_title": "Error de conexión",
+    "load_error_description": "Error al cargar los datos del administrador. Por favor, actualice o póngase en contacto con soporte. Referencia: {reference}",
+    "no_reference": "N/D",
+    "error": {
+      "cache_purge_failed": "No se pudo purgar la caché. Por favor, inténtelo de nuevo.",
+      "invalid_purge_type": "Seleccione un tipo de purga de caché válido.",
+      "method_not_allowed": "Este método de solicitud no es compatible.",
+      "admin_privileges_required": "No tienes permiso para realizar esta acción.",
+      "authentication_required": "Debes iniciar sesión para continuar.",
+      "invalid_channel": "Introduzca un nombre de canal válido de Twitch.",
+      "invalid_display_name": "Introduzca un nombre para mostrar válido.",
+      "invalid_enabled_flag": "El valor habilitado no es válido.",
+      "invalid_request_body": "El cuerpo de la solicitud no es válido.",
+      "invalid_target_user_id": "Introduzca un ID de usuario válido.",
+      "invalid_tier": "Seleccione un nivel de seguidor válido.",
+      "service_config_missing": "El servicio de administración no está configurado.",
+      "supabase_request_failed": "El servicio de administración no pudo completar la solicitud.",
+      "supporter_update_failed": "No se pudo actualizar el acceso del seguidor.",
+      "twitch_config_update_failed": "No se pudo actualizar la configuración de Twitch."
+    },
+    "access_warning_title": "Acceso de administrador",
+    "access_warning_description": "Las acciones realizadas aquí afectan a todos los usuarios. Iniciado sesión como {user}.",
+    "cache_management_title": "Gestión de caché",
+    "last_purge_description": "Última purga: {type} en {timestamp}",
+    "tarkov_data_cache_label": "Caché de datos Tarkov",
+    "tarkov_data_cache_description": "Borra los datos del juego en caché (tareas, Escondite y objetos). Los usuarios obtendrán datos actualizados de la API de tarkov.dev.",
+    "purge_game_data_button": "Limpiar datos de juego",
+    "full_cache_purge_label": "Purga de Caché Completa",
+    "full_cache_purge_description": "Borra TODO el contenido en caché, incluidos los recursos estáticos. Úsalo con moderación: aumenta la carga del servidor de origen.",
+    "purge_everything_button": "Purgar todo",
+    "cache_behavior_title": "Comportamiento de la caché",
+    "cache_info_description": "Tras purgar la caché, la siguiente solicitud de un usuario activará una descarga actualizada de tarkov.dev. Estos datos nuevos se guardarán en caché para todos los usuarios.",
+    "confirm_full_cache_purge_title": "Confirmar purga total de la caché",
+    "confirm_full_cache_purge_description": "Esto borrará TODO el contenido en caché de Cloudflare, incluidos los recursos estáticos, las fuentes y los paquetes de JavaScript. Puede aumentar temporalmente los tiempos de carga de todos los usuarios.",
+    "confirm_purge_button": "Confirmar la purga",
+    "all_cache_label": "Toda la Cache",
+    "tarkov_data_label": "Datos de Tarkov",
+    "unauthorized_title": "Sin Autorización",
+    "admin_privileges_required": "Se necesitan privilegios de administrador para esta acción.",
+    "cache_purged_title": "Caché purgada",
+    "tarkov_cache_purged_description": "La caché de datos de Tarkov ha sido limpiada. Los usuarios recibirán datos nuevos.",
+    "full_cache_purged_title": "Caché completamente purgada",
+    "full_cache_purged_description": "Se ha borrado todo el contenido en caché de Cloudflare.",
+    "purge_failed_title": "La depuración falló",
+    "purge_failed_description": "Error al depurar la caché",
+    "audit_log_title": "Registro de Auditoría de administrador",
+    "refresh_button": "Recargar",
+    "audit_log_login_required": "No autorizado: Por favor, inicie sesión para continuar.",
+    "audit_log_admin_required": "No autorizado: Se requieren privilegios de administrador para ver registros de auditoría.",
+    "audit_log_table_not_found": "Tabla de registro de auditoría no encontrada.",
+    "audit_log_table_not_found_description": "Ejecute la migración de SQL para crear admin_audit_log.",
+    "audit_log_fetch_failed": "Error al recuperar registros de auditoría",
+    "no_actions_recorded": "No hay acciones de administración registradas aún",
+    "audit_log_by": "por",
+    "supporter_override_title": "Acceso de soporte",
+    "supporter_override_description": "Establece el estado de patrocinador de un usuario para pruebas en producción sin crear un pago en Stripe.",
+    "supporter_target_user_label": "Id de usuario",
+    "supporter_target_user_placeholder": "UUID de usuario de autenticación de Supabase",
+    "supporter_tier_label": "Grado",
+    "supporter_override_saved_title": "Acceso de soporte actualizado",
+    "supporter_override_enabled_description": "Se ha habilitado el acceso de patrocinador de nivel {tier}.",
+    "supporter_override_disabled_description": "Se ha deshabilitado el acceso de patrocinador activo.",
+    "twitch_config_title": "Flujo de Twitch",
+    "twitch_config_description": "Establece el canal de Twitch promocionado en la esquina del sitio. Los visitantes recogen el cambio en un par de minutos.",
+    "twitch_channel_label": "Canal",
+    "twitch_channel_placeholder": "Nombre del canal Twitch",
+    "twitch_display_name_label": "Nombre mostrado",
+    "twitch_display_name_placeholder": "Nombre para mostrar canal",
+    "twitch_config_saved_title": "Configuración de Twitch actualizada",
+    "twitch_config_saved_description": "La transmisión promocionada es ahora {channel}.",
+    "twitch_config_saved_with_warning_title": "Configuración de Twitch guardada",
+    "twitch_config_saved_with_warning_description": "La configuración fue guardada, pero los visitantes en caché pueden ver el valor anterior.",
+    "twitch_config_load_failed_title": "Configuración de Twitch no disponible",
+    "twitch_config_load_failed_description": "No se pudo cargar la configuración actual de Twitch."
+  },
+  "alerts": {
+    "no_map_data": "No hay datos de mapa disponibles para esta selección."
+  },
+  "app_bar": {
+    "error_loading": "Error al cargar datos de Tarkov",
+    "loading": "Cargando datos de Tarkov",
+    "logout_failed": "No se pudo cerrar sesión. Inténtalo de nuevo.",
+    "logout_unreachable": "No se pudo acceder al servidor, por lo que aún estás conectado. Sólo puedes cerrar sesión en este dispositivo; el servidor no se contará, así que la sesión allí permanece activa hasta que caduque o cierre la sesión desde otro dispositivo.",
+    "logout_this_device": "Cerrar sesión sólo en este dispositivo",
+    "logout_this_device_done": "Sólo se ha cerrado la sesión en este dispositivo. La sesión en el servidor permanece activa hasta que caduque o cierre la sesión en otro dispositivo.",
+    "logout_local_only": "Se ha cerrado la sesión en este dispositivo. El servidor no ha podido ser alcanzado, por lo que es posible que sus otras sesiones todavía estén conectadas.",
+    "hidden_label": "Oculto",
+    "user_label": "Usuario",
+    "user_avatar_alt": "Avatar de usuario",
+    "supporter_badge_aria": "Gestionar tu suscripción de patrocinador ({tier})",
+    "help_community_aria": "Ayuda y comunidad",
+    "community_section": "Comunidad",
+    "keyboard_shortcuts": "Atajos de teclado",
+    "report_problem": "Informar de un problema",
+    "login_aria": "Inicia sesión en tu cuenta",
+    "switch_to_light_theme": "Cambiar a tema claro",
+    "switch_to_dark_theme": "Cambiar a tema oscuro"
+  },
+  "progress_save_status": {
+    "indicator_aria": "Estado del progreso guardado: {status}",
+    "cloud_pending_label": "Guardando progreso en la nube",
+    "cloud_retrying_label": "Guardar en la nube reintentando",
+    "cloud_failed_label": "Error al guardar la nube",
+    "local_failed_label": "Progreso no guardado en este navegador",
+    "cloud_pending_description": "Sus últimos cambios de progreso aún no han sido guardados en la nube.",
+    "cloud_retrying_description": "Ha fallado guardar sus últimos cambios de progreso en la nube. Puede seguir rastreando mientras otro intento se ejecuta automáticamente.",
+    "cloud_failed_description": "Los intentos automáticos de guardar los últimos cambios de progreso en la nube se han detenido. Los cambios todavía están esperando a ser guardados, y puede seguir rastreando y reintentarlo en cualquier momento.",
+    "local_failed_description": "No se han podido guardar los últimos cambios de progreso en este navegador. Puede seguir rastreando, pero los cambios que no se guardan en otros lugares pueden perderse si recarga, cierra esta pestaña o cierra la sesión.",
+    "local_saved_note": "Estos cambios se guardan en este navegador.",
+    "cloud_also_pending_note": "Tampoco se han guardado en la nube. Exporta tu progreso para guardar una copia.",
+    "retry_scheduled": "Se ha programado el reintento automático {attempt} de {total}.",
+    "cause_offline": "Causa: este dispositivo parece estar desconectado.",
+    "cause_rate_limited": "Causa: el servicio en la nube limita temporalmente los ahorros.",
+    "cause_auth": "Causa: su sesión de inicio de sesión no pudo ser verificada.",
+    "cause_quota": "Causa: el almacenamiento de este navegador para TarkovTracker está lleno.",
+    "cause_unavailable": "Causa: este navegador está bloqueando el almacenamiento del sitio, por ejemplo debido a la configuración de privacidad.",
+    "cause_unknown": "La causa de este fracaso es desconocida.",
+    "quota_guidance": "Limpiar los datos de este sitio o recargar podría eliminar su única copia de estos cambios. Exportar su progreso antes de eliminar cualquier dato.",
+    "retry_button": "Reintentar la nube guardada",
+    "retry_succeeded": "Sus cambios de progreso fueron guardados en la nube.",
+    "retry_failed": "No se ha podido guardar la nube. Los cambios aún están esperando a ser guardados.",
+    "export_button": "Progreso de exportación",
+    "export_hint": "Exportar descarga su progreso actual como un archivo de copia de seguridad, incluso cuando el guardado ha fallado."
+  },
+  "sign_out_confirm": {
+    "title": "¿Cerrar sesión con cambios no guardados?",
+    "risk": "Sus últimos cambios de progreso no se guardan en este navegador o en la nube. Si cierra sesión ahora, se perderán.",
+    "options": "Puede permanecer conectado y volver a intentar guardar, o exportar su progreso actual antes de decidir.",
+    "stay_signed_in": "Permanecer conectado",
+    "discard_and_sign_out": "Cerrar sesión y descartar cambios",
+    "retry_succeeded": "Los cambios se han guardado en la nube. Puede cerrar sesión de forma segura."
+  },
+  "omnibar": {
+    "title": "Buscar",
+    "description": "Buscar tareas, elementos necesarios y estaciones ocultas",
+    "trigger_label": "Buscar...",
+    "open_aria": "Abrir búsqueda global",
+    "aria_label": "Búsqueda global",
+    "placeholder": "Buscar tareas, objetos necesarios, Escondite...",
+    "hint_min_chars": "Escribe al menos 2 caracteres para buscar...",
+    "no_results": "No se han encontrado resultados para \"{query}\".",
+    "group_tasks": "Tareas / Misiones",
+    "group_hideout": "Estaciones del Escondite"
+  },
+  "activity_log": {
+    "unread_indicator": "Tienes actividad sin leer",
+    "mark_read": "Marcar como leído",
+    "clear": "Limpiar",
+    "empty": "Ninguna actividad registrada aún.",
+    "badge_api": "API Sync",
+    "api_synced": "Progreso de API sincronizado",
+    "more_count": "+{count} más",
+    "entry": {
+      "completed": "Tarea completada: {name}",
+      "uncompleted": "Tarea incompleta: {name}",
+      "failed": "Tarea fallida: {name}",
+      "reset_failed": "Reiniciar tarea fallida: {name}",
+      "available": "Tarea desbloqueada: {name}",
+      "undo_completed": "Se deshizo la finalización de la tarea: {name}",
+      "undo_uncompleted": "Se deshizo la acción de marcar la tarea como no completada: {name}",
+      "undo_reset_failed": "Se deshizo el restablecimiento de la tarea fallida: {name}",
+      "undo_failed": "Se deshizo el estado fallido de la tarea: {name}"
+    }
+  },
+  "promoted_stream": {
+    "close": "Cerrar transmisión",
+    "expand": "Abrir transmisión",
+    "open_channel": "Ir al canal de Twitch",
+    "player_title": "Transmisión de Twitch {streamer}",
+    "region_label": "Transmisión de Twitch promocionado por {streamer}",
+    "reopen": "Reabrir transmisión",
+    "shrink": "Contraer transmisión",
+    "title": "{streamer} en vivo"
+  },
+  "buttons": {},
+  "errors": {
+    "generic_fallback": "Error inesperado. Inténtalo de nuevo.",
+    "chunk_load_blocked": "No se pudo cargar un archivo requerido de la aplicación. Inténtalo de nuevo. Si sigue ocurriendo, tu PSI región podría estar bloqueando el acceso.",
+    "network_access_denied": "Se bloqueó una solicitud de red necesaria. Inténtalo de nuevo. Si continúa, usa VPN o Cloudflare WARP."
+  },
+  "error": {
+    "return_home": "Volver al inicio",
+    "show_details": "Mostrar detalles",
+    "hide_details": "Ocultar detalles",
+    "technical_details": "Detalles técnicos",
+    "copy_details": "Copiar detalles",
+    "copy_success": "Copiado",
+    "status_prefix": "Error",
+    "page_not_found_description": "La página que buscas no existe.",
+    "access_blocked": "Acceso bloqueado",
+    "service_unavailable": "Servicio no disponible",
+    "something_went_wrong": "Algo salió mal",
+    "unexpected_description": "Se produjo un error inesperado al procesar tu solicitud.",
+    "invalid_host_hint": "Este host de vista previa está bloqueado por la validación de hosts de la API. Añade el nombre del host de vista previa a API_ALLOWED_HOSTS o derívalo de CF_PAGES_URL.",
+    "supabase_config_hint": "A esta implementación le falta la configuración pública de Supabase. Define NUXT_PUBLIC_SUPABASE_URL y NUXT_PUBLIC_SUPABASE_ANON_KEY para las vistas previas, o permite que las compilaciones de vista previa se ejecuten en modo sin conexión.",
+    "request_blocked_hint": "Se bloqueó una solicitud necesaria para renderizar esta página. Abre los detalles técnicos e incluye la URL de la solicitud fallida al informar del problema."
+  },
+  "toast": {
+    "hideout_updated": {
+      "title": "Escondite actualizado",
+      "description": "Se eliminaron {count} mejoras de estación que ya no cumplen los requisitos."
+    },
+    "api_updated": {
+      "title": "Actualización desde la API",
+      "description_fallback": "Tu progreso se actualizó mediante la API.",
+      "label": {
+        "single": "Tarea actualizada",
+        "plural": "Tareas actualizadas"
+      },
+      "state": {
+        "active": "activo",
+        "completed": "completada",
+        "failed": "fallida",
+        "uncompleted": "sin completar"
+      },
+      "more": ", +{count} más"
+    },
+    "local_ignored": {
+      "title": "Progreso local del navegador omitido",
+      "other_account": "Este navegador tenía progreso guardado de otra cuenta; se omitió para no sobrescribir tu progreso en la nube.",
+      "unsaved": "Esta pestaña tenía progreso temporal en memoria pero no una copia guardada en el navegador (normalmente tras recargar/cierre inesperado), así que se mantuvo el progreso en la nube.",
+      "guest": "Este navegador aún tenía progreso de invitado de antes de iniciar sesión, así que se mantuvo tu progreso en la nube."
+    },
+    "progress_merged": {
+      "title": "Progreso en la nube sincronizado",
+      "description": "Se sincronizó progreso desde otra pestaña/dispositivo y se fusionaron {count} diferencias locales."
+    },
+    "tarkov_uid_conflict": {
+      "title": "Perfil de Tarkov no vinculado",
+      "description": "La UID Tarkov {uid} ya está vinculada a otra cuenta TarkovTracker, por lo que no estaba vinculada a esta. Tu progreso aún ha sido guardado. Desvinculalo de la otra cuenta o importa tu propio perfil."
+    },
+    "load_failed": {
+      "title": "Error al cargar",
+      "description": "No se pudo cargar la información. Intenta de nuevo más tarde."
+    },
+    "count_edit_updated": {
+      "title": "Borrador actualizado",
+      "description": "Tu valor en progreso se actualizó a {value}."
+    },
+    "clipboard_copied": {
+      "title": "¡Copiado!",
+      "description": "{value}"
+    },
+    "clipboard_error": {
+      "title": "Error al copiar",
+      "description": "No se pudo copiar \"{value}\" al portapapeles."
+    },
+    "action_undone": {
+      "title": "Se deshizo la acción: {description}"
+    },
+    "action_undo_failed": {
+      "title": "Error al deshacer la acción: {description}"
+    }
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "click": "Haz clic",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "finish": "Finalizar",
+    "back_to_top": "Volver arriba",
+    "refresh_button": "Intentar de nuevo",
+    "opens_in_new_tab": "Abrir en una pestaña nueva",
+    "available": "Disponible",
+    "enabled": "Activado",
+    "disabled": "Deshabilitado",
+    "update_failed": "Error al actualizar",
+    "tasks": "Tareas",
+    "level": "Nivel",
+    "locked": "Bloqueado",
+    "all": "Todos",
+    "completed": "Completado",
+    "status_completed": "completada",
+    "hideout": "Hideout",
+    "unknown": "Desconocido",
+    "failed": "Fallo",
+    "status_failed": "fallida",
+    "complete": "Complete",
+    "pvp": "JcJ",
+    "pve": "JcJ",
+    "seasonal_pvp": "JcJ estacional",
+    "pvp_description": "Jugador vs Jugador (Estándar)",
+    "pve_description": "Jugador vs entorno (Co-op)",
+    "seasonal_pvp_description": "Temporada {season}",
+    "retry": "Reintentar",
+    "open_tasks": "Abrir tareas",
+    "view_on_tarkov_dev": "Ver en Tarkov.dev",
+    "reset": "Reset",
+    "scav": "Escav",
+    "apply": "Aplicar",
+    "more": "Más",
+    "needed_items": "Elementos necesarios",
+    "task": "Tarea",
+    "lightkeeper": "Lightkeeper",
+    "kappa": "Kappa",
+    "storyline": "Historial",
+    "mark_complete": "Marca completa",
+    "maps": "Mapas",
+    "clear_search": "Limpiar búsqueda",
+    "settings": "Ajustes",
+    "about": "Acerca de",
+    "credits": "Crédito",
+    "support": "Soporte",
+    "privacy_policy": "Política de privacidad",
+    "terms_of_service": "Términos de Servicio",
+    "streamer_tools": "Herramientas Streamer",
+    "prestige": "Prestige",
+    "backup_restore": "Copia de seguridad y restauración",
+    "confirm_import": "Confirmar importación",
+    "admin_panel": "Panel de administración",
+    "supporter": "Ayudante",
+    "timmy": "Timmy",
+    "chad": "Chad",
+    "activity_log": "Registro de actividades",
+    "manual": "Manual",
+    "page_not_found": "Página no encontrada",
+    "open_hideout": "Abrir escondite",
+    "zoom_speed": "Velocidad de zoom",
+    "pan_speed": "Velocidad de desconexión",
+    "zone_opacity": "Opacidad de zona",
+    "default": "Por defecto",
+    "compact": "Compacto",
+    "pmc_spawn": "Spawn PMC",
+    "pmc_extract": "Extraer PMC",
+    "scav_extract": "Extracto escav",
+    "dashboard": "Tablero",
+    "objectives": "Objetivos",
+    "kappa_tasks": "Tareas de Kappa",
+    "getting_started": "Comenzando",
+    "progress": "Progreso",
+    "blocked": "Bloqueado",
+    "optional": "Opcional",
+    "lv": "Lv",
+    "kappa_lightkeeper": "Kappa y Lightkeeper",
+    "list": "Lista",
+    "traders": "Comerciantes",
+    "clear_focus": "Limpiar enfoque",
+    "lvl_level": "Lvl {level}",
+    "impact": "Impacto",
+    "appearance": "Apariencia",
+    "requires": "Requiere",
+    "view_on_wiki": "Ver en Wiki",
+    "item": "Objeto",
+    "reset_failed": "Error al reiniciar",
+    "was_status": "era {status}",
+    "fail": "Fallo",
+    "accept": "Aceptar",
+    "ready_to_hand_over": "Listo para entregar",
+    "objective": "Objetivo",
+    "maxed": "Máximo",
+    "found_in_raid_required": "Encontrado en la incursión requerida",
+    "fir": "ARCHIVO",
+    "priority": "Prioridad",
+    "team": "Equipo",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "login": "Ingresar",
+    "overview": "Resumen",
+    "api_documentation": "Documentación de la API",
+    "api": "API",
+    "game_settings": "Ajustes del juego",
+    "custom_scale": "Escala personalizada",
+    "self_contained": "Autocontenido",
+    "progress_track": "Rastreo de progreso",
+    "account": "Cuenta",
+    "preferences": "Preferencias",
+    "game_edition": "Edición de juego",
+    "reset_pvp_data": "Restablecer datos PvP",
+    "reset_pve_data": "Restablecer datos PvE",
+    "reset_seasonal_data": "Restablecer datos estacionales JcJ",
+    "reset_all_data": "Restablecer todos los datos",
+    "import_failed": "Error al importar",
+    "delete_archived_run": "Eliminar Ejecuta Archivada",
+    "validation_error": "Error de validación",
+    "got_it": "Entendido"
+  },
+  "page_help": {
+    "button": "Ayuda",
+    "launcher": {
+      "title": "Ayuda y onboarding",
+      "summary": "Elige una guía rápida para esta página o el flujo completo de configuración.",
+      "page_guide": "Guiar esta página",
+      "page_guide_unavailable": "Todavía no hay una guía para esta página. Usa el onboarding en su lugar.",
+      "onboarding": "Onboarding para nuevos usuarios",
+      "onboarding_description": "Empieza con las importaciones, termina lo básico y luego verifica las tareas.",
+      "keyboard_shortcuts_error": "No se pudo abrir los atajos de teclado. Por favor, inténtelo de nuevo."
+    },
+    "onboarding": {
+      "title": "Empezar la configuración",
+      "summary": "Este es el primer recorrido recomendado para usuarios nuevos o que regresan. Usa los botones de acción para saltar directamente a las páginas reales.",
+      "actions": {
+        "account": "Abrir cuenta",
+        "login": "Iniciar sesión"
+      },
+      "steps": {
+        "import": {
+          "title": "Importa primero tu progreso",
+          "description": "Usa las importaciones antes de tocar la configuración manual. Es la forma más rápida de dejar la mayor parte de tu tracker en un estado útil.",
+          "bullets": {
+            "one": "Importa primero tu perfil de Tarkov.dev cuando lo tengas. Eso suele completar gran parte de los datos básicos de la cuenta y del progreso seguido.",
+            "two": "Después importa tus registros de EFT. Eso puede rellenar misiones y otro progreso con casi ningún clic manual.",
+            "three": "Si ambas importaciones salen bien, la configuración manual se convierte en una verificación rápida en lugar de reconstruir todo a mano."
+          },
+          "actions": {
+            "open": "Abrir importaciones"
+          }
+        },
+        "profile": {
+          "title": "Completa lo básico",
+          "description": "Después de las importaciones, fija los campos principales del perfil y decide si quieres sincronizar tu progreso con una cuenta.",
+          "bullets": {
+            "one": "Configura tu modo de juego, edición, nivel, facción y nombre visible para que los filtros y los requisitos de desbloqueo coincidan con tu cuenta real.",
+            "two": "Iniciar sesión desbloquea equipos, funciones basadas en API y almacenamiento en la nube, para que sea más fácil mantener el progreso entre dispositivos.",
+            "three": "Si todavía no quieres iniciar sesión, igual puedes empezar siguiendo el progreso localmente y vincularlo a una cuenta más tarde."
+          },
+          "actions": {
+            "settings": "Abrir ajustes"
+          }
+        },
+        "tasks": {
+          "title": "Revisa las tareas",
+          "description": "El último paso de limpieza con más impacto es la disponibilidad de tareas. Cuando eso es correcto, el resto del sitio se vuelve mucho más fiable.",
+          "bullets": {
+            "one": "En la página de tareas, marca las misiones que tienes disponibles ahora mismo en el juego para cada comerciante. Eso rellena las cadenas de requisitos mucho más rápido que completar tareas antiguas una por una.",
+            "two": "Si algo parece incorrecto, usa el menú de la tarjeta de tarea para reportar un problema de datos en lugar de forzar tu tracker a un estado erróneo.",
+            "three": "Después de esta revisión, usa el botón de ayuda de la barra superior en cualquier página compatible para volver a abrir la guía de la página o este onboarding."
+          }
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Guía del panel",
+      "summary": "Usa el panel para detectar tu mejor siguiente paso, revisar el progreso y saltar a las páginas que necesitan atención.",
+      "hint": "Obtén una vista rápida de lo que muestra el panel y de dónde conviene hacer clic después.",
+      "sections": {
+        "focus": {
+          "title": "Mejor siguiente paso",
+          "description": "La tarjeta superior resalta el progreso inmediato más claro según tus filtros actuales y el progreso que ya has registrado.",
+          "bullet_one": "Úsala cuando quieras una recomendación fuerte en lugar de recorrer toda la lista de tareas.",
+          "bullet_two": "Si parece incorrecta, revisa primero tus filtros de tareas, porque las tareas ocultas pueden cambiar la recomendación."
+        },
+        "progress": {
+          "title": "Tarjetas de progreso",
+          "description": "Las tarjetas de progreso son atajos a tareas y objetos necesarios con tus totales actuales ya puestos en contexto.",
+          "bullet_one": "Las tarjetas de tareas y objetivos te devuelven a tu lista de misiones.",
+          "bullet_two": "Las tarjetas de objetos saltan directamente a la vista correspondiente de objetos necesarios para tareas o escondite."
+        },
+        "review": {
+          "title": "Revisión a más largo plazo",
+          "description": "Las secciones de comerciantes e hitos sirven para revisar el progreso general, no solo tu siguiente clic.",
+          "bullet_one": "Usa los comerciantes para ver qué líneas de misiones siguen teniendo más trabajo pendiente.",
+          "bullet_two": "Usa los hitos para revisar Kappa, Lightkeeper y el ritmo general de finalización de un vistazo."
+        }
+      },
+      "actions": {
+        "needed_items": "Abrir objetos necesarios"
+      }
+    },
+    "tasks": {
+      "title": "Guía de tareas",
+      "summary": "Usa la página de tareas para ver el trabajo disponible, cambiar de perspectiva y reducir la lista exactamente a lo que quieres priorizar.",
+      "hint": "Obtén una explicación rápida de las vistas de tareas, los filtros y dónde están los ajustes importantes.",
+      "sections": {
+        "views": {
+          "title": "Elige una vista",
+          "description": "La fila superior cambia cómo se agrupan las tareas para que puedas navegar por lista, comerciante, mapa o grafo.",
+          "bullet_one": "La vista de lista es la mejor para comprobaciones normales de progreso y búsqueda rápida.",
+          "bullet_two": "Las vistas por comerciante, mapa y grafo son mejores cuando ya sabes el ángulo desde el que quieres revisar."
+        },
+        "filters": {
+          "title": "Recorta la lista",
+          "description": "Los filtros de estado te permiten centrarte en lo que está disponible ahora, bloqueado, completado o fallido sin salir de la página.",
+          "bullet_one": "La búsqueda funciona sobre los nombres de tareas y ayuda cuando la lista se siente demasiado grande.",
+          "bullet_two": "Si un conteo parece menor de lo esperado, normalmente alguno de los filtros de estado o de compañeros está ocultando resultados."
+        },
+        "settings": {
+          "title": "Ajusta el comportamiento",
+          "description": "El engranaje abre preferencias de visualización y filtrado que cambian cómo se comporta la lista de tareas entre sesiones.",
+          "bullet_one": "Usa los ajustes cuando quieras filtros predeterminados distintos, visibilidad del equipo o un comportamiento diferente de los mapas.",
+          "bullet_two": "Si la página se siente rara, los ajustes son el primer lugar que deberías revisar antes de asumir que faltan datos."
+        }
+      },
+      "actions": {
+        "needed_items": "Objetos de tareas"
+      }
+    },
+    "needed_items": {
+      "title": "Guía de objetos necesarios",
+      "summary": "Usa objetos necesarios para combinar materiales de tareas y escondite, y luego reducir la lista justo a los objetos que todavía te importan.",
+      "hint": "Obtén una explicación rápida de las pestañas, los modos de vista y los filtros detrás del engranaje.",
+      "sections": {
+        "scopes": {
+          "title": "Elige un alcance",
+          "description": "Las pestañas de arriba cambian entre todos los objetos, solo tareas, solo escondite y necesidades completadas.",
+          "bullet_one": "Usa solo tareas cuando estés haciendo misiones y no quieras mezclar materiales del escondite.",
+          "bullet_two": "Usa completadas cuando quieras revisar lo que ya cubriste en lugar de lo que aún falta."
+        },
+        "views": {
+          "title": "Cambia el diseño",
+          "description": "Las vistas de lista, cuadrícula y combinada muestran los mismos datos, pero están optimizadas para distintos estilos de revisión.",
+          "bullet_one": "La vista de lista es la más rápida para revisar cantidades y nombres.",
+          "bullet_two": "La vista combinada agrupa objetos repetidos cuando te importan más los totales que las fuentes individuales."
+        },
+        "filters": {
+          "title": "Refina la lista",
+          "description": "El panel de ajustes controla la visibilidad de objetos poseídos, las reglas FIR, las necesidades del equipo y otros filtros de alto impacto.",
+          "bullet_one": "Si un objeto desaparece de forma inesperada, normalmente la causa es un filtro del panel.",
+          "bullet_two": "Ordenar por prioridad es lo mejor cuando quieres ver primero los objetos de mayor impacto."
+        }
+      }
+    },
+    "hideout": {
+      "title": "Guía del escondite",
+      "summary": "Usa la página del escondite para ver qué estaciones están listas, qué está bloqueado y qué materiales siguen importando para las próximas mejoras.",
+      "hint": "Obtén una explicación rápida de los estados del escondite, las reglas de disponibilidad y dónde encontrar los materiales enlazados.",
+      "sections": {
+        "statuses": {
+          "title": "Lee los estados",
+          "description": "Los filtros principales separan las estaciones en todas, disponibles, bloqueadas y al máximo para que te centres en la etapa correcta.",
+          "bullet_one": "Disponible es la forma más rápida de ver qué puedes construir ahora mismo.",
+          "bullet_two": "Bloqueado es útil cuando quieres entender qué requisitos siguen faltando."
+        },
+        "requirements": {
+          "title": "Controla los bloqueos",
+          "description": "El menú de ajustes puede exigir requisitos de estación, habilidad y comerciante para que la disponibilidad coincida con el nivel de rigor que quieres en la página.",
+          "bullet_one": "Activa los filtros de requisitos cuando solo quieras mejoras que ya se puedan construir por completo.",
+          "bullet_two": "Desactívalos cuando quieras una vista de planificación más amplia de lo que viene pronto."
+        },
+        "materials": {
+          "title": "Sigue los materiales",
+          "description": "Cada tarjeta de estación muestra los objetos y requisitos detrás de la próxima mejora, con enlaces de vuelta al flujo más amplio de objetos.",
+          "bullet_one": "Usa las tarjetas de estación cuando quieras detalles de mejoras sin salir de la página.",
+          "bullet_two": "Salta a objetos necesarios cuando quieras la lista completa de compras del escondite entre todas las estaciones."
+        }
+      },
+      "actions": {
+        "needed_items": "Objetos del escondite"
+      }
+    }
+  },
+  "maps": {
+    "tooltip_density": "Consejos",
+    "map_settings": "Ajustes del mapa",
+    "not_available_title": "Mapa no disponible",
+    "not_available_description": "El mapa interactivo de {mapName} aún no está disponible. Estamos esperando a que se cree un mapa compatible.",
+    "placeholder": "esta ubicación",
+    "floors": "Pisos",
+    "extract_names": {
+      "scav_underboat_hideout": "Escondido bajo la Etapa de Tierra"
+    },
+    "factions": {
+      "pmc": "PMC"
+    },
+    "layers": {
+      "pmc_spawns": "Spawns de PMC"
+    },
+    "legend": {
+      "regular": "Regular",
+      "pinned": "Fijado",
+      "shared_extract": "Extracción compartida (cualquiera de las facciones)",
+      "coop_extract": "Extracción cooperativa (PMC + Scav)"
+    },
+    "tooltips": {
+      "zoom_in": "Acercarse en",
+      "zoom_out": "Apagar",
+      "reset_view": "Restablecer vista",
+      "open_fullscreen": "Abrir pantalla completa del mapa",
+      "exit_fullscreen": "Salir de pantalla completa",
+      "drag_to_resize": "Arrastre para cambiar el tamaño del mapa",
+      "switch_floor": "Cambiar piso (Ctrl + desplazamiento)"
+    },
+    "help": {
+      "title": "Controles del mapa",
+      "groups": {
+        "navigate": "Navigate",
+        "floors": "Pisos",
+        "interact": "Interactuar",
+        "view": "Ver"
+      },
+      "pan": "{keys} o arrastre a una sartén",
+      "zoom": "{keys} para acercar",
+      "reset": "{key} para restablecer la vista",
+      "cycle_floors": "{keys} a los pisos de ciclo",
+      "floor_panel": "O utilice el panel del suelo.",
+      "click_at_cursor": "{key} para hacer clic en el cursor",
+      "click_marker": "Haga clic en un marcador para más detalles.",
+      "fullscreen": "Utilice el botón de pantalla completa en los controles de mapas.",
+      "resize": "Arrastre el borde inferior del mapa para cambiar el tamaño."
+    },
+    "hint": {
+      "title": "Controles rápidos del mapa",
+      "summary": "Arrastre al sartén · Mayúsculas + Desplazamiento para acercar",
+      "summary_multi_floor": "Arrastre al pan · Mayúsculas + Desplazarse para acercar · Ctrl + Desplazarse para cambiar de piso",
+      "all_controls": "Todos los controles"
+    },
+    "aria": {
+      "tooltip_density": "Densidad de tooltips"
+    },
+    "tooltip": {
+      "go_to": "Ir al objetivo",
+      "go_to_in_task_list": "Ir al objetivo en la lista de tareas",
+      "complete": "Completar objetivo",
+      "uncomplete": "Descompletar objetivo",
+      "objective_unavailable": "Objetivo no disponible.",
+      "stacked_objectives": "{count} objetivos aquí"
+    }
+  },
+  "page": {
+    "dashboard": {
+      "changelog": {
+        "title": "Novedades",
+        "show": "Mostrar actualizaciones",
+        "hide": "Ocultar actualizaciones",
+        "loading": "Cargando actualizaciones...",
+        "error": "No se pudieron cargar las actualizaciones.",
+        "empty": "Sin actualizaciones aún.",
+        "view_all": "Ver todo"
+      },
+      "focus": {
+        "title": {
+          "default": "¿Qué debería hacer ahora?",
+          "multiple": "Varios buenos siguientes pasos",
+          "blocked": "Ahora mismo no hay nada listo",
+          "complete": "Estás al día"
+        },
+        "heading": {
+          "start": "Empieza {task}",
+          "continue": "Continúa {task}",
+          "finish": "Termina {task}",
+          "review_filters": "Revisa tus filtros de tareas",
+          "closest_unlock": "Desbloqueo más cercano: {task}",
+          "caught_up": "Todo lo visible está hecho"
+        },
+        "summary": {
+          "unlock_trader": "{task} es el paso de desbloqueo para {trader}.",
+          "impact": "{task} ofrece el mayor beneficio en cadena de tu cola actual.",
+          "close": "{task} es una de tus finalizaciones disponibles más cercanas.",
+          "kappa": "{task} es tu paso de Kappa más claro en este momento.",
+          "lightkeeper": "{task} es tu paso de Guardafaro más claro en este momento.",
+          "default": "{task} es la ganancia inmediata más clara en tu panel.",
+          "filter_hidden_one": "Tus filtros actuales ocultan 1 tarea disponible.",
+          "filter_hidden_other": "Tus filtros actuales ocultan {count} tareas disponibles.",
+          "blocked_requirement": "{task} está bloqueado por sus requerimientos.",
+          "complete": "Has terminado todas las tareas visibles en este alcance del panel."
+        },
+        "stat": {
+          "why": "Por qué gana",
+          "status": "Estado",
+          "secondary": "Otras buenas opciones",
+          "secondary_actionable": "Úsalas si el plan principal no te encaja.",
+          "secondary_blocked": "Estos son los desbloqueos más cercanos en tu cola.",
+          "secondary_empty": "Este es el siguiente paso más claro en este momento."
+        },
+        "reason": {
+          "unlock_trader": "Desbloquea {trader}",
+          "impact_one": "Abre 1 tarea posterior",
+          "impact_other": "Abre {count} tareas posteriores",
+          "close": "Una de tus finalizaciones más cercanas",
+          "kappa": "Hace avanzar Kappa",
+          "lightkeeper": "Hace avanzar Guardafaro",
+          "trader": "Hace avanzar {trader}",
+          "filters": "Los filtros actuales están ocultando tareas viables",
+          "complete": "Todo lo visible está completado",
+          "default": "Progreso inmediato"
+        },
+        "proof": {
+          "unlock_trader_one": "Máxima prioridad de desbloqueo: desbloquea {trader} con 1 objetivo restante.",
+          "unlock_trader_other": "Máxima prioridad de desbloqueo: desbloquea {trader} con {count} objetivos restantes.",
+          "impact_one": "Mayor recompensa: abre 1 tarea posterior.",
+          "impact_other": "Mayor recompensa: abre {count} tareas posteriores.",
+          "close_one": "La más rápida disponible: solo queda 1 objetivo.",
+          "close_other": "La más rápida disponible: solo quedan {count} objetivos.",
+          "ready_one": "La mejor disponible: queda 1 objetivo.",
+          "ready_other": "La mejor disponible: quedan {count} objetivos.",
+          "ready_zero": "La mejor disponible: lista para entregar ahora.",
+          "kappa_one": "Mejor progreso de cadena especial: hace avanzar Kappa con 1 objetivo restante.",
+          "kappa_other": "Mejor progreso de cadena especial: hace avanzar Kappa con {count} objetivos restantes.",
+          "lightkeeper_one": "Mejor progreso de cadena especial: hace avanzar Guardafaro con 1 objetivo restante.",
+          "lightkeeper_other": "Mejor progreso de cadena especial: hace avanzar Guardafaro con {count} objetivos restantes.",
+          "filters_one": "Sin opciones visibles: 1 tarea disponible está oculta por tus filtros.",
+          "filters_other": "Sin opciones visibles: {count} tareas disponibles están ocultas por tus filtros.",
+          "complete": "No queda trabajo visible en este alcance del panel."
+        },
+        "status": {
+          "ready_one": "Lista ahora. Queda 1 objetivo.",
+          "ready_other": "Lista ahora. Quedan {count} objetivos.",
+          "ready_no_objectives": "Lista ahora.",
+          "filters": "Ajusta tus filtros de tareas para mostrar las opciones ocultas.",
+          "complete": "Sin bloqueos. No queda nada visible sin hacer."
+        },
+        "badge": {
+          "based_on_filters": "Basado en los filtros actuales",
+          "hidden_available_one": "Los filtros ocultan 1 tarea disponible",
+          "hidden_available_other": "Los filtros ocultan {count} tareas disponibles"
+        },
+        "cta": {
+          "open_task": "Abrir tarea",
+          "open_tasks": "Abrir lista de tareas"
+        }
+      },
+      "progress": {
+        "title": "Desglose del progreso",
+        "items": "Objetos de misión",
+        "hideout_items": "Objetos del escondite",
+        "filtered_status_active": "Filtrado por configuración de tareas",
+        "filtered_status_inactive": "Todos los tipos de tareas activos",
+        "filtered_warning_tooltip": "Estas cifras siguen tus filtros de tareas (Kappa, Guardafaro y no especiales)."
+      },
+      "progress_card": {
+        "view_details": "Ver detalles de {label}",
+        "progress_label": "{label} Progreso"
+      },
+      "milestones": {
+        "title": "Hitos",
+        "halfway": "A mitad de camino",
+        "veteran": "Casi terminado",
+        "kappa": {
+          "subtitle": "Contenedor obtenido"
+        },
+        "lightkeeper": {
+          "subtitle": "Comerciante desbloqueado"
+        }
+      },
+      "traders": {
+        "title": "Progreso de comerciantes",
+        "view_tasks": "Ver las Misiones de {name}",
+        "tasks": "misiones",
+        "loyalty_level": "Nivel de lealtad",
+        "reputation": "Reputación",
+        "reputation_input_label": "Entrada de reputación",
+        "set_loyalty_level": "Establecer nivel de lealtad {level}",
+        "rep_progress_label": "Nivel {level}",
+        "scav_karma": "Karma de Scav",
+        "unlock_required": "Se requiere desbloqueo:",
+        "locked_summary": "{count} Comerciantes bloqueados",
+        "sort": {
+          "aria_label": "Ordenar comerciantes",
+          "direction_aria_label": "Alternar dirección de ordenación"
+        }
+      }
+    },
+    "changelog": {
+      "title": "Registro de cambios",
+      "description": "Consulta las últimas actualizaciones y cambios de TarkovTracker.",
+      "loading": "Cargando registro de cambios...",
+      "error": "No se pudo cargar el registro de cambios.",
+      "empty": "Aún no hay entradas en el registro de cambios.",
+      "load_more": "Cargar más",
+      "types": {
+        "added": "Añadido",
+        "fixed": "Corregido",
+        "improved": "Mejorado",
+        "updated": "Actualizado",
+        "changed": "Cambiado"
+      }
+    },
+    "storyline": {
+      "subtitle": "Sigue tu progreso en los capítulos de la historia de Tarkov.",
+      "chapters_complete": "capítulos completados",
+      "wip_title": "En desarrollo",
+      "wip_badge": "WIP",
+      "wip_description": "Esta función aún está en desarrollo. El contenido y la funcionalidad se ampliarán y mejorarán con el tiempo mientras seguimos organizando los datos. ¡Gracias por tu paciencia!",
+      "no_data": "No hay datos de capítulos de la historia disponibles.",
+      "mark_incomplete": "Marcar como incompleto",
+      "endings": "Finales",
+      "ending_progress": "Objetivos conocidos de {completed}/{total}",
+      "ending_evidence_pending": "No hay objetivos asignados a este final todavía.",
+      "partial_data": "Datos parciales",
+      "partial_data_hint": "Los datos de historias arriba para este capítulo están incompletos, por lo que pueden existir más objetivos de los que aparecen en la lista.",
+      "quest_route_exclusive": "Terminar una de estas rutas regula la otra.",
+      "quest_route_known_steps_done": "Todos los pasos conocidos hechos",
+      "quest_route_evidence_pending": "No hay pasos capturados aún",
+      "quest_route_conflict": "Más de una ruta se lee como terminado; sólo una es posible en el juego.",
+      "quest_route_progress": "{completed}/{total} pasos",
+      "stale_progress_one": "1 marca de objetivo guardada ya no coincide con los datos de la historia actual y necesita revisarla.",
+      "stale_progress_other": "{count} marcas de objetivos guardadas ya no coinciden con los datos actuales de la historia y deben volver a comprobarse.",
+      "route_choice": "Opción de ruta",
+      "route_chosen": "Ruta seleccionada",
+      "route_blocks": "Bloqueos: {objectives}",
+      "route_blocked_by": "Bloqueado por: {objectives}",
+      "route_decision": "Decisión {index}",
+      "route_choose_one": "Selecciona uno",
+      "route_required_steps": "Pasos requeridos",
+      "route_optional_steps": "Pasos opcionales",
+      "route_selected_hint": "Esta ruta está activa.",
+      "route_switch_hint": "Para cambiar de ruta, desmarque la ruta seleccionada primero.",
+      "route_unlocks_here": "Desbloquea aquí",
+      "route_unlocks_chapter": "Capítulo se desbloquea",
+      "route_unlocks_estimated": "Tiempo estimado",
+      "route_unlock_map": "Mapa: {name}",
+      "route_unlock_trader": "Comerciante: {name}",
+      "route_unlock_reward": "Recompensa: {name}"
+    },
+    "kappa": {
+      "subtitle": "Sigue tu progreso hacia el contenedor Kappa y las misiones de Lightkeeper.",
+      "row": {
+        "level_met_aria": "Nivel requerido {required}, tú eres nivel {current}",
+        "level_unmet_aria": "Requiere nivel {required}, tú eres nivel {current}",
+        "level_title": "Nivel requerido {required} (eres {current})",
+        "level_summary": "Nivel {required} (tienes {current})",
+        "trader_level": "{trader} Lv{level}",
+        "action_uncomplete": "Marcar incompleto",
+        "action_reset_failed": "Error al restablecer",
+        "locked_by": "Requiere: {task}"
+      },
+      "empty": "Aún no hay tareas para esta lista.",
+      "summary": {
+        "complete": "completado",
+        "final_goal": "Objetivo final de Kappa"
+      },
+      "trader_selector": {
+        "label": "Seleccionar comerciante"
+      },
+      "trader": {
+        "other": "Otro"
+      }
+    },
+    "supporter": {
+      "title": "Apoya TarkovTracker",
+      "subtitle": "Ayuda a mantener el sitio en funcionamiento. Cada contribución se destina directamente al alojamiento, al desarrollo y a mantener las luces encendidas.",
+      "billing_monthly": "Mensual",
+      "billing_6month": "6 meses",
+      "billing_yearly": "Anual",
+      "most_popular": "Más popular",
+      "tier_cta": "Subscribir",
+      "tier_login_cta": "Inicia sesión para suscribirse",
+      "tier_change_cta": "Cambiar plan en el portal de facturación",
+      "current_tier_badge": "Plan actual",
+      "tier_scav_name": "Escav",
+      "tier_scav_tagline": "Solo intento salir adelante",
+      "tier_timmy_name": "Timmy",
+      "tier_timmy_tagline": "Aprendiendo a manejarme",
+      "tier_chad_name": "Chad",
+      "tier_chad_tagline": "Apoyo de un verdadero veterano.",
+      "perk_badge": "Insignia de apoyo",
+      "perk_discord": "Rol de apoyo en Discord",
+      "perk_tier_role": "Rol de nivel {tier} en Discord",
+      "perk_early_access": "Acceso anticipado a nuevas funciones",
+      "perk_priority_support": "Soporte prioritario",
+      "perk_feature_voting": "Prioridad en la votación de nuevas funciones",
+      "one_time_title": "Contribución única",
+      "one_time_subtitle": "¿Prefieres no suscribirte? Envía un donativo único a partir de {min}.",
+      "one_time_cover_fees": "Cubrir las comisiones de Stripe",
+      "one_time_fee_amount": "{fees} en comisiones",
+      "one_time_amount_field_label": "Importe de la contribución",
+      "one_time_min_error": "Mínimo: {min}",
+      "one_time_invalid_error": "Introduce un importe válido",
+      "one_time_max_error": "Máximo: {max}",
+      "one_time_give_cta": "Donar {total}",
+      "one_time_login_cta": "Inicia sesión para contribuir",
+      "one_time_net_note": "Tras las comisiones, nos llegan {net}.",
+      "one_time_perks_heading": "Incluye ventajas para patrocinadores",
+      "one_time_fee_transparency": "Las comisiones de Stripe (2.9% + $0.30) se muestran antes de pagar.",
+      "perk_api_rate_limit": "Mayores cuotas diarias de lectura y escritura de la API",
+      "perk_subscription_retention": "Exento de la limpieza de inactividad de rutina mientras una suscripción calificada está activa",
+      "perk_one_time_retention": "Ventana de inactividad de un año con soporte calificado",
+      "billing_summary": "Las suscripciones se renuevan automáticamente en el intervalo seleccionado. Cancela las futuras renovaciones en cualquier momento. Las contribuciones de una sola vez no se renovan.",
+      "policies_title": "Soporte de un vistazo",
+      "terms_summary": "Apoyo financia este proyecto gratuito. Los beneficios pueden cambiar y no están garantizados. Los pagos generalmente no son reembolsables, sujeto a la ley aplicable.",
+      "payment_terms_link": "Términos de pago, cancelación y reembolso",
+      "retention_summary": "El soporte calificativo extiende la ventana de inactividad de la rutina; las suscripciones activas que cumplen los requisitos son exentas. Los reembolsos y los reembolsos afectan a la elegibilidad. Esto no es una garantía de almacenamiento o protección de otra eliminación de cuenta.",
+      "retention_terms_link": "Términos de retención completos",
+      "privacy_summary": "Stripe gestiona los pagos. Mantenemos limitados pagos y registros de seguidores para administrar su soporte. Nuestra política de privacidad explica el uso de datos, retención y sus derechos.",
+      "login_required_warning": "Debes iniciar sesión para recibir ventajas de patrocinador.",
+      "price_to_us": "Nos llega",
+      "price_per_month_suffix": "/mo",
+      "price_stripe_fees": "Comisiones de Stripe",
+      "billed_every_label": "Se factura cada {label}",
+      "savings_note": "Ahorras {amount} frente al pago mensual",
+      "kofi_deprecation_title": "Ko-fi (opción alternativa)",
+      "kofi_deprecation_detail": "Las suscripciones y las contribuciones únicas indicadas ahora se gestionan a través de Stripe, lo que significa que pagas menos comisiones y una mayor parte de tu apoyo llega directamente a nosotros. Ko-fi sigue disponible como alternativa solo para donativos puntuales.",
+      "alt_payments_title": "Pronto añadiremos más métodos de pago",
+      "alt_payments_coming_soon": "Estamos añadiendo más opciones de pago para que cada persona pueda contribuir de la manera que mejor le convenga.",
+      "alt_payment_crypto": "Criptomodas",
+      "alt_payment_gift_cards": "Tarjetas regalo",
+      "alt_payments_more": "Y más",
+      "checkout_error_title": "No se pudo completar el pago",
+      "checkout_error_generic": "No pudimos iniciar el proceso de pago. Inténtalo de nuevo en un momento.",
+      "manage_subscription_cta": "Gestionar suscripción",
+      "upgrade_cta": "Elige un nivel",
+      "portal_error_title": "No se pudo abrir el portal de facturación",
+      "portal_error_generic": "No pudimos abrir el portal de facturación. Inténtalo de nuevo.",
+      "status_active_subscription": "Suscripción activa",
+      "status_active_one_time": "Patrocinador activo",
+      "status_past_due": "Pago vencido",
+      "status_cancelled": "Suscripción cancelada",
+      "status_expired": "Suscripción expirada",
+      "status_inactive": "Patrocinador inactivo",
+      "status_summary_inactive": "El apoyo ha finalizado. Elige un nivel a continuación para renovar las ventajas.",
+      "status_summary_renews": "Se renueva el {date}. Puedes cambiar de nivel o cancelarla en cualquier momento.",
+      "status_summary_cancelled_until": "El acceso continuará hasta el {date}. Finalizará después de esa fecha.",
+      "status_summary_subscription": "Gracias por mantener las luces encendidas. Gestiona el pago en cualquier momento.",
+      "status_summary_one_time": "Gracias por tu contribución única.",
+      "status_summary_one_time_until": "Ventajas activas hasta el {date}.",
+      "thanks_subscription_title": "¡Te damos la bienvenida!",
+      "thanks_subscription_description": "Tu suscripción se está activando. Tu insignia de nivel aparecerá en breve.",
+      "thanks_one_time_title": "¡Gracias por tu apoyo!",
+      "thanks_one_time_description": "Tu contribución se ha realizado. Puede tardar un momento en reflejarse en tu cuenta.",
+      "one_time_amount_label": "Importe de la contribución única en USD",
+      "billing_6month_interval": "6 meses",
+      "billing_yearly_interval": "año"
+    },
+    "tasks": {
+      "primary_views": {
+        "graph": "Grafo"
+      },
+      "graph": {
+        "focus_mode_active": "Mostrando cadena de dependencias para {taskName}",
+        "isolate_chain": "Aislar cadena",
+        "show_context": "Mostrar contexto",
+        "no_tasks": "No se encontraron misiones para este comerciante.",
+        "mobile_unavailable": "La vista de grafo se ve mejor en una pantalla más ancha.",
+        "legend": "Leyenda",
+        "flow_start": "Inicio (sin requisitos previos)",
+        "flow_end": "Fin (sin tareas posteriores)",
+        "flow_direction": "Las tareas fluyen de arriba → abajo",
+        "keyboard_controls_title": "Controles de teclado",
+        "keyboard_pan": "Mover",
+        "keyboard_zoom": "Zoom",
+        "keyboard_reset": "Restablecer vista",
+        "alpha_notice": "La vista de grafo está en alfa. El diseño y las funciones pueden cambiar con frecuencia.",
+        "resize_handle": "Ajustar altura del grafo"
+      },
+      "user_views": {
+        "yourself": "Tú"
+      },
+      "search": {
+        "placeholder": "Buscar...",
+        "aria_label": "Tareas de búsqueda"
+      },
+      "sort": {
+        "none": "Orden predeterminado",
+        "impact": "Impacto",
+        "alphabetical": "Alfabético",
+        "level": "Nivel requerido",
+        "trader": "Orden de comerciante",
+        "teammates": "Disponible para compañeros de equipo",
+        "xp": "Recompensa de XP",
+        "ascending": "Ascendente",
+        "descending": "Descendente",
+        "aria_label": "ordenar tareas",
+        "progression": "Progreso"
+      },
+      "settings": {
+        "title": "Configuración de tareas",
+        "tabs": {
+          "filters": "Filtros de tareas",
+          "filter_bar": "Barra de filtro",
+          "advanced": "Avanzado"
+        },
+        "filters": {
+          "hint": "Controla qué tareas aparecen.",
+          "regular_tasks": "Tareas regulares",
+          "kappa_required": "Kappa Requerido",
+          "lightkeeper_required": "Lightkeeper Requerido",
+          "team_shared_only": "Equipo compartido únicamente",
+          "has_required_keys": "Solo misiones con llaves",
+          "show_global_tasks": "Mostrar tareas globales en el mapa",
+          "impact_respects_filters": "El impacto respeta los filtros de tareas",
+          "hide_completed_map_objectives": "Ocultar tareas completadas en mapa"
+        },
+        "appearance": {
+          "hint": "Ajusta el aspecto de las tarjetas de tareas.",
+          "required_labels": "Etiquetas \"obligatorias\"",
+          "experience_rewards": "Recompensas de experiencia",
+          "next_tasks": "Próximas tareas",
+          "previous_tasks": "Tareas anteriores",
+          "collapse_completed_objectives": "Contraer objetivos en tareas completadas"
+        },
+        "filter_bar": {
+          "hint": "Mostrar u ocultar filtros de estado.",
+          "all_filter": "Todos los filtros",
+          "all_filter_hint": "Mostrar cada tarea sin importar el estado.",
+          "available_filter": "Filtro disponible",
+          "available_filter_hint": "Tareas que puedes empezar ahora mismo según tu nivel y los requisitos previos.",
+          "locked_filter": "Filtro bloqueado",
+          "locked_filter_hint": "Tareas bloqueadas por el nivel, la reputación del comerciante o las tareas previas.",
+          "completed_filter": "Filtro completado",
+          "completed_filter_hint": "Tareas que ya has finalizado.",
+          "failed_filter": "Filtro fallido",
+          "failed_filter_hint": "Tareas que fallaron debido a condiciones perdidas."
+        },
+        "advanced": {
+          "manual_fail_actions": "Acciones manuales de error",
+          "failed_tasks_label": "Tareas fallidas",
+          "repair_failed": "Reparar tareas fallidas",
+          "repair_failed_confirm": "¿Reparar tareas fallidas borrando indicadores fallidos que no son compatibles con las condiciones de falla actuales?",
+          "repair_failed_done": "Se borró el estado fallido para las tareas {count}.",
+          "repair_failed_error": "No se pudieron reparar las tareas fallidas",
+          "repair_failed_action": "Reparar"
+        }
+      },
+      "no_tasks_found": "No se han encontrado misiones. Prueba a cambiar los filtros o actualizar el nivel.",
+      "no_tasks_found_description": "Ajusta los filtros o los requisitos de nivel para ver las misiones disponibles.",
+      "loading": "Cargando misiones",
+      "map": {
+        "resize_handle": "Ajustar altura del mapa",
+        "show_map": "Mostrar mapa",
+        "hide_map": "Ocultar mapa",
+        "fullscreen_label": "Pantalla completa",
+        "required_items": "Artículos requeridos",
+        "required_keys": "Claves requeridas",
+        "required_items_summary": "Objetos necesarios para tareas activas",
+        "required_keys_summary": "Llaves necesarias para tareas activas",
+        "active_tasks_group": "Tareas activas",
+        "time_period": {
+          "dawn": "Amanecer",
+          "day": "Día",
+          "dusk": "Atardecer",
+          "night": "Noche",
+          "default": "Hora"
+        },
+        "map_complete_tasks_hidden": "{count} tareas completadas en este mapa están ocultas.",
+        "map_complete_tasks_showing": "{count} tareas completadas en este mapa se están mostrando.",
+        "map_complete_tasks_toggle_show": "Mostrar ocultas",
+        "map_complete_tasks_toggle_hide": "Ocultar completadas en mapa",
+        "map_hidden_hint": "Mapa oculto — haga clic para mostrar",
+        "raid_time_tooltip": "Tiempo actual de la banda del juego",
+        "raid_plan": {
+          "title": "Misiones en el mapa",
+          "summary_all": "Mostrando todo {total}",
+          "summary_hidden": "{hidden} de {total} ocultos",
+          "choose_quests": "Elegir misiones",
+          "show_all": "Mostrar todo",
+          "popover_description": "Desmarca las misiones que no estés ejecutando esta banda para borrarlas del mapa. \"Sólo\" oculta todo lo demás.",
+          "only": "Sólo",
+          "show_only_named": "Mostrar solo {name} en el mapa",
+          "show_only_quest": "Mostrar sólo esta misión en el mapa",
+          "hide_quest": "Ocultar del mapa",
+          "show_quest": "Mostrar en el mapa",
+          "all_hidden_hint": "Cada misión en este mapa está oculta. Usa Mostrar todos para traerlos de vuelta.",
+          "hidden_section_title": "Escondido del mapa ({count})",
+          "hidden_section_description": "Seguidamente seguido, no dibujado en el mapa.",
+          "hidden_section_expand": "Mostrar misiones ocultas",
+          "hidden_section_collapse": "Colapsar misiones ocultas"
+        }
+      },
+      "pinned_tasks_section": "Tareas fijadas",
+      "focused_task_section": "Tarea enfocada",
+      "focused_task_description": "Abierta desde un enlace de tarea para que quede claro donde continuar.",
+      "global_tasks_section": "Tareas globales",
+      "questcard": {
+        "pin_task": "Fijar misión",
+        "unpin_task": "Desfijar misión",
+        "level": "Nivel requerido: {count}",
+        "level_badge": "Nivel {count}",
+        "fence_rep_badge": "Valla {rep}",
+        "fence_rep_tooltip": "Requiere reputación con Fence de {rep}",
+        "trader_level_tooltip": "Requiere nivel de lealtad {level} con {trader}",
+        "trader_level_badge": "{trader} LL{level}",
+        "wiki": "Wiki",
+        "locked_before": "Misiones antes: {count}",
+        "unlocks_next": "Desbloquea el siguiente",
+        "copy_task_link": "Copiar enlace de tarea",
+        "copy_key_name": "Copiar nombre de la llave",
+        "report_data_issue": "Reportar problema de datos",
+        "tarkov_dev_logo": "Logotipo de Tarkov.dev",
+        "view_task_on_wiki": "Ver {name} en la Wiki",
+        "hand_over": "Entregar",
+        "hand_over_fir": "Entrega encontrada en allanamiento",
+        "decrease": "Disminuir",
+        "increase": "Aumentar",
+        "uncomplete": "Incompleto",
+        "not_completed": "No completado",
+        "of": "de",
+        "mark_failed": "Marcar como fallida",
+        "available_button": "Marcar como disponible",
+        "clear_availability_confirmation": "Borrar confirmación de disponibilidad en el juego",
+        "uncomplete_button": "Marcar como no completado",
+        "reset_item_counts": "Restablecer conteos de objetos",
+        "collapse_task": "Colapsar tarea",
+        "expand_task": "Expandir tarea",
+        "reset_item_counts_disabled_complete": "Marca esta misión como incompleta para restablecer conteos",
+        "reset_item_counts_disabled_failed": "Marca esta misión como disponible para restablecer conteos",
+        "reset_item_counts_disabled_nothing_to_reset": "No hay conteos de objetos que restablecer",
+        "status_complete": "Marcado {name} como completo",
+        "status_uncomplete": "Marcado {name} como no completado",
+        "status_failed": "Marcado {name} como fallida",
+        "status_reset_failed": "Estado de fallo restablecido para {name}",
+        "status_available": "Marcados todos los requisitos previos para {name} como completados",
+        "undo": "Deshacer",
+        "undo_complete": "Deshecha la finalización de {name}",
+        "undo_uncomplete": "Deshecha la marcación de no completado de {name}",
+        "undo_failed": "Deshecho el fallo de {name}",
+        "undo_reset_failed": "Restaurado el estado de fallo de {name}",
+        "mark_failed_confirm": "¿Marcar esta misión como fallida? Esto es solo para problemas de datos, no se recomienda y puede bloquear cadenas de misiones.",
+        "reset_item_counts_confirm": "¿Restablecer todos los conteos de objetos de esta misión?",
+        "failed_because": "Falló porque",
+        "failed_because_status_tooltip": "Falló automáticamente cuando \"{name}\" estaba {status}",
+        "failed_because_unknown": "Marcado como fallido manualmente o faltan datos",
+        "blocked_because": "Bloqueada porque",
+        "blocked_because_status_tooltip": "Bloqueada permanentemente — \"{name}\" estaba {status}",
+        "blocked_because_unknown": "Bloqueada por requisitos previos",
+        "keys_disclaimer_tooltip": "Basado en datos de la API y no siempre es 100 % obligatorio. Es posible que las puertas ya estén abiertas. Verifícalo en el juego o en la wiki antes de comprar llaves.",
+        "keys_disclaimer_aria": "Aviso sobre llaves requeridas",
+        "keys_or": "o",
+        "equipment_disclaimer_tooltip": "Equipo especial que se debe llevar a la raid para completar este objetivo.",
+        "equipment_disclaimer_aria": "Aviso sobre equipo requerido",
+        "copy_equipment_name": "Copiar nombre del equipo",
+        "requirement_status_active": "activa/aceptada",
+        "requirement_status_available": "disponible",
+        "requirement_status_not_started": "sin empezar",
+        "requires_must_be": "debe estar {status}",
+        "requires_currently": "actualmente {status}",
+        "requires_tooltip_action": "{action} \"{name}\" para desbloquear esta tarea",
+        "requires_tooltip_conflict": "\"{name}\" está {current}, pero requiere {expected} — esta tarea puede quedar bloqueada permanentemente",
+        "requires_progress": "{completed} de {total} requisitos previos completados",
+        "requires_progress_tooltip": "Siguiente: {tasks}",
+        "requires_progress_tooltip_overflow": "Siguiente: {tasks} y {count} más",
+        "objectives_hidden": "{count} objetivos no están en este mapa ({uncompleted} sin completar)",
+        "needed_by": "Necesitado por: {names}",
+        "unlocks_next_tooltip": "Número de tareas que estarán disponibles después de completar esta tarea",
+        "impact_tooltip": "Número de tareas incompletas que dependen de que esta tarea se complete",
+        "reward_items": "Elementos:",
+        "unlocks_purchase": "Desbloquea compra:",
+        "blocked_tooltip": "Esta misión está bloqueada permanentemente y nunca puede completarse debido a decisiones tomadas en otras misiones",
+        "edition_exclusive_tooltip": "Esta tarea sólo está disponible para jugadores con la edición {editions}.",
+        "any_map": "Cualquiera",
+        "global_task_tooltip": "Esta misión se puede completar en cualquier mapa",
+        "jump_to_map": "Ir al mapa",
+        "any_location_tooltip": "La misión se puede completar en cualquier mapa",
+        "click_to_edit": "Haz clic para editar",
+        "find": "Encontrar",
+        "find_and_hand_over": "Encontrar y entregar",
+        "find_and_hand_over_fir": "Encontrar y entregar encontrado en incursión",
+        "find_fir": "Encontrar en incursión",
+        "items_count": "{count} objetos",
+        "kappa_tooltip": "Esta misión es necesaria para obtener el Contenedor Seguro Kappa",
+        "level_badge_tooltip": "Nivel mínimo de jugador {level} requerido para desbloquear esta misión",
+        "lightkeeper_tooltip": "Esta misión es necesaria para desbloquear al comerciante Lightkeeper",
+        "alternatives_tooltip": "Esta misión ofrece {count} opciones alternativas; solo tienes que completar una",
+        "alternatives_badge": "{count} alt",
+        "location_tooltip": "Los objetivos de la misión están en {map}",
+        "next_tasks": "Siguiente(s) misión(es):",
+        "open_item_on_tarkov_dev": "Abrir {name} en tarkov.dev",
+        "previous_tasks": "Misión(es) anterior(es):",
+        "progress": "Progreso {completed}/{total}",
+        "rewards": "Recompensas",
+        "unlocks_count": "{count} desbloqueos",
+        "trader_requirement_badge": "{trader} {kind} {comparison} {value}",
+        "loyalty_level": "L",
+        "reputation": "Rep"
+      },
+      "blockers": {
+        "player_level": "Nivel de jugador {comparison} {required} requerido (actual: {current}).",
+        "trader_level": "Se requiere un nivel de lealtad {trader} {comparison} {required} (actual: {current}).",
+        "trader_reputation": "Se requiere reputación {trader} {comparison} {required} (actual: {current}).",
+        "prerequisite": "Conoce los estados de tareas requeridos para: {tasks}.",
+        "story_route": "Conoce los estados de tareas requeridos para {tasks}, o progresa uno de estos capítulos de historia: {chapters}.",
+        "failed_branch": "Bloqueada por una tarea fallida: {task}.",
+        "faction": "Disponible para caracteres {faction}.",
+        "trader_unlock": "Desbloquea {trader} completando {task}.",
+        "prestige": "Requiere Prestigio {required} (actual: {current}).",
+        "global_variable": "Valor de progresión del servidor {comparison} {required} requerido (actual: {current}).",
+        "global_variable_unknown": "Requiere progresión del servidor {comparison} {required}. Tu valor actual no está disponible para el rastreador. Usar Marca disponible sólo si esta tarea está disponible dentro del juego; no se marcarán las tareas contadoras.",
+        "task_counter": "Requiere {comparison} {required} tareas completadas de este nivel de lealtad del trader (completado: {current}). Si esta tarea ya está disponible en el juego, usa la marca disponible.",
+        "dialogue": "Requiere una conversación en el juego. Usa la marca disponible sólo después de confirmar que esta tarea está disponible en el juego.",
+        "story_objective": "Completa el objetivo de la historia \"{objective}\" ({chapter}).",
+        "unknown": "Los datos requeridos no están disponibles o no soportados. No se puede confirmar la disponibilidad.",
+        "cycle": "La cadena de prerrequisitos contiene un ciclo. La disponibilidad no puede ser confirmada.",
+        "complete": "Esta tarea se ha completado.",
+        "failed": "Esta tarea ha fallado.",
+        "disabled": "Esta tarea está desactivada.",
+        "task_status": "{task} ({status})",
+        "status_complete": "completada",
+        "status_failed": "fallida",
+        "status_active": "activo o aceptado",
+        "status_unknown": "estado desconocido",
+        "status_or": " o "
+      }
+    },
+    "hideout": {
+      "loading": "Cargando datos del escondite",
+      "station_link_label": "Ir a {name}",
+      "no_stations_found": "No se encontraron estaciones. Intenta cambiar los filtros.",
+      "collapse_completed": "Colapsar estaciones completadas",
+      "sort": {
+        "ready_first": "Ordenar las estaciones listas para construir primero"
+      },
+      "prereq_filters": {
+        "title": "Requisitos de disponibilidad",
+        "station_levels": "Requerir niveles de estación",
+        "skill_levels": "Requerir niveles de habilidad",
+        "trader_loyalty": "Requerir lealtad del comerciante",
+        "confirm_title": "¿Activar requisito de disponibilidad?",
+        "confirm_description": "Al activar {requirement}, se pueden eliminar mejoras del escondite que ya no cumplan los requisitos.",
+        "confirm_confirm": "Activar"
+      },
+      "stationcard": {
+        "level": "Disponible para construir | Nivel {count} | Nivel {count}",
+        "level_not_ready": "Aún no está listo para construir",
+        "next_level": "Requisitos para el próximo nivel",
+        "max_level": "Nivel máximo de estación alcanzado",
+        "upgrade_unavailable": "No se puede mejorar esta estación",
+        "prerequisites": "Requisitos previos",
+        "requirements": {
+          "station": "{stationname} nivel {level}",
+          "skill": "{skillname} nivel {level}",
+          "trader": "{tradername} LL{loyaltylevel}"
+        },
+        "game_edition_description": "El nivel base del escondite está determinado por la edición del juego que posees. Puedes cambiar esto en la configuración del rastreador.",
+        "settings_button": "Ir a Configuración",
+        "upgrade_button": "Construir | Construir nivel {level} | Mejorar a nivel {level}",
+        "downgrade_button": "Eliminar estación | Degradar a nivel {level} | Degradar a nivel {level}",
+        "status_upgraded": "Mejorado {name} a nivel {level}",
+        "status_downgraded": "Degradado {name} desde el nivel {level}",
+        "requirement": {
+          "mark_complete": "Marcar completo ({count})",
+          "mark_incomplete": "Marcar incompleto",
+          "set_custom_amount": "Establecer cantidad personalizada:"
+        }
+      }
+    },
+    "needed_items": {
+      "loading": "Cargando datos de misiones y escondite",
+      "search_placeholder": "Buscar objetos...",
+      "items": "artículos",
+      "empty": "No hay objetos que coincidan con tu búsqueda.",
+      "error": "No se pueden cargar los elementos necesarios.",
+      "filters": {
+        "label": "Filtros",
+        "non_fir": "NO-FIR",
+        "hide_owned": "OCULTAR POSEÍDOS",
+        "hide_non_fir_special_equipment_title": "Ocultar equipo especial no-FIR (p. ej., marcadores MS2000, cámaras Wi-Fi)",
+        "kappa_only": "KAPPA",
+        "kappa_only_tooltip": "Mostrar solo los objetos necesarios para misiones Kappa",
+        "kappa_only_disabled_tooltip": "El filtro de Kappa solo aplica a las misiones.",
+        "hide_team_needs": "OCULTAR NECESIDADES DEL EQUIPO"
+      },
+      "sort": {
+        "label": "Ordenar",
+        "name": "Nombre",
+        "category": "Categoría",
+        "count": "Cantidad"
+      },
+      "view": {
+        "list": "Vista de lista",
+        "grid": "Vista de cuadrícula",
+        "combined": "Vista combinada"
+      },
+      "teammates_needed": "Los compañeros de equipo necesitan esto",
+      "settings": {
+        "title": "Configuración de objetos necesarios"
+      }
+    },
+    "settings": {
+      "card": {
+        "apitokens": {
+          "title": "Tokens de API",
+          "new_token_expand": "Crear un token",
+          "submit_new_token": "Crear token",
+          "open_api_documentation": "Documentación de OpenAPI",
+          "create_token_success": "Se ha creado correctamente un nuevo token de API.",
+          "create_token_error": "Error al crear un nuevo token de API.",
+          "load_tokens_error": "Error al cargar los tokens de API.",
+          "copy_failed": "Error al copiar el token.",
+          "copy_token": "Copiar token",
+          "edit_name": "Editar nombre de token",
+          "edit_name_aria": "Editar nombre de token para {name}",
+          "save_name": "Guardar nombre de token",
+          "cancel_name_edit": "Cancelar edición de nombre de token",
+          "name_updated": "Nombre del token actualizado",
+          "name_update_error": "Error al actualizar el nombre del token. Por favor, inténtelo de nuevo.",
+          "token_created": "Token creado",
+          "token_created_description": "Copia y guarda este token ahora. No podrás verlo nuevamente.",
+          "token_created_close": "Listo",
+          "token_copied": "Token copiado al portapapeles",
+          "hide_token": "Ocultar token",
+          "token_revoked": "Token revocado",
+          "token_revoke_error": "No se pudo revocar el token. Inténtalo nuevamente.",
+          "no_tokens": "No tienes ningún token de API de TarkovTracker.",
+          "not_logged_in": "Debes iniciar sesión para crear un token de API.",
+          "default_note": "Token sin nombre",
+          "show_token": "Mostrar token",
+          "token_value_hidden": "Valor del token oculto por la configuración del servidor",
+          "token_value_missing": "Valor del token no disponible",
+          "token_value_unavailable": "Mostrar el valor del token no disponible",
+          "token_value_unavailable_desc": "Tu API actual no expone los valores de los tokens existentes.",
+          "token_cap_reached": "Límite de tokens alcanzado",
+          "token_cap_reached_desc": "Puedes tener como máximo 3 tokens API activos. Revoca un token existente para crear uno nuevo.",
+          "revoke_button": "Revocar",
+          "report": {
+            "load_failed": "Error al cargar los tokens de API",
+            "create_failed": "Error al crear el token de API",
+            "rename_failed": "Fallo al renombrar token API",
+            "revoke_failed": "Error al revocar el token de API"
+          },
+          "list": {
+            "created": "Creado",
+            "last_used_tooltip": "Último uso: {value}",
+            "never": "Nunca",
+            "usage_count": "{count} usos",
+            "revoked": "Revocado"
+          },
+          "form": {
+            "gamemode_title": "Modo de juego",
+            "permissions_title": "Permisos",
+            "note_label": "Etiqueta o nota",
+            "note_placeholder": "p. ej. overlay de streaming, bot del clan, app personal"
+          }
+        }
+      }
+    },
+    "team": {
+      "page_description": "Invita a tus compañeros, elige el progreso del equipo que ves y sigue juntos.",
+      "invite": {
+        "title": "Enlace de invitación",
+        "subtitle": "Comparte tu equipo con compañeros de equipo de confianza.",
+        "link_label": "URL de invitación al equipo",
+        "helper": "Cualquiera con este enlace puede unirse a su equipo.",
+        "show": "Mostrar enlace",
+        "hide": "Ocultar enlace",
+        "copy": "Copiar enlace",
+        "copied": "¡Copiado!"
+      },
+      "members": {
+        "title": "Miembros ({count})",
+        "no_members": "Aún no hay miembros en este equipo. Comparte tu enlace de invitación para añadir compañeros.",
+        "alone": "Estás solo aquí: comparte tu enlace de invitación para añadir compañeros.",
+        "copy_invite": "Copiar enlace de invitación"
+      },
+      "visibility": {
+        "title": "Ajustes de visibilidad",
+        "description": "Controla el progreso de tus compañeros de equipo que aparecen en tu rastreador.",
+        "items_section": "Items",
+        "show_tasks": "Mostrar tareas de los miembros del equipo",
+        "show_items": "Mostrar elementos necesarios de los miembros del equipo",
+        "show_non_fir": "Mostrar elementos que no son necesarios",
+        "show_hideout": "Mostrar elementos necesarios para ocultar",
+        "show_maps": "Mostrar los objetivos del mapa de los miembros del equipo"
+      },
+      "danger_zone": {
+        "title": "Zona de peligro",
+        "disband_description": "La disolución elimina el equipo para todos los miembros. Esto no se puede deshacer.",
+        "leave_description": "Dejar te elimina de este equipo. Tu progreso permanece en tu cuenta.",
+        "disband": "Disolver equipo",
+        "leave": "Dejar equipo",
+        "confirm_disband_title": "¿Disolver equipo?",
+        "confirm_disband_description": "Esto elimina el equipo y su membresía para todos. Esto no se puede deshacer.",
+        "confirm_leave_title": "¿Abandonar equipo?",
+        "confirm_leave_description": "Dejarás este equipo y dejarás de compartir el progreso con sus miembros.",
+        "confirm_disband": "Sí, equipo de disolver",
+        "confirm_leave": "Sí, dejar equipo",
+        "disband_success": "Equipo disuelto correctamente.",
+        "disband_error": "Error al disolver el equipo.",
+        "action_error": "No se puede actualizar la membresía del equipo."
+      },
+      "card": {
+        "manageteam": {
+          "membercard": {
+            "this_is_you": "(Eres tú)",
+            "owner": "Dueño",
+            "taskscomplete": "{completed}/{total} misiones completadas",
+            "kick_success": "El compañero de equipo pateó con éxito.",
+            "kick_error": "Error al patear a un compañero.",
+            "level_badge_alt": "Insignia {level} de nivel",
+            "hide_progress": "Ocultarme el progreso de {name}",
+            "show_progress": "Mostrar el progreso de {name}para mí",
+            "enable_team_tasks": "Mostrar tareas de los miembros del equipo antes de cambiar un miembro individual",
+            "remove_member": "Eliminar {name} del equipo"
+          }
+        },
+        "myteam": {
+          "create_new_team": "Crear un nuevo equipo",
+          "create_team_success": "Se ha creado correctamente un nuevo equipo.",
+          "create_team_error": "Error al crear un nuevo equipo.",
+          "create_team_error_ui_update": "El estado del equipo no se actualizó. Recarga o inténtalo de nuevo.",
+          "leave_team_success": "Has dejado tu equipo correctamente.",
+          "leave_team_error": "Error al dejar tu equipo.",
+          "already_in_team": "Ya estás en un equipo {mode} . Deja tu equipo actual primero.",
+          "no_team": "Actualmente no estás en un equipo.",
+          "login_required": "Inicia sesión para crear un equipo o administrar el enlace de invitación de tu equipo.",
+          "user_not_authenticated": "Usuario no autenticado."
+        },
+        "teaminvite": {
+          "description": "Has recibido una invitación a un equipo de TarkovTracker",
+          "decline": "Rechazar"
+        }
+      }
+    },
+    "credits": {
+      "sections": {
+        "original_creator": "Creador original del proyecto:",
+        "beta_testers": "Nuxt - Probadores de beta cerrada:",
+        "contributors": "Colaboradores de código abierto:"
+      },
+      "notes": {
+        "alphabetical": "Listado alfabéticamente; el orden no refleja la contribución.",
+        "contributors": "Los colaboradores de GitHub se ordenan por número de contribuciones; las cuentas bot se excluyen."
+      },
+      "contributors": {
+        "loading": "Cargando colaboradores...",
+        "error": "No se pueden cargar los colaboradores ahora mismo.",
+        "empty": "Aún no se encontraron colaboradores.",
+        "contributions": "{count} contribuciones",
+        "total": "Colaborador {count} | Contribuyentes {count}"
+      },
+      "team_link": "Mantenido por el equipo TarkovTracker — conozca a ellos en la página Acerca"
+    },
+    "about": {
+      "title": "Acerca de TarkovTracker",
+      "intro": "TarkovTracker es un rastreador de progreso gratuito de código abierto para Escape de Tarkov. Mantiene el progreso de tu misión y línea de historiales, ocultan las mejoras y los requisitos de objetos en un solo lugar, y permanece actualizado con los datos del juego mantenidos por la comunidad. El proyecto está dirigido por un pequeño equipo de voluntarios con la ayuda de colaboradores de código abierto.",
+      "team": {
+        "summary": "TarkovTracker.org es mantenido por un pequeño equipo de voluntarios. La gente de abajo mantiene el sitio funcionando y apoya a la comunidad de Discord.",
+        "core_heading": "Equipo central",
+        "support_heading": "Soporte de Discord"
+      },
+      "partners": {
+        "heading": "Socios y ecosistema",
+        "summary": "TarkovTracker se basa en proyectos comunitarios. Estos mantenedores gestionan las herramientas y fuentes de datos independientes en las que el rastreador confía."
+      },
+      "help": {
+        "heading": "Cómo obtener ayuda",
+        "routing": "Para la respuesta más rápida, utilice los flujos de trabajo de soporte específicos de los canales en nuestro Discord en lugar de mensajes directos a los miembros del equipo. Los errores reproducibles y las ideas de características pertenecen a GitHub, y los informes de seguridad pasan por nuestra política de seguridad privada.",
+        "discord": "Soporte de la comunidad en Discord",
+        "github_issues": "Reportar un error o solicitar una característica en GitHub",
+        "security": "Reportar un problema de seguridad (privado)",
+        "credits_link": "Pruebas beta y colaboradores de código abierto — ver Créditos"
+      },
+      "github_profile": "GitHub profile",
+      "roles": {
+        "core_owner": "Propietario principal, mantenedor y desarrollador",
+        "discord_owner_developer": "Propietario del servidor de Discord, desarrollador y mantenedor de TrackerBot",
+        "core_support": "Personal de soporte básico",
+        "discord_support": "Soporte general de Discord",
+        "tarkov_dev_maintainer": "Mantenedor de Tarkov.dev",
+        "ratscanner_maintainer": "Propietario y mantenedor de RatScanner"
+      },
+      "projects": {
+        "tarkov_dev": "Tarkov.dev",
+        "ratscanner": "Escáner de puntuación"
+      }
+    },
+    "login": {
+      "subtitle": "Inicia sesión para acceder a tu cuenta",
+      "continue_twitch": "Continuar con Twitch",
+      "continue_discord": "Continuar con Discord",
+      "continue_google": "Continuar con Google",
+      "continue_github": "Continuar con GitHub",
+      "popup_blocked_title": "Popup bloqueado",
+      "popup_blocked_description": "Tu navegador bloqueó la ventana de inicio de sesión. Redirigiendo ahora...",
+      "authenticating": "Autentificando...",
+      "authenticating_description": "Espera mientras completamos tu inicio de sesión.",
+      "error_title": "Error al iniciar sesión",
+      "error_description": "La autenticación se canceló o falló. Inténtalo de nuevo.",
+      "success_title": "Sesión iniciada",
+      "success_description": "Sesión iniciada con {provider}.",
+      "login_options": "Opciones de inicio de sesión"
+    },
+    "profile": {
+      "shared_player": "Jugador compartido",
+      "shared_view": "Vista compartida",
+      "loading_shared_profile": "Cargando perfil compartido...",
+      "loading_data": "Cargando metadatos de progresión...",
+      "shared_private": "El perfil compartido es privado.",
+      "shared_not_found": "El perfil compartido no se encontró.",
+      "shared_unavailable": "El perfil compartido no está disponible en este momento.",
+      "shared_load_failed": "Error al cargar el perfil compartido.",
+      "shared_mode_notice": "Estás viendo el progreso compartido de este modo.",
+      "share_private_intro": "Este modo es privado. Activa el uso compartido en ",
+      "account_settings_link": "Configuración de cuenta",
+      "share_private_outro": " para hacer este enlace público.",
+      "share_public_enabled": "Este modo es público. Cualquiera que tenga el enlace puede verlo.",
+      "share_private_enabled": "Este modo es privado.",
+      "mode_toggle_label": "Seleccionar modo de perfil",
+      "copy_snapshot": "Copiar Snapshot",
+      "view_tasks": "Abrir tareas",
+      "story_no_tasks": "Esperando los metadatos de las tareas para crear tu historia.",
+      "story_start": "El perfil de {mode} acaba de empezar.",
+      "story_complete": "Historia principal de tareas completada.",
+      "story_late": "Entrando en la etapa avanzada de progreso del wipe.",
+      "story_mid": "El progreso a mitad del wipe está ganando impulso.",
+      "story_early": "Progreso temprano con un ritmo constante.",
+      "story_paragraph_empty": "Todavía no hay progreso con fecha y hora de {name} en {mode}.",
+      "story_paragraph": "{name} ha estado activo en {mode} durante unos {active_days} días, con {journey_days} días entre el primer progreso registrado y el más reciente.",
+      "next_milestone_done": "Se han alcanzado todos los hitos de finalización de tareas.",
+      "next_milestone_value": "Queda {remaining}% para alcanzar el {milestone}% de finalización de tareas.",
+      "no_date": "Aún no hay datos",
+      "level_meta": "Nivel del perfil de {mode} y facción activa ({faction})",
+      "tasks_meta": "{remaining} pendientes, {failed} ramas fallidas",
+      "objectives_meta": "{completion_pct}% de finalización de los objetivos registrados",
+      "hideout_meta": "{completed_parts} hitos de objetos del Escondite completados",
+      "achievement_mainline": "Progreso de la línea principal de tareas",
+      "achievement_objectives": "Finalización de objetivos",
+      "no_storyline": "No hay datos de historia disponibles para este perfil.",
+      "storyline_auto_start": "Inicio automático",
+      "storyline_discovered": "Descubierto",
+      "storyline_objectives_main": "Objetivos principales",
+      "storyline_objectives_optional": "Objetivos opcionales",
+      "no_hideout": "No hay datos del escondite disponibles para este perfil.",
+      "hideout_item_fallback": "Objeto del Escondite",
+      "hideout_module_fallback": "Mejora del Escondite",
+      "level_prefix": "Nv.",
+      "no_tasks": "No hay tareas disponibles para este perfil.",
+      "no_objectives": "Sin objetivos",
+      "activity_timeline": "Cronología de actividad",
+      "timeline_subtitle": "Eventos recientes de progreso con marcas de tiempo",
+      "timeline_task": "Finalización de tarea",
+      "timeline_failed": "Rama de tarea fallida",
+      "timeline_hideout": "Módulo del Escondite completado",
+      "timeline_hideout_item": "Materiales del Escondite entregados",
+      "started": "Inicio",
+      "latest_activity": "Actividad más reciente",
+      "recent_momentum": "Impulso de 7 días",
+      "recent_momentum_value": "{count} tareas completadas",
+      "no_timeline": "Aún no hay actividad con marca de tiempo para este modo.",
+      "progress_overview": "Resumen de progreso",
+      "progress_overview_subtitle": "Resumen del recorrido y ritmo",
+      "next_milestone": "Próximo hito",
+      "total_actions": "Acciones registradas",
+      "total_actions_value": "{count} incrementos de objetivos/objetos registrados",
+      "achievements": "Logros",
+      "achievements_subtitle": "Hitos importantes de progresión",
+      "kappa_projection": "Cronograma de Kappa",
+      "kappa_projection_subtitle": "Duración completada o ETA estimada",
+      "kappa_unknown": "Cronología de Kappa no disponible",
+      "kappa_unknown_detail": "No se han detectado tareas de Kappa para este perfil.",
+      "kappa_done": "Kappa completada en este modo",
+      "kappa_done_detail": "Completó {total} tareas de Kappa en unos {days} días.",
+      "kappa_done_detail_simple": "Todas las tareas de Kappa están completadas en este perfil.",
+      "kappa_insufficient": "La estimación de Kappa necesita más historial",
+      "kappa_insufficient_detail": "Completa más tareas con fecha y hora para generar una estimación.",
+      "kappa_pace_unavailable": "No hay suficientes datos de ritmo para estimar la finalización.",
+      "kappa_projected_headline": "Se estima completar Kappa en unos {days_remaining} días.",
+      "kappa_projected_detail": "Basado en {sample_count} finalizaciones con fecha y hora repartidas en {sample_days} días.",
+      "kappa_floor_note": "La estimación se ha aumentado para tener en cuenta {critical_path_floor} requisitos previos secuenciales y bloqueos por nivel.",
+      "confidence_high": "Alta confianza",
+      "confidence_medium": "Confianza media",
+      "confidence_low": "Baja confianza",
+      "estimated_finish": "Final estimado",
+      "kappa_remaining": "{count} restantes"
+    },
+    "not_found": {
+      "not_found_description": "Lo sentimos, no se ha encontrado la página."
+    },
+    "terms_of_service": {
+      "table_of_contents": "Tabla de contenidos",
+      "index_button": "Índice"
+    },
+    "resources": {
+      "title": "Recursos y guías",
+      "subtitle": "Encuentra aplicaciones complementarias, herramientas comunitarias, recursos para desarrolladores y guías para sacar más partido a TarkovTracker.",
+      "search_placeholder": "Buscar herramientas y guías...",
+      "clear_filters": "Borrar filtros",
+      "no_results": "Ningún recurso coincide con tu búsqueda.",
+      "results_count": "Se han encontrado {count} recursos",
+      "results_count_one": "1 recurso encontrado",
+      "filter_label": "Filtrar recursos por categoría",
+      "more_actions": "Más acciones",
+      "suggest_title": "¿Conoces algún recurso útil para Tarkov?",
+      "suggest_description": "Sugiere una herramienta comunitaria o una guía para incluirla en esta página.",
+      "suggest_cta": "Sugerir un recurso",
+      "migration_banner": {
+        "title": "¿Mover de TarkovTracker.io?",
+        "cta": "Leer la guía de migración"
+      },
+      "categories": {
+        "tarkovtracker_guides": "Guías TarkovTracker.org",
+        "companion_apps": "Aplicaciones complementarias",
+        "data_and_apis": "Datos y herramientas para desarrolladores",
+        "calculators_and_reference": "Calculadoras y referencia"
+      },
+      "category_badges": {
+        "tarkovtracker_guides": "Guía Oficial",
+        "companion_apps": "Aplicación de escritorio",
+        "data_and_apis": "Plataforma de datos",
+        "calculators_and_reference": "Referencia"
+      },
+      "actions": {
+        "setup_guide": "Guía de configuración",
+        "read_guide": "Leer la guía",
+        "open_calculator": "Abrir la calculadora",
+        "view_changes": "Ver cambios",
+        "open_tool": "Abrir herramienta",
+        "download_release": "Descargar la última versión"
+      },
+      "back_to_hub": "Volver a recursos",
+      "breadcrumb": "Ruta de navegación",
+      "guide_label": "Guía",
+      "on_this_page": "En esta página",
+      "compatibility_label": "Compatibilidad",
+      "guide_not_found": "Guía no encontrada. Puede que el recurso que buscas aún no tenga una guía.",
+      "meta": {
+        "official_guide": "Guía oficial",
+        "maintained_by_team": "Mantenido por el equipo TarkovTracker.org",
+        "windows": "Windows",
+        "setup_time": "Configuración en 5 minutos",
+        "community_data": "Mantenido por la comunidad",
+        "web_tool": "Herramienta web",
+        "companion_app": "Aplicación complementaria"
+      },
+      "link_types": {
+        "website": "Abrir el sitio web",
+        "project_website": "Sitio web del proyecto",
+        "github": "Ver el código fuente",
+        "discord": "Apoyo de la comunidad",
+        "download": "Descargar"
+      },
+      "guide_sections": {
+        "video_walkthrough": "Vídeo",
+        "troubleshooting": "Solución de problemas",
+        "tips": "Consejos y trucos",
+        "faq": "Preguntas frecuentes"
+      },
+      "items": {
+        "tarkovtracker_org_vs_io": {
+          "name": "TarkovTracker.org vs TarkovTracker.io",
+          "description": "¿Cómo se relaciona TarkovTracker.org con el sitio .io original y cómo mover su progreso?"
+        },
+        "tarkovdev": {
+          "name": "Tarkov.dev",
+          "description": "Datos de objetos, misiones, comerciantes y mercado mantenidos por la comunidad para jugadores y desarrolladores."
+        },
+        "tarkovmonitor": {
+          "name": "TarkovMonitor",
+          "description": "Consulta datos de incursiones en tiempo real y sincroniza automáticamente el progreso compatible con TarkovTracker."
+        },
+        "ratscanner": {
+          "name": "RatScanner",
+          "description": "Escanea la información emergente de los objetos dentro del juego para ver su valor de mercado, usos en intercambios y relevancia para misiones."
+        },
+        "cultistcircle": {
+          "name": "CultistCircle",
+          "description": "Calcula las posibles recompensas del Círculo de los Cultistas según los objetos que aportes."
+        },
+        "tarkovchanges": {
+          "name": "Cambios de Tarkov",
+          "description": "Consulta los cambios en objetos, misiones y jugabilidad entre actualizaciones de Tarkov."
+        }
+      },
+      "guides": {
+        "tarkovtracker_org_vs_io": {
+          "overview": "TarkovTracker existe en dos dominios. TarkovTracker.io es el sitio original creado por el fundador del proyecto TarkovTracker y alberga el código base original. TarkovTracker. rg es la continuación activamente mantenida por un colaborador y antiguo mantenedor del proyecto original, como un fork libre y de código abierto bajo la misma licencia GNU GPLv3. Esta guía explica las diferencias y las formas apoyadas para reconstruir su progreso en TarkovTracker.org.",
+          "step_1_title": "Crea o inicia sesión en tu cuenta TarkovTracker.org",
+          "step_1_desc": "Crea una cuenta TarkovTracker.org o inicia sesión en la cuenta donde quieras rastrear tu progreso de borrado actual.",
+          "step_2_title": "Importa tus metadatos de perfil Tarkov.dev",
+          "step_2_desc": "Abre Configuración, elige Importaciones, y utiliza la importación de perfiles Tarkov.dev para restaurar los detalles del perfil soportado, como nivel, facción y habilidades.",
+          "step_3_title": "Importa tus registros de juego EFT",
+          "step_3_desc": "En la misma pestaña Importaciones, selecciona tu carpeta de registros EFT para recuperar eventos de inicio de misiones y finalización que aún están presentes en tus registros locales.",
+          "step_4_title": "Verificar tareas y ocultar el progreso",
+          "step_4_desc": "Revisa tu lista de tareas y escondite y restaura manualmente el progreso que Tarkov.dev y tus registros de juegos disponibles no pudieron recuperar.",
+          "step_5_title": "Conectar herramientas de acompañamiento soportadas",
+          "step_5_desc": "Configure TarkovMonitor con un nuevo token de API de lectura y escritura TarkovTracker.org para que futuras actualizaciones de progreso soportadas vayan a su cuenta .org.",
+          "faq_1_q": "¿Cuál es la diferencia entre TarkovTracker.io y TarkovTracker.org?",
+          "faq_1_a": "TarkovTracker.io es el sitio original. Es relativamente estable, pero tiene problemas conocidos y ya no se mantiene: su último despliegue tuvo lugar en agosto de 2024 y no hay desarrollo ni apoyo activo. TarkovTracker. rg es la bifurcación mantenida activamente: recibe actualizaciones regulares, soporta cambios de juego después de EFT 0.15, y añade nuevas características. Debido a que está en desarrollo activo puede ocasionalmente tener errores o tiempos de inactividad, y mientras trabajamos duro para prevenirlo, la pérdida de datos no se puede descartar por completo.",
+          "faq_2_q": "¿Qué sitio debería usar?",
+          "faq_2_a": "Utilice TarkovTracker.org. Es la única versión que recibe actualizaciones, correcciones de errores y soporte para Escape actual del contenido Tarkov. Las nuevas cuentas siempre deben ser creadas en TarkovTracker.org.",
+          "faq_3_q": "¿Cómo migro mi progreso de .io a .org?",
+          "faq_3_a": "TarkovTracker.org no proporciona actualmente una importación directa de tokens .io. Crea o inicia sesión en tu . rg account then use the supported Tarkov.dev profile and EFT game-log import in Settings. Verificar tareas y ocultar el progreso manualmente porque esas fuentes pueden no contener todo lo registrado en .io. El progreso no se sincroniza entre los dos sitios.",
+          "faq_4_q": "¿El equipo TarkovTracker.org ejecuta TarkovTracker.io?",
+          "faq_4_a": "No. El dominio .io y el despliegue son propiedad y controlados por el fundador del proyecto original. No tenemos acceso a él y no podemos corregir, actualizar o proporcionar soporte para nada en .io."
+        },
+        "tarkovdev": {
+          "overview": "Tarkov.dev es la base del ecosistema de datos de la comunidad. Mantiene un conjunto de datos de código abierto sobre objetos, misiones, comerciantes, estaciones del Escondite y mucho más, todo accesible mediante endpoints JSON estáticos gratuitos en json.tarkov.dev. TarkovTracker usa estos endpoints para mantenerse al día con los últimos datos del juego. Si desarrolla herramientas, escribe guías o simplemente quiere consultar estadísticas de objetos, Tarkov.dev es la fuente autorizada.",
+          "step_1_title": "Explorar el sitio web",
+          "step_1_desc": "Visita tarkov.dev para buscar objetos, consultar los requisitos de las misiones, ver los inventarios de los comerciantes y explorar los datos de las estaciones del Escondite en una interfaz limpia y sin anuncios.",
+          "step_2_title": "Usar la API JSON",
+          "step_2_desc": "Si eres desarrollador, indica json.tarkov.dev en tu cliente HTTP. El catálogo de endpoints está en json.tarkov.dev/endpoints. La API es gratuita, no requiere autenticación para consultas de lectura y devuelve archivos JSON estáticos que puedes guardar en caché localmente.",
+          "step_3_title": "Unirte a la comunidad",
+          "step_3_desc": "El Discord de The Hideout es el punto de encuentro para colaboradores de datos, desarrolladores de herramientas e informes de errores. Si detectas datos desactualizados o quieres contribuir, este es el lugar.",
+          "tip_1": "Los endpoints JSON no tienen límite de solicitudes. Para aplicaciones en producción, guarda las respuestas en caché en el cliente para evitar solicitudes redundantes.",
+          "tip_2": "Los datos de Tarkov.dev se actualizan con frecuencia durante las temporadas de wipe. Si algo parece incorrecto, puede que ya esté corregido en el último conjunto de datos.",
+          "faq_1_q": "¿Es gratuita la API de Tarkov.dev?",
+          "faq_1_a": "Sí, los endpoints JSON son completamente gratuitos para consultas de lectura. No se necesita una clave de API ni autenticación para el uso estándar.",
+          "faq_2_q": "¿Con qué frecuencia se actualizan los datos?",
+          "faq_2_a": "Los datos mantienen colaboradores comunitarios y se actualizan a medida que se descubren cambios dentro del juego. Durante los periodos activos de wipe, las actualizaciones pueden ocurrir varias veces al día."
+        },
+        "tarkovmonitor": {
+          "overview": "TarkovMonitor es una aplicación de escritorio del equipo de The Hideout que analiza los archivos de registro de Escape from Tarkov y puede marcar automáticamente como completadas las misiones en TarkovTracker. También ofrece notificaciones sonoras, estadísticas locales y una integración opcional con el sitio web de Tarkov.dev.",
+          "compatibility": "Mantén TarkovMonitor en funcionamiento mientras juegas para que pueda detectar nuevas entradas en los registros del juego. No lee la memoria del juego.",
+          "step_1_title": "Descargar TarkovMonitor",
+          "step_1_desc": "Descarga el último ZIP para Windows desde la página oficial de GitHub Releases.",
+          "step_2_title": "Extraer y ejecutar",
+          "step_2_desc": "Extrae el archivo en una carpeta permanente y, a continuación, ejecuta TarkovMonitor.exe. No lo ejecutes directamente desde dentro del archivo ZIP.",
+          "step_3_title": "Conectar tu cuenta de TarkovTracker",
+          "step_3_desc": "En los ajustes de TarkovMonitor, abre la sección de integración de TarkovTracker. Crea un token API de lectura y escritura en los ajustes de TarkovTracker y, después, pégalo en TarkovMonitor.",
+          "step_4_title": "Juega con TarkovMonitor abierto",
+          "step_4_desc": "Juega con normalidad mientras TarkovMonitor permanece abierto. Cuando el juego escribe en sus registros un evento compatible de finalización de misión, TarkovMonitor puede marcar esa misión como completada en TarkovTracker.",
+          "troubleshooting_1_title": "El progreso no se sincroniza",
+          "troubleshooting_1_desc": "Comprueba que el token API sea de lectura y escritura, que no haya caducado y que TarkovMonitor esté ejecutando la última versión.",
+          "troubleshooting_2_title": "Falta el progreso anterior",
+          "troubleshooting_2_desc": "Usa Read Past Logs en Initial Setup y, después, selecciona el wipe y el punto de corte del perfil correctos.",
+          "troubleshooting_3_title": "El modo de juego parece incorrecto",
+          "troubleshooting_3_desc": "Haz coincidir el ajuste del modo de juego de TarkovTracker con el modo que estás jugando, ya sea PvP o PvE.",
+          "tip_1": "Genera un token API de lectura y escritura en los ajustes de TarkovTracker. Un token de solo lectura no puede actualizar el progreso.",
+          "tip_2": "El monitoreo normal solo procesa los registros nuevos creados mientras TarkovMonitor está en funcionamiento.",
+          "faq_1_q": "¿Es seguro utilizar TarkovMonitor?",
+          "faq_1_a": "TarkovMonitor analiza los archivos de registro que Escape from Tarkov escribe localmente. No lee la memoria del juego y los registros no se actualizan mientras dura una incursión. Cualquier herramienta de terceros conlleva cierto riesgo, así que utilízala bajo tu propia responsabilidad.",
+          "faq_2_q": "¿Funciona TarkovMonitor con el modo PvE?",
+          "faq_2_a": "Sí. Admite PvP y PvE. Haz coincidir el ajuste del modo de juego de TarkovTracker con el modo que estás jugando.",
+          "faq_3_q": "¿Necesito TarkovMonitor para utilizar TarkovTracker?",
+          "faq_3_a": "No. TarkovTracker funciona totalmente con la Introducección manual. TarkovMonitor solo automatiza las actualizaciones de progreso compatibles."
+        },
+        "ratscanner": {
+          "overview": "RatScanner es una herramienta de escritorio de código abierto que identifica objetos de Escape from Tarkov a partir de capturas de pantalla y muestra sus datos en una superposición. Funciona de forma externa y no accede a la memoria del juego.",
+          "compatibility": "Usa el modo sin bordes o en ventana. El modo de pantalla completa exclusiva puede impedir que aparezca la superposición.",
+          "step_1_title": "Descargar el último ZIP",
+          "step_1_desc": "Descarga RatScanner.zip desde la página oficial de GitHub Releases. El sitio web del proyecto puede ir por detrás de la última versión.",
+          "step_2_title": "Extraer y ejecutar",
+          "step_2_desc": "Extrae el ZIP en una carpeta permanente y, a continuación, ejecuta RatScanner.exe. No lo ejecutes directamente desde dentro del archivo.",
+          "step_3_title": "Configurar la superposición",
+          "step_3_desc": "Elige qué detalles de los objetos aparecen en la superposición, ajusta la opacidad y confirma las teclas de escaneo.",
+          "step_4_title": "Escanear un objeto",
+          "step_4_desc": "Escaneo por nombre: abre la ventana de inspección de un objeto y haz clic en la lupa. Escaneo por icono: mantén pulsada la tecla modificadora configurada y haz clic izquierdo en un objeto. RatScanner captura una imagen del objeto y muestra sus datos.",
+          "troubleshooting_1_title": "RatScanner no se inicia",
+          "troubleshooting_1_desc": "Extrae primero la carpeta completa de la versión y, después, ejecuta el archivo ejecutable desde esa carpeta. Si Windows o el antivirus lo bloquean, comprueba que el archivo proceda del repositorio oficial.",
+          "troubleshooting_2_title": "No se detecta ningún objeto",
+          "troubleshooting_2_desc": "Asegúrate de que la interfaz de inspección de objetos esté completamente visible y, después, prueba el escaneo por nombre desde la lupa o el escaneo por icono con la tecla modificadora configurada.",
+          "troubleshooting_3_title": "La superposición no aparece",
+          "troubleshooting_3_desc": "Cambia Tarkov al modo sin bordes o en ventana. El modo de pantalla completa exclusiva suele ocultar las superposiciones.",
+          "troubleshooting_4_title": "Los precios parecen desactualizados",
+          "troubleshooting_4_desc": "RatScanner obtiene los datos de mercado de una fuente de terceros, por lo que los valores pueden ir por detrás de los cambios en el mercado de objetos.",
+          "tip_1": "Usa los ajustes para elegir qué detalles de los objetos aparecen y ajustar la opacidad de la superposición.",
+          "tip_2": "Los valores de mercado mostrados pueden ir por detrás de los cambios en el juego o en el mercado.",
+          "faq_1_q": "¿Me pueden expulsar por usar RatScanner?",
+          "faq_1_a": "RatScanner lee la información emergente de los objetos mediante captura de pantalla y no modifica el cliente del juego ni interactúa con sus servidores. La postura de Battlestate Games sobre las herramientas de terceros puede cambiar, así que utilízalo bajo tu propio riesgo.",
+          "faq_2_q": "¿Funciona RatScanner con el mercado de objetos?",
+          "faq_2_a": "Sí. Muestra los precios actuales del mercado de objetos y puede ayudar a comparar el precio del mercado con el valor del comerciante.",
+          "faq_3_q": "¿Puede RatScanner mostrar los objetos necesarios para TarkovTracker?",
+          "faq_3_a": "Puede mostrar información general de los objetos desde su proveedor de datos. Para los requisitos basados en tu progreso personal en TarkovTracker, utiliza la página de objetos necesarios.",
+          "faq_4_q": "¿Funciona RatScanner con TarkovTracker.org?",
+          "faq_4_a": "Sí. Instale RatScanner, abra la sección TarkovTracker en su configuración y cambie el backend de TarkovTracker de .io a .org antes de entrar en su tarkovtracker. token rg API. El equipo TarkovTracker.org ahora ayuda a mantener RatScanner, así que la integración de .org y los valores predeterminados seguirán mejorando en futuras versiones."
+        },
+        "cultistcircle": {
+          "overview": "CultistCircle es una calculadora gratuita creada por la comunidad para la función Círculo de los Cultistas de Escape from Tarkov. Te permite consultar recetas —qué objetos puedes sacrificar y qué obtienes a cambio— sin tener que experimentar dentro del juego. Creado por un desarrollador comunitario independiente, es una referencia útil para planificar tus intercambios en el círculo de forma eficiente.",
+          "step_1_title": "Visitar el sitio web",
+          "step_1_desc": "Accede a cultistcircle.com para usar la calculadora. No se requiere una cuenta ni una descarga: funciona completamente en tu navegador.",
+          "step_2_title": "Buscar recetas",
+          "step_2_desc": "Usa la función de búsqueda o navegación para encontrar recetas por objeto de entrada o resultado. La calculadora muestra las proporciones de intercambio y los posibles resultados de cada combinación.",
+          "tip_1": "Consulta la calculadora antes de sacrificar objetos raros: algunos intercambios tienen proporciones de valor mucho mejores que otros.",
+          "tip_2": "Los datos de las recetas pueden ir por detrás de los parches del juego. Si una receta parece faltar o ser incorrecta, vuelve a comprobarlo después de que el sitio se haya actualizado.",
+          "faq_1_q": "¿CultistCircle es gratuito?",
+          "faq_1_a": "Sí, CultistCircle es completamente gratuito y funciona en tu navegador sin necesidad de una cuenta.",
+          "faq_2_q": "¿CultistCircle está afiliado a TarkovTracker?",
+          "faq_2_a": "No, CultistCircle es un proyecto independiente creado por un desarrollador comunitario independiente. Se incluye aquí como un recurso comunitario útil."
+        }
+      },
+      "video": {
+        "walkthrough_title": "Examen en vídeo {name}",
+        "caption": "Los pasos pueden diferir ligeramente de la guía escrita.",
+        "play": "Reproducir vídeo: {title}"
+      },
+      "official_guide_label": "Guía TarkovTracker.org"
+    },
+    "account_retention": {
+      "scope": "Estas reglas se aplican a la eliminación de cuentas de rutina por inactividad mientras TarkovTracker opera. Definen cuándo una cuenta puede ser elegible para la limpieza, no una fecha programada de eliminación.",
+      "standard": "No hay soporte calificable: una cuenta puede ser eliminada después de seis meses consecutivos sin actividad registrada.",
+      "previous_supporter": "Ayudante anterior: una cuenta con una contribución calificada registrada en su contra, incluyendo una contribución única o una suscripción previa, podrá ser elegible para ser eliminada un año después de la última actividad registrada de su cuenta y su contribución registrada más reciente.",
+      "active_subscriber": "Suscripción activa que califica como activa: una cuenta está exenta de la eliminación de inactividad rutina mientras su suscripción de seguidor permanece activa, incluso si la cuenta no se utiliza.",
+      "subscription_end": "La cancelación de la renovación no termina esta exención mientras continúe el acceso a la suscripción de pago. Una vez finalizado el acceso a la suscripción, incluyendo cualquier período de gracia que concedamos, una cuenta se convierte en elegible para la eliminación de inactividad no antes de un año después de la última actividad registrada y el final de su último período de acceso a la suscripción.",
+      "activity": "Evaluamos la inactividad utilizando registros disponibles de inicio de sesión, sitio autenticado o uso de la API, y guardamos cambios en los datos de la cuenta. Ver un perfil público sin iniciar sesión no cuenta como actividad para esa cuenta.",
+      "exceptions": "Las contribuciones totalmente reembolsadas no son válidas para la retención de los seguidores; es posible que otras contribuciones válidas sigan siendo válidas. Un contracargo elimina inmediatamente todos los beneficios de los seguidores y el historial de retención de los seguidores, incluyendo los beneficios de contribuciones anteriores. Las cuentas con un cheque de devolución siguen la regla estándar de inactividad de seis meses. Estas protecciones sólo se aplican a la limpieza de inactividad rutina. No impiden la eliminación que usted solicita, la acción por razones de abuso o seguridad, la eliminación requerida por la ley, o la eliminación cuando el Servicio es interrumpido.",
+      "no_guarantee": "Apoyar TarkovTracker no compra almacenamiento permanente, servicio de copia de seguridad o disponibilidad garantizada o recuperación. Los datos pueden perderse por fallos, incidentes de seguridad o interrupciones de terceros y el Servicio puede suspenderse o cerrarse. La política de retención no garantiza que los datos permanezcan disponibles durante un período determinado.",
+      "backup": "Exportar su progreso desde Ajustes y mantener su propia copia de seguridad. La exportación y recuperación pueden no estar disponibles durante una interrupción o después de que los datos se pierdan o eliminen.",
+      "rights": "Nada en esta política excluye o limita derechos o recursos que no puedan ser excluidos o limitados legalmente.",
+      "notice": "Cuando sea factible, haremos esfuerzos razonables para notificar a los usuarios afectados antes de eliminar la inactividad de la rutina. Los cambios materiales de esta política se comunicarán de acuerdo con las Condiciones de Servicio y la legislación aplicable.",
+      "terms_summary": "La limpieza rutinaria de la inactividad sigue las normas de retención de cuentas de la Sección 7.3, incluida la exención para los suscriptores activos y la ventana de un año para los seguidores anteriores.",
+      "perk_summary": "Protección contra la eliminación de la inactividad de la rutina bajo las normas de retención de cuentas de la Sección 7.3, incluidos los contribuyentes y los suscriptores anteriores",
+      "liability": "Cualquier exclusión o limitación de responsabilidad por pérdida de datos o incidentes relacionados con la privacidad sólo se aplica en la medida permitida por la ley aplicable. Nada de lo dispuesto en esta Política excluye o limita derechos o recursos que no puedan ser excluidos o limitados legalmente.",
+      "liability_label": "Límites permitidos por la ley:"
+    }
+  },
+  "footer": {
+    "call_to_action": {
+      "discord": "Discordia",
+      "github": "GitHub"
+    },
+    "analytics_preferences": "Preferencias de analítica",
+    "game_attribution": "Escape from Tarkov y el contenido y materiales relacionados del juego son marcas comerciales y obras protegidas por derechos de autor de Battlestate Games Limited y sus licenciantes. Todos los derechos reservados. TarkovTracker es un proyecto de fans no oficial y no está afiliado ni respaldado por Battlestate Games.",
+    "tagline": "Registra tu huida desde misiones Tarkov, mejoras de escondite y requisitos de objetos en un solo lugar.",
+    "version_release_link": "Ver las notas de lanzamiento de la versión {version} en GitHub",
+    "build_commit_link": "Ver commit de compilación {commit} en GitHub",
+    "sections": {
+      "explore": "Explorar",
+      "project": "Projekt",
+      "legal": "Legal"
+    },
+    "links": {
+      "org_vs_io": ".org frente a .io"
+    }
+  },
+  "navigation_drawer": {
+    "main_navigation": "Navegación principal",
+    "close_menu": "Cerrar menú",
+    "toggle": "Alternar menú",
+    "brand_name": "TarkovTracker.org",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "resources": "Recursos",
+    "profile": "Perfil",
+    "section_navigation": "Navegación",
+    "account_menu": "Menú de cuenta",
+    "mode_auto": "Automático",
+    "auto_level_enabled": "El cálculo automático de nivel está activado",
+    "level_display_auto": "Nivel {level} (cálculo automático habilitado)",
+    "level_display_editable": "Nivel {level}, haz clic o presiona Enter para editar",
+    "increment_level": "Aumentar nivel",
+    "decrement_level": "Disminuir nivel",
+    "xp_progress": "Progreso de XP",
+    "xp_settings_link": "Ver la configuración de XP y nivel"
+  },
+  "profile": {
+    "season_short": "S{season}"
+  },
+  "streamer_tools": {
+    "subtitle": "Genera enlaces de fuente de navegador para OBS, Streamlabs Desktop, XSplit y vMix para mostrar el progreso de Kappa en vivo.",
+    "manage_sharing": "Gestionar compartir",
+    "login_required": "Inicia sesión para generar enlaces personalizados de overlay para streamers.",
+    "mode_private": "Este modo de juego es privado. El uso compartido público debe estar habilitado para que los enlaces de fuente de navegador funcionen.",
+    "open_account_settings": "Abrir configuración de cuenta",
+    "content_title": "Contenido",
+    "mode_label": "Modo de juego",
+    "metric_label": "Widget",
+    "platform_obs": "OBS Studio / Streamlabs Desktop",
+    "platform_xsplit": "XSplit / vMix",
+    "customize_options": "Personalizar opciones de overlay",
+    "reset_defaults": "Restablecer",
+    "layout_label": "Diseño",
+    "accent_label": "Acento",
+    "text_size": "Tamaño de texto",
+    "align_label": "Alineación",
+    "refresh_label": "Intervalo de actualización",
+    "background_label": "Fondo",
+    "custom_background": "Fondo personalizado",
+    "background_color": "Color",
+    "background_opacity": "Opacidad",
+    "background_transparent": "Transparente",
+    "background_custom": "Color personalizado",
+    "show_percent": "Mostrar porcentaje",
+    "show_remaining": "Mostrar restantes",
+    "custom_label": "Etiqueta personalizada",
+    "custom_label_placeholder": "Título opcional para tu overlay",
+    "your_overlay_title": "Tu Overlay",
+    "preview": "Vista previa",
+    "preview_title": "Vista previa del overlay de streamer",
+    "browser_source_url": "URL de fuente de navegador",
+    "copy_link": "Copiar enlace",
+    "open_overlay": "Abrir Overlay",
+    "open_json": "Abrir JSON",
+    "setup_title": "Configuración de plataforma",
+    "setup_subtitle": "Configuraciones de fuente de navegador compatibles con OBS y las principales herramientas de streaming.",
+    "preview_dim_self": "Solo widget",
+    "preview_help_self": "Muestra el widget en su tamaño natural. Posiciona esta fuente en cualquier lugar de tu escena OBS/Streamlabs arrastrándola.",
+    "preview_help_canvas": "Muestra cómo aparece el overlay dentro de una fuente de navegador en pantalla completa. El patrón de cuadrícula representa la transparencia — no aparecerá en el stream.",
+    "setup_mode_canvas": "Modo Lienzo de escena — fuente de resolución completa",
+    "setup_mode_canvas_desc": "La fuente del navegador llena todo el lienzo del stream. El widget se posiciona automáticamente según la configuración de alineación. Establece las dimensiones de la fuente para que coincidan con tu resolución de stream.",
+    "setup_mode_self_contained": "Modo autónomo — fuente del tamaño del widget",
+    "setup_mode_self_contained_desc": "La fuente del navegador solo produce el widget. Arrastra y redimensiona la fuente en cualquier lugar de tu escena.",
+    "obs_step_1": "En tu escena, haz clic en + debajo de Fuentes y selecciona Navegador.",
+    "obs_step_2": "Pega la URL de la fuente de navegador de arriba en el campo URL.",
+    "obs_step_3_prefix": "Establece el ancho y alto en",
+    "obs_step_3_canvas_note": "(debe coincidir con tu resolución de stream).",
+    "obs_step_3_self_note": "(o cualquier tamaño que se ajuste a tu diseño).",
+    "obs_step_4_canvas": "Usa Editar > Transformar > Centrar en pantalla (o Ctrl+D) para centrar la fuente en tu escena.",
+    "obs_step_4_self": "Arrastra la fuente a la posición deseada en la vista previa de la escena.",
+    "obs_step_5": "Recomendado: marca \"Apagar fuente cuando no sea visible\" y \"Actualizar navegador cuando la escena se active\".",
+    "xsplit_step_1": "Agrega una fuente de Página web / Navegador.",
+    "xsplit_step_2": "Pega la URL de la fuente de navegador de arriba.",
+    "xsplit_step_4": "Asegúrate de que la transparencia esté habilitada en las propiedades de la fuente.",
+    "setup_scaling_warning_title": "Evita redimensionar la fuente en OBS",
+    "setup_scaling_warning": "Arrastrar las esquinas de la fuente para hacerla más grande en OBS estira la imagen y causa mucho desenfoque. Para cambiar el tamaño del widget, usa los ajustes de Resolución, Tamaño de texto o Escala personalizada en esta página — el overlay se re-renderiza en calidad nativa.",
+    "setup_transparency_note": "El fondo del overlay es transparente por defecto. No se necesita CSS personalizado ni filtros de clave de color — OBS y Streamlabs soportan fuentes de navegador transparentes de forma nativa.",
+    "interval_60s": "Cada 60 segundos",
+    "interval_120s": "Cada 2 minutos",
+    "interval_300s": "Cada 5 minutos",
+    "interval_600s": "Cada 10 minutos",
+    "metric_tasks_desc": "Tareas Kappa completadas y restantes.",
+    "metric_items_desc": "Objetos Kappa recolectados y restantes.",
+    "metric_items": "Objetos Kappa",
+    "metric_summary_desc": "Tareas y objetos en un widget de overlay.",
+    "metric_summary": "Resumen combinado",
+    "layout_card": "Tarjeta completa",
+    "layout_minimal": "Píldora mínima",
+    "layout_text": "Solo texto",
+    "accent_kappa": "Rojo",
+    "accent_info": "Cian",
+    "accent_success": "Verde",
+    "accent_warning": "Naranja",
+    "accent_custom": "Personalizado",
+    "custom_accent": "Acento personalizado",
+    "size_sm": "Pequeño",
+    "size_md": "Mediano",
+    "size_lg": "Grande",
+    "align_top_left": "Arriba Izquierda",
+    "align_top_center": "Arriba Centro",
+    "align_top_right": "Arriba Derecha",
+    "align_center_left": "Centro Izquierda",
+    "align_center": "Centro",
+    "align_center_right": "Centro Derecha",
+    "align_bottom_left": "Abajo Izquierda",
+    "align_bottom_center": "Abajo Centro",
+    "align_bottom_right": "Abajo Derecha",
+    "copy_success": "URL de overlay copiada",
+    "copy_failed": "No se pudo copiar la URL de la superposición",
+    "settings_reset": "Configuración de streamer restablecida",
+    "resolution_label": "Resolución",
+    "resolution_1080": "1080p",
+    "resolution_1440": "1440p",
+    "container_label": "Contenedor",
+    "container_canvas": "Lienzo de escena",
+    "self_contained_hint": "Solo genera los límites del widget. Mueve la fuente del navegador en OBS/Streamlabs en lugar de cambiar la alineación del overlay.",
+    "custom_scale_percent": "Escala",
+    "font_label": "Fuente",
+    "show_title": "Mostrar título",
+    "colors_label": "Colores",
+    "colors_text": "Texto",
+    "colors_card": "Tarjeta",
+    "colors_border": "Borde",
+    "text_color": "Color del texto",
+    "card_color": "Color de la tarjeta",
+    "card_opacity": "Opacidad de la tarjeta",
+    "border_color": "Color del borde",
+    "border_opacity": "Opacidad del borde",
+    "track_opacity": "Opacidad de la barra"
+  },
+  "settings": {
+    "locale": "Idioma",
+    "page_description": "Administra tu cuenta, progreso del juego y preferencias de la aplicación.",
+    "tabs": {
+      "progression": "Progreso",
+      "imports": "Importaciones"
+    },
+    "tab_groups": {
+      "game_progress": "Progreso del juego",
+      "app": "App",
+      "data": "Datos",
+      "account": "Cuenta",
+      "tools_integrations": "Herramientas e integraciones"
+    },
+    "account": {
+      "begin_deletion": "Iniciar eliminación de cuenta"
+    },
+    "debug_state": {
+      "title": "Estado de depuración",
+      "description": "Crea una instantánea JSON del estado actual de tu rastreador para informes de errores. Incluye el modo de juego, el nivel, los estados de finalización de tareas y las cadenas de requisitos previos.",
+      "copy_button": "Copiar estado de depuración"
+    },
+    "general": {
+      "title": "Preferencias generales",
+      "privacy_mode": "Modo streamer",
+      "privacy_mode_hint": "Oculta información sensible mientras transmites."
+    },
+    "appearance": {
+      "theme": "Tema",
+      "theme_hint": "Elija entre la interfaz oscura y ligera. Su elección se recuerda en este dispositivo.",
+      "theme_dark": "Oscuro",
+      "theme_light": "Claro"
+    },
+    "interface": {
+      "tasks": {
+        "title": "Tarjetas de tareas",
+        "show_required": "Mostrar etiquetas requeridas",
+        "show_xp": "Mostrar recompensas de XP",
+        "show_next": "Mostrar misiones siguientes",
+        "show_prev": "Mostrar misiones anteriores",
+        "collapse_by_default": "Colapsar misiones por defecto",
+        "hide_rewards": "Ocultar recompensas",
+        "require_trader_levels": "Requerir el nivel de lealtad y la reputación del comerciante para la disponibilidad de tareas",
+        "flags_section": "Mostrar tarea",
+        "availability_section": "Disponibilidad de tareas",
+        "view_defaults_section": "Vistas por defecto"
+      },
+      "maps": {
+        "show_extracts": "Mostrar extracciones por defecto",
+        "zoom_speed": "Velocidad de zoom",
+        "pan_speed": "Velocidad de desplazamiento",
+        "zone_opacity": "Opacidad de zona",
+        "colors": {
+          "title": "Colores del mapa",
+          "description": "Ajusta los colores de los marcadores para mejorar legibilidad y accesibilidad.",
+          "self_objective": "Tu objetivo",
+          "pinned_objective": "Tarea Anclada",
+          "team_objective": "Objetivo del equipo",
+          "selected": "Objetivo fijado",
+          "shared_extract": "Extracción compartida",
+          "coop_extract": "Extracción cooperativa"
+        }
+      },
+      "links": {
+        "antifandom": "Usar antifandom.com",
+        "antifandom_hint": "Abre los enlaces de la wiki en antifandom.com, un espejo de Fandom gestionado por la comunidad y con pocos anuncios, en lugar de fandom.com."
+      }
+    },
+    "game_profile": {
+      "game_edition_with_value": "Edición {edition}"
+    },
+    "profile_sharing": {
+      "title": "Compartir perfil",
+      "description": "Controla qué perfiles de modo de juego se pueden ver desde un enlace compartido.",
+      "public": "Público",
+      "private": "Privado",
+      "toggle_label": "Alternar compartir perfil {mode}",
+      "copy_link": "Copiar enlace de perfil {mode}",
+      "load_failed": "No se puede cargar la configuración de compartir.",
+      "save_failed": "No se puede actualizar la configuración de compartir.",
+      "login_required": "Inicia sesión para gestionar la visibilidad del perfil compartido."
+    },
+    "game_settings": {
+      "switch_mode_failed": "Error al cambiar el modo de juego, vuelve a intentarlo",
+      "switch_mode_fetch_failed": "Se cambió el modo de juego, pero no se pudieron actualizar los datos. Vuelve a intentarlo."
+    },
+    "data_management": {
+      "reset_pvp_confirmation": "¿Estás seguro de que quieres restablecer tu progreso PvP?",
+      "reset_pvp_warning": "Esto eliminará permanentemente todo tu progreso PvP incluyendo misiones, escondite y nivel. Tus datos PvE no se verán afectados.",
+      "reset_pve_confirmation": "¿Estás seguro de que quieres restablecer tu progreso PvE?",
+      "reset_pve_warning": "Esto eliminará permanentemente todo tu progreso PvE incluyendo misiones, escondite y nivel. Tus datos PvP no se verán afectados.",
+      "reset_seasonal_confirmation": "¿Está seguro de que desea restablecer su progreso estacional JcJ?",
+      "reset_seasonal_warning": "Esto eliminará permanentemente todo tu progreso JcJ estacional para la temporada activa. Tus datos persistentes JcJ y JcE no se verán afectados.",
+      "reset_all_confirmation": "¿Estás seguro de que quieres restablecer todo tu progreso?",
+      "reset_all_warning": "¡Esto eliminará permanentemente todo tu progreso para los modos PvP y PvE. Esta acción no se puede deshacer!",
+      "prestige_mode_warning": "Tu ejecución actual de {mode} será archivada, luego su progresión se restablecerá para el siguiente nivel de prestigio. Otros modos no se verán afectados.",
+      "reset_confirm": "Restablecer",
+      "export_description": "Descarga una copia de seguridad de tu progreso para los modos PvP y PvE.",
+      "export_button": "Exportar copia de seguridad",
+      "debug_export_button": "Exportar instantánea de depuración",
+      "debug_export_description": "Descarga una instantánea saneada de la cuenta para depurar problemas al iniciar sesión. Excluye tokens de autenticación, correo electrónico e imágenes de perfil.",
+      "import_backup_button": "Importar copia de TarkovTracker",
+      "import_eft_logs_folder_button": "Importar carpeta de registros de EFT",
+      "recommended_badge": "Recomendado",
+      "active_flow_blocked_title": "Termina primero el flujo de datos actual",
+      "active_flow_blocked_description": "Termina o cancela {flow} antes de iniciar otra importación o restauración.",
+      "flow_data": "el flujo de datos actual",
+      "flow_tarkov_dev": "la importación del perfil de Tarkov.dev",
+      "flow_eft_logs": "la importación de registros de EFT",
+      "flow_backup": "la restauración de copia",
+      "tarkov_dev_section_description": "Importar metadatos del perfil incluyendo nivel, facción y habilidades",
+      "eft_logs_section_title": "Importar registros del juego EFT",
+      "eft_logs_section_description": "Importar progreso de misiones detectado en los archivos de registro del juego",
+      "backup_restore_section_description": "Exportar una copia de seguridad o restaurar desde un archivo exportado anteriormente",
+      "debug_section_title": "Instantánea de depuración",
+      "import_backup_title": "Restaurar desde copia de seguridad",
+      "import_backup_description": "Restaurar progreso desde un archivo de copia de seguridad de TarkovTracker",
+      "import_preview_exported_at": "Exportado",
+      "import_preview_pvp_level": "Nivel PvP",
+      "import_preview_pvp_tasks": "Misiones PvP",
+      "import_preview_pve_level": "Nivel PvE",
+      "import_preview_pve_tasks": "Misiones PvE",
+      "import_preview_seasonal_level": "Nivel estacional JcJ",
+      "import_preview_seasonal_tasks": "Tareas estacionales JcJ",
+      "import_target_label": "Destino de importación",
+      "import_target_pvp": "Solo PvP",
+      "import_target_pve": "Solo PvE",
+      "import_target_all": "Todo disponible",
+      "import_success_title": "Copia importada",
+      "import_success_description": "Tu progreso se ha restaurado correctamente.",
+      "import_error_title": "Importación de copia de seguridad fallida",
+      "import_error_description": "Tu copia de seguridad no pudo ser importada. Por favor, inténtalo de nuevo.",
+      "export_error_title": "Error de exportación",
+      "debug_export_error_title": "Error al exportar la depuración",
+      "reset_title": "Restablecer progreso",
+      "danger_zone_title": "Zona de peligro",
+      "danger_zone_hint": "Restableciendo todo el progreso permanentemente borra sus datos para JcJ, JcJ y JcJ estacional. Esto no se puede deshacer.",
+      "prestige_history_title": "Historial de prestigio",
+      "prestige_history_loading": "Cargando historial de prestigio...",
+      "prestige_history_empty": "Aún no hay runs de prestigio archivadas.",
+      "prestige_history_load_error": "No se pudo cargar el historial de prestigio.",
+      "prestige_history_select": "Seleccionar run",
+      "prestige_history_option": "P{from} → P{to} • {when}",
+      "prestige_history_unknown_date": "Fecha desconocida",
+      "prestige_history_completed_tasks": "Misiones completadas",
+      "prestige_history_failed_tasks": "Misiones falladas",
+      "prestige_history_completed_objectives": "Objetivos completados",
+      "prestige_history_completed_hideout_modules": "Módulos del escondite",
+      "prestige_history_completed_story_chapters": "Capítulos de historia",
+      "prestige_history_duration": "Duración de la run",
+      "prestige_history_days_value": "{days} días",
+      "prestige_history_compare_title": "Comparación con la run anterior",
+      "prestige_history_compare_subtitle": "Prestigio actual {from} comparado con prestigio {to}"
+    },
+    "prestige_pvp": {
+      "success_title": "Prestigio PvP completado",
+      "success_description": "Tu perfil PvP ha sido prestigiado al nivel {level}.",
+      "error_title": "Prestigio fallido",
+      "error_description": "No se pudo prestigiar el perfil PvP. Inténtalo de nuevo."
+    },
+    "reset_pvp": {
+      "success_title": "Restablecimiento de datos PvP",
+      "success_description": "Su progreso de PvP se ha restablecido correctamente.",
+      "error_description": "No se pudieron restablecer los datos del PvP. Por favor inténtalo de nuevo."
+    },
+    "reset_pve": {
+      "success_title": "Restablecimiento de datos PvE",
+      "success_description": "Su progreso de PvE se ha restablecido correctamente.",
+      "error_description": "No se pudieron restablecer los datos del PvE. Por favor inténtalo de nuevo."
+    },
+    "reset_seasonal": {
+      "success_title": "Reinicio estacional de datos JcJ",
+      "success_description": "Su progreso de la temporada activa se ha reiniciado correctamente.",
+      "error_description": "Error al restablecer los datos estacionales de JcJ. Por favor, inténtalo de nuevo."
+    },
+    "reset_all": {
+      "success_title": "Restablecer todos los datos",
+      "success_description": "Todo tu progreso se ha restablecido exitosamente.",
+      "error_description": "No se pudieron restablecer los datos. Por favor inténtalo de nuevo."
+    },
+    "account_data": {
+      "title": "Gestión de cuenta y datos",
+      "account_info_title": "Información de la cuenta",
+      "username_label": "Nombre de usuario",
+      "email_label": "Correo electrónico",
+      "auth_method_label": "Método de autenticación",
+      "auth_methods_label": "Métodos de autenticación",
+      "member_since_label": "Miembro desde",
+      "account_id_label": "ID de cuenta",
+      "account_deletion_title": "Eliminación de cuenta",
+      "login_required_delete": "Inicia sesión para eliminar tu cuenta",
+      "show_username": "Mostrar nombre de usuario",
+      "hide_username": "Ocultar nombre de usuario",
+      "show_email": "Mostrar correo electrónico",
+      "hide_email": "Ocultar correo electrónico",
+      "show_account_id": "Mostrar ID de cuenta",
+      "hide_account_id": "Ocultar ID de cuenta",
+      "copy_account_id": "Copiar ID de cuenta",
+      "copy_failed": "No se pudo copiar el ID de la cuenta",
+      "account_id_copied": "ID de cuenta copiado",
+      "confirm_delete_title": "Confirmar eliminación de cuenta",
+      "confirm_delete_sr_only": "Esta acción es irreversible y requiere escribir la frase de confirmación para continuar.",
+      "irreversible_title": "¡Esta acción es irreversible!",
+      "irreversible_description": "Todos tus datos se eliminarán permanentemente y no se podrán recuperar.",
+      "what_deleted_title": "Qué se eliminará",
+      "delete_item_progress": "Tus datos de progreso",
+      "delete_item_teams": "Membresías de equipo y equipos que posees",
+      "delete_item_tokens": "Tokens de API y configuraciones",
+      "delete_item_personal": "Toda la información personal",
+      "not_affect_tarkov": "Esto no afecta tu cuenta de Escape from Tarkov, solo los datos de Tarkov Tracker.",
+      "team_transfer_title": "Transferencia de propiedad del equipo",
+      "team_transfer_description": "Si eres propietario de algún equipo, la propiedad se transferirá automáticamente al miembro más antiguo de cada equipo. Los equipos sin otros miembros se eliminarán.",
+      "security_confirmation_title": "Confirmación de seguridad",
+      "security_confirmation_description": "La eliminación de la cuenta requiere escribir la frase de confirmación exacta a continuación. Esta acción es permanente y no se puede deshacer.",
+      "confirm_phrase_value": "ELIMINAR MI CUENTA",
+      "confirm_phrase_label": "Escribe \"{phrase}\" para confirmar:",
+      "confirm_phrase_error": "Escribe exactamente: {phrase}",
+      "delete_forever": "Eliminar cuenta para siempre",
+      "delete_success_title": "Cuenta eliminada correctamente",
+      "delete_success_sr_only": "La eliminación de tu cuenta se ha completado y serás redirigido al panel.",
+      "delete_success_cleanup_failed_sr_only": "Su cuenta fue eliminada, pero algunos datos permanecen en este dispositivo. Puede volver a intentar limpiar o continuar con los datos que quedan aquí.",
+      "delete_success_description": "Tu cuenta y todos los datos asociados se han eliminado permanentemente.",
+      "other_session_deleted_description": "La cuenta que comenzó esta eliminación fue eliminada. Su cuenta actual todavía está conectada y no ha cambiado.",
+      "cleanup_pending": "La limpieza de algunos datos aún está en curso y finalizará en breve.",
+      "device_cleanup_failed": "Algunos datos borrados de la cuenta permanecen en este dispositivo. Vuelva a intentar limpiar, o continúe y deje esos datos aquí.",
+      "session_end_failed": "Este navegador todavía está conectado a la cuenta eliminada. Seleccione Ir al panel de control para intentar cerrar sesión de nuevo.",
+      "retry_device_cleanup": "Reintentar limpieza del dispositivo",
+      "continue_with_device_data_remaining": "Continuar con los datos restantes",
+      "redirect_message": "Gracias por usar TarkovTracker. Serás redirigido al panel.",
+      "go_to_dashboard": "Ir al panel",
+      "session_changed": "Tu cuenta de inicio de sesión ha cambiado. No se tomarán más medidas en esta sesión."
+    },
+    "discord_link": {
+      "title": "Cuenta de Discord",
+      "description": "Vincula tu cuenta de Discord para obtener el rol Linked y mantener sincronizadas las ventajas de patrocinador.",
+      "link_account": "Vincular cuenta de Discord",
+      "login_to_link": "Inicia sesión para vincular Discord",
+      "linked_as": "Vinculada como {username}",
+      "sync_roles": "Sincronizar los roles de Discord",
+      "error_title": "Vínculo de Discord no disponible",
+      "not_in_guild_title": "Unirse al servidor de Discord",
+      "not_in_guild": "Tu cuenta está vinculada, pero debes unirte al servidor de Discord de TarkovTracker antes de poder sincronizar los roles.",
+      "load_error": "No pudimos cargar el vínculo de tu cuenta de Discord.",
+      "link_error": "No pudimos iniciar la vinculación de la cuenta de Discord. Inténtalo de nuevo.",
+      "unlink_account": "Desvincular cuenta de Discord",
+      "unlink_requires_login": "Añade otro método de inicio de sesión antes de desvincular tu única identidad de acceso.",
+      "unlink_error": "No pudimos desvincular tu cuenta de Discord. El vínculo sigue activo.",
+      "sync_error": "Tu cuenta está vinculada, pero no pudimos sincronizar los roles de Discord. Inténtalo de nuevo más tarde."
+    },
+    "prestige": {
+      "persistent_mode_unsupported_title": "Prestigio no disponible",
+      "persistent_mode_unsupported": "Prestigio no está disponible para el modo JcE persistente.",
+      "seasonal_mode_unsupported": "Prestige no está disponible en JcJ Estacional.",
+      "current_level": "Nivel de prestigio actual",
+      "set_current": "Establecer prestigio actual",
+      "set_current_hint": "Usa esto cuando ya hayas hecho prestigio en el juego y solo necesites que el tracker coincida. Esto no reinicia el progreso ni crea historial.",
+      "confirm_word": "PRESTIGIO",
+      "confirm_instruction": "Escribe {word} para confirmar el prestigio:",
+      "login_required": "Inicia sesión para prestigiar tu perfil PvP.",
+      "max_reached": "Se alcanzó el nivel máximo de prestigio.",
+      "lowering_warning": "Bajar el prestigio del tracker de {current} a {next} solo cambia la visibilidad. No reconstruye las partidas archivadas ni reinicia el progreso.",
+      "requirements_title": "Requisitos para el siguiente prestigio",
+      "requirements_description": "El tracker comprueba tu siguiente prestigio real: Prestigio {level}.",
+      "requirements_empty": "No hay requisitos adicionales del tracker para este nivel de prestigio.",
+      "archive_title": "Archivar partida e iniciar el siguiente prestigio",
+      "archive_description_mode": "Usa esto sólo cuando estés ganando prestigio ahora. Tu ejecución actual de {mode} será archivada y su progresión se restablecerá para el siguiente nivel de prestigio.",
+      "archive_cta": "Archivar partida e iniciar Prestigio {level}",
+      "archive_cta_disabled": "Prestigio no disponible",
+      "archive_dialog_title_mode": "Archivar Corrección Actual {mode}",
+      "archive_sync_hint": "Si solo necesitas que el tracker coincida con un prestigio ya existente en el juego, usa antes \"Establecer prestigio actual\".",
+      "archive_soft_gate_unmet": "Todavía parecen incompletos {count} requisito(s) seguidos. Puedes continuar igualmente si al tracker le falta contexto.",
+      "archive_soft_gate_manual": "Todavía debes comprobar manualmente en el juego {count} requisito(s).",
+      "archived_runs_description": "Aquí solo aparecen partidas PvP archivadas realmente por el tracker. Establecer tu prestigio actual más tarde no crea entradas de historial.",
+      "delete_history_cta": "Eliminar partida seleccionada",
+      "delete_history_warning": "Esto solo elimina la entrada archivada del historial. No restaura ni reinicia tu progreso PvP actual.",
+      "delete_history_selected_label": "Partida seleccionada",
+      "delete_history_success_title": "Partida archivada eliminada",
+      "delete_history_success_description": "Se eliminó la entrada de historial de prestigio seleccionada.",
+      "delete_history_error_title": "Error al eliminar",
+      "delete_history_error_description": "No se pudo eliminar la partida de prestigio archivada. Inténtalo de nuevo.",
+      "sync_success_title": "Prestigio actualizado",
+      "sync_success_description": "El prestigio del tracker ahora está establecido en {level}. Se conservó el progreso actual.",
+      "sync_error_title": "Actualización de Prestigio Falló",
+      "sync_error_description": "No se pudo actualizar el prestigio del tracker. Inténtalo de nuevo.",
+      "requirement_source": {
+        "tarkov_dev": "Tarkov.dev",
+        "overlay": "Superposición",
+        "wiki": "Wiki"
+      },
+      "requirement_source_tooltip": "Fuente: {source}",
+      "requirement_state": {
+        "incomplete": "Incompleto",
+        "manual": "Comprobación manual"
+      },
+      "requirement_progress": "{current} / {required}",
+      "summary": {
+        "ready": "Listo",
+        "not_ready": "Advertencias",
+        "manual_check": "Comprobaciones manuales",
+        "max": "Prestigio máximo"
+      },
+      "summary_description_ready": "Se cumplen todos los requisitos seguidos.",
+      "summary_description_unmet": "Todavía hay {count} requisito(s) seguidos incompletos en el tracker.",
+      "summary_description_manual": "Todavía hay {count} requisito(s) que necesitan verificación manual en el juego."
+    },
+    "display_name": {
+      "explanation": "Su nombre para mostrar se muestra a los compañeros de equipo y en la navegación. Cada modo de juego (PVP/PVE) tiene un nombre para mostrar separado.",
+      "label": "Nombre para mostrar",
+      "placeholder": "Ingrese su nombre para mostrar...",
+      "save": "Ahorrar",
+      "empty_error": "El nombre para mostrar no puede estar vacío",
+      "max_error": "El nombre para mostrar no puede superar {max} caracteres",
+      "saved_title": "Nombre para mostrar guardado",
+      "saved_description": "Tu nombre para mostrar de {mode} se ha actualizado",
+      "save_failed_title": "Error al guardar",
+      "save_failed_description": "No se pudo guardar el nombre para mostrar. Inténtalo de nuevo.",
+      "active_mode": "Activo",
+      "game_edition_hint": "Selecciona la edición del juego que tienes para que el seguimiento coincida con tu contenido disponible."
+    },
+    "skills": {
+      "title": "Gestión de Habilidades",
+      "explanation": "Las recompensas de las misiones se calculan automáticamente. Ingrese su nivel de habilidad total para ajustar la compensación.",
+      "no_skills": "No se encontraron habilidades en los datos del juego.",
+      "show_all": "Mostrar todo",
+      "show_less": "Mostrar menos",
+      "quest": "Búsqueda:",
+      "offset": "Compensar:",
+      "req_count": "Requisito:",
+      "reward_count": "Premio:",
+      "limit_exceeded": "Límite excedido",
+      "max_level": "El nivel máximo de habilidad es 51.",
+      "valid_range": "Rango válido: 0-51",
+      "sort": {
+        "ingame": "En el juego"
+      },
+      "quest_tooltip": "Nivel de habilidad otorgado automáticamente por las recompensas de misión completadas.",
+      "offset_tooltip": "Ajuste manual sobre el nivel de recompensa de misión. Positivo significa que has entrenado la habilidad sobre las recompensas de misión.",
+      "collapsed_hint": "Mostrando {shown} de {total} habilidades. Mostrar todas para ver cada habilidad."
+    },
+    "keybinds": {
+      "title": "Atajos de teclado",
+      "omnibar_label": "Búsqueda global (Omnibar)",
+      "omnibar_description": "Pulsa este atajo para abrir la paleta de búsqueda global.",
+      "undo_label": "Deshacer la última acción",
+      "undo_description": "Pulsa este atajo para revertir el cambio de progreso más reciente.",
+      "record_placeholder": "Haz clic para registrar...",
+      "recording": "Pulsa la combinación de teclas...",
+      "listening": "Escuchando...",
+      "reset_aria": "Restablecer valor predeterminado",
+      "conflict_omnibar": "El atajo entra en conflicto con el atajo de deshacer.",
+      "conflict_undo": "El atajo entra en conflicto con el atajo de búsqueda.",
+      "conflict_rejected": "Ya lo usa {action}. Pulsa otra combinación.",
+      "warn_system_omnibar": "Advertencia: puede entrar en conflicto con los atajos del navegador o del sistema operativo (p. ej., Ctrl+T, Ctrl+W, Alt+Tab).",
+      "warn_system_undo": "Advertencia: puede entrar en conflicto con los atajos del navegador o del sistema operativo (p. ej., Ctrl+W, Ctrl+T, Alt+Tab)."
+    },
+    "experience": {
+      "title": "Experiencia y nivel",
+      "auto_level_title": "Cálculo automático de nivel",
+      "auto_level_description": "Cuando esté habilitado, su nivel se calculará automáticamente en función del XP total. Cuando está deshabilitado, puede configurar manualmente su nivel independientemente de los cálculos de XP.",
+      "current_level": "Nivel actual",
+      "set_total_xp": "Establecer XP total",
+      "manual_hint": "Ingrese su XP total real para ajustar la compensación automáticamente.",
+      "xp_amount": "{amount} XP",
+      "xp_to_next": "{amount} para el siguiente",
+      "reset_offset": "Restablecer compensación de XP",
+      "xp_progress_aria": "Progreso de la experiencia hacia el siguiente nivel",
+      "xp_progress_value": "{percent}% hacia el siguiente nivel"
+    },
+    "danger_zone": {
+      "confirm_instruction": "Escriba {word} para confirmar el restablecimiento de todos los datos:",
+      "confirm_word": "ELIMINAR"
+    },
+    "log_import": {
+      "reading_logs": "Leyendo registros y preparando la vista previa…",
+      "large_folder_hint": "Las grandes carpetas se leen localmente en chunks. Mantenga esta página abierta; puede cancelar mientras se leen los registros.",
+      "upload_hint": "Selecciona la carpeta Logs de Escape from Tarkov para importar el progreso de misiones.",
+      "deleted_logs_hint": "Si se eliminaron sesiones antiguas de logs, no se pueden importar.",
+      "deleted_logs_hint_tooltip": "La importación de logs solo lee eventos de misiones que aún existen en tu carpeta Logs actual.",
+      "logs_folder_required": "Selecciona la carpeta Logs de nivel superior, no una carpeta de sesión log_* individual.",
+      "default_path_label": "Ruta predeterminada habitual:",
+      "default_path_value": "C:\\Battlestate Games\\Escape from Tarkov\\Logs",
+      "find_in_launcher_hint": "¿No la encuentras? Abre el BSG Launcher -> Game Settings -> Logs y copia esa ruta.",
+      "avoid_session_folder_label": "No selecciones una carpeta de sesión como:",
+      "session_folder_example_path": "C:\\Battlestate Games\\Escape from Tarkov\\Logs\\log_2026.02.19_13-14-36_1.0.2.0.43037",
+      "version_filter_label": "Incluir versiones de registros",
+      "version_filter_hint": "La versión principal más reciente se selecciona por defecto. Ajústala para incluir wipes anteriores.",
+      "version_filter_tooltip": "Los registros se agrupan por versión de sesión. La versión principal más reciente se selecciona por defecto para evitar mezclar datos de wipes anteriores.",
+      "version_unknown": "Versión desconocida",
+      "source_file": "Archivo de origen",
+      "selected_files": "Archivos seleccionados",
+      "selected_files_count": "{count} archivos seleccionados",
+      "logs_scanned": "Archivos de registro analizados",
+      "logs_scanned_tooltip": "Archivos de registro de notificaciones analizados tras aplicar el filtro de versión.",
+      "entries_scanned": "Entradas del archivo analizadas",
+      "entries_scanned_tooltip": "Total de archivos seleccionados o entradas de archivo analizadas al buscar registros de EFT.",
+      "chat_messages": "Mensajes de chat",
+      "chat_messages_tooltip": "Mensajes de notificación del chat leídos de los registros de notificaciones incluidos.",
+      "completion_events": "Eventos de finalización de misión",
+      "completion_events_tooltip": "Eventos únicos de finalización de misión tras deduplicar líneas de registro repetidas.",
+      "started_events": "Eventos de inicio de misión",
+      "started_events_tooltip": "Eventos únicos de inicio de misión tras deduplicar líneas de registro repetidas.",
+      "matched_tasks": "Misiones coincidentes",
+      "matched_tasks_tooltip": "IDs únicos de misiones completadas que coinciden con tareas del conjunto de datos actual de TarkovTracker.",
+      "matched_started_tasks": "Misiones activas coincidentes",
+      "matched_started_tasks_tooltip": "IDs únicos de misiones iniciadas que coinciden con tareas actuales, excluyendo las ya contadas como completadas.",
+      "detected_mode": "Modo detectado",
+      "detected_mode_tooltip": "Detectado a partir de hosts del backend en las mismas sesiones. Desconocido significa que no hay una señal clara de PvP o PvE.",
+      "unknown_mode_events": "Eventos de modo desconocido",
+      "unknown_mode_events_tooltip": "Eventos de sesiones en las que los registros del backend no pudieron resolver el modo PvP frente a PvE.",
+      "unknown_mode_event_details": "Detalles de eventos de modo desconocido",
+      "unknown_completion_events": "Misiones completadas (modo desconocido)",
+      "unknown_started_events": "Misiones iniciadas (modo desconocido)",
+      "import_unknown_to_mode": "Importar eventos de modo desconocido a",
+      "import_unknown_to_mode_hint": "Los eventos conocidos de PvP/PvE se enrutan automáticamente. Esto solo se aplica a eventos no resueltos.",
+      "auto_mode_hint": "El enrutamiento de modo se detectó a partir de los registros del backend y se aplicará automáticamente.",
+      "success_title": "Registros de EFT importados",
+      "success_description": "Se marcaron {complete_count} misiones como completadas y {active_count} misiones como activas desde los registros del juego.",
+      "error_title": "Error al importar registros de EFT",
+      "cleared_logs_toast_title": "Es probable que se hayan limpiado logs antiguos",
+      "cleared_logs_toast_description": "La importación de logs solo puede leer historial de misiones que aún está en tu carpeta Logs. Las sesiones eliminadas no se pueden recuperar.",
+      "errors": {
+        "invalid_archive": "El archivo ZIP está incompleto o contiene una entrada de registro no válida. No se ha importado ningún progreso.",
+        "budget_exceeded": "Los registros seleccionados exceden el presupuesto de importación seguro. Seleccione menos sesiones recientes o extraiga sólo los archivos de registro relevantes. No se ha importado ningún progreso.",
+        "record_too_large": "Un registro individual en {path} es demasiado grande para analizar con seguridad. No se ha importado ningún progreso. Por favor, informe de este formato de registro.",
+        "apply_import_failed": "No se pudieron aplicar los datos importados de finalización de misiones.",
+        "no_files_selected": "No se seleccionaron archivos.",
+        "no_matching_tasks_found": "Se encontraron eventos de misión, pero ninguno coincide con las misiones actuales de TarkovTracker.",
+        "no_notification_logs_found": "No se encontraron registros de notificaciones en los archivos seleccionados.",
+        "no_quest_events_found": "No se encontraron eventos de inicio/finalización de misiones en los registros seleccionados.",
+        "parse_failed": "No se pudieron analizar los registros de EFT.",
+        "task_metadata_not_loaded": "Los metadatos de misiones aún no se cargaron. Actualiza e inténtalo de nuevo.",
+        "invalid_mode": "Selecciona un modo de juego de destino válido.",
+        "outside_active_season": "Estos registros contienen eventos fuera de la temporada activa o sin una fecha utilizable. Seleccione sesiones de la temporada activa antes de importar en JcJ estacional."
+      },
+      "failed_tasks": "Tareas fallidas encontradas: {count}",
+      "unknown_failed_events": "Tareas fallidas (Modo desconocido)",
+      "skipped_malformed": {
+        "single": "Se omitió {count} notificación mal formada.",
+        "plural": "Se omitieron {count} notificaciones mal formadas."
+      },
+      "skipped_seasonal": {
+        "single": "Evento estacional omitido {count} fuera de la temporada activa o sin fecha válida.",
+        "plural": "Eventos estacionales omitidos {count} fuera de la temporada activa o sin fechas válidas."
+      }
+    },
+    "tarkov_dev_import": {
+      "title": "Importación de perfil de Tarkov.dev",
+      "profile_url_label": "URL del perfil de Tarkov.dev",
+      "profile_url_placeholder": "https://tarkov.dev/players/regular/8560316",
+      "profile_url_hint": "Encuentra tu perfil en {link}, abre el perfil PvP o PvE correspondiente y pega aquí la URL de esa página.",
+      "profile_url_hint_link": "tarkov.dev/players",
+      "profile_url_refresh_hint": "Tarkov.dev actualiza el JSON del perfil después de que abras allí tu página de perfil.",
+      "fetch_profile": "Obtener perfil",
+      "nickname": "Apodo",
+      "faction": "Facción",
+      "skills_count": "{count} habilidades detectadas",
+      "last_refreshed": "Datos Tarkov.dev actualizados",
+      "last_refreshed_unknown": "Desconocido",
+      "data_age_warning": "Esta instantánea de Tarkov.dev tiene {days} días de antigüedad. Si has jugado desde entonces, abre tu perfil en Tarkov.dev para que se actualice y, después, obtén los datos de nuevo antes de importarlos.",
+      "cooldown_hint": "Importado recientemente. Puedes volver a importar este perfil en aproximadamente {minutes} min.",
+      "turnstile_hint": "Completa la verificación humana a continuación para obtener tu perfil.",
+      "skills_details_toggle": "Ver valores de habilidades",
+      "skills_details_skill": "Habilidad",
+      "edition_guess": "Edición (detectada)",
+      "import_to_mode": "Importar al modo",
+      "import_target_notice": "Estos datos se importarán en tu perfil {mode}.",
+      "success_title": "Perfil importado",
+      "success_description": "Tu perfil de Tarkov.dev se importó correctamente.",
+      "linked_uid": "UID de Tarkov",
+      "refetch_hint": "Abre primero tu perfil de Tarkov.dev para que se actualice allí y luego vuelve a obtenerlo aquí.",
+      "refetch_mode_label": "Perfil para obtener",
+      "refetch_mode_arena": "Arena",
+      "refetch_mode_arena_unavailable": "Las importaciones de Arena llegarán próximamente.",
+      "refetch_profile": "Volver a obtener perfil",
+      "unlink_profile": "Desvincular",
+      "errors": {
+        "unexpected_profile_flow": "Algo salió mal al obtener el perfil de Tarkov.dev. Inténtalo de nuevo.",
+        "cooldown_active": "Has importado este perfil recientemente. Puedes volver a importarlo en aproximadamente {minutes} min.",
+        "profile_stale": "Tarkov.dev actualizó este perfil por última vez hace {days} días, demasiado tiempo atrás para importarlo. Abre la página del perfil en Tarkov.dev, deja que se cargue y, después, obtén los datos de nuevo.",
+        "profile_not_generated": "Tarkov.dev todavía no tiene una instantánea para este perfil. Abra la página de perfil en Tarkov.dev una vez, déjelo cargar, y vuelva a buscar.",
+        "rate_limited": "Demasiados intentos de importación. Espera {minutes} min, luego vuelve a intentarlo.",
+        "verification_failed": "Falló la verificación humana. Recarga la página e inténtalo de nuevo.",
+        "fetch_failed": "No se puede obtener el perfil de Tarkov.dev. Abra el perfil en Tarkov.dev, y vuelva a intentarlo.",
+        "tarkov_uid_conflict": "Este perfil de Tarkov ya está vinculado a otra cuenta de TarkovTracker, por lo que no estaba vinculado aquí. El progreso importado fue guardado. Desvincularlo de la otra cuenta y luego volver a importar.",
+        "save_failed": "El perfil fue importado en este dispositivo, pero no se pudo guardar en su cuenta todavía. Compruebe su conexión; la importación permanece en este dispositivo hasta que se sincronice."
+      }
+    },
+    "device_data": {
+      "title": "Datos en este dispositivo",
+      "description": "El inicio de sesión mantiene el progreso guardado de esta cuenta en este navegador, para que los cambios que no hayan llegado a la nube aún puedan sincronizarse cuando inicie sesión de nuevo. El progreso desplazado por un reinicio o un rollover estacional se mantiene por separado para su exportación. Eliminar los datos de este dispositivo borra el progreso de esta cuenta, las copias de recuperación y las preferencias de este navegador y te desconecta.",
+      "cloud_unaffected": "Tu progreso en la nube no se ha eliminado. Los datos de otras cuentas en este dispositivo no se verán afectados.",
+      "superseded_available": "Cambios de progreso {count} desde un reinicio o rollover estacional se mantienen aquí solo para exportación. No serán restaurados o sincronizados automáticamente.",
+      "superseded_export": "Exportar progreso superado",
+      "superseded_export_error": "No se pudo exportar el progreso superado",
+      "remove_button": "Eliminar los datos de esta cuenta de este dispositivo",
+      "confirm_title": "¿Eliminar los datos de esta cuenta de este dispositivo?",
+      "confirm_description": "El progreso de esta cuenta, las copias de recuperación, las exportaciones de progreso superadas y las preferencias serán eliminadas de este navegador, y usted será desconectado. Su progreso en la nube permanece disponible cuando inicie sesión de nuevo.",
+      "pending_warning": "Algunos cambios de progreso aún no se han guardado en la nube. Eliminar los datos de este dispositivo los descartará permanentemente. Exporta tu progreso primero si quieres mantenerlos.",
+      "confirm_button": "Eliminar datos y cerrar sesión",
+      "removed": "Los datos de esta cuenta fueron removidos de este dispositivo.",
+      "remove_error": "Algunos datos de la cuenta no se pudieron eliminar de este dispositivo. Inténtalo de nuevo antes de usar otra cuenta aquí.",
+      "remove_incomplete": "Algunos datos de la cuenta que eliminaste todavía están en este dispositivo. Inténtalo de nuevo antes de usar otra cuenta aquí.",
+      "retry_removal": "Intenta eliminar de nuevo",
+      "revocation_unavailable": "No se pudo acceder al servidor, por lo que aún estás conectado. Sólo puedes cerrar sesión en este dispositivo y eliminar los datos; el servidor no se contará, así que la sesión allí permanece activa hasta que caduque o cierre la sesión desde otro dispositivo.",
+      "confirm_device_only_button": "Cerrar sesión sólo en este dispositivo y eliminar datos"
+    }
+  },
+  "hideout": {
+    "collapse": "Colapsar",
+    "expand": "Expandir"
+  },
+  "tasks": {
+    "view": {
+      "map": "Mapa"
+    }
+  },
+  "quest": {
+    "view_on_dev": "Ver {name} en Tarkov.dev"
+  },
+  "needed_items": {
+    "total": "Total:",
+    "progress_format": "{current}/{total}",
+    "non": "No",
+    "non_fir": "No FIR",
+    "task_kappa_req": "Requerido para Kappa",
+    "collected_items": "Artículos recolectados",
+    "smart_fill": "Llenado inteligente",
+    "unknown_task": "Tarea desconocida",
+    "unknown_station": "Estación desconocida",
+    "lvl": "nivel",
+    "needed": "necesario",
+    "view_details_for": "Ver detalles de {name}",
+    "locked_before": "{count} antes",
+    "switch_to_expanded": "Cambiar a vista ampliada",
+    "switch_to_compact": "Cambiar a vista compacta",
+    "collected": "Coleccionado",
+    "mark_collected": "Marcar como recogido",
+    "handed_over": "Entregado",
+    "aria": {
+      "enter_count": "Introducir cantidad del objeto",
+      "decrease_count": "Disminuir cantidad",
+      "increase_count": "Aumentar cantidad",
+      "click_to_enter_value": "Haga clic para introducir un valor",
+      "mark_as_complete": "Marcar como 100% completado",
+      "mark_as_incomplete": "Marcar como incompleto",
+      "decrease_fir": "Disminuir el recuento de FIR",
+      "increase_fir": "Aumentar el recuento de FIR",
+      "decrease_non_fir": "Disminuir el recuento de no FIR",
+      "increase_non_fir": "Aumentar el recuento de no FIR",
+      "decrease_objective_count": "Disminuir el objetivo de {task_name}",
+      "increase_objective_count": "Aumentar el objetivo de {task_name}",
+      "decrease_hideout_count": "Disminuir el escondite de {station_name}",
+      "increase_hideout_count": "Aumentar el escondite de {station_name}"
+    },
+    "any_of_items": "Cualquiera de estos {count} objetos sirve",
+    "any_of_items_short": "Cualquiera de {count}",
+    "view_accepted_items": "Ver los {count} objetos aceptados",
+    "not_collected": "No recogido",
+    "click_to_collect": "Haga clic para recoger",
+    "click_to_uncollect": "Haga clic para eliminar",
+    "modal": {
+      "smart_fill_error": "No se pudo aplicar el llenado inteligente",
+      "reset_error": "No se pudo restablecer el progreso del objeto",
+      "unknown_error": "Se produjo un error inesperado"
+    }
+  },
+  "skills": {
+    "req": "Requiere",
+    "required_for": "Requerido para: {items}",
+    "required_levels": "Niveles requeridos: {items}",
+    "elite_level": "Nivel ÉLITE"
+  },
+  "game_settings": {
+    "select_game_mode_label": "Seleccionar modo de juego",
+    "select_faction_label": "Seleccionar facción",
+    "season_ends_in": "La temporada {season} termina en {days}d {hours}h {minutes}m",
+    "season_ended": "La temporada {season} ha terminado"
+  },
+  "oauth": {
+    "consent": {
+      "authorize": "Autorizar aplicación",
+      "loading": "Cargando...",
+      "error": "{error}",
+      "unknown": "Aplicación desconocida",
+      "requesting_access": "solicita acceso a tu cuenta de TarkovTracker.",
+      "requested_permissions": "Permisos solicitados:",
+      "redirect_to": "Te redirigirá a:",
+      "approve": "Aprobar",
+      "deny": "Denegar"
+    }
+  },
+  "tarkov_access": {
+    "title": "Verifique su navegador",
+    "checking": "Comprobando acceso al sitio…",
+    "description": "Este sitio está protegido contra peticiones automatizadas excesivas. Completa la verificación de seguridad a continuación para cargar los datos del juego Tarkov.",
+    "retry": "Intentar de nuevo",
+    "dismiss": "No ahora",
+    "dismissed_notice": "Los datos del juego se detienen hasta que completes la comprobación de seguridad.",
+    "verify_now": "Verificar ahora",
+    "verification_failed_retry": "La comprobación de seguridad no se completó. Puede intentarlo de nuevo.",
+    "verifying": "Verificando tu navegador…",
+    "widget_hint": "Complete la comprobación para continuar.",
+    "failed": "La carga de datos de Tarkov no está disponible actualmente. Puede intentarlo de nuevo.",
+    "blocked": "El acceso a los datos de Tarkov está actualmente bloqueado para su red. Puede intentarlo de nuevo o volver más tarde.",
+    "rate_limited": "Demasiadas comprobaciones en poco tiempo. Espere un momento y vuelva a intentarlo.",
+    "widget_unavailable": "No se pudo cargar la comprobación de seguridad. Puede intentarlo de nuevo."
+  },
+  "analytics_consent": {
+    "eyebrow": "Analítica",
+    "title": "¿Permitir analítica de uso?",
+    "title_answered": "Preferencias de analítica",
+    "description": "Permítenos usar herramientas de analítica para entender el uso del sitio y mejorar TarkovTracker.",
+    "accepted": "La analítica de uso está permitida en este navegador.",
+    "declined": "La analítica de uso está bloqueada en este navegador.",
+    "badge_default_off": "Desactivada por defecto",
+    "badge_usage_stats": "Estadísticas de uso",
+    "badge_analytics_only": "Solo analítica",
+    "status_enabled": "Estado de Analytics: Activado",
+    "status_disabled": "Estado de Analytics: Deshabilitado",
+    "change_anytime": "Puedes cambiarlo en cualquier momento desde el pie.",
+    "review_details": "Ver detalles en la Política de privacidad",
+    "allow": "Permitir",
+    "decline": "Rechazar"
+  },
+  "prestige": {
+    "no_prestige": "Sin Prestigio",
+    "prestige_n": "Prestigio {n}"
+  },
+  "generic": {},
+  "seo": {
+    "site_name": "TarkovTracker",
+    "application_description": "Sigue las tareas de Escape from Tarkov, las mejoras del refugio, los requisitos de Kappa, las misiones de la historia y los objetos necesarios en los modos PvP, PvE y de temporada.",
+    "routes": {
+      "home": {
+        "title": "Rastreador de progreso de Escape from Tarkov · TarkovTracker.org",
+        "description": "Sigue las tareas de Escape from Tarkov, las mejoras del refugio, los requisitos de Kappa, las misiones de la historia y los objetos necesarios en los modos PvP, PvE y de temporada.",
+        "heading": "Rastreador de progreso de Escape from Tarkov"
+      },
+      "tasks": {
+        "title": "Rastreador de misiones de Tarkov · TarkovTracker.org",
+        "description": "Sigue las misiones, los objetivos, las recompensas y los requisitos previos de Tarkov en los modos PvP, PvE y de temporada."
+      },
+      "hideout": {
+        "title": "Rastreador del refugio de Tarkov · TarkovTracker.org",
+        "description": "Planifica las mejoras del refugio y sigue los requisitos de los módulos y el progreso de la construcción."
+      },
+      "needed_items": {
+        "title": "Tarkov: seguimiento de objetos necesarios · TarkovTracker.org",
+        "description": "Encuentra en una sola lista los objetos que aún necesitas para las misiones y las mejoras del Refugio."
+      },
+      "kappa": {
+        "title": "Seguimiento de Kappa y Lightkeeper · TarkovTracker.org",
+        "description": "Haz seguimiento de los requisitos de las misiones de Kappa y Lightkeeper y de lo que aún te queda por completar."
+      },
+      "storyline": {
+        "title": "Tarkov: seguimiento de la historia · TarkovTracker.org",
+        "description": "Sigue las misiones de la historia de Escape from Tarkov y controla tu progreso."
+      },
+      "resources": {
+        "title": "Herramientas y guías de Escape from Tarkov",
+        "description": "Descubre herramientas y guías de la comunidad para TarkovTracker, TarkovMonitor, RatScanner y Tarkov.dev."
+      },
+      "about": {
+        "title": "Acerca de TarkovTracker",
+        "description": "Conoce TarkovTracker y su proyecto comunitario para hacer seguimiento del progreso en Escape from Tarkov."
+      },
+      "credits": {
+        "title": "Créditos de TarkovTracker",
+        "description": "Conoce a quienes contribuyen y descubre los proyectos comunitarios que hacen posible TarkovTracker."
+      },
+      "changelog": {
+        "title": "Registro de cambios de TarkovTracker",
+        "description": "Consulta las últimas versiones, mejoras y correcciones de TarkovTracker."
+      },
+      "supporter": {
+        "title": "Apoya a TarkovTracker.org",
+        "description": "Ayuda a financiar el alojamiento y el desarrollo. Descubre los niveles de apoyo y las formas de contribuir."
+      },
+      "privacy": {
+        "title": "Política de privacidad de TarkovTracker",
+        "description": "Consulta cómo TarkovTracker gestiona la información de la cuenta y los datos de progreso."
+      },
+      "terms_of_service": {
+        "title": "Términos del servicio de TarkovTracker",
+        "description": "Consulta los términos que rigen el uso de TarkovTracker."
+      },
+      "tarkovtracker_org_vs_io": {
+        "title": "Guía de TarkovTracker.org y TarkovTracker.io",
+        "description": "Comprende las diferencias entre TarkovTracker.org y TarkovTracker.io y cómo empezar."
+      },
+      "tarkovmonitor": {
+        "title": "Guía de configuración de TarkovMonitor",
+        "description": "Instala TarkovMonitor y conéctalo a TarkovTracker para sincronizar el progreso de las incursiones y las misiones."
+      },
+      "ratscanner": {
+        "title": "Guía de configuración de RatScanner",
+        "description": "Instala RatScanner y conecta el escaneo de objetos con el seguimiento de tu progreso en TarkovTracker."
+      },
+      "tarkovdev": {
+        "title": "Guía de datos de Tarkov.dev",
+        "description": "Descubre cómo las fuentes de datos JSON de Tarkov.dev respaldan las herramientas de Escape from Tarkov y el seguimiento del progreso."
+      },
+      "cultistcircle": {
+        "title": "Guía de la calculadora del Círculo del Cultista",
+        "description": "Descubre cómo usar la calculadora del Círculo del Cultista para consultar las recetas de sacrificio y sus recompensas."
+      },
+      "settings": {
+        "title": "Ajustes · TarkovTracker.org",
+        "description": "Gestiona tus preferencias, importaciones, copias de seguridad e integraciones de TarkovTracker."
+      },
+      "progression": {
+        "title": "Ajustes de progreso · TarkovTracker.org",
+        "description": "Gestiona los ajustes de nivel, habilidades y progreso de TarkovTracker."
+      },
+      "prestige": {
+        "title": "Ajustes de prestigio · TarkovTracker.org",
+        "description": "Gestiona tu progreso de prestigio en TarkovTracker."
+      },
+      "preferences": {
+        "title": "Preferencias · TarkovTracker.org",
+        "description": "Personaliza tu idioma, tu apariencia y tus preferencias de seguimiento en TarkovTracker."
+      },
+      "account": {
+        "title": "Cuenta · TarkovTracker.org",
+        "description": "Gestiona tu cuenta de TarkovTracker y los servicios conectados."
+      },
+      "team": {
+        "title": "Equipo · TarkovTracker.org",
+        "description": "Gestiona tu equipo de TarkovTracker y el progreso compartido."
+      },
+      "admin": {
+        "title": "Administración · TarkovTracker.org",
+        "description": "Controles de administración de TarkovTracker."
+      },
+      "profile": {
+        "title": "Perfil del jugador · TarkovTracker.org",
+        "description": "Consulta un perfil de jugador de TarkovTracker y el progreso compartido."
+      },
+      "login": {
+        "title": "Iniciar sesión · TarkovTracker.org",
+        "description": "Inicia sesión en TarkovTracker para sincronizar tu progreso y colaborar con tu equipo."
+      },
+      "auth_callback": {
+        "title": "Retorno de inicio de sesión · TarkovTracker.org",
+        "description": "Completa el inicio de sesión en TarkovTracker."
+      },
+      "oauth_consent": {
+        "title": "Autorizar la aplicación · TarkovTracker.org",
+        "description": "Revisa la solicitud de una aplicación para acceder a tu cuenta de TarkovTracker."
+      },
+      "not_found": {
+        "title": "Página no encontrada",
+        "description": "No se encontró la página de TarkovTracker solicitada."
+      }
+    }
+  }
+}

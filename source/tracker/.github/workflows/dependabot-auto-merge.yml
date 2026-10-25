@@ -1,0 +1,330 @@
+name: Dependabot Auto Merge
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+permissions:
+  actions: write
+  checks: read
+  contents: write
+  pull-requests: write
+  statuses: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.pull_requests[0].number || github.event.workflow_run.id }}
+  cancel-in-progress: true
+jobs:
+  auto-merge:
+    name: Auto-merge safe Dependabot PR
+    # workflow_run uses trusted main code and a write token. Dependabot's own pull_request_target
+    # runs are read-only even if the workflow requests write permissions.
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CI_RUN_ID: ${{ github.event.workflow_run.id }}
+      GH_TOKEN: ${{ github.token }}
+      HEAD_REF: ${{ github.event.workflow_run.head_branch }}
+      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
+    steps:
+      - name: Gate Dependabot PR
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          eligible=false
+          if [[ ! "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::CI run has no single Dependabot PR."
+            exit 0
+          fi
+          ci_run="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$CI_RUN_ID")"
+          if ! jq -e --arg sha "$HEAD_SHA" --arg repo "$GITHUB_REPOSITORY" --argjson number "$PR_NUMBER" '
+            .path == ".github/workflows/ci.yml" and .event == "pull_request" and
+            .status == "completed" and .conclusion == "success" and .head_sha == $sha and
+            .head_repository.full_name == $repo and
+            .actor.id == 49699333 and .triggering_actor.id == 49699333 and
+            ([.pull_requests[]? | select(.number == $number and .head.sha == $sha)] | length) == 1
+          ' >/dev/null <<< "$ci_run"; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::CI run no longer matches the Dependabot candidate."
+            exit 0
+          fi
+          pr="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")"
+          if ! jq -e --arg sha "$HEAD_SHA" --arg repo "$GITHUB_REPOSITORY" --arg branch "$HEAD_REF" '
+            .state == "open" and .draft == false and .user.id == 49699333 and
+            .base.ref == "main" and .head.sha == $sha and .head.ref == $branch and
+            .head.repo.full_name == $repo
+          ' >/dev/null <<< "$pr"; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Dependabot PR is closed, draft, stale, forked, or no longer targets main."
+            exit 0
+          fi
+          # Every group is minor/patch only (.github/dependabot.yml); majors and ungrouped
+          # updates use other branch names. Auth and billing clients are confirm-required.
+          case "$HEAD_REF" in
+            dependabot/npm_and_yarn/auth-and-billing-*)
+              ;;
+            dependabot/npm_and_yarn/nuxt-ecosystem-* | \
+            dependabot/npm_and_yarn/lint-and-format-* | \
+            dependabot/npm_and_yarn/testing-tooling-* | \
+            dependabot/npm_and_yarn/typescript-and-types-* | \
+            dependabot/npm_and_yarn/tailwind-tooling-* | \
+            dependabot/npm_and_yarn/cloudflare-tooling-* | \
+            dependabot/npm_and_yarn/release-tooling-* | \
+            dependabot/npm_and_yarn/remaining-npm-*)
+              eligible=true
+              ;;
+          esac
+          if [ "$eligible" != "true" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Dependabot group is outside the low-risk auto-merge allowlist."
+            exit 0
+          fi
+          invalid_files="$(
+            gh pr view "$PR_NUMBER" \
+              --repo "$GITHUB_REPOSITORY" \
+              --json files \
+              --jq '.files[].path' |
+              while IFS= read -r file; do
+                case "$file" in
+                  package.json | \
+                  pnpm-lock.yaml | \
+                  pnpm-workspace.yaml | \
+                  workers/api-gateway/package.json)
+                    ;;
+                  *)
+                    printf '%s\n' "$file"
+                    ;;
+                esac
+              done
+          )"
+          if [ -n "$invalid_files" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Dependabot PR changes files outside the auto-merge allowlist:"
+            printf '%s\n' "$invalid_files"
+            exit 0
+          fi
+          # Defense in depth for group drift: any changed manifest line naming an auth or
+          # billing client keeps the PR for human confirmation. Unreadable changes hold it too.
+          if ! patches="$(
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" \
+              --jq '.[] | select(.filename | endswith("package.json")) | .patch // "MISSING_PATCH"'
+          )"; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Could not read the PR's manifest changes; merge needs confirmation."
+            exit 0
+          fi
+          if printf '%s\n' "$patches" | grep -qx 'MISSING_PATCH'; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::A manifest diff is unavailable; merge needs confirmation."
+            exit 0
+          fi
+          grep_status=0
+          sensitive="$(
+            printf '%s\n' "$patches" |
+              grep -E '^[-+][[:space:]]*"(stripe|@stripe/[^"]+|@supabase/[^"]+|supabase)":'
+          )" || grep_status=$?
+          if [ "$grep_status" -gt 1 ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Manifest inspection failed; merge needs confirmation."
+            exit 0
+          fi
+          if [ -n "$sensitive" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Dependabot PR changes an auth or billing dependency; merge needs confirmation:"
+            printf '%s\n' "$sensitive"
+            exit 0
+          fi
+          echo "eligible=true" >> "$GITHUB_OUTPUT"
+      - name: Wait for checks
+        if: steps.gate.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Aggregates only: `CI Result` (GitHub Actions check run, covers validation and the
+          # integrated security scans), Socket's PR alerts, and `Preview Result` (commit status
+          # from the trusted preview controller). Individual job names are not a dependency.
+          # Socket Security vets new and changed packages for supply-chain risk.
+          expected_checks=(
+            "CI Result|15368"
+            "PR Meta|15368"
+            "Socket Security: Pull Request Alerts|156372"
+          )
+          expected_statuses=(
+            "Preview Result"
+          )
+          # Gate waits are bounded to 60 minutes.
+          deadline=$((SECONDS + 3600))
+          preview_requested=false
+          while true; do
+            # Preview Result is the authoritative gate; controller job checks may be cancelled by
+            # a newer event on the same head and are not independent merge requirements.
+            check_runs="$(
+              gh api \
+                "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA/check-runs?per_page=100" \
+                --jq '.check_runs | map(select(.name != "Auto-merge safe Dependabot PR" and .name != "Refresh preview state" and .name != "Plan preview" and .name != "Deploy preview" and .name != "Preview smoke tests" and .name != "Publish preview result"))'
+            )"
+            status_contexts="$(
+              gh api \
+                "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA/status" \
+                --jq '.statuses | sort_by(.context, .id) | group_by(.context) | map(last) | map(select(.context != "Preview Result"))'
+            )"
+            current_pr="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")"
+            if ! jq -e --arg sha "$HEAD_SHA" '.state == "open" and .draft == false and .base.ref == "main" and .head.sha == $sha' >/dev/null <<< "$current_pr"; then
+              echo "::error::Dependabot pull request changed while waiting for preview."
+              exit 1
+            fi
+            # Preview Result targets the validated head: GitHub regenerates the test-merge
+            # commit when a merge is attempted, so a status there would not survive.
+            preview_status_contexts="$(
+              gh api \
+                "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA/status" \
+                --jq '[.statuses[] | select(.context == "Preview Result")] | sort_by(.id) | if length > 0 then [last] else [] end'
+            )"
+            failing_count="$(
+              jq '[.[] | select(.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "timed_out" or .conclusion == "action_required")] | length' <<< "$check_runs"
+            )"
+            failing_status_count="$(
+              jq -n --argjson head "$status_contexts" --argjson preview "$preview_status_contexts" '[($head + $preview)[] | select(.state == "failure" or .state == "error")] | length'
+            )"
+            if [ "$failing_count" -gt 0 ] || [ "$failing_status_count" -gt 0 ]; then
+              jq -r '.[] | select(.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "timed_out" or .conclusion == "action_required") | "::error::\(.name) concluded \(.conclusion)"' <<< "$check_runs"
+              jq -r '.[] | select(.state == "failure" or .state == "error") | "::error::\(.context) concluded \(.state)"' <<< "$status_contexts"
+              jq -r '.[] | select(.state == "failure" or .state == "error") | "::error::\(.context) concluded \(.state)"' <<< "$preview_status_contexts"
+              exit 1
+            fi
+            missing_checks=()
+            incomplete_checks=()
+            pending_count="$(
+              jq '[.[] | select(.status != "completed")] | length' <<< "$check_runs"
+            )"
+            pending_status_count="$(
+              jq -n --argjson head "$status_contexts" --argjson preview "$preview_status_contexts" '[($head + $preview)[] | select(.state == "pending")] | length'
+            )"
+            other_pending_status_count="$(
+              jq '[.[] | select(.context != "Preview Result" and .state == "pending")] | length' <<< "$status_contexts"
+            )"
+            for expected_check in "${expected_checks[@]}"; do
+              check_name="${expected_check%|*}"
+              check_app="${expected_check##*|}"
+              matching_check="$(
+                jq --arg name "$check_name" --argjson app "$check_app" '[.[] | select(.name == $name and .app.id == $app)]' <<< "$check_runs"
+              )"
+              if [ "$(jq 'length' <<< "$matching_check")" -eq 0 ]; then
+                missing_checks+=("$check_name")
+                continue
+              fi
+              incomplete_count="$(
+                jq '[.[] | select(.status != "completed" or .conclusion != "success")] | length' <<< "$matching_check"
+              )"
+              if [ "$incomplete_count" -gt 0 ]; then
+                incomplete_checks+=("$check_name")
+              fi
+            done
+            checks_ready=false
+            if [ "${#missing_checks[@]}" -eq 0 ] && [ "${#incomplete_checks[@]}" -eq 0 ] && [ "$pending_count" -eq 0 ]; then
+              checks_ready=true
+            fi
+            for status_context in "${expected_statuses[@]}"; do
+              latest_state="$(
+                jq -r --arg name "$status_context" '[.[] | select(.context == $name)] | last | .state // "missing"' <<< "$preview_status_contexts"
+              )"
+              case "$latest_state" in
+                success) ;;
+                missing) missing_checks+=("$status_context") ;;
+                *) incomplete_checks+=("$status_context") ;;
+              esac
+            done
+            if [ "$preview_requested" = false ] && [ "$checks_ready" = true ] && [ "$other_pending_status_count" -eq 0 ] && { [ "$latest_state" = missing ] || [ "$latest_state" = pending ]; }; then
+              ci_details_url="$(
+                jq -r '[.[] | select(.name == "CI Result" and .app.id == 15368)] | sort_by(.id) | last | .details_url // ""' <<< "$check_runs"
+              )"
+              if [[ ! "$ci_details_url" =~ ^https://github.com/${GITHUB_REPOSITORY}/actions/runs/([0-9]+)/job/[0-9]+$ ]]; then
+                echo "::error::CI Result is not bound to a GitHub Actions run."
+                exit 1
+              fi
+              bound_run_id="${BASH_REMATCH[1]}"
+              if [ "$bound_run_id" != "$CI_RUN_ID" ]; then
+                echo "::error::A newer CI Result superseded the triggering run."
+                exit 1
+              fi
+              ci_run="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$bound_run_id")"
+              if ! jq -e --arg sha "$HEAD_SHA" '.path == ".github/workflows/ci.yml" and .event == "pull_request" and .head_sha == $sha and .status == "completed" and .conclusion == "success"' >/dev/null <<< "$ci_run"; then
+                echo "::error::CI run $bound_run_id is not successful on the validated head."
+                exit 1
+              fi
+              gh workflow run preview.yml --repo "$GITHUB_REPOSITORY" --ref main -f "run_id=$bound_run_id"
+              preview_requested=true
+              echo "Requested one preview for validated Dependabot candidate $HEAD_SHA."
+            fi
+            if [ "${#missing_checks[@]}" -eq 0 ] && [ "${#incomplete_checks[@]}" -eq 0 ] && [ "$pending_count" -eq 0 ] && [ "$pending_status_count" -eq 0 ]; then
+              echo "All checks completed."
+              break
+            fi
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              printf '::error::Timed out waiting for checks. Missing: %s. Incomplete: %s. Pending checks: %s. Pending statuses: %s.\n' \
+                "${missing_checks[*]:-none}" \
+                "${incomplete_checks[*]:-none}" \
+                "$pending_count" \
+                "$pending_status_count"
+              exit 1
+            fi
+            printf 'Waiting for checks. Missing: %s. Incomplete: %s. Pending checks: %s. Pending statuses: %s.\n' \
+              "${missing_checks[*]:-none}" \
+              "${incomplete_checks[*]:-none}" \
+              "$pending_count" \
+              "$pending_status_count"
+            sleep 30
+          done
+      - name: Merge Dependabot PR
+        if: steps.gate.outputs.eligible == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          # GitHub recomputes mergeability asynchronously, so the status can be
+          # UNKNOWN for a short window right after checks settle. Poll until it
+          # resolves instead of failing on the transient state.
+          merge_state="UNKNOWN"
+          deadline=$((SECONDS + 120))
+          while true; do
+            pr_state="$(
+              gh pr view "$PR_NUMBER" \
+                --repo "$GITHUB_REPOSITORY" \
+                --json headRefOid,mergeStateStatus,baseRefName,state,isDraft,isCrossRepository
+            )"
+            current_head_sha="$(jq -r '.headRefOid' <<< "$pr_state")"
+            merge_state="$(jq -r '.mergeStateStatus' <<< "$pr_state")"
+            if [ "$current_head_sha" != "$HEAD_SHA" ]; then
+              echo "::error::PR head changed from $HEAD_SHA to $current_head_sha after validation."
+              exit 1
+            fi
+            if ! jq -e '.baseRefName == "main" and .state == "OPEN" and .isDraft == false and .isCrossRepository == false' >/dev/null <<< "$pr_state"; then
+              echo "::error::Dependabot PR is no longer eligible for main."
+              exit 1
+            fi
+            if [ "$merge_state" != "UNKNOWN" ]; then
+              break
+            fi
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              echo "::error::Timed out waiting for merge state to resolve (still UNKNOWN)."
+              exit 1
+            fi
+            echo "Merge state is UNKNOWN; waiting for GitHub to recompute mergeability."
+            sleep 10
+          done
+          case "$merge_state" in
+            CLEAN | UNSTABLE)
+              ;;
+            *)
+              echo "::error::PR merge state is $merge_state, not mergeable."
+              exit 1
+              ;;
+          esac
+          gh pr merge "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --match-head-commit "$HEAD_SHA" \
+            --squash \
+            --delete-branch

@@ -1,0 +1,492 @@
+{
+  "customs": {
+    "svg": {
+      "file": "Customs.svg",
+      "floors": [
+        "Ground_Level",
+        "2nd Floor",
+        "3rd Floor",
+        "4th Floor",
+        "Underground"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.239,
+        168.65,
+        0.239,
+        136.35
+      ],
+      "bounds": [
+        [
+          698,
+          -307
+        ],
+        [
+          -372,
+          237
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6
+    }
+  },
+  "factory": {
+    "svg": {
+      "file": "Factory.svg",
+      "floors": [
+        "Tunnels",
+        "Ground_Floor",
+        "2nd Floor",
+        "3rd Floor"
+      ],
+      "defaultFloor": "Ground_Floor",
+      "coordinateRotation": 90,
+      "transform": [
+        1.629,
+        119.9,
+        1.629,
+        139.3
+      ],
+      "bounds": [
+        [
+          77,
+          -64.5
+        ],
+        [
+          -65.5,
+          67.4
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 6
+    }
+  },
+  "groundzero": {
+    "svg": {
+      "file": "GroundZero.svg",
+      "floors": [
+        "Ground_Level",
+        "2nd Floor",
+        "3rd Floor",
+        "Garage"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.524,
+        167.3,
+        0.524,
+        65.1
+      ],
+      "bounds": [
+        [
+          249,
+          -124
+        ],
+        [
+          -99,
+          364
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 6
+    }
+  },
+  "icebreaker": {
+    "tile": {
+      "tilePath": "https://assets.tarkov.dev/maps/icebreaker/06_infirmary/{z}/{x}/{y}.png",
+      "tileSize": 256,
+      "minZoom": 1,
+      "maxZoom": 5,
+      "transform": [
+        2,
+        125,
+        3.5,
+        91
+      ],
+      "coordinateRotation": 180,
+      "bounds": [
+        [
+          77,
+          -64.5
+        ],
+        [
+          -65.5,
+          67.4
+        ]
+      ],
+      "floors": [
+        "Infirmary",
+        "Helipad",
+        "Gym/Canteen",
+        "Accommodation (lower)",
+        "Accommodation (mid)",
+        "Accommodation (upper)",
+        "Officers' Deck",
+        "Stairs (blocked)",
+        "Bridge",
+        "Bridge Roof",
+        "Control Room",
+        "Engine Room",
+        "Engine Room (upper)",
+        "Fuel Pumps (lower)",
+        "Fuel Pumps",
+        "Storage/Security"
+      ],
+      "defaultFloor": "Infirmary",
+      "floorTilePaths": {
+        "Infirmary": "https://assets.tarkov.dev/maps/icebreaker/06_infirmary/{z}/{x}/{y}.png",
+        "Helipad": "https://assets.tarkov.dev/maps/icebreaker/07_helipad/{z}/{x}/{y}.png",
+        "Gym/Canteen": "https://assets.tarkov.dev/maps/icebreaker/08_gym-canteen/{z}/{x}/{y}.png",
+        "Accommodation (lower)": "https://assets.tarkov.dev/maps/icebreaker/09_accommodation_lower/{z}/{x}/{y}.png",
+        "Accommodation (mid)": "https://assets.tarkov.dev/maps/icebreaker/10_accommodation_mid/{z}/{x}/{y}.png",
+        "Accommodation (upper)": "https://assets.tarkov.dev/maps/icebreaker/11_accommodation_upper/{z}/{x}/{y}.png",
+        "Officers' Deck": "https://assets.tarkov.dev/maps/icebreaker/12_officers_deck/{z}/{x}/{y}.png",
+        "Stairs (blocked)": "https://assets.tarkov.dev/maps/icebreaker/13_stairs_blocked/{z}/{x}/{y}.png",
+        "Bridge": "https://assets.tarkov.dev/maps/icebreaker/14_bridge/{z}/{x}/{y}.png",
+        "Bridge Roof": "https://assets.tarkov.dev/maps/icebreaker/15_bridge_roof/{z}/{x}/{y}.png",
+        "Control Room": "https://assets.tarkov.dev/maps/icebreaker/00_control_room/{z}/{x}/{y}.png",
+        "Engine Room": "https://assets.tarkov.dev/maps/icebreaker/01_engine_room/{z}/{x}/{y}.png",
+        "Engine Room (upper)": "https://assets.tarkov.dev/maps/icebreaker/02_engine_room_upper/{z}/{x}/{y}.png",
+        "Fuel Pumps (lower)": "https://assets.tarkov.dev/maps/icebreaker/03_fuel_pumps_lower/{z}/{x}/{y}.png",
+        "Fuel Pumps": "https://assets.tarkov.dev/maps/icebreaker/04_fuel_pumps/{z}/{x}/{y}.png",
+        "Storage/Security": "https://assets.tarkov.dev/maps/icebreaker/05_storage_ecurity/{z}/{x}/{y}.png"
+      }
+    }
+  },
+  "interchange": {
+    "svg": {
+      "file": "Interchange.svg",
+      "floors": [
+        "Ground_Level",
+        "2nd Floor",
+        "3rd Floor"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.265,
+        150.6,
+        0.265,
+        134.6
+      ],
+      "bounds": [
+        [
+          598,
+          -442
+        ],
+        [
+          -433,
+          426
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 6
+    }
+  },
+  "lab": {
+    "tile": {
+      "tilePath": "https://assets.tarkov.dev/maps/labs_v4/1st/{z}/{x}/{y}.png",
+      "floorTilePaths": {
+        "Technical": "https://assets.tarkov.dev/maps/labs_v4/technical/{z}/{x}/{y}.png",
+        "First_Level": "https://assets.tarkov.dev/maps/labs_v4/1st/{z}/{x}/{y}.png",
+        "Second_Level": "https://assets.tarkov.dev/maps/labs_v4/2nd/{z}/{x}/{y}.png"
+      },
+      "floors": [
+        "Technical",
+        "First_Level",
+        "Second_Level"
+      ],
+      "defaultFloor": "First_Level",
+      "coordinateRotation": 270,
+      "transform": [
+        0.575,
+        281.2,
+        0.575,
+        193.7
+      ],
+      "bounds": [
+        [
+          -80,
+          -477
+        ],
+        [
+          -287,
+          -193
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6,
+      "tileSize": 175
+    }
+  },
+  "labyrinth": {
+    "tile": {
+      "tilePath": "https://assets.tarkov.dev/maps/labyrinth/main/{z}/{x}/{y}.png",
+      "coordinateRotation": 270,
+      "transform": [
+        2.115,
+        85.5,
+        2.115,
+        128
+      ],
+      "bounds": [
+        [
+          -52,
+          -37
+        ],
+        [
+          53,
+          76
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 6
+    }
+  },
+  "lighthouse": {
+    "svg": {
+      "file": "Lighthouse.svg",
+      "floors": [
+        "Ground_Level"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.2,
+        0,
+        0.2,
+        0
+      ],
+      "bounds": [
+        [
+          515,
+          -998
+        ],
+        [
+          -545,
+          725
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 6
+    },
+    "extractsAdd": [
+      {
+        "id": "SCAV_Underboat_Hideout",
+        "name": "Hideout Under the Landing Stage",
+        "nameKey": "maps.extract_names.scav_underboat_hideout",
+        "faction": "scav",
+        "position": {
+          "x": 143.13,
+          "y": 0.73,
+          "z": -159.34
+        }
+      }
+    ]
+  },
+  "openworld": {
+    "unavailable": true
+  },
+  "reserve": {
+    "svg": {
+      "file": "Reserve.svg",
+      "floors": [
+        "Bunkers",
+        "Ground_Level"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.395,
+        122,
+        0.395,
+        137.65
+      ],
+      "bounds": [
+        [
+          289,
+          -293
+        ],
+        [
+          -303,
+          244
+        ]
+      ],
+      "svgBounds": [
+        [
+          289,
+          -274
+        ],
+        [
+          -303,
+          272
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6,
+      "stackFloors": false
+    }
+  },
+  "shoreline": {
+    "svg": {
+      "file": "Shoreline.svg",
+      "floors": [
+        "Ground_Level",
+        "2nd Floor",
+        "3rd Floor",
+        "Underground"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.16,
+        83.2,
+        0.16,
+        111.1
+      ],
+      "bounds": [
+        [
+          504,
+          -415
+        ],
+        [
+          -1056,
+          618
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6
+    }
+  },
+  "streetsoftarkov": {
+    "svg": {
+      "file": "StreetsOfTarkov.svg",
+      "floors": [
+        "Ground_Level",
+        "2nd Floor",
+        "3rd Floor",
+        "4th Floor",
+        "5th Floor",
+        "Underground"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.38,
+        0,
+        0.38,
+        0
+      ],
+      "bounds": [
+        [
+          323,
+          -295
+        ],
+        [
+          -280,
+          532
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 5
+    }
+  },
+  "terminal": {
+    "svg": {
+      "file": "Terminal.svg",
+      "floors": [
+        "Ground_Level",
+        "2nd Floor"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.2,
+        0,
+        0.2,
+        0
+      ],
+      "bounds": [
+        [
+          463,
+          -580
+        ],
+        [
+          -433,
+          475
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6
+    }
+  },
+  "transits": {
+    "unavailable": true
+  },
+  "woods": {
+    "svg": {
+      "file": "Woods.svg",
+      "floors": [
+        "Ground_Level"
+      ],
+      "defaultFloor": "Ground_Level",
+      "coordinateRotation": 180,
+      "transform": [
+        0.1855,
+        112.95,
+        0.1855,
+        167.85
+      ],
+      "bounds": [
+        [
+          646,
+          -914
+        ],
+        [
+          -761,
+          442
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6
+    }
+  },
+  "thelabdark": {
+    "tile": {
+      "tilePath": "https://assets.tarkov.dev/maps/labs_v4/1st/{z}/{x}/{y}.png",
+      "floorTilePaths": {
+        "Technical": "https://assets.tarkov.dev/maps/labs_v4/technical/{z}/{x}/{y}.png",
+        "First_Level": "https://assets.tarkov.dev/maps/labs_v4/1st/{z}/{x}/{y}.png",
+        "Second_Level": "https://assets.tarkov.dev/maps/labs_v4/2nd/{z}/{x}/{y}.png"
+      },
+      "floors": [
+        "Technical",
+        "First_Level",
+        "Second_Level"
+      ],
+      "defaultFloor": "First_Level",
+      "coordinateRotation": 270,
+      "transform": [
+        0.575,
+        281.2,
+        0.575,
+        193.7
+      ],
+      "bounds": [
+        [
+          -80,
+          -477
+        ],
+        [
+          -287,
+          -193
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6,
+      "tileSize": 175
+    }
+  }
+}

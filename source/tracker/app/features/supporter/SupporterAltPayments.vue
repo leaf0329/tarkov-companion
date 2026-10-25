@@ -1,0 +1,28 @@
+<template>
+  <div class="space-y-3">
+    <div class="border-surface-700/40 bg-surface-900/40 rounded-2xl border p-4">
+      <div class="flex items-start gap-3">
+        <UIcon name="i-mdi-information-outline" class="text-surface-400 mt-0.5 h-5 w-5 shrink-0" />
+        <div>
+          <h3 class="text-surface-200 text-sm font-semibold">
+            {{ t('page.supporter.kofi_deprecation_title') }}
+          </h3>
+          <p class="text-surface-400 mt-0.5 text-xs">
+            {{ t('page.supporter.kofi_deprecation_detail') }}
+          </p>
+          <a
+            href="https://ko-fi.com/dysektai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-surface-300 hover:text-surface-100 mt-1.5 inline-block text-xs underline transition-colors"
+          >
+            ko-fi.com/dysektai
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+  const { t } = useI18n({ useScope: 'global' });
+</script>

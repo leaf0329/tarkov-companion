@@ -1,0 +1,110 @@
+// @vitest-environment happy-dom
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { mount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+const { openPreferences, runtimeConfig } = vi.hoisted(() => ({
+  openPreferences: vi.fn(),
+  runtimeConfig: {
+    public: {
+      appUrl: 'https://tarkovtracker.org',
+      appVersion: '1.2.3',
+      buildCommit: '',
+      githubOwner: 'tarkovtracker-org',
+      githubRepo: 'TarkovTracker',
+      googleAnalyticsMeasurementId: 'G-TEST',
+      microsoftClarityProjectId: '',
+    },
+  },
+}));
+mockNuxtImport('useRuntimeConfig', () => () => runtimeConfig);
+mockNuxtImport('useAnalyticsConsent', () => () => ({ openPreferences }));
+vi.mock('@/utils/runtimeConfig', () => ({
+  shouldEnableAnalyticsIntegrations: () => true,
+}));
+vi.mock('vue-i18n', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('vue-i18n')>()),
+  useI18n: () => ({ t: (key: string) => key }),
+}));
+const mountFooter = async () => {
+  const { default: AppFooter } = await import('@/shell/AppFooter.vue');
+  return mount(AppFooter, {
+    global: {
+      stubs: {
+        AppFooterColumn: {
+          props: ['title', 'items'],
+          template:
+            '<section :data-title="title"><button v-for="item in items" :key="item.label" @click="item.onClick?.()">{{ item.label }}</button></section>',
+        },
+        NuxtImg: true,
+        NuxtLink: { template: '<a><slot /></a>' },
+      },
+    },
+  });
+};
+describe('AppFooter', () => {
+  beforeEach(() => {
+    openPreferences.mockReset();
+    // Restore default runtime config; individual tests mutate it to exercise
+    // the release-link fallback branches.
+    runtimeConfig.public.appVersion = '1.2.3';
+    runtimeConfig.public.buildCommit = '';
+    runtimeConfig.public.githubOwner = 'tarkovtracker-org';
+    runtimeConfig.public.githubRepo = 'TarkovTracker';
+  });
+  it('renders the navigation groups, version, and analytics preferences action', async () => {
+    const wrapper = await mountFooter();
+    expect(wrapper.text()).toContain('navigation_drawer.brand_name');
+    expect(wrapper.text()).toContain('v1.2.3');
+    const versionLink = wrapper.findAll('a').find((anchor) => anchor.text().includes('v1.2.3'));
+    expect(versionLink?.attributes('href')).toBe(
+      'https://github.com/tarkovtracker-org/TarkovTracker/releases/tag/v1.2.3'
+    );
+    expect(versionLink?.attributes('rel')).toBe('noopener noreferrer');
+    expect(versionLink?.attributes('target')).toBe('_blank');
+    expect(wrapper.findAll('section')).toHaveLength(3);
+    const analyticsButton = wrapper
+      .findAll('button')
+      .find((button) => button.text() === 'footer.analytics_preferences');
+    expect(analyticsButton).toBeDefined();
+    await analyticsButton?.trigger('click');
+    expect(openPreferences).toHaveBeenCalledOnce();
+  });
+  it.each(['', 'dev'])('renders no release link for the unversioned %j build', async (version) => {
+    runtimeConfig.public.appVersion = version;
+    const wrapper = await mountFooter();
+    expect(wrapper.text()).toContain('vdev');
+    const versionLink = wrapper.findAll('a').find((anchor) => anchor.text().includes('vdev'));
+    expect(versionLink).toBeUndefined();
+  });
+  it.each([
+    { owner: '', repo: 'TarkovTracker' },
+    { owner: 'tarkovtracker-org', repo: '' },
+  ])('renders no release link for incomplete repo config: %j', async ({ owner, repo }) => {
+    runtimeConfig.public.githubOwner = owner;
+    runtimeConfig.public.githubRepo = repo;
+    const wrapper = await mountFooter();
+    const versionLink = wrapper.findAll('a').find((anchor) => anchor.text().includes('v1.2.3'));
+    expect(versionLink).toBeUndefined();
+    expect(wrapper.text()).toContain('v1.2.3');
+  });
+  it('links the short build commit so a deploy is identifiable between releases', async () => {
+    const sha = 'dce724280dd507aba2fdec7d9712c3fe20d60cfa';
+    runtimeConfig.public.buildCommit = sha.toUpperCase();
+    const wrapper = await mountFooter();
+    const commitLink = wrapper.findAll('a').find((anchor) => anchor.text() === 'dce7242');
+    expect(commitLink?.attributes('href')).toBe(
+      `https://github.com/tarkovtracker-org/TarkovTracker/commit/${sha}`
+    );
+    expect(commitLink?.attributes('rel')).toBe('noopener noreferrer');
+    expect(commitLink?.attributes('title')).toBe('footer.build_commit_link');
+  });
+  it('shows an unlinked commit without repo config and nothing for invalid values', async () => {
+    runtimeConfig.public.buildCommit = 'a'.repeat(40);
+    runtimeConfig.public.githubOwner = '';
+    const unlinked = await mountFooter();
+    expect(unlinked.text()).toContain('aaaaaaa');
+    expect(unlinked.findAll('a').some((anchor) => anchor.text() === 'aaaaaaa')).toBe(false);
+    runtimeConfig.public.buildCommit = 'abc1234';
+    expect((await mountFooter()).text()).not.toContain('abc1234');
+  });
+});

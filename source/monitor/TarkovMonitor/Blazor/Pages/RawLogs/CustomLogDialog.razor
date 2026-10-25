@@ -1,0 +1,34 @@
+﻿@inject GameWatcher eft
+@inject LocalizationService LocalizationService
+
+<MudDialog>
+    <DialogContent>
+        <MudSelect @bind-Value="gameLogType" Label="Log type" RelativeWidth="DropdownWidth.Adaptive" HelperText="Choose which GameWatcher monitor should process this log" OpenIcon="@Icons.Material.Filled.TextSnippet" AdornmentColor="Color.Secondary" PopoverFixed="false" Modal="false" MaxHeight="280" Margin="Margin.Dense" Dense="true" Class="tm-select tm-select--dialog" PopoverClass="tm-select-popover" ListClass="tm-select-list">
+            @foreach (GameLogType item in Enum.GetValues(typeof(GameLogType)))
+            {
+                <MudSelectItem Value="@item">@item</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField Immediate="true" @bind-Value="@sampleText" T="string" Label="Log data" Variant="Variant.Outlined" Lines="5" Class="mt-4"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@LocalizationService.GetString("Cancel")</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@LocalizationService.GetString("Submit")</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; }
+
+    void Cancel() => MudDialog.Cancel();
+
+    string sampleText = "";
+
+    // Grab list of watchers from GameWatcher and populate the dropdown
+    private GameLogType gameLogType = GameLogType.Application;
+
+    public void Submit()
+    {
+        eft.GameWatcher_NewLogData(this, new NewLogDataEventArgs { Type = gameLogType, Data = sampleText });
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

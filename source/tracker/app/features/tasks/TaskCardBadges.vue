@@ -1,0 +1,187 @@
+<template>
+  <div
+    class="flex scrollbar-none flex-wrap items-center gap-1.5 sm:flex-nowrap sm:justify-end sm:overflow-x-auto"
+  >
+    <AppTooltip
+      :text="isPinned ? t('page.tasks.questcard.unpin_task') : t('page.tasks.questcard.pin_task')"
+    >
+      <UButton
+        size="xs"
+        variant="ghost"
+        :color="isPinned ? 'primary' : 'neutral'"
+        :icon="isPinned ? 'i-mdi-pin' : 'i-mdi-pin-outline'"
+        class="shrink-0"
+        :aria-label="
+          isPinned ? t('page.tasks.questcard.unpin_task') : t('page.tasks.questcard.pin_task')
+        "
+        @click.stop="emit('togglePin')"
+      />
+    </AppTooltip>
+    <TaskMapVisibilityToggles :task-id="task.id" />
+    <AppTooltip
+      v-for="req in traderRequirements"
+      :key="req.id"
+      :text="
+        t('page.tasks.questcard.trader_requirement_badge', {
+          trader: req.trader.name,
+          kind: t(
+            `page.tasks.questcard.${req.requirementType === 'level' ? 'loyalty_level' : 'reputation'}`
+          ),
+          comparison: req.compareMethod,
+          value: req.value,
+        })
+      "
+    >
+      <UBadge
+        size="xs"
+        :color="req.met ? 'success' : 'error'"
+        variant="soft"
+        class="shrink-0 cursor-help text-[11px]"
+      >
+        {{
+          t('page.tasks.questcard.trader_requirement_badge', {
+            trader: req.trader.name,
+            kind: t(
+              `page.tasks.questcard.${req.requirementType === 'level' ? 'loyalty_level' : 'reputation'}`
+            ),
+            comparison: req.compareMethod,
+            value: req.value,
+          })
+        }}
+      </UBadge>
+    </AppTooltip>
+    <AppTooltip :text="locationTooltip">
+      <UBadge
+        size="xs"
+        color="neutral"
+        variant="soft"
+        class="inline-flex max-w-40 shrink-0 cursor-help items-center gap-1 text-[11px] leading-none"
+      >
+        <UIcon
+          :name="task?.map?.name ? 'i-mdi-map-marker' : 'i-mdi-earth'"
+          aria-hidden="true"
+          class="h-3 w-3 shrink-0"
+        />
+        <span class="truncate leading-none">
+          {{ task?.map?.name || t('page.tasks.questcard.any_map') }}
+        </span>
+      </UBadge>
+    </AppTooltip>
+    <UBadge
+      v-if="hasProgress"
+      size="xs"
+      color="neutral"
+      variant="soft"
+      class="inline-flex shrink-0 cursor-help items-center gap-1 text-[11px] leading-none"
+    >
+      <UIcon name="i-mdi-check-circle-outline" aria-hidden="true" class="h-3 w-3 shrink-0" />
+      <span class="truncate leading-none">
+        {{
+          t('page.tasks.questcard.progress', {
+            completed: props.progressCompleted,
+            total: props.progressTotal,
+          })
+        }}
+      </span>
+    </UBadge>
+    <UBadge v-if="isFailed" size="xs" color="error" variant="soft" class="shrink-0 text-[11px]">
+      {{ t('common.failed', 'Failed') }}
+    </UBadge>
+    <AppTooltip
+      v-if="isInvalid && !isFailed"
+      :text="
+        t(
+          'page.tasks.questcard.blocked_tooltip',
+          'This task is permanently blocked and can never be completed due to choices made in other tasks'
+        )
+      "
+    >
+      <UBadge size="xs" color="neutral" variant="soft" class="shrink-0 cursor-help text-[11px]">
+        {{ t('common.blocked', 'Blocked') }}
+      </UBadge>
+    </AppTooltip>
+    <AppTooltip
+      v-if="showRequiredLabels && task.kappaRequired"
+      :text="t('page.tasks.questcard.kappa_tooltip')"
+    >
+      <UIcon
+        name="i-mdi-trophy"
+        class="text-kappa h-4 w-4 shrink-0 cursor-help"
+        aria-hidden="true"
+      />
+    </AppTooltip>
+    <AppTooltip
+      v-if="showRequiredLabels && task.lightkeeperRequired"
+      :text="t('page.tasks.questcard.lightkeeper_tooltip')"
+    >
+      <UIcon
+        name="i-mdi-lighthouse"
+        class="text-lightkeeper h-4 w-4 shrink-0 cursor-help"
+        aria-hidden="true"
+      />
+    </AppTooltip>
+    <AppTooltip
+      v-if="task.alternatives && task.alternatives.length > 0"
+      :text="t('page.tasks.questcard.alternatives_tooltip', { count: task.alternatives.length })"
+    >
+      <UBadge size="xs" color="warning" variant="soft" class="shrink-0 cursor-help text-[11px]">
+        <UIcon name="i-mdi-swap-horizontal" class="mr-0.5 h-3 w-3" aria-hidden="true" />
+        {{ t('page.tasks.questcard.alternatives_badge', { count: task.alternatives.length }) }}
+      </UBadge>
+    </AppTooltip>
+    <AppTooltip
+      v-if="showRequiredLabels && exclusiveEditionBadge"
+      :text="
+        t(
+          'page.tasks.questcard.edition_exclusive_tooltip',
+          { editions: exclusiveEditionBadge },
+          `This quest is only available to players with ${exclusiveEditionBadge} edition`
+        )
+      "
+    >
+      <UBadge size="xs" color="primary" variant="soft" class="shrink-0 cursor-help text-[11px]">
+        {{ exclusiveEditionBadge }}
+      </UBadge>
+    </AppTooltip>
+    <slot name="actions" />
+    <div class="hidden sm:flex">
+      <AppTooltip v-if="isOurFaction" :text="t('common.more', 'More')">
+        <UButton
+          size="xs"
+          color="neutral"
+          variant="ghost"
+          class="shrink-0"
+          :aria-label="t('common.more', 'More')"
+          @click.stop="emit('openMenu', $event)"
+        >
+          <UIcon name="i-mdi-dots-horizontal" aria-hidden="true" class="h-5 w-5" />
+        </UButton>
+      </AppTooltip>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+  import TaskMapVisibilityToggles from '@/features/tasks/TaskMapVisibilityToggles.vue';
+  import type { Task, NormalizedTraderRequirement } from '@/types/tarkov';
+  const props = defineProps<{
+    task: Task;
+    isPinned: boolean;
+    isOurFaction: boolean;
+    traderRequirements: Array<
+      Exclude<NormalizedTraderRequirement, { requirementType: 'unknown' }> & { met: boolean }
+    >;
+    locationTooltip: string;
+    isFailed: boolean;
+    isInvalid: boolean;
+    showRequiredLabels: boolean;
+    exclusiveEditionBadge?: string;
+    progressCompleted: number;
+    progressTotal: number;
+  }>();
+  const emit = defineEmits<{
+    togglePin: [];
+    openMenu: [event: MouseEvent];
+  }>();
+  const { t } = useI18n({ useScope: 'global' });
+  const hasProgress = computed(() => props.progressTotal > 0);
+</script>

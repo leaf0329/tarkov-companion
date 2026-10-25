@@ -1,0 +1,101 @@
+name: Feature Request
+description: Suggest a new feature or major addition
+title: '[Feature]: '
+labels: ['feature']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please provide as much detail as possible.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: I'm always frustrated when...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see.
+      placeholder: I would like to see...
+    validations:
+      required: true
+  - type: dropdown
+    id: product-area
+    attributes:
+      label: Which area of TarkovTracker is affected?
+      multiple: true
+      options:
+        - Dashboard
+        - Tasks
+        - Hideout
+        - Needed items
+        - Maps
+        - Team
+        - Profile or account
+        - Login
+        - Settings
+        - API or integrations
+        - Translations
+        - Other / not sure
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or features?
+      placeholder: I've also thought about...
+    validations:
+      required: false
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups/Examples
+      description: If applicable, add mockups, screenshots, or examples from other apps.
+      placeholder: Drag and drop images here or paste URLs
+    validations:
+      required: false
+  - type: textarea
+    id: impact
+    attributes:
+      label: What does this prevent you from doing?
+      description: Describe the problem or limitation this feature would solve.
+    validations:
+      required: true
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does this affect you?
+      options:
+        - Always
+        - Frequently
+        - Occasionally
+        - Rarely
+    validations:
+      required: true
+  - type: textarea
+    id: beneficiaries
+    attributes:
+      label: Who would benefit from this change?
+      description: E.g., all users, team leaders, streamers, API consumers, etc.
+    validations:
+      required: false
+  - type: input
+    id: discord
+    attributes:
+      label: Discord Handle (Optional)
+      description: Your Discord username if you'd like to discuss further
+      placeholder: username#1234
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context or information about the feature request.
+    validations:
+      required: false

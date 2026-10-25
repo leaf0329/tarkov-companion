@@ -1,0 +1,46 @@
+﻿
+<MudItem Class="d-flex align-center flex-grow-1 gap-4">
+    <MudLink Href="@itemLink"><MudImage Src="@itemImageURL" Width="@imgWidth" Height="@imgHeight" Class="ma-2" title="@itemName" /></MudLink>
+    @if (subItems.Length > 0)
+    {
+        <MudButton OnClick="OnExpandCollapseClick"><MudIcon Icon="@(_expanded ? Icons.Material.Filled.IndeterminateCheckBox : Icons.Material.Filled.AddBox)" Title="Tarkov.dev" Color="Color.Info" /></MudButton>
+        <MudCollapse Expanded="_expanded">
+            @foreach (LoadoutItem item in subItems)
+            {
+
+                <LoadoutRecursor Loadout="@Loadout" Item="item" />
+            }
+        </MudCollapse>
+    }
+</MudItem>
+
+@code {
+    [Parameter]
+    public LoadoutItem[] Loadout { get; set; } = { };
+
+    [Parameter]
+    public LoadoutItem Item { get; set; }
+
+    private LoadoutItem[] subItems { get; set; } = { };
+
+    bool _expanded = false;
+
+    private TarkovDev.Item? devItem => TarkovDev.Items.Where(i => i.id == Item._tpl).FirstOrDefault();
+
+    private int imgWidth => devItem != null ? (devItem.width * 31) + 1 : 96;
+    private int imgHeight => devItem != null ? (devItem.height * 31) + 1 : 96;
+    private string itemImageURL => devItem?.gridImageLink ?? "";
+    private string itemLink => devItem?.link ?? "";
+    private string itemName => devItem?.name ?? "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        subItems = Loadout.Where(i => i.parentId == Item._id && TarkovDev.Items.Where(it => it.id == i._tpl).FirstOrDefault() != null).ToArray();
+    }
+
+    private void OnExpandCollapseClick()
+    {
+        _expanded = !_expanded;
+    }
+}

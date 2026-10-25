@@ -1,0 +1,111 @@
+{
+  "checkedAt": "2026-10-25",
+  "sources": [
+    "https://tarkov.help/en/map/reserve/home",
+    "https://tarkovflip.com/season/map/reserve",
+    "https://tarkov.help/en/map/factory/home",
+    "https://tarkov.help/en/map/customs/home",
+    "https://tarkov.help/en/map/interchange/home",
+    "https://escapefromtarkov.fandom.com/wiki/The_Lab"
+  ],
+  "extracts": {
+    "1dd5cede4fa747d279b076872c45fc59a4c3b916": [
+      "flare",
+      "green_flare"
+    ],
+    "fed921b46204418ef8fa0174468c6886e91325c4": [
+      "vehicle"
+    ],
+    "d71465c84357271657810c0395fd1e69b7636e4a": [
+      "flare"
+    ],
+    "010b98a982808abfba6d5419a3705cbe05409de1": [
+      "vehicle"
+    ],
+    "1dc6fca97ac062b2363fe53479748fb0bc6e2d6b": [
+      "vehicle"
+    ],
+    "1e65f8bedbd9322074ae387892f0972883bdb794": [
+      "flare",
+      "green_flare"
+    ],
+    "12448fe61862391cd784b298a6c3081f24de39d6": [
+      "vehicle"
+    ],
+    "d93214582e40ec0c37a7f55ba8777447f43e9b2f": [
+      "flare"
+    ],
+    "e565f6d911f327638f03bdd00990cdd8585a4f80": [
+      "vehicle"
+    ],
+    "22f281b913a76b31fe574b792b65c115fd8bb656": [
+      "flare"
+    ],
+    "e858220a780a95ffbb923225d7649aa134df8836": [
+      "vehicle"
+    ],
+    "60df4348793d4cde35ee2de0865480b5824a8ee6": [
+      "vehicle"
+    ],
+    "d9e23573110e4fe1dbe4a47bc3ba7e316e09cfbc": [
+      "flare"
+    ],
+    "c22a209b9f46247ff2d5376595377db3908d53fa": [
+      "climbing"
+    ],
+    "78919c46c8d06b4ea7790a701b383e1cc0dda28e": [
+      "no_backpack"
+    ],
+    "bd1ef03f5270eb97daeb05b6e4f206895c17860d": [
+      "train"
+    ],
+    "819ea4a9c6d61f208739c3cf866c6a17c79b4707": [
+      "bunker_power"
+    ],
+    "b166214093a289801ff6e25389caabe8c83792a5": [
+      "d2"
+    ],
+    "4b93f765fc6e0b6379679b3c827074d4e57ff680": [
+      "factory_key"
+    ],
+    "f261d229a5b13a3292a4a49dced2a4949dfc342b": [
+      "factory_key"
+    ],
+    "99c2f21880da0baf75d431a5f45b462fde2f79b1": [
+      "factory_key"
+    ],
+    "3f7e27d7bae8ffb6e3004af071b18bf0e7d896b8": [
+      "zb013"
+    ],
+    "9aa4d38482dc1996ba1f191e2f897e193e05f982": [
+      "no_backpack"
+    ],
+    "7bdf4ff52b59f4bb8d60cc0ec90a932596b0f6ac": [
+      "saferoom"
+    ],
+    "e4449767a7b69f57de8efbd2cf7dd5ee11a8468d": [
+      "labs_hangar"
+    ],
+    "9f0ea7a638bbcc3e2d855a66ef7a9f643cc06265": [
+      "labs_medical"
+    ],
+    "bb32a5dbbe8116e0765ed80a5ec7980e47676dc6": [
+      "no_backpack"
+    ],
+    "aecf93f8def45d42877594c4170f5a71b5b41b39": [
+      "labs_cargo"
+    ],
+    "718b3e098cf256525a98ad84c481876082391b18": [
+      "labs_main"
+    ],
+    "99477cb352520521b92ba91a2c1cfd7fc219ad26": [
+      "labs_parking"
+    ],
+    "70e59e240344a72e8dbb151c370f32851997fd50": [
+      "labs_sewage"
+    ],
+    "c936f6e98a38c78963a308892b708474c54f4718": [
+      "old_gas"
+    ]
+  }
+}

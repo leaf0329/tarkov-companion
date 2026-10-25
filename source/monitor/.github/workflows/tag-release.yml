@@ -1,0 +1,74 @@
+name: Create Release from tag
+
+on:
+  push:
+    tags:
+      - '\d+\.\d+\.\d+\.\d+'
+
+permissions:
+  contents: write
+
+jobs:
+  upload:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # pin@v7.0.1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # pin@v6.0.0
+        with:
+          dotnet-version: "10.x"
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build and publish
+        shell: pwsh
+        run: |
+          dotnet publish TarkovMonitor/TarkovMonitor.csproj `
+            -c Release `
+            --self-contained `
+            --runtime win-x64 `
+            -p:PublishSingleFile=true `
+            -p:Version=${{ github.ref_name }} `
+            -p:AssemblyVersion=${{ github.ref_name }} `
+            --output "$Env:GITHUB_WORKSPACE\publish"
+
+      - name: Verify published application
+        shell: pwsh
+        run: |
+          $executable = "$Env:GITHUB_WORKSPACE\publish\TarkovMonitor.exe"
+
+          if (-not (Test-Path -LiteralPath $executable)) {
+            throw "Published executable was not found: $executable"
+          }
+
+          Write-Output "Verified published executable: $executable"
+
+      - name: Create build release archive
+        shell: pwsh
+        run: |
+          $publishDirectory = "$Env:GITHUB_WORKSPACE\publish"
+          $archivePath = "$Env:GITHUB_WORKSPACE\TarkovMonitor.zip"
+
+          Compress-Archive `
+            -Path "$publishDirectory\*" `
+            -DestinationPath $archivePath
+
+          if (-not (Test-Path -LiteralPath $archivePath)) {
+            throw "Release archive was not created: $archivePath"
+          }
+
+          Write-Output "Created release archive: $archivePath"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # pin@v3.0.2
+        with:
+          files: TarkovMonitor.zip
+          prerelease: true
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

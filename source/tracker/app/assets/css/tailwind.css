@@ -1,0 +1,1142 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+/* Light theme variant for per-spot overrides; the base token flip lives at the end of this file */
+@custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
+/* Smooth scrolling for hash anchor navigation */
+html {
+  scroll-behavior: smooth;
+}
+/* Disable smooth scroll for virtualized window-scrollers to avoid scroll ratcheting */
+html.no-smooth-scroll {
+  scroll-behavior: auto;
+}
+@layer utilities {
+  .slider-thumb::-webkit-slider-thumb {
+    appearance: none;
+    height: 0.875rem;
+    width: 0.875rem;
+    cursor: pointer;
+    border-radius: 9999px;
+    border: 2px solid var(--color-surface-950);
+    background: var(--color-surface-200);
+  }
+  .slider-thumb::-moz-range-thumb {
+    height: 0.875rem;
+    width: 0.875rem;
+    cursor: pointer;
+    border-radius: 9999px;
+    border: 2px solid var(--color-surface-950);
+    background: var(--color-surface-200);
+  }
+}
+/* Tailwind v4 + Nuxt UI v4 theme tokens */
+@theme static {
+  --font-ui:
+    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
+    'Helvetica Neue', arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  --font-display:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+  /* Primary (brand tan) - warmer, more saturated */
+  --color-primary-50: hsl(40 45% 95%);
+  --color-primary-100: hsl(39 42% 88%);
+  --color-primary-200: hsl(38 40% 76%);
+  --color-primary-300: hsl(37 42% 64%);
+  --color-primary-400: hsl(36 45% 52%);
+  --color-primary-500: hsl(35 48% 46%);
+  --color-primary-600: hsl(34 50% 40%);
+  --color-primary-700: hsl(33 48% 32%);
+  --color-primary-800: hsl(32 42% 24%);
+  --color-primary-900: hsl(30 35% 16%);
+  --color-primary-950: hsl(28 30% 10%);
+  /* Secondary (muted cyan/teal - general UI accent) */
+  --color-secondary-50: hsl(185 50% 96%);
+  --color-secondary-100: hsl(185 50% 90%);
+  --color-secondary-200: hsl(185 50% 78%);
+  --color-secondary-300: hsl(185 50% 65%);
+  --color-secondary-400: hsl(185 50% 50%);
+  --color-secondary-500: hsl(185 50% 40%);
+  --color-secondary-600: hsl(185 50% 34%);
+  --color-secondary-700: hsl(185 50% 28%);
+  --color-secondary-800: hsl(185 50% 22%);
+  --color-secondary-900: hsl(185 50% 16%);
+  --color-secondary-950: hsl(185 50% 10%);
+  /* Brand aliases — keep a single source of truth (primary) */
+  --color-brand-50: var(--color-primary-50);
+  --color-brand-100: var(--color-primary-100);
+  --color-brand-200: var(--color-primary-200);
+  --color-brand-300: var(--color-primary-300);
+  --color-brand-400: var(--color-primary-400);
+  --color-brand-500: var(--color-primary-500);
+  --color-brand-600: var(--color-primary-600);
+  --color-brand-700: var(--color-primary-700);
+  --color-brand-800: var(--color-primary-800);
+  --color-brand-900: var(--color-primary-900);
+  --color-brand-950: var(--color-primary-950);
+  /* Accent — deep forest/teal drawn from legacy UI */
+  --color-accent-50: hsl(180 14% 94%);
+  --color-accent-100: hsl(180 14% 86%);
+  --color-accent-200: hsl(184 16% 72%);
+  --color-accent-300: hsl(186 18% 58%);
+  --color-accent-400: hsl(187 22% 44%);
+  --color-accent-500: hsl(189 28% 32%);
+  --color-accent-600: hsl(189 30% 26%);
+  --color-accent-700: hsl(190 32% 20%);
+  --color-accent-800: hsl(190 34% 15%);
+  --color-accent-900: hsl(192 38% 11%);
+  --color-accent-950: hsl(192 42% 8%);
+  /* Surface ladder: Tailwind Neutral (pure gray, no tint) */
+  /* bg(950) → chrome(900) → content(850) → raised(800) → state(700) */
+  --color-surface-50: hsl(0 0% 98%);
+  --color-surface-100: hsl(0 0% 96%);
+  --color-surface-200: hsl(0 0% 90%);
+  --color-surface-300: hsl(0 0% 83%);
+  --color-surface-400: hsl(0 0% 64%);
+  --color-surface-500: hsl(0 0% 45%);
+  --color-surface-600: hsl(0 0% 32%); /* Borders/dividers */
+  --color-surface-700: hsl(0 0% 25%); /* State fallback */
+  --color-surface-800: hsl(0 0% 15%); /* Raised/interactive */
+  --color-surface-850: hsl(0 0% 12%); /* Content surfaces */
+  --color-surface-900: hsl(0 0% 9%); /* Shell chrome */
+  --color-surface-950: hsl(0 0% 4%); /* Page canvas */
+  /* State overlay tokens */
+  --state-hover: rgba(255, 255, 255, 0.05);
+  --state-pressed: rgba(255, 255, 255, 0.08);
+  --state-selected: rgba(198, 145, 89, 0.12);
+  /* Border tokens */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  /* PvP (in-game tan) */
+  --color-pvp-50: hsl(40 60% 99%);
+  --color-pvp-100: hsl(38 44.4% 96.5%);
+  --color-pvp-200: hsl(37 47.4% 92.5%);
+  --color-pvp-300: hsl(38 38.5% 87.3%);
+  --color-pvp-400: hsl(46 26.5% 80.8%);
+  --color-pvp-500: hsl(41 22.3% 72.7%);
+  --color-pvp-600: hsl(36 20.2% 61.2%);
+  --color-pvp-700: hsl(34 14.2% 48.4%);
+  --color-pvp-800: hsl(31 14.6% 36.3%);
+  --color-pvp-900: hsl(32 14.7% 25.3%);
+  --color-pvp-950: hsl(39 18.4% 14.9%);
+  /* PvE (in-game blue) */
+  --color-pve-50: hsl(196 57.9% 96.3%);
+  --color-pve-100: hsl(196 57.9% 92.5%);
+  --color-pve-200: hsl(196 57.9% 85.1%);
+  --color-pve-300: hsl(197 55.6% 75.3%);
+  --color-pve-400: hsl(196 40% 60.8%);
+  --color-pve-500: hsl(196 35.2% 52.2%);
+  --color-pve-600: hsl(197 33.3% 43.5%);
+  --color-pve-700: hsl(198 32.6% 35.5%);
+  --color-pve-800: hsl(199 32.4% 27.3%);
+  --color-pve-900: hsl(201 32% 19.6%);
+  --color-pve-950: hsl(201 31.2% 12.5%);
+  /* Success (vibrant teal-green matching COMPLETE button) */
+  --color-success-50: hsl(158 60% 96%);
+  --color-success-100: hsl(158 58% 88%);
+  --color-success-200: hsl(158 56% 75%);
+  --color-success-300: hsl(158 60% 62%);
+  --color-success-400: hsl(158 64% 52%);
+  --color-success-500: hsl(158 68% 42%);
+  --color-success-600: hsl(158 70% 36%);
+  --color-success-700: hsl(158 68% 28%);
+  --color-success-800: hsl(158 64% 22%);
+  --color-success-900: hsl(158 60% 15%);
+  --color-success-950: hsl(158 55% 9%);
+  /* Completed state (muted olive-green, military/tactical feel) */
+  /* Low saturation, yellow-gray bias, near-background luminance */
+  --color-completed-400: hsl(95 18% 42%);
+  --color-completed-600: hsl(95 15% 28%);
+  --color-completed-800: hsl(95 12% 18%);
+  --color-completed-900: hsl(95 10% 12%);
+  --color-completed-950: hsl(95 8% 8%);
+  /* Locked state (matches legacy task lock icon accent) */
+  --color-locked-500: hsl(20 100% 50%);
+  /* Warning (amber) */
+  --color-warning-50: hsl(45 80% 96%);
+  --color-warning-100: hsl(45 80% 90%);
+  --color-warning-200: hsl(45 80% 80%);
+  --color-warning-300: hsl(45 80% 68%);
+  --color-warning-400: hsl(45 80% 56%);
+  --color-warning-500: hsl(45 80% 45%);
+  --color-warning-600: hsl(45 80% 38%);
+  --color-warning-700: hsl(45 80% 30%);
+  --color-warning-800: hsl(45 80% 24%);
+  --color-warning-900: hsl(45 80% 18%);
+  --color-warning-950: hsl(45 80% 12%);
+  /* Info (blue) */
+  --color-info-50: hsl(205 75% 96%);
+  --color-info-100: hsl(205 75% 90%);
+  --color-info-200: hsl(205 70% 80%);
+  --color-info-300: hsl(205 70% 68%);
+  --color-info-400: hsl(205 70% 55%);
+  --color-info-500: hsl(205 70% 45%);
+  --color-info-600: hsl(205 70% 38%);
+  --color-info-700: hsl(205 70% 30%);
+  --color-info-800: hsl(205 65% 24%);
+  --color-info-900: hsl(205 60% 18%);
+  --color-info-950: hsl(205 55% 12%);
+  /* Error (muted red) */
+  --color-error-50: hsl(0 55% 96%);
+  --color-error-100: hsl(0 55% 90%);
+  --color-error-200: hsl(0 55% 80%);
+  --color-error-300: hsl(0 55% 70%);
+  --color-error-400: hsl(0 55% 58%);
+  --color-error-500: hsl(0 55% 45%);
+  --color-error-600: hsl(0 55% 38%);
+  --color-error-700: hsl(0 55% 30%);
+  --color-error-800: hsl(0 55% 24%);
+  --color-error-900: hsl(0 55% 18%);
+  --color-error-950: hsl(0 55% 12%);
+  --color-selection-500: hsl(262 83% 58%);
+  /* Kappa (vibrant red) */
+  --color-kappa-50: hsl(0 80% 96%);
+  --color-kappa-100: hsl(0 80% 90%);
+  --color-kappa-200: hsl(0 80% 80%);
+  --color-kappa-300: hsl(0 80% 70%);
+  --color-kappa-400: hsl(0 80% 60%);
+  --color-kappa-500: hsl(0 80% 50%);
+  --color-kappa-500-rgb: 230 25 25;
+  --color-kappa-600: hsl(0 80% 42%);
+  --color-kappa-700: hsl(0 80% 34%);
+  --color-kappa-800: hsl(0 80% 26%);
+  --color-kappa-900: hsl(0 80% 18%);
+  --color-kappa-950: hsl(0 80% 10%);
+  /* Lightkeeper (gold/yellow) */
+  --color-lightkeeper-50: hsl(45 90% 96%);
+  --color-lightkeeper-100: hsl(45 90% 88%);
+  --color-lightkeeper-200: hsl(45 90% 76%);
+  --color-lightkeeper-300: hsl(45 90% 64%);
+  --color-lightkeeper-400: hsl(45 90% 54%);
+  --color-lightkeeper-500: hsl(45 90% 48%);
+  --color-lightkeeper-500-rgb: 233 177 12;
+  --color-lightkeeper-600: hsl(45 90% 40%);
+  --color-lightkeeper-700: hsl(45 90% 32%);
+  --color-lightkeeper-800: hsl(45 90% 24%);
+  --color-lightkeeper-900: hsl(45 90% 16%);
+  --color-lightkeeper-950: hsl(45 90% 10%);
+  /* Rarity colors for loot game */
+  --color-rarity-common-100: hsl(0 0% 90%);
+  --color-rarity-common-200: hsl(0 0% 82%);
+  --color-rarity-common-400: hsl(0 0% 62%);
+  --color-rarity-uncommon-100: hsl(208 60% 88%);
+  --color-rarity-uncommon-400: hsl(208 60% 60%);
+  --color-rarity-rare-100: hsl(270 65% 88%);
+  --color-rarity-rare-400: hsl(270 65% 60%);
+  --color-rarity-epic-100: hsl(270 65% 88%);
+  --color-rarity-epic-400: hsl(270 65% 60%);
+  --color-rarity-legendary-100: hsl(45 70% 88%);
+  --color-rarity-legendary-400: hsl(45 70% 56%);
+  --color-rarity-violet: hsl(271 12% 16%);
+  --color-rarity-grey: hsl(0 0% 17%);
+  --color-rarity-yellow: hsl(44 17% 26%);
+  --color-rarity-orange: hsl(28 36% 22%);
+  --color-rarity-orange-400: hsl(28 65% 55%);
+  --color-rarity-green: hsl(120 10% 14%);
+  --color-rarity-green-400: hsl(120 35% 50%);
+  --color-rarity-red: hsl(0 25% 18%);
+  --color-rarity-red-400: hsl(0 55% 50%);
+  --color-rarity-black: hsl(0 0% 7%);
+  --color-rarity-black-400: hsl(0 0% 35%);
+  --color-rarity-blue: hsl(195 20% 13%);
+  --color-rarity-default: hsl(0 0% 13%);
+  /* Extract marker colors */
+  --color-extract-pmc: hsl(0 75% 55%);
+  --color-extract-scav: var(--color-info-400);
+  --color-extract-shared-primary: var(--color-info-400);
+  --color-extract-shared-secondary: var(--color-secondary-400);
+  --color-extract-shared-coop: var(--color-secondary-600);
+  /* Twitch brand color */
+  --color-twitch: hsl(264 100% 64%);
+  --color-twitch-hover: hsl(264 100% 70%);
+  /* Discord brand color (#5865F2) */
+  --color-discord: hsl(235 86% 65%);
+  --color-discord-hover: hsl(235 86% 72%);
+  /* GitHub brand color */
+  --color-github: hsl(210 12% 20%);
+  --color-github-hover: hsl(210 12% 30%);
+  /* Legacy Tailwind aliases mapped to semantic palettes */
+  --color-gray-50: var(--color-surface-50);
+  --color-gray-100: var(--color-surface-100);
+  --color-gray-200: var(--color-surface-200);
+  --color-gray-300: var(--color-surface-300);
+  --color-gray-400: var(--color-surface-400);
+  --color-gray-500: var(--color-surface-500);
+  --color-gray-600: var(--color-surface-600);
+  --color-gray-700: var(--color-surface-700);
+  --color-gray-800: var(--color-surface-800);
+  --color-gray-900: var(--color-surface-900);
+  --color-gray-950: var(--color-surface-950);
+  --color-red-50: var(--color-error-50);
+  --color-red-100: var(--color-error-100);
+  --color-red-200: var(--color-error-200);
+  --color-red-300: var(--color-error-300);
+  --color-red-400: var(--color-error-400);
+  --color-red-500: var(--color-error-500);
+  --color-red-600: var(--color-error-600);
+  --color-red-700: var(--color-error-700);
+  --color-red-800: var(--color-error-800);
+  --color-red-900: var(--color-error-900);
+  --color-red-950: var(--color-error-950);
+  --color-green-50: var(--color-success-50);
+  --color-green-100: var(--color-success-100);
+  --color-green-200: var(--color-success-200);
+  --color-green-300: var(--color-success-300);
+  --color-green-400: var(--color-success-400);
+  --color-green-500: var(--color-success-500);
+  --color-green-600: var(--color-success-600);
+  --color-green-700: var(--color-success-700);
+  --color-green-800: var(--color-success-800);
+  --color-green-900: var(--color-success-900);
+  --color-green-950: var(--color-success-950);
+  --color-blue-50: var(--color-secondary-50);
+  --color-blue-100: var(--color-secondary-100);
+  --color-blue-200: var(--color-secondary-200);
+  --color-blue-300: var(--color-secondary-300);
+  --color-blue-400: var(--color-secondary-400);
+  --color-blue-500: var(--color-secondary-500);
+  --color-blue-600: var(--color-secondary-600);
+  --color-blue-700: var(--color-secondary-700);
+  --color-blue-800: var(--color-secondary-800);
+  --color-blue-900: var(--color-secondary-900);
+  --color-blue-950: var(--color-secondary-950);
+  --color-yellow-50: var(--color-warning-50);
+  --color-yellow-100: var(--color-warning-100);
+  --color-yellow-200: var(--color-warning-200);
+  --color-yellow-300: var(--color-warning-300);
+  --color-yellow-400: var(--color-warning-400);
+  --color-yellow-500: var(--color-warning-500);
+  --color-yellow-600: var(--color-warning-600);
+  --color-yellow-700: var(--color-warning-700);
+  --color-yellow-800: var(--color-warning-800);
+  --color-yellow-900: var(--color-warning-900);
+  --color-yellow-950: var(--color-warning-950);
+  --color-orange-50: var(--color-warning-50);
+  --color-orange-100: var(--color-warning-100);
+  --color-orange-200: var(--color-warning-200);
+  --color-orange-300: var(--color-warning-300);
+  --color-orange-400: var(--color-warning-400);
+  --color-orange-500: var(--color-warning-500);
+  --color-orange-600: var(--color-warning-600);
+  --color-orange-700: var(--color-warning-700);
+  --color-orange-800: var(--color-warning-800);
+  --color-orange-900: var(--color-warning-900);
+  --color-orange-950: var(--color-warning-950);
+  --color-cyan-50: var(--color-secondary-50);
+  --color-cyan-100: var(--color-secondary-100);
+  --color-cyan-200: var(--color-secondary-200);
+  --color-cyan-300: var(--color-secondary-300);
+  --color-cyan-400: var(--color-secondary-400);
+  --color-cyan-500: var(--color-secondary-500);
+  --color-cyan-600: var(--color-secondary-600);
+  --color-cyan-700: var(--color-secondary-700);
+  --color-cyan-800: var(--color-secondary-800);
+  --color-cyan-900: var(--color-secondary-900);
+  --color-cyan-950: var(--color-secondary-950);
+  /* Custom semantic colors for Tarkov Tracker */
+  --color-complete: var(--color-success-700);
+  --color-failed: var(--color-error-300);
+  --color-tasklink: var(--color-info-500);
+  --color-link: hsl(208 93% 52%);
+  --color-link-hover: hsl(208 93% 65%);
+  --color-enough: var(--color-info-900);
+  --color-questlink: var(--color-surface-50);
+  --color-objectiveahead: var(--color-success-900);
+  --color-objectivecomplete: var(--color-success-800);
+  --color-objectiveuncomplete: var(--color-error-900);
+  --color-objectiveenough: var(--color-info-800);
+  --color-chartbase: var(--color-surface-50);
+  --color-sitebackground: var(--color-surface-950);
+  --color-contentbackground: var(--color-surface-900);
+  --color-border: var(--color-surface-600);
+  --color-checker-dark: hsl(240 27% 14%);
+  --color-checker-bg: hsl(240 27% 10%);
+  /* Surface ladder: bg(950) → panel(900) → card(800) → hover(700) → border(600) */
+  --color-bg: var(--color-surface-950);
+  --color-panel: var(--color-surface-900);
+  --color-raised: var(--color-surface-800);
+  --color-hover: var(--color-surface-700);
+  --color-divider: var(--color-surface-600);
+  /* Text hierarchy: primary (90%) → secondary (74%) → tertiary (64%) → disabled (44%) */
+  --color-text: hsl(0 0% 90%);
+  --color-text-secondary: hsl(216 8% 74%);
+  --color-text-muted: hsl(216 7% 64%);
+  --color-text-disabled: hsl(215 6% 44%);
+}
+/* Modern override: use OKLCH where supported for better perceptual consistency */
+@supports (color: oklch(0 0 0)) {
+  :root {
+    --color-primary-50: oklch(0.958531 0.009845 87.47);
+    --color-primary-100: oklch(0.920558 0.016115 82.79);
+    --color-primary-200: oklch(0.838958 0.032256 84.59);
+    --color-primary-300: oklch(0.756775 0.049173 83.87);
+    --color-primary-400: oklch(0.672055 0.066713 84.66);
+    --color-primary-500: oklch(0.634237 0.052556 83.12);
+    --color-primary-600: oklch(0.588274 0.048467 80.24);
+    --color-primary-700: oklch(0.492406 0.040305 80.92);
+    --color-primary-800: oklch(0.395258 0.025655 78.78);
+    --color-primary-900: oklch(0.291603 0.010623 73.5);
+    --color-primary-950: oklch(0.209826 0.008289 84.59);
+    --color-secondary-50: oklch(0.96 0.02 195);
+    --color-secondary-100: oklch(0.91 0.04 195);
+    --color-secondary-200: oklch(0.82 0.06 195);
+    --color-secondary-300: oklch(0.72 0.08 195);
+    --color-secondary-400: oklch(0.6 0.09 195);
+    --color-secondary-500: oklch(0.52 0.08 195);
+    --color-secondary-600: oklch(0.46 0.07 195);
+    --color-secondary-700: oklch(0.4 0.06 195);
+    --color-secondary-800: oklch(0.34 0.05 195);
+    --color-secondary-900: oklch(0.28 0.04 195);
+    --color-secondary-950: oklch(0.22 0.03 195);
+    --color-brand-50: var(--color-primary-50);
+    --color-brand-100: var(--color-primary-100);
+    --color-brand-200: var(--color-primary-200);
+    --color-brand-300: var(--color-primary-300);
+    --color-brand-400: var(--color-primary-400);
+    --color-brand-500: var(--color-primary-500);
+    --color-brand-600: var(--color-primary-600);
+    --color-brand-700: var(--color-primary-700);
+    --color-brand-800: var(--color-primary-800);
+    --color-brand-900: var(--color-primary-900);
+    --color-brand-950: var(--color-primary-950);
+    /* Accent: fall back to HSL values when OKLCH is unsupported; no override needed */
+    /* Surface ladder (OKLCH) - proper elevation steps */
+    --color-surface-50: oklch(0.985 0 0);
+    --color-surface-100: oklch(0.97 0 0);
+    --color-surface-200: oklch(0.92 0 0);
+    --color-surface-300: oklch(0.87 0 0);
+    --color-surface-400: oklch(0.71 0 0);
+    --color-surface-500: oklch(0.55 0 0);
+    --color-surface-600: oklch(0.44 0 0); /* Borders */
+    --color-surface-700: oklch(0.37 0 0); /* State fallback */
+    --color-surface-800: oklch(0.27 0 0); /* Raised/interactive */
+    --color-surface-850: oklch(0.23 0 0); /* Content surfaces */
+    --color-surface-900: oklch(0.2 0 0); /* Shell chrome */
+    --color-surface-950: oklch(0.14 0 0); /* Page canvas */
+    --color-pvp-50: oklch(0.994254 0.002849 84.56);
+    --color-pvp-100: oklch(0.97706 0.007366 80.72);
+    --color-pvp-200: oklch(0.951577 0.016465 79.35);
+    --color-pvp-300: oklch(0.915587 0.023529 82.12);
+    --color-pvp-400: oklch(0.872401 0.027713 93.13);
+    --color-pvp-500: oklch(0.807177 0.030874 85.57);
+    --color-pvp-600: oklch(0.713128 0.038492 78);
+    --color-pvp-700: oklch(0.60116 0.034516 74.97);
+    --color-pvp-800: oklch(0.486765 0.027433 69.19);
+    --color-pvp-900: oklch(0.381338 0.020591 70.09);
+    --color-pvp-950: oklch(0.279315 0.017462 82.23);
+    --color-pve-50: oklch(0.973985 0.009403 222.06);
+    --color-pve-100: oklch(0.948028 0.018804 222.16);
+    --color-pve-200: oklch(0.896376 0.0375 222.45);
+    --color-pve-300: oklch(0.826229 0.059051 224.48);
+    --color-pve-400: oklch(0.71572 0.068204 223.86);
+    --color-pve-500: oklch(0.649348 0.073321 223.58);
+    --color-pve-600: oklch(0.567896 0.06509 225.53);
+    --color-pve-700: oklch(0.487519 0.054261 227.86);
+    --color-pve-800: oklch(0.405769 0.043568 228.42);
+    --color-pve-900: oklch(0.324052 0.03313 231.99);
+    --color-pve-950: oklch(0.247436 0.022404 232.37);
+    --color-success-50: oklch(0.97 0.04 165);
+    --color-success-100: oklch(0.92 0.07 165);
+    --color-success-200: oklch(0.84 0.1 165);
+    --color-success-300: oklch(0.74 0.13 165);
+    --color-success-400: oklch(0.66 0.15 165);
+    --color-success-500: oklch(0.58 0.14 165);
+    --color-success-600: oklch(0.52 0.13 165);
+    --color-success-700: oklch(0.44 0.11 165);
+    --color-success-800: oklch(0.38 0.09 165);
+    --color-success-900: oklch(0.3 0.07 165);
+    --color-success-950: oklch(0.22 0.05 165);
+    --color-completed-400: oklch(0.52 0.04 130);
+    --color-completed-600: oklch(0.38 0.03 130);
+    --color-completed-800: oklch(0.28 0.02 130);
+    --color-completed-900: oklch(0.22 0.015 130);
+    --color-completed-950: oklch(0.18 0.01 130);
+    --color-warning-50: oklch(0.98 0.04 90);
+    --color-warning-100: oklch(0.94 0.06 90);
+    --color-warning-200: oklch(0.88 0.1 90);
+    --color-warning-300: oklch(0.82 0.13 90);
+    --color-warning-400: oklch(0.76 0.15 90);
+    --color-warning-500: oklch(0.68 0.15 90);
+    --color-warning-600: oklch(0.6 0.13 90);
+    --color-warning-700: oklch(0.5 0.11 90);
+    --color-warning-800: oklch(0.43 0.09 90);
+    --color-warning-900: oklch(0.36 0.07 90);
+    --color-warning-950: oklch(0.28 0.05 90);
+    --color-info-50: oklch(0.97 0.03 240);
+    --color-info-100: oklch(0.92 0.05 240);
+    --color-info-200: oklch(0.84 0.08 240);
+    --color-info-300: oklch(0.74 0.11 240);
+    --color-info-400: oklch(0.64 0.13 240);
+    --color-info-500: oklch(0.56 0.12 240);
+    --color-info-600: oklch(0.5 0.1 240);
+    --color-info-700: oklch(0.42 0.08 240);
+    --color-info-800: oklch(0.36 0.07 240);
+    --color-info-900: oklch(0.3 0.05 240);
+    --color-info-950: oklch(0.24 0.04 240);
+    --color-error-50: oklch(0.964457 0.039644 24.35);
+    --color-error-100: oklch(0.906354 0.054454 20.44);
+    --color-error-200: oklch(0.810351 0.082005 17.29);
+    --color-error-300: oklch(0.717087 0.112933 16.04);
+    --color-error-400: oklch(0.613876 0.1522 15.95);
+    --color-error-500: oklch(0.514643 0.161326 16.46);
+    --color-error-600: oklch(0.456178 0.141018 16.42);
+    --color-error-700: oklch(0.38705 0.116818 16.35);
+    --color-error-800: oklch(0.333236 0.097764 16.27);
+    --color-error-900: oklch(0.27734 0.077642 16.16);
+    --color-error-950: oklch(0.218875 0.055957 15.99);
+    --color-checker-dark: oklch(0.228228 0.03707 283.07);
+    --color-checker-bg: oklch(0.192364 0.027672 283.49);
+    --color-kappa-50: oklch(0.97 0.08 25);
+    --color-kappa-100: oklch(0.92 0.12 25);
+    --color-kappa-200: oklch(0.84 0.16 25);
+    --color-kappa-300: oklch(0.76 0.18 25);
+    --color-kappa-400: oklch(0.68 0.2 25);
+    --color-kappa-500: oklch(0.6 0.22 25);
+    --color-kappa-600: oklch(0.52 0.2 25);
+    --color-kappa-700: oklch(0.44 0.17 25);
+    --color-kappa-800: oklch(0.36 0.14 25);
+    --color-kappa-900: oklch(0.28 0.11 25);
+    --color-kappa-950: oklch(0.2 0.08 25);
+    --color-lightkeeper-50: oklch(0.98 0.06 90);
+    --color-lightkeeper-100: oklch(0.93 0.12 90);
+    --color-lightkeeper-200: oklch(0.86 0.16 90);
+    --color-lightkeeper-300: oklch(0.78 0.18 90);
+    --color-lightkeeper-400: oklch(0.72 0.19 90);
+    --color-lightkeeper-500: oklch(0.68 0.18 90);
+    --color-lightkeeper-600: oklch(0.6 0.16 90);
+    --color-lightkeeper-700: oklch(0.52 0.14 90);
+    --color-lightkeeper-800: oklch(0.44 0.12 90);
+    --color-lightkeeper-900: oklch(0.36 0.1 90);
+    --color-lightkeeper-950: oklch(0.28 0.08 90);
+  }
+}
+/* Nuxt UI core tokens mapped to Tarkov Tracker theme */
+:root {
+  --ui-bg: var(--color-surface-950);
+  --ui-bg-muted: var(--color-surface-900);
+  --ui-bg-elevated: var(--color-surface-800);
+  --ui-bg-accented: var(--color-surface-700);
+  --ui-bg-inverted: var(--color-surface-50);
+  /* Text hierarchy: avoid pure white, use warm off-whites */
+  --ui-text: var(--color-text);
+  --ui-text-muted: var(--color-text-secondary);
+  --ui-text-highlighted: var(--color-primary-400);
+  --ui-text-dimmed: var(--color-text-muted);
+  --ui-text-inverted: var(--color-surface-950);
+  /* Borders: clear separation */
+  --ui-border: var(--color-surface-600);
+  --ui-border-accented: var(--color-surface-500);
+  --ui-color-neutral-700: var(--color-surface-600);
+  /* Primary accent */
+  --ui-primary: var(--color-primary-500);
+}
+/* Utility: default ring color aligned to surface (neutral) */
+.ring-default {
+  --tw-ring-color: var(--color-surface-700);
+}
+/* Utility: force accented ring to brand as well */
+.ring-accented {
+  --tw-ring-color: var(--ui-border-accented);
+}
+@layer utilities {
+  /* Kappa color utilities */
+  .bg-kappa {
+    background-color: var(--color-kappa-500);
+  }
+  @supports (color: rgb(from red r g b)) {
+    .bg-kappa\/10 {
+      background-color: rgb(from var(--color-kappa-500) r g b / 0.1);
+    }
+    .bg-kappa\/15 {
+      background-color: rgb(from var(--color-kappa-500) r g b / 0.15);
+    }
+  }
+  @supports not (color: rgb(from red r g b)) {
+    .bg-kappa\/10 {
+      background-color: rgba(var(--color-kappa-500-rgb), 0.1);
+    }
+    .bg-kappa\/15 {
+      background-color: rgba(var(--color-kappa-500-rgb), 0.15);
+    }
+  }
+  .text-kappa {
+    color: var(--color-kappa-400);
+  }
+  /* Lightkeeper color utilities */
+  .bg-lightkeeper {
+    background-color: var(--color-lightkeeper-500);
+  }
+  @supports (color: rgb(from red r g b)) {
+    .bg-lightkeeper\/10 {
+      background-color: rgb(from var(--color-lightkeeper-500) r g b / 0.1);
+    }
+    .bg-lightkeeper\/15 {
+      background-color: rgb(from var(--color-lightkeeper-500) r g b / 0.15);
+    }
+  }
+  @supports not (color: rgb(from red r g b)) {
+    .bg-lightkeeper\/10 {
+      background-color: rgba(var(--color-lightkeeper-500-rgb), 0.1);
+    }
+    .bg-lightkeeper\/15 {
+      background-color: rgba(var(--color-lightkeeper-500-rgb), 0.15);
+    }
+  }
+  .text-lightkeeper {
+    color: var(--color-lightkeeper-400);
+  }
+  .bg-twitch-hover {
+    background-color: var(--color-twitch-hover);
+  }
+  .bg-discord-hover {
+    background-color: var(--color-discord-hover);
+  }
+  .bg-github-hover {
+    background-color: var(--color-github-hover);
+  }
+  .shadow-twitch {
+    box-shadow:
+      0 10px 15px -3px rgb(from var(--color-twitch) r g b / 0.25),
+      0 4px 6px -4px rgb(from var(--color-twitch) r g b / 0.25);
+  }
+  .shadow-discord {
+    box-shadow:
+      0 10px 15px -3px rgb(from var(--color-discord) r g b / 0.25),
+      0 4px 6px -4px rgb(from var(--color-discord) r g b / 0.25);
+  }
+  .shadow-github {
+    box-shadow:
+      0 10px 15px -3px rgb(from var(--color-github) r g b / 0.25),
+      0 4px 6px -4px rgb(from var(--color-github) r g b / 0.25);
+  }
+  /* Background: solid dark base */
+  .bg-military-background {
+    background-color: var(--color-surface-950);
+  }
+  /* Panel: shell-level containers */
+  .panel {
+    background-color: var(--color-surface-900);
+    border: 1px solid var(--color-surface-700);
+    border-radius: var(--radius-lg);
+  }
+  /* Card: content surfaces (background handled by component) */
+  .card {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  /* Card hover: use state overlay instead of solid color */
+  .card-interactive {
+    transition:
+      background-color 150ms ease-in-out,
+      transform 150ms ease-in-out;
+  }
+  .card-interactive:hover {
+    background-color: color-mix(in srgb, var(--color-surface-850), var(--state-hover));
+    transform: translateY(-1px);
+  }
+  .card-interactive:focus-visible {
+    outline: 2px solid var(--color-surface-600);
+    outline-offset: 2px;
+  }
+  .content-visibility-auto-128 {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 128px;
+  }
+  .content-visibility-auto-220 {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 220px;
+  }
+  .content-visibility-auto-240 {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 240px;
+  }
+  .content-visibility-auto-280 {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 280px;
+  }
+  .content-visibility-auto-420 {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 420px;
+  }
+  .shadow-nav-drawer {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+      1px 0 0 rgba(0, 0, 0, 0.55);
+  }
+  /* Shadow scale for elevation */
+  .shadow-card {
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  .shadow-elevated {
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.35),
+      0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  /* Sidebar: shell chrome (same as appbar) */
+  .bg-sidebar {
+    background-color: var(--color-surface-900);
+  }
+  /* Legacy alias */
+  .bg-military-panel {
+    background-color: var(--color-surface-900);
+  }
+}
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-surface-600) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--color-surface-600);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-surface-500);
+  }
+  .no-spinner::-webkit-inner-spin-button,
+  .no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .no-spinner {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+}
+/* Text colors now use warm surface tokens (see @theme --color-surface-*) */
+/* Restore pointer cursor on interactive elements (reset by Tailwind preflight) */
+button:not(:disabled),
+[role='button']:not([disabled]):not([aria-disabled='true']),
+[type='button']:not(:disabled),
+[type='submit']:not(:disabled),
+[type='reset']:not(:disabled),
+select:not(:disabled),
+summary {
+  cursor: pointer;
+}
+@layer base {
+  :where(
+    a[href],
+    button,
+    [role='button'],
+    input:not([type='hidden']),
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex='-1'])
+  ):focus-visible {
+    outline: 2px solid var(--color-primary-400);
+    outline-offset: 2px;
+  }
+}
+@layer utilities {
+  .fade-enter-active,
+  .fade-leave-active {
+    @apply transition-opacity duration-200 ease-in-out;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0ms;
+  }
+  .page-help-highlight,
+  .objective-highlight {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.page-help-highlight {
+  animation: page-help-highlight-pulse 1.6s ease-in-out infinite;
+}
+@keyframes page-help-highlight-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(0, 0, 0, 0.5),
+      0 0 0 0 rgba(196, 145, 89, 0.18);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(0, 0, 0, 0.18),
+      0 0 0 1px rgba(196, 145, 89, 0.38);
+    transform: scale(1.01);
+  }
+}
+.objective-highlight {
+  --highlight-color: var(--color-selection-500);
+  animation: objective-highlight-solid 3s ease-in-out;
+  border-radius: 0.375rem;
+}
+@keyframes objective-highlight-solid {
+  0% {
+    outline: 2px solid transparent;
+    outline-offset: 0;
+  }
+  5% {
+    outline: 2px solid var(--highlight-color);
+    outline-offset: 0;
+  }
+  85% {
+    outline: 2px solid var(--highlight-color);
+    outline-offset: 0;
+  }
+  100% {
+    outline: 2px solid transparent;
+    outline-offset: 0;
+  }
+}
+.map-objective-popup .leaflet-popup-content-wrapper {
+  background-color: var(--color-surface-800) !important;
+  color: var(--color-gray-200) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.map-objective-popup .leaflet-popup-content {
+  margin: 10px 12px;
+}
+.map-objective-popup .leaflet-popup-tip {
+  background-color: var(--color-surface-800) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.leaflet-container {
+  background-color: var(--color-surface-900) !important;
+  font-family: inherit;
+}
+.map-background-pane {
+  background-color: var(--color-surface-900);
+  filter: brightness(0.75) saturate(0.9);
+}
+.leaflet-popup-content-wrapper {
+  background-color: var(--color-surface-900) !important;
+  color: var(--color-gray-200) !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.leaflet-popup-tip {
+  background-color: var(--color-surface-900) !important;
+}
+.leaflet-popup-content {
+  margin: 0.75rem;
+}
+.map-zone-tooltip {
+  background-color: var(--color-surface-900) !important;
+  color: var(--color-gray-200) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  padding: 6px 8px;
+}
+.extract-marker {
+  background: transparent;
+  border: none;
+}
+.extract-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-color: var(--color-surface-900);
+  color: var(--color-surface-200);
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.5);
+  transform: translate(-50%, calc(-100% - 6px));
+}
+.extract-badge-label {
+  font-weight: 600;
+}
+.leaflet-tooltip.spawn-cluster-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: var(--color-surface-50) !important;
+  font-size: 10px;
+  font-weight: 700;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 4px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+/* Map tiles remain dark in both themes; spawn counts must retain a light foreground. */
+:root[data-theme='light'] .leaflet-tooltip.spawn-cluster-label {
+  color: var(--color-white) !important;
+}
+.leaflet-tooltip.spawn-cluster-label::before {
+  display: none !important;
+}
+/* Vue Flow dark theme overrides */
+.vue-flow {
+  --vf-accent-color: var(--color-primary-500);
+  --vf-surface-850: var(--color-surface-850);
+  --vf-surface-900: var(--color-surface-900);
+  --vf-surface-925: color-mix(in srgb, var(--color-surface-900) 80%, var(--color-surface-950));
+  --vf-surface-600: var(--color-surface-600);
+  --vf-surface-grid: color-mix(in srgb, var(--color-surface-700) 50%, var(--color-surface-800));
+  --vf-surface-850-alpha-06: color-mix(in srgb, var(--color-surface-850) 6%, transparent);
+  --vf-surface-850-alpha-08: color-mix(in srgb, var(--color-surface-850) 8%, transparent);
+  --vf-surface-850-alpha-10: color-mix(in srgb, var(--color-surface-850) 10%, transparent);
+  --vf-surface-850-alpha-12: color-mix(in srgb, var(--color-surface-850) 12%, transparent);
+  --vf-text-75: hsl(0 0% 75%);
+  --vf-text-80: hsl(0 0% 80%);
+  --vf-text-95: hsl(0 0% 95%);
+  --vf-node-bg: transparent;
+  --vf-node-text: hsl(0 0% 90%);
+  --vf-connection-path: hsl(0 0% 45%);
+  --vf-handle: var(--vf-accent-color);
+}
+.vue-flow__edge-textbg {
+  fill: var(--vf-surface-850) !important;
+}
+.vue-flow__edge-text {
+  fill: var(--vf-text-80) !important;
+}
+.vue-flow__edge-path,
+.vue-flow__connection-path {
+  stroke: var(--vf-surface-600) !important;
+  stroke-width: 1.5;
+}
+.vue-flow__edge.selected .vue-flow__edge-path,
+.vue-flow__edge:focus .vue-flow__edge-path,
+.vue-flow__edge:focus-visible .vue-flow__edge-path,
+.vue-flow__edge:hover .vue-flow__edge-path {
+  stroke: var(--vf-accent-color) !important;
+}
+.vue-flow__controls {
+  background: var(--vf-surface-900) !important;
+  border: 1px solid var(--vf-surface-850-alpha-12) !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px hsl(0 0% 0% / 0.4) !important;
+  overflow: hidden;
+}
+.vue-flow__controls-button {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--vf-surface-850-alpha-08) !important;
+  fill: var(--vf-text-75) !important;
+}
+.vue-flow__controls-button:hover {
+  background: var(--vf-surface-850-alpha-10) !important;
+  fill: var(--vf-text-95) !important;
+}
+.vue-flow__controls-button svg {
+  fill: inherit;
+}
+.vue-flow__minimap {
+  background-color: var(--vf-surface-925) !important;
+  border: 1px solid var(--vf-surface-850-alpha-12) !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px hsl(0 0% 0% / 0.4) !important;
+  overflow: hidden;
+}
+.vue-flow__minimap svg {
+  background: transparent !important;
+}
+.vue-flow__minimap-mask {
+  vector-effect: non-scaling-stroke;
+}
+.vue-flow__minimap-node {
+  vector-effect: non-scaling-stroke;
+}
+.vue-flow__minimap.task-graph-minimap {
+  background-color: var(--vf-surface-900) !important;
+  border-color: hsl(0 0% 100% / 0.15) !important;
+}
+.vue-flow__minimap.task-graph-minimap .vue-flow__minimap-mask {
+  fill: hsl(0 0% 1% / 0.74) !important;
+  filter: drop-shadow(0 0 6px hsl(40 95% 61% / 0.3));
+  stroke: var(--vf-accent-color) !important;
+  stroke-dasharray: 6 3;
+  stroke-width: 2.5 !important;
+}
+.vue-flow__minimap.task-graph-minimap .vue-flow__minimap-node {
+  stroke-width: 0.75 !important;
+}
+.vue-flow__handle {
+  background: hsl(0 0% 30%) !important;
+  border: 1px solid hsl(0 0% 50%) !important;
+  width: 6px !important;
+  height: 6px !important;
+}
+.vue-flow__background {
+  background-color: transparent !important;
+}
+.vue-flow__background pattern circle,
+.vue-flow__background pattern line {
+  stroke: var(--vf-surface-grid) !important;
+  fill: var(--vf-surface-grid) !important;
+}
+/*
+ * Light theme ("warm paper")
+ *
+ * Dark remains the default and is unchanged. The light theme flips only the
+ * neutral surface ladder and its companion text/state/border tokens through
+ * [data-theme='light'] on <html>; gameplay accent palettes (primary, pvp, pve,
+ * success, ...) are intentionally theme-agnostic. The ladder is role-mapped
+ * rather than strictly reversed: the page canvas is a soft parchment (never
+ * pure white), cards/panels sit slightly lighter for elevation, and the
+ * 50-500 range becomes the dark-ink text ramp.
+ */
+:root[data-theme='light'] {
+  color-scheme: light;
+  /* Surface ladder: canvas(950) → shell(900) → content(850) → raised(800) → state(700) */
+  --color-surface-50: hsl(32 16% 12%); /* Primary ink (was brightest text) */
+  --color-surface-100: hsl(31 14% 16%);
+  --color-surface-200: hsl(30 12% 22%);
+  --color-surface-300: hsl(30 10% 30%);
+  --color-surface-400: hsl(30 8% 34%); /* Muted text: >= 4.5:1 on every light surface */
+  --color-surface-500: hsl(30 7% 38%); /* Dimmed text / placeholders: readable on shell chrome */
+  --color-surface-600: hsl(36 12% 74%); /* Borders/dividers */
+  --color-surface-700: hsl(38 16% 82%); /* State fallback */
+  --color-surface-800: hsl(40 33% 98%); /* Raised/interactive */
+  --color-surface-850: hsl(40 30% 96%); /* Content surfaces */
+  --color-surface-900: hsl(38 18% 87%); /* Shell chrome */
+  --color-surface-950: hsl(40 24% 92%); /* Page canvas (soft parchment, not white) */
+  /* Text hierarchy mirrors the inverted ladder */
+  --color-text: var(--color-surface-50);
+  --color-text-secondary: var(--color-surface-200);
+  --color-text-muted: var(--color-surface-400);
+  --color-text-disabled: hsl(30 8% 56%);
+  /* State overlays + borders become warm dark alphas */
+  --state-hover: rgba(49, 37, 24, 0.05);
+  --state-pressed: rgba(49, 37, 24, 0.09);
+  --state-selected: rgba(146, 103, 54, 0.16);
+  --border-subtle: rgba(49, 37, 24, 0.08);
+  --border-default: rgba(49, 37, 24, 0.14);
+  --border-strong: rgba(49, 37, 24, 0.22);
+  /* Links and status colors tuned for light backgrounds */
+  --color-link: hsl(208 80% 36%);
+  --color-link-hover: hsl(208 85% 30%);
+  --color-tasklink: var(--color-info-700);
+  --color-failed: var(--color-error-600);
+  /* Transparent-image checkerboard */
+  --color-checker-dark: hsl(36 10% 76%);
+  --color-checker-bg: hsl(40 16% 86%);
+  /* Nuxt UI aliases that are hardcoded to white in the upstream dark block */
+  --ui-text-highlighted: var(--color-primary-800);
+  --ui-bg-inverted: var(--color-surface-50);
+  --ui-border-inverted: var(--color-surface-50);
+  /*
+   * Accent foreground range.
+   *
+   * Steps 200-400 and the bare Nuxt UI accent aliases are authored as
+   * foregrounds for dark surfaces; on the paper canvas they land between
+   * 1.0:1 and 3.6:1, so accent labels, chips and links fail WCAG AA. Light
+   * mode resolves that range to the deep end of the same hue: the accent stays
+   * recognizable (same family, same identity) while clearing 4.5:1 against
+   * every surface in the light ladder, including the tinted `/10` and `/25`
+   * chip backgrounds that composite over it.
+   *
+   * Deliberately unchanged: steps 500-950, which carry accent *backgrounds*,
+   * rings, borders and gradient stops, and steps 50-100, which light mode uses
+   * as pale tints. Keeping those fixed is what preserves the gameplay palette.
+   * pvp/pve sit near the neutral end of their ladders, so they need one extra
+   * step of depth to clear the same threshold.
+   */
+  --color-primary-200: var(--color-primary-950);
+  --color-primary-300: var(--color-primary-900);
+  --color-primary-400: var(--color-primary-800);
+  --color-accent-200: var(--color-accent-950);
+  --color-accent-300: var(--color-accent-900);
+  --color-accent-400: var(--color-accent-800);
+  --color-secondary-200: var(--color-secondary-950);
+  --color-secondary-300: var(--color-secondary-900);
+  --color-secondary-400: var(--color-secondary-800);
+  --color-success-200: var(--color-success-950);
+  --color-success-300: var(--color-success-900);
+  --color-success-400: var(--color-success-800);
+  --color-warning-200: var(--color-warning-950);
+  --color-warning-300: var(--color-warning-900);
+  --color-warning-400: var(--color-warning-800);
+  --color-error-200: var(--color-error-950);
+  --color-error-300: var(--color-error-900);
+  --color-error-400: var(--color-error-800);
+  --color-info-200: var(--color-info-950);
+  --color-info-300: var(--color-info-900);
+  --color-info-400: var(--color-info-800);
+  --color-kappa-200: var(--color-kappa-950);
+  --color-kappa-300: var(--color-kappa-900);
+  --color-kappa-400: var(--color-kappa-800);
+  --color-lightkeeper-200: var(--color-lightkeeper-950);
+  --color-lightkeeper-300: var(--color-lightkeeper-900);
+  --color-lightkeeper-400: var(--color-lightkeeper-800);
+  --color-pvp-200: var(--color-pvp-950);
+  --color-pvp-300: var(--color-pvp-900);
+  --color-pvp-400: var(--color-pvp-900);
+  --color-pve-200: var(--color-pve-950);
+  --color-pve-300: var(--color-pve-900);
+  --color-pve-400: var(--color-pve-900);
+  /* Bare Nuxt UI accent aliases back `text-primary`, `bg-primary/10`, `ring-primary`, ... */
+  --ui-primary: var(--color-primary-800);
+  --ui-accent: var(--color-accent-800);
+  --ui-secondary: var(--color-secondary-800);
+  --ui-success: var(--color-success-800);
+  --ui-warning: var(--color-warning-800);
+  --ui-error: var(--color-error-800);
+  --ui-info: var(--color-info-800);
+  --ui-kappa: var(--color-kappa-800);
+  --ui-lightkeeper: var(--color-lightkeeper-800);
+  --ui-pvp: var(--color-pvp-900);
+  --ui-pve: var(--color-pve-900);
+}
+/* Nuxt UI applies dark color-scheme to body via its pinned .dark class; restore light */
+:root[data-theme='light'] body {
+  color-scheme: light;
+}
+/* Vue Flow scopes its tokens on .vue-flow, so light overrides must match that scope */
+:root[data-theme='light'] .vue-flow {
+  --vf-text-75: var(--color-surface-400);
+  --vf-text-80: var(--color-surface-300);
+  --vf-text-95: var(--color-surface-50);
+  --vf-node-text: var(--color-surface-100);
+  --vf-connection-path: var(--color-surface-500);
+  --vf-handle: var(--color-surface-500);
+}

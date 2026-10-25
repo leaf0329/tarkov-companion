@@ -1,0 +1,86 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: github.event_name == 'push'
+    environment: production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: deployment check
+        uses: github/branch-deploy@f0984057ffe1aa340aa017b6eafb894310aed88e # pin@v12.0.0
+        id: deployment-check
+        with:
+          merge_deploy_mode: "true" # tells the Action to use the merge commit workflow strategy
+          environment: production
+
+      - name: checkout
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # pin@v6
+        with:
+          ref: ${{ steps.deployment-check.outputs.sha }}
+
+      # check to ensure all JSON files are valid in the repository
+      - name: json-yaml-validate
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        uses: GrantBirki/json-yaml-validate@3ff75979f3b21171f2e8a44705f0ff4bed30bbc0 # pin@v5.0.0
+        with:
+          exclude_file: .github/exclude.txt
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # pin@v6.0.10
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # pin@v7.0.0
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        with:
+          node-version-file: .node-version
+          cache: 'pnpm'
+
+      - name: install dependencies
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: env setup
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        env:
+          PUBLIC_URL: ''
+        run: |
+          touch .env
+          echo PUBLIC_URL=$PUBLIC_URL >> .env
+
+      - name: build
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        run: pnpm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.HIDEOUT_BOT_TOKEN }}
+          PUBLIC_URL: ''
+
+      - name: test
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        run: pnpm run test
+
+      - name: deploy
+        if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # pin@v4.0.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          wranglerVersion: '4.101.0'
+          command: pages publish build/ --project-name=tarkov-dev --branch=main
+
+      # Always run this step on push to main
+      - name: CDN Purge
+        # if: ${{ steps.deployment-check.outputs.continue == 'true' }}
+        uses: jakejarvis/cloudflare-purge-action@eee6dba0236093358f25bb1581bd615dc8b3d8e3 # pin@v0.3.0
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+          PURGE_URLS: '["https://tarkov.dev/data/item-grids.min.json", "https://tarkov.dev/data/item-props.min.json"]'

@@ -1,0 +1,17 @@
+# Generated / build output
+.nuxt
+dist
+.output
+node_modules
+
+# Assets / caches
+public/_nuxt
+public/_fonts
+
+# Tooling
+.wrangler
+.data
+
+# Generated or verbatim docs (do not reformat)
+CHANGELOG.md
+LICENSE.md

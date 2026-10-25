@@ -1,0 +1,272 @@
+﻿@page "/sounds"
+@using System.Diagnostics
+@using NAudio.Wave
+@inject GameWatcher eft
+@inject MessageLog messageLog
+@inject IDialogService DialogService
+@inject LocalizationService LocalizationService
+@layout AppLayout
+@implements IDisposable
+
+<MudGrid Class="pa-0" Spacing="0">
+	<MudItem xs="12">
+        <MudPaper Class="app-surface pa-2 ma-2 mx-4" Elevation="3">
+            <MudText Typo="Typo.h6" Class="d-flex align-center"><MudIcon Icon="@Icons.Material.Filled.Speaker" Class="mr-2"/><span class="tm-card-heading-text">@LocalizationService.GetString("Sounds")</span></MudText>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayRaidStart" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@RaidStartSwitch" Label="@LocalizationService.GetString("CustomRaidStartingSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayMatchFound" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@MatchFoundSwitch" Label="@LocalizationService.GetString("CustomMatchFoundSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayRestartTask" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@RestartTaskSwitch" Label="@LocalizationService.GetString("CustomRestartTasksSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayRunthrough" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@RunthroughSwitch" Label="@LocalizationService.GetString("CustomRunthroughPeriodSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayAirFilterOn" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@AirFilterOnSwitch" Label="@LocalizationService.GetString("CustomAirFilterOnSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayAirFilterOff" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@AirFilterOffSwitch" Label="@LocalizationService.GetString("CustomAirFilterOffSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+            <div>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Info" @onclick="PlayScavAvailable" Class="d-inline-flex mr-2"><MudIcon Icon="@Icons.Material.Filled.Audiotrack" Size="Size.Small" /></MudButton>
+                <MudSwitch @bind-Value="@ScavCooldownSwitch" Label="@LocalizationService.GetString("CustomScavCooldownSound")" Color="Color.Info" Class="d-inline-flex" />
+            </div>
+        </MudPaper>
+        
+        <MudPaper Class="app-surface pa-2 ma-2 mx-4" Elevation="3">
+                <MudText Typo="Typo.h6" Class="d-flex align-center"><MudIcon Icon="@Icons.Material.Filled.MusicNote" Class="mr-2"/><span class="tm-card-heading-text">Media controls</span></MudText>
+            <div>
+                <MudSwitch @bind-Value="@PauseMediaOnRaidSwitch" Label="Pause media on raid start" Color="Color.Primary" />
+                <MudText Typo="Typo.caption" Class="ml-7">Automatically fade and pause music when you enter a raid, then resume it when you leave.</MudText>
+            </div>
+        </MudPaper>
+	</MudItem>
+</MudGrid>
+
+@code {
+
+    [CascadingParameter(Name="AppLayout")]
+    public AppLayout AppLayout { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            AppLayout.SetTitle(LocalizationService.GetString("Sounds"));
+        }
+    }
+
+    public void Dispose()
+    {
+    }
+
+    public void PlayRaidStart()
+    {
+        Sound.Play("raid_starting");
+    }
+
+    public void PlayMatchFound()
+    {
+        Sound.Play("match_found");
+    }
+
+    public void PlayRestartTask()
+    {
+        Sound.Play("restart_failed_tasks");
+    }
+
+    public void PlayRunthrough()
+    {
+        Sound.Play("runthrough_over");
+    }
+
+    public void PlayAirFilterOn()
+    {
+        Sound.Play("air_filter_on");
+    }
+
+    public void PlayAirFilterOff()
+    {
+        Sound.Play("air_filter_off");
+    }
+
+    public void PlayScavAvailable()
+    {
+        Sound.Play("scav_available");
+    }
+
+    public DialogOptions diagOptions = new DialogOptions { CloseOnEscapeKey = true };
+
+    private OpenFileDialog fileDialog = new OpenFileDialog()
+    {
+        Filter = "MP3 files (*.mp3)|*.mp3"
+    };
+
+    public bool PauseMediaOnRaidSwitch
+    {
+        get
+        {
+            return Properties.Settings.Default.pauseMediaOnRaid;
+        }
+        set
+        {
+            Properties.Settings.Default.pauseMediaOnRaid = value;
+            Properties.Settings.Default.Save();
+        }
+    }
+
+    public bool RaidStartSwitch { 
+        get 
+        {
+            return Sound.IsCustom("raid_starting");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for raid start";
+            }
+            ToggleCustomSound("raid_starting", value);
+        }
+    }
+
+    public bool MatchFoundSwitch { 
+        get 
+        {
+            return Sound.IsCustom("match_found");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for match found";
+            }
+            ToggleCustomSound("match_found", value);
+        }
+    }
+
+    public bool RestartTaskSwitch
+    {
+        get
+        {
+            return Sound.IsCustom("restart_failed_tasks");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for task restart";
+            }
+            ToggleCustomSound("restart_failed_tasks", value);
+        }
+    }
+
+    public bool RunthroughSwitch
+    {
+        get
+        {
+            return Sound.IsCustom("runthrough_over");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for run-through";
+            }
+            ToggleCustomSound("runthrough_over", value);
+        }
+    }
+
+    public bool AirFilterOnSwitch
+    {
+        get
+        {
+            return Sound.IsCustom("air_filter_on");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for air filter on";
+            }
+            ToggleCustomSound("air_filter_on", value);
+        }
+    }
+
+    public bool AirFilterOffSwitch
+    {
+        get
+        {
+            return Sound.IsCustom("air_filter_off");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for air filter off";
+            }
+            ToggleCustomSound("air_filter_off", value);
+        }
+    }
+
+    public bool ScavCooldownSwitch
+    {
+        get
+        {
+            return Sound.IsCustom("scav_available");
+        }
+        set
+        {
+            if (value)
+            {
+                fileDialog.Title = "Select a sound for Scav availability";
+            }
+            ToggleCustomSound("scav_available", value);
+        }
+    }
+
+    private void ToggleCustomSound(string key, bool isCustom)
+    {
+        if (isCustom)
+        {
+            var result = fileDialog.ShowDialog();
+            if (result != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+            Sound.SetCustomSound(key, fileDialog.FileName);
+        }
+        else
+        {
+            var startedUtc = DateTime.UtcNow;
+            try
+            {
+                Sound.RemoveCustomSound(key);
+            }
+            catch (Exception ex)
+            {
+                messageLog.AddException("The custom sound could not be removed.", "TM-FILES-003", "RemoveCustomSound", ex, "Filesystem", "Sounds", durationMilliseconds: DiagnosticsService.ElapsedMilliseconds(startedUtc));
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+﻿@inject GameWatcher eft
+@inject LocalizationService LocalizationService
+
+<MudDialog>
+    <DialogContent>
+        <MudText>@LocalizationService.GetString("AreYouSureYouWantToClearAllData")</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@LocalizationService.GetString("Cancel")</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">@LocalizationService.GetString("ClearData")</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; }
+
+    void Cancel() => MudDialog.Cancel();
+
+    public void Submit()
+    {
+        TarkovMonitor.Stats.ClearData();
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

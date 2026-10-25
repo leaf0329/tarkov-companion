@@ -1,0 +1,486 @@
+:root {
+    /* This is to ensure maps do not clip. Please do not remove */
+    --display-height: auto;
+}
+
+#leaflet-map {
+    background-color: transparent;
+}
+
+/* Popup styles */
+.leaflet-popup-content-wrapper {
+    background-color: rgb(45 45 47);
+}
+
+.leaflet-popup-tip {
+    background-color: rgb(45 45 47);
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-content-wrapper a {
+    color: var(--color-gold-one);
+    font-family:
+        "bender",
+        -apple-system,
+        system-ui,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        "Arial",
+        sans-serif;
+    font-style: normal;
+
+    /* font-weight: 400; */
+}
+
+.leaflet-popup-content-wrapper a {
+    color: var(--color-gold-two);
+}
+
+/* leaflet-control-coordinates */
+.leaflet-control-coordinates {
+    color: var(--color-black);
+    font-weight: bold;
+    background-color: var(--color-white);
+    background-color: rgb(from var(--color-white) r g b / 0.8);
+    cursor: pointer;
+}
+
+.leaflet-control-coordinates,
+.leaflet-control-coordinates .uiElement input {
+    border-radius: 5px;
+}
+
+.leaflet-control-coordinates .uiElement {
+    margin: 4px;
+}
+
+.leaflet-control-coordinates .uiElement .labelFirst {
+    margin-right: 4px;
+}
+
+.leaflet-control-coordinates .uiHidden {
+    display: none;
+}
+
+.leaflet-control-coordinates .uiElement.label {
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    padding: 0;
+    display: inherit;
+}
+
+/* leaflet-control-groupedlayer */
+.leaflet-control-layers-group-name {
+    font-weight: 700;
+    margin-bottom: 0.2em;
+    margin-left: 3px;
+}
+
+.leaflet-control-layers-group {
+    margin-bottom: 0.5em;
+}
+
+.leaflet-control-layers-scrollbar {
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.leaflet-control-layers-group-label {
+    margin-bottom: 2px;
+}
+
+.leaflet-control-layers-group-selector,
+.leaflet-control-layers-selector {
+    vertical-align: top;
+}
+
+.leaflet-control-layers-group label:not(.leaflet-control-layers-group-label) {
+    text-indent: 15px;
+}
+
+.leaflet-control-layers-group.group-collapsable.collapsed .leaflet-control-layers-group-collapse,
+.leaflet-control-layers-group.group-collapsable:not(.collapsed) .leaflet-control-layers-group-expand,
+.leaflet-control-layers-group.group-collapsable.collapsed label:not(.leaflet-control-layers-group-label) {
+    display: none;
+}
+
+.leaflet-control-layers-group-expand-default::before {
+    content: "+";
+    width: 12px;
+    display: inline-block;
+    text-align: center;
+}
+
+.leaflet-control-layers-group-collapse-default::before {
+    content: "-";
+    width: 12px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* leaflet-control-groupedlayer */
+.control-item-image {
+    height: 14px;
+    position: relative;
+    top: 2px;
+}
+
+/* elevation visability */
+
+.leaflet-layer.off-level > .leaflet-tile-container,
+div.leaflet-pane.leaflet-overlay-pane > img.off-level,
+div.leaflet-pane.leaflet-overlay-pane > svg.off-level g.base-layer {
+    opacity: 0.2;
+}
+
+div.leaflet-pane.leaflet-marker-pane > .off-level {
+    opacity: 0.2;
+    z-index: -9999 !important;
+}
+
+.leaflet-container.always-show-snipers div.leaflet-pane.leaflet-marker-pane > .off-level.sniper-spawn,
+.leaflet-container.always-show-extracts div.leaflet-pane.leaflet-marker-pane > .off-level.extract-icon {
+    opacity: 1;
+    z-index: initial !important;
+}
+
+div.leaflet-overlay-pane > svg.leaflet-zoom-animated > g > path.off-level {
+    stroke-opacity: 0.2;
+    fill-opacity: 0.02;
+}
+
+.leaflet-container.always-show-hazard-bounds .hazard-outline.not-shown {
+    display: block;
+}
+
+.not-shown {
+    display: none;
+}
+
+.btr-stop img {
+    vertical-align: middle;
+}
+
+.extract-name,
+.btr-stop-name {
+    font-weight: 800;
+    font-size: 18px;
+    font-family: "Arial", "Helvetica", sans-serif;
+    color: var(--color-white);
+    white-space: nowrap;
+
+    /* text-transform: uppercase; */
+    vertical-align: top;
+    text-shadow: 0 0 3px var(--color-black);
+    -webkit-text-stroke: 0.5px var(--color-black);
+}
+
+.btr-stop .btr-stop-name {
+    margin-left: 5px;
+    color: var(--color-gold-one);
+    text-shadow: 0 0 3px var(--color-black);
+    -webkit-text-stroke: 0.5px var(--color-black);
+    vertical-align: middle;
+}
+
+.leaflet-container .leaflet-marker-pane .extract-icon img {
+    max-width: 24px !important;
+    max-height: 24px !important;
+}
+
+.leaflet-container .leaflet-marker-pane .btr-stop img {
+    max-width: 16px !important;
+    max-height: 16px !important;
+}
+
+.extract-icon,
+.btr-stop {
+    display: inline;
+    white-space: nowrap;
+}
+
+.extract-name.pmc {
+    color: var(--color-green);
+}
+
+.extract-name.scav {
+    color: var(--color-orange);
+}
+
+.extract-name.shared {
+    color: var(--color-blue-light);
+}
+
+.extract-name.transit {
+    color: var(--color-red);
+}
+
+.poi-image,
+img.popup-item {
+    max-width: 24px;
+    max-height: 24px;
+    vertical-align: middle;
+    filter: drop-shadow(0.01em 0.01em white) drop-shadow(-0.01em -0.01em white) drop-shadow(-0.01em 0.01em white)
+        drop-shadow(0.01em -0.01em white);
+}
+
+.poi-link {
+    cursor: pointer;
+}
+
+/* general control styles */
+.leaflet-control {
+    background-color: rgb(from var(--color-black) r g b / 0.75);
+    color: var(--color-gold-one);
+    font-family:
+        "bender",
+        -apple-system,
+        system-ui,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        "Arial",
+        sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.leaflet-control-layers-separator {
+    border-color: var(--color-gold-two);
+}
+
+.leaflet-control input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    appearance: none;
+
+    /* For iOS < 15 to remove gradient background */
+    background-color: var(--color-gunmetal-dark);
+
+    /* Not removed via appearance */
+    font: inherit;
+    color: currentcolor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid var(--color-gold-two);
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+}
+
+.leaflet-control input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--color-gold-one);
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    display: grid;
+    place-content: center;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+.leaflet-control input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+.leaflet-control input[type="radio"] {
+    /* Add if not using autoprefixer */
+    appearance: none;
+
+    /* For iOS < 15 to remove gradient background */
+    background-color: var(--color-gunmetal-dark);
+
+    /* Not removed via appearance */
+    font: inherit;
+    color: currentcolor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid var(--color-gold-two);
+    border-radius: 0.5em;
+    transform: translateY(-0.075em);
+}
+
+.leaflet-control input[type="radio"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 0.5em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--color-gold-one);
+    display: grid;
+    place-content: center;
+    margin-left: 0.1em;
+    margin-top: 0.1em;
+}
+
+.leaflet-control input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+/* settings control */
+.leaflet-control-map-settings.leaflet-control {
+    padding: 4px 4px;
+}
+
+.leaflet-control-map-settings {
+    background-color: rgb(from var(--color-black) r g b / 0.75);
+}
+
+.display-wrapper.only-active-quest-markers .inactive-quest-marker {
+    display: none;
+}
+
+/* fullscreen control */
+.leaflet-control-fullscreen a {
+    background-color: rgb(from var(--color-black) r g b / 0.75);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAA0CAYAAACU7CiIAAAAxnpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjabVBRDsMgCP3nFDuC8KjicezaJrvBjj+suLTLXuITeOSh0P5+HfToEFbSpViuOSeHVq3SPLA00E7mpCePpIXG9zpBQxAvwW+M1HL0zzp/DaYhp+ViZM8Q1rtQY4DYj1EMQn+ReLCFUQ0jyBA4DFp8IVcr1y+se7rDxqFOx9xJGddvrsW3ty0+ByI7GMkZYykQ9KOE5gE7M8wbE+pZUWdFjpf0Df/Z0wR9AGIiWbdAFcPEAAABhGlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw1AUhU/TSkUqBe0g4pChOtlFRRxLFYtgobQVWnUweekfNGlIUlwcBdeCgz+LVQcXZ10dXAVB8AfE2cFJ0UVKvC8ptIjxwuN9nHfP4b37AKFVY6oZiAOqZhmZZELMF1bF4Ct8GEIYAUQlZuqp7GIOnvV1T91UdzGe5d33Zw0qRZMBPpE4znTDIt4gnt20dM77xBFWkRTic+JJgy5I/Mh12eU3zmWHBZ4ZMXKZeeIIsVjuYbmHWcVQiWeIo4qqUb6Qd1nhvMVZrTVY5578haGitpLlOq0xJLGEFNIQIaOBKmqwEKNdI8VEhs4THv5Rx58ml0yuKhg5FlCHCsnxg//B79mapekpNymUAPpebPtjHAjuAu2mbX8f23b7BPA/A1da119vAXOfpDe7WvQICG8DF9ddTd4DLneAkSddMiRH8tMSSiXg/Yy+qQAM3wIDa+7cOuc4fQByNKvlG+DgEJgoU/a6x7v7e+f2b09nfj92lnKoz48yYwAADXZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+Cjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDQuNC4wLUV4aXYyIj4KIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgIHhtbG5zOkdJTVA9Imh0dHA6Ly93d3cuZ2ltcC5vcmcveG1wLyIKICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICB4bXBNTTpEb2N1bWVudElEPSJnaW1wOmRvY2lkOmdpbXA6NDAyNDAzZGQtMzYxMS00OGRjLWJjMGUtNzQ0NmViYTcxNTc3IgogICB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjE2NTkzNGExLWNhYzAtNGJjNS05Mjc3LTljMDgyZTc3NzA0MSIKICAgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOmUyMmRkYjhlLWIzZTQtNGRkYy1iN2YxLTRiZDdiNzEyZGVmZCIKICAgZGM6Rm9ybWF0PSJpbWFnZS9wbmciCiAgIEdJTVA6QVBJPSIyLjAiCiAgIEdJTVA6UGxhdGZvcm09IldpbmRvd3MiCiAgIEdJTVA6VGltZVN0YW1wPSIxNzA1NTkwMjg2MzczMjE5IgogICBHSU1QOlZlcnNpb249IjIuMTAuMzQiCiAgIHRpZmY6T3JpZW50YXRpb249IjEiCiAgIHhtcDpDcmVhdG9yVG9vbD0iR0lNUCAyLjEwIgogICB4bXA6TWV0YWRhdGFEYXRlPSIyMDI0OjAxOjE4VDA5OjA0OjQ2LTA2OjAwIgogICB4bXA6TW9kaWZ5RGF0ZT0iMjAyNDowMToxOFQwOTowNDo0Ni0wNjowMCI+CiAgIDx4bXBNTTpIaXN0b3J5PgogICAgPHJkZjpTZXE+CiAgICAgPHJkZjpsaQogICAgICBzdEV2dDphY3Rpb249InNhdmVkIgogICAgICBzdEV2dDpjaGFuZ2VkPSIvIgogICAgICBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOmQ0MzNjMDAwLTc2MjQtNDcxOS1hNjBhLTBmMDJiZDZiYTZhMyIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iR2ltcCAyLjEwIChXaW5kb3dzKSIKICAgICAgc3RFdnQ6d2hlbj0iMjAyNC0wMS0xOFQwOTowNDo0NiIvPgogICAgPC9yZGY6U2VxPgogICA8L3htcE1NOkhpc3Rvcnk+CiAgPC9yZGY6RGVzY3JpcHRpb24+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz6tAhAHAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH6AESDwQuQlUKHQAAAIdJREFUWMPtl0EOwCAIBNemH+NllZfxNHvxZKixNDWx3TmiBlHAFSCkkjyjmRXPLiIpMg8AtlkR7b1Bb2eRCKdG9D1HZFHMrPRqIrKOdfROr2vP+05vY2cghFCpUqku9/A1x5IBHI1ZRSSHs+5JJvI3McfRheJUZ6qOKtXhrKvZlXlHVKrkB5zEQE3lVsjhWQAAAABJRU5ErkJggg==");
+}
+
+.leaflet-control-fullscreen a:hover {
+    background-color: rgb(50 50 50 / 0.75);
+}
+
+/* zoom control */
+.leaflet-bar a {
+    /* stylelint-disable-line no-descending-specificity */
+    background-color: transparent;
+    color: var(--color-gold-one);
+    border-bottom-color: rgb(50 50 50);
+}
+
+.leaflet-bar a:hover,
+.leaflet-bar a:active {
+    background-color: rgb(25 25 25 / 0.75);
+    color: var(--color-gold-one);
+}
+
+.leaflet-bar a.leaflet-disabled {
+    color: var(--color-gold-two);
+    background-color: rgb(50 50 50 / 0.75);
+}
+
+.leaflet-bar a.leaflet-disabled:hover,
+.leaflet-bar a.leaflet-disabled:active {
+    background-color: rgb(40 40 40 / 0.75);
+}
+
+.leaflet-control-layers-list {
+    font-size: 14px;
+}
+
+/* Raid Info control */
+.leaflet-control-raid-info {
+    background-color: rgb(from var(--color-black) r g b / 0.5);
+    line-height: normal;
+}
+
+.leaflet-control-raid-info a {
+    /* stylelint-disable-line no-descending-specificity */
+    color: var(--color-gold-one);
+}
+
+/* Area labels */
+.leaflet-marker-icon.map-area-label {
+    font-family:
+        "bender",
+        -apple-system,
+        system-ui,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Roboto",
+        "Helvetica Neue",
+        "Arial",
+        sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--color-gold-one);
+    text-shadow: 0 0 3px var(--color-black);
+    -webkit-text-stroke: 0.5px var(--color-black);
+    text-align: center;
+}
+
+.leaflet-marker-icon.map-area-label .label {
+    position: absolute;
+
+    /* -webkit-transform: translate3d(-50%, -50%, 0); 
+    -moz-transform: translate3d(-50%, -50%, 0);  
+    transform: translate3d(-50%, -50%, 0); */
+    width: 200px;
+}
+
+.leaflet-marker-icon.map-area-label.off-level {
+    display: none;
+}
+
+.leaflet-container .leaflet-marker-pane img.loot-outline {
+    filter: drop-shadow(0.01em 0.01em white) drop-shadow(-0.01em -0.01em white) drop-shadow(-0.01em 0.01em white)
+        drop-shadow(0.01em -0.01em white);
+}
+
+/* active level badge for grouped layer */
+
+.leaflet-left [data-badge]::after {
+    margin-left: 30px;
+}
+
+.leaflet-right [data-badge]::after {
+    margin-right: -14px;
+    right: 100%;
+}
+
+.leaflet-control-container [data-badge]::after {
+    background: #222;
+    border-radius: 30px;
+    color: var(--color-gold-one);
+    content: attr(data-badge);
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: -10px;
+    min-width: 20px;
+    padding: 2px 5px;
+    position: absolute;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.leaflet-control-container [data-badge^="-"]::after,
+.leaflet-control-container [data-badge="0"]::after,
+.leaflet-control-container [data-badge=""]::after,
+.leaflet-control-container [data-badge="undefined"]::after {
+    display: none;
+}
+
+/* remote styles */
+
+.display-wrapper:has(~ .id-wrapper-left) .leaflet-bottom.leaflet-left,
+.display-wrapper:has(~ .id-wrapper-right) .leaflet-bottom.leaflet-right {
+    margin-bottom: 60px;
+}
+
+.leaflet-pane.leaflet-overlay-pane svg.base-layer {
+    z-index: 1;
+}
+
+.leaflet-pane.leaflet-overlay-pane svg.level-layer {
+    z-index: 2;
+}
+
+.display-wrapper.map-page {
+    margin: 0px;
+}
+
+.leaflet-pane.leaflet-overlay-pane svg .overlay-layer.hidden-layer {
+    display: none;
+}
+
+.leaflet-pane.leaflet-overlay-pane svg.auto-show .overlay-layer.hidden-layer {
+    display: block;
+}

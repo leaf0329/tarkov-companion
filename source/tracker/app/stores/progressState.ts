@@ -1,0 +1,533 @@
+/**
+ * User Progress State Definition
+ *
+ * Defines the core state structure, getters, and actions for tracking
+ * user progress in Escape from Tarkov (tasks, hideout, levels, traders).
+ *
+ * This module is shared between:
+ * - Main tarkov store (user's own progress)
+ * - Teammate stores (dynamically created for each team member)
+ *
+ * Supports independent progress for every game mode.
+ * Each game mode maintains its own independent progress: level, faction, tasks,
+ * hideout modules, and trader relationships.
+ *
+ * @module stores/userProgressState
+ */
+import { ACTIVE_SEASON_NUMBER, GAME_MODES, type GameMode } from '@/utils/constants';
+import {
+  reconcileSeasonalProgressSeason,
+  sanitizeManualActivityEpoch,
+  sanitizeManualActivityHistory,
+  sanitizeOwnedProgressData,
+} from '@/utils/progressSanitizers';
+import { nextClock } from '@/utils/taskAvailabilityConfirmation';
+import {
+  isTaskComplete as isTaskCompletionComplete,
+  isTaskFailed as isTaskCompletionFailed,
+  type RawTaskCompletion,
+} from '@/utils/taskStatus';
+import type { ManualActivityEntry, TaskCompletion, UserProgressData } from '@/types/progress';
+import type { _GettersTree } from 'pinia';
+export type {
+  ApiTaskUpdate,
+  ApiUpdateMeta,
+  ManualActivityEntry,
+  UserProgressData,
+} from '@/types/progress';
+export interface UserState {
+  currentGameMode: GameMode;
+  gameEdition: number;
+  tarkovUid: number | null;
+  pvp: UserProgressData;
+  pve: UserProgressData;
+  seasonal: UserProgressData;
+  seasonalSeasonNumber?: number;
+}
+const defaultProgressData: UserProgressData = {
+  level: 1,
+  pmcFaction: 'USEC',
+  displayName: null,
+  xpOffset: 0,
+  taskObjectives: {},
+  taskCompletions: {},
+  taskAvailability: {},
+  hideoutParts: {},
+  hideoutModules: {},
+  traders: {},
+  skills: {},
+  prestigeLevel: 0,
+  progressEpoch: 0,
+  skillOffsets: {},
+  storyChapters: {},
+  apiUpdateHistory: [],
+  manualActivityHistory: [],
+  manualActivityEpoch: 0,
+};
+export const defaultState: UserState = {
+  currentGameMode: GAME_MODES.PVP,
+  gameEdition: 1,
+  tarkovUid: null,
+  pvp: structuredClone(defaultProgressData),
+  pve: structuredClone(defaultProgressData),
+  seasonal: structuredClone(defaultProgressData),
+  seasonalSeasonNumber: ACTIVE_SEASON_NUMBER,
+};
+// Migration function to convert legacy data structure to new gamemode-aware structure
+export function migrateToGameModeStructure(legacyData: unknown): UserState {
+  // If already in new format and properly structured, return as-is
+  if (
+    legacyData &&
+    typeof legacyData === 'object' &&
+    'currentGameMode' in legacyData &&
+    'pvp' in legacyData &&
+    'pve' in legacyData
+  ) {
+    const data = legacyData as Record<string, unknown>;
+    return {
+      currentGameMode: (data.currentGameMode as GameMode) || GAME_MODES.PVP,
+      gameEdition: (data.gameEdition as number) || defaultState.gameEdition,
+      tarkovUid: (data.tarkovUid as number | null) ?? null,
+      pvp: sanitizeOwnedProgressData(data.pvp),
+      pve: sanitizeOwnedProgressData(data.pve),
+      ...reconcileSeasonalProgressSeason(
+        sanitizeOwnedProgressData(data.seasonal),
+        data.seasonalSeasonNumber
+      ),
+    };
+  }
+  // Handle partial migration case - has currentGameMode but missing pvp/pve structure
+  if (
+    legacyData &&
+    typeof legacyData === 'object' &&
+    'currentGameMode' in legacyData &&
+    (!('pvp' in legacyData) || !('pve' in legacyData))
+  ) {
+    const data = legacyData as Record<string, unknown>;
+    const hasPvp = 'pvp' in data;
+    const hasPve = 'pve' in data;
+    const hasSeasonal = 'seasonal' in data;
+    const currentGameMode = Object.values(GAME_MODES).includes(data.currentGameMode as GameMode)
+      ? (data.currentGameMode as GameMode)
+      : GAME_MODES.PVP;
+    const migratedLegacy = sanitizeOwnedProgressData(data);
+    return {
+      currentGameMode,
+      gameEdition: (data.gameEdition as number) || defaultState.gameEdition,
+      tarkovUid: (data.tarkovUid as number | null) ?? null,
+      pvp: hasPvp
+        ? sanitizeOwnedProgressData(data.pvp)
+        : currentGameMode === GAME_MODES.SEASONAL
+          ? structuredClone(defaultProgressData)
+          : migratedLegacy,
+      pve: hasPve ? sanitizeOwnedProgressData(data.pve) : structuredClone(defaultProgressData),
+      ...reconcileSeasonalProgressSeason(
+        hasSeasonal
+          ? sanitizeOwnedProgressData(data.seasonal)
+          : currentGameMode === GAME_MODES.SEASONAL
+            ? migratedLegacy
+            : structuredClone(defaultProgressData),
+        data.seasonalSeasonNumber
+      ),
+    };
+  }
+  // Create new structure with migrated data from legacy format
+  const data = (legacyData as Record<string, unknown>) || {};
+  return {
+    currentGameMode: GAME_MODES.PVP, // Default to PvP for existing users
+    gameEdition: (data.gameEdition as number) || defaultState.gameEdition,
+    tarkovUid: (data.tarkovUid as number | null) ?? null,
+    pvp: sanitizeOwnedProgressData(data),
+    pve: structuredClone(defaultProgressData),
+    seasonal: structuredClone(defaultProgressData),
+    seasonalSeasonNumber: ACTIVE_SEASON_NUMBER,
+  };
+}
+// Helper to get current gamemode data
+const getCurrentData = (state: UserState): UserProgressData => {
+  // Handle case where state might not be fully migrated yet
+  if (!state.currentGameMode || !state[state.currentGameMode]) {
+    // If we don't have gamemode structure, try to return legacy data
+    const legacyState = state as unknown as Record<string, unknown>;
+    if (
+      legacyState.level !== undefined ||
+      legacyState.taskCompletions ||
+      legacyState.taskObjectives
+    ) {
+      return legacyState as unknown as UserProgressData; // Cast to UserProgressData for legacy compatibility
+    }
+    // Otherwise return default structure
+    return {
+      level: 1,
+      pmcFaction: 'USEC',
+      displayName: null,
+      xpOffset: 0,
+      taskCompletions: {},
+      taskAvailability: {},
+      taskObjectives: {},
+      hideoutParts: {},
+      hideoutModules: {},
+      traders: {},
+      skills: {},
+      prestigeLevel: 0,
+      progressEpoch: 0,
+      skillOffsets: {},
+      storyChapters: {},
+      apiUpdateHistory: [],
+      manualActivityHistory: [],
+      manualActivityEpoch: 0,
+    };
+  }
+  return state[state.currentGameMode];
+};
+// Simplified getters using arrow functions
+export const getters = {
+  getCurrentGameMode: (state: UserState) => () => state.currentGameMode || GAME_MODES.PVP,
+  playerLevel: (state: UserState) => () => getCurrentData(state).level ?? 1,
+  getGameEdition: (state: UserState) => () => state.gameEdition ?? 1,
+  getPMCFaction: (state: UserState) => () => getCurrentData(state).pmcFaction ?? 'USEC',
+  getDisplayName: (state: UserState) => () => {
+    const currentData = getCurrentData(state);
+    return currentData.displayName === '' ? null : (currentData.displayName ?? null);
+  },
+  getModeDisplayName: (state: UserState) => (mode: GameMode) => {
+    const modeData = state[mode];
+    return modeData.displayName === '' ? null : (modeData.displayName ?? null);
+  },
+  getObjectiveCount: (state: UserState) => (objectiveId: string) =>
+    getCurrentData(state)?.taskObjectives?.[objectiveId]?.count ?? 0,
+  getHideoutPartCount: (state: UserState) => (objectiveId: string) =>
+    getCurrentData(state)?.hideoutParts?.[objectiveId]?.count ?? 0,
+  isTaskComplete: (state: UserState) => (taskId: string) =>
+    isTaskCompletionComplete(getCurrentData(state)?.taskCompletions?.[taskId] as RawTaskCompletion),
+  isTaskFailed: (state: UserState) => (taskId: string) =>
+    isTaskCompletionFailed(getCurrentData(state)?.taskCompletions?.[taskId] as RawTaskCompletion),
+  isTaskObjectiveComplete: (state: UserState) => (objectiveId: string) =>
+    getCurrentData(state)?.taskObjectives?.[objectiveId]?.complete ?? false,
+  isHideoutPartComplete: (state: UserState) => (objectiveId: string) =>
+    getCurrentData(state)?.hideoutParts?.[objectiveId]?.complete ?? false,
+  isHideoutModuleComplete: (state: UserState) => (hideoutId: string) =>
+    getCurrentData(state)?.hideoutModules?.[hideoutId]?.complete ?? false,
+  getCurrentProgressData: (state: UserState) => () => getCurrentData(state),
+  getManualActivityHistory: (state: UserState) => (): ManualActivityEntry[] =>
+    getCurrentData(state)?.manualActivityHistory ?? [],
+  getModeProgressData: (state: UserState) => (mode: GameMode) => state[mode],
+  getPvPProgressData: (state: UserState) => () => state.pvp,
+  getPvEProgressData: (state: UserState) => () => state.pve,
+  getSeasonalProgressData: (state: UserState) => () => state.seasonal,
+  getTraderLevel: (state: UserState) => (traderId: string) =>
+    getCurrentData(state)?.traders?.[traderId]?.level ?? 1,
+  getTraderReputation: (state: UserState) => (traderId: string) =>
+    getCurrentData(state)?.traders?.[traderId]?.reputation ?? 0,
+  getSkillLevel: (state: UserState) => (skillName: string) =>
+    getCurrentData(state)?.skills?.[skillName] ?? 0,
+  getXpOffset: (state: UserState) => () => getCurrentData(state)?.xpOffset ?? 0,
+  getPrestigeLevel: (state: UserState) => () => getCurrentData(state)?.prestigeLevel ?? 0,
+  getProgressEpoch: (state: UserState) => () => getCurrentData(state)?.progressEpoch ?? 0,
+  getSkillOffset: (state: UserState) => (skillName: string) =>
+    getCurrentData(state)?.skillOffsets?.[skillName] ?? 0,
+  getAllSkillOffsets: (state: UserState) => () => getCurrentData(state)?.skillOffsets ?? {},
+  getTarkovUid: (state: UserState) => () => state.tarkovUid ?? null,
+  isStoryChapterComplete: (state: UserState) => (chapterId: string) =>
+    getCurrentData(state)?.storyChapters?.[chapterId]?.complete ?? false,
+  isStoryObjectiveComplete: (state: UserState) => (chapterId: string, objectiveId: string) =>
+    getCurrentData(state)?.storyChapters?.[chapterId]?.objectives?.[objectiveId]?.complete ?? false,
+} as const satisfies _GettersTree<UserState>;
+// Helper functions for common operations
+const createCompletion = (complete: boolean, failed = false, manual?: boolean) => {
+  const completion: TaskCompletion = {
+    complete,
+    failed,
+    timestamp: Date.now(),
+  };
+  if (typeof manual === 'boolean') {
+    completion.manual = manual;
+  }
+  return completion;
+};
+type ProgressObjectKey = {
+  [Key in keyof UserProgressData]-?: UserProgressData[Key] extends Record<string, infer Value>
+    ? Value extends object
+      ? Key
+      : never
+    : never;
+}[keyof UserProgressData];
+type ProgressObjectEntry<Key extends ProgressObjectKey> =
+  UserProgressData[Key] extends Record<string, infer Value> ? Value : never;
+const updateObjective = <Key extends ProgressObjectKey>(
+  state: UserState,
+  key: Key,
+  objectiveId: string,
+  updates: Partial<ProgressObjectEntry<Key>>
+) => {
+  const currentData = getCurrentData(state);
+  const stateObj = currentData[key] as Record<string, ProgressObjectEntry<Key>>;
+  const existing = stateObj[objectiveId];
+  stateObj[objectiveId] = {
+    ...(existing && typeof existing === 'object' ? existing : {}),
+    ...updates,
+  } as ProgressObjectEntry<Key>;
+};
+/**
+ * The timestamp is kept strictly after the task's status timestamp so a confirmation made right
+ * after a status change (same millisecond) is still honoured, and never behind the previous
+ * confirmation so the newest user intent wins a merge.
+ */
+const setAvailabilityConfirmation = (state: UserState, taskId: string, requirements: string) => {
+  const currentData = getCurrentData(state);
+  const statusTs = currentData.taskCompletions?.[taskId]?.timestamp ?? 0;
+  const previousTs = currentData.taskAvailability?.[taskId]?.timestamp ?? 0;
+  const confirmations = (currentData.taskAvailability ??= {});
+  // `statusTs - 1` so the confirmation may share the status millisecond (it still counts).
+  confirmations[taskId] = { requirements, timestamp: nextClock(statusTs - 1, previousTs) };
+};
+/**
+ * A status change must retire the task's current confirmation even when that confirmation carries a
+ * clock from a device that runs ahead, so the status timestamp is advanced past it.
+ */
+const setTaskStatus = (state: UserState, taskId: string, completion: TaskCompletion) => {
+  const confirmationTs = getCurrentData(state).taskAvailability?.[taskId]?.timestamp;
+  const timestamp =
+    confirmationTs === undefined
+      ? completion.timestamp
+      : Math.max(completion.timestamp ?? 0, nextClock(confirmationTs));
+  updateObjective(state, 'taskCompletions', taskId, { ...completion, timestamp });
+};
+// Simplified actions
+export const actions = {
+  switchGameMode(this: UserState, mode: GameMode) {
+    this.currentGameMode = mode;
+  },
+  incrementLevel(this: UserState) {
+    const currentData = getCurrentData(this);
+    currentData.level = currentData.level ? currentData.level + 1 : 2;
+  },
+  decrementLevel(this: UserState) {
+    const currentData = getCurrentData(this);
+    currentData.level = Math.max(1, (currentData.level || 1) - 1);
+  },
+  setLevel(this: UserState, level: number) {
+    const currentData = getCurrentData(this);
+    currentData.level = Math.max(1, level);
+  },
+  setGameEdition(this: UserState, edition: number) {
+    this.gameEdition = edition;
+  },
+  setPMCFaction(this: UserState, faction: 'USEC' | 'BEAR') {
+    const currentData = getCurrentData(this);
+    currentData.pmcFaction = faction;
+  },
+  setDisplayName(this: UserState, name: string | null) {
+    const currentData = getCurrentData(this);
+    currentData.displayName = typeof name === 'string' ? name : null;
+  },
+  setModeDisplayName(this: UserState, mode: GameMode, name: string | null) {
+    const modeData = this[mode];
+    modeData.displayName = typeof name === 'string' ? name : null;
+  },
+  setXpOffset(this: UserState, offset: number) {
+    const currentData = getCurrentData(this);
+    currentData.xpOffset = Number.isFinite(offset) ? Math.trunc(offset) : 0;
+  },
+  setPrestigeLevel(this: UserState, level: number) {
+    const currentData = getCurrentData(this);
+    currentData.prestigeLevel = Math.max(0, Math.min(6, level)); // Clamp 0-6
+  },
+  setSkillOffset(this: UserState, skillName: string, offset: number) {
+    const currentData = getCurrentData(this);
+    if (!currentData.skillOffsets) {
+      currentData.skillOffsets = {};
+    }
+    currentData.skillOffsets[skillName] = Number.isFinite(offset) ? offset : 0;
+  },
+  resetSkillOffset(this: UserState, skillName: string) {
+    const currentData = getCurrentData(this);
+    if (currentData.skillOffsets) {
+      const { [skillName]: _, ...rest } = currentData.skillOffsets;
+      currentData.skillOffsets = rest;
+    }
+  },
+  setObjectiveCount(this: UserState, objectiveId: string, count: number) {
+    updateObjective(this, 'taskObjectives', objectiveId, {
+      count: Math.max(0, count),
+    });
+  },
+  setTaskObjectiveCountWithStatus(
+    this: UserState,
+    objectiveId: string,
+    count: number,
+    isComplete: boolean
+  ) {
+    const updates: Record<string, unknown> = {
+      count: Math.max(0, count),
+      complete: isComplete,
+    };
+    if (isComplete) {
+      updates.timestamp = Date.now();
+    }
+    updateObjective(this, 'taskObjectives', objectiveId, updates);
+  },
+  setHideoutPartCount(this: UserState, objectiveId: string, count: number) {
+    updateObjective(this, 'hideoutParts', objectiveId, {
+      count: Math.max(0, count),
+    });
+  },
+  clearTaskAvailability(this: UserState, taskId: string) {
+    // Only the confirmation store changes: a stale clear can never rewrite task status.
+    setAvailabilityConfirmation(this, taskId, '');
+  },
+  confirmTaskAvailability(this: UserState, taskId: string, requirements: string) {
+    setAvailabilityConfirmation(this, taskId, requirements);
+  },
+  setTaskComplete(this: UserState, taskId: string) {
+    setTaskStatus(this, taskId, createCompletion(true, false, false));
+  },
+  setTaskFailed(this: UserState, taskId: string, failOptions?: { manual?: boolean }) {
+    setTaskStatus(this, taskId, createCompletion(true, true, failOptions?.manual));
+  },
+  setTaskUncompleted(this: UserState, taskId: string) {
+    setTaskStatus(this, taskId, createCompletion(false, false, false));
+  },
+  setTaskObjectiveComplete(this: UserState, objectiveId: string) {
+    updateObjective(this, 'taskObjectives', objectiveId, {
+      complete: true,
+      timestamp: Date.now(),
+    });
+  },
+  setTaskObjectiveUncomplete(this: UserState, objectiveId: string) {
+    updateObjective(this, 'taskObjectives', objectiveId, { complete: false });
+  },
+  toggleTaskObjectiveComplete(this: UserState, objectiveId: string) {
+    const isComplete = getters.isTaskObjectiveComplete(this)(objectiveId);
+    if (isComplete) {
+      actions.setTaskObjectiveUncomplete.call(this, objectiveId);
+    } else {
+      actions.setTaskObjectiveComplete.call(this, objectiveId);
+    }
+  },
+  setHideoutPartComplete(this: UserState, objectiveId: string) {
+    updateObjective(this, 'hideoutParts', objectiveId, {
+      complete: true,
+      timestamp: Date.now(),
+    });
+  },
+  setHideoutPartUncomplete(this: UserState, objectiveId: string) {
+    updateObjective(this, 'hideoutParts', objectiveId, { complete: false });
+  },
+  toggleHideoutPartComplete(this: UserState, objectiveId: string) {
+    const isComplete = getters.isHideoutPartComplete(this)(objectiveId);
+    if (isComplete) {
+      actions.setHideoutPartUncomplete.call(this, objectiveId);
+    } else {
+      actions.setHideoutPartComplete.call(this, objectiveId);
+    }
+  },
+  setHideoutModuleComplete(this: UserState, hideoutId: string) {
+    updateObjective(this, 'hideoutModules', hideoutId, {
+      complete: true,
+      timestamp: Date.now(),
+    });
+  },
+  setHideoutModuleUncomplete(this: UserState, hideoutId: string) {
+    updateObjective(this, 'hideoutModules', hideoutId, { complete: false });
+  },
+  toggleHideoutModuleComplete(this: UserState, hideoutId: string) {
+    const isComplete = getters.isHideoutModuleComplete(this)(hideoutId);
+    if (isComplete) {
+      actions.setHideoutModuleUncomplete.call(this, hideoutId);
+    } else {
+      actions.setHideoutModuleComplete.call(this, hideoutId);
+    }
+  },
+  setTraderLevel(this: UserState, traderId: string, level: number) {
+    updateObjective(this, 'traders', traderId, { level: Math.max(1, level) });
+  },
+  setTraderReputation(this: UserState, traderId: string, reputation: number) {
+    updateObjective(this, 'traders', traderId, { reputation: reputation });
+  },
+  setSkillLevel(this: UserState, skillName: string, level: number) {
+    const currentData = getCurrentData(this);
+    if (!currentData.skills) {
+      currentData.skills = {};
+    }
+    currentData.skills[skillName] = Number.isFinite(level) ? level : 0;
+  },
+  setTarkovUid(this: UserState, uid: number | null) {
+    this.tarkovUid = uid;
+  },
+  setStoryChapterComplete(this: UserState, chapterId: string) {
+    updateObjective(this, 'storyChapters', chapterId, {
+      complete: true,
+      timestamp: Date.now(),
+    });
+  },
+  setStoryChapterUncomplete(this: UserState, chapterId: string) {
+    updateObjective(this, 'storyChapters', chapterId, {
+      complete: false,
+      timestamp: Date.now(),
+    });
+  },
+  setStoryObjectiveComplete(this: UserState, chapterId: string, objectiveId: string) {
+    const data = getCurrentData(this);
+    if (!data.storyChapters[chapterId]) {
+      data.storyChapters[chapterId] = {};
+    }
+    if (!data.storyChapters[chapterId].objectives) {
+      data.storyChapters[chapterId].objectives = {};
+    }
+    // A completion the user records now must outrank an entry another device stamped ahead.
+    const previous = data.storyChapters[chapterId].objectives![objectiveId]?.timestamp ?? 0;
+    data.storyChapters[chapterId].objectives![objectiveId] = {
+      complete: true,
+      timestamp: nextClock(previous),
+    };
+  },
+  setStoryObjectiveUncomplete(this: UserState, chapterId: string, objectiveId: string) {
+    const data = getCurrentData(this);
+    if (!data.storyChapters[chapterId]) {
+      data.storyChapters[chapterId] = {};
+    }
+    if (!data.storyChapters[chapterId].objectives) {
+      data.storyChapters[chapterId].objectives = {};
+    }
+    // An uncompletion must also outrank an entry another device stamped ahead.
+    const previous = data.storyChapters[chapterId].objectives![objectiveId]?.timestamp ?? 0;
+    data.storyChapters[chapterId].objectives![objectiveId] = {
+      complete: false,
+      timestamp: nextClock(previous),
+    };
+  },
+  toggleStoryObjectiveComplete(this: UserState, chapterId: string, objectiveId: string) {
+    const isComplete = getters.isStoryObjectiveComplete(this)(chapterId, objectiveId);
+    if (isComplete) {
+      actions.setStoryObjectiveUncomplete.call(this, chapterId, objectiveId);
+    } else {
+      actions.setStoryObjectiveComplete.call(this, chapterId, objectiveId);
+    }
+  },
+  /**
+   * Append manual activity entries to the selected mode's synced history.
+   *
+   * The history is stored inside the mode's progress blob so it shares the
+   * lifecycle, sanitization, merge, and reset rules of every other progress
+   * field. Entries are deduplicated by id, sorted newest first, and capped by
+   * the shared sanitizer limit.
+   */
+  addManualActivityEntries(this: UserState, entries: ManualActivityEntry[]) {
+    if (!Array.isArray(entries) || entries.length === 0) return;
+    const currentData = getCurrentData(this);
+    currentData.manualActivityHistory = sanitizeManualActivityHistory([
+      ...entries,
+      ...sanitizeManualActivityHistory(currentData.manualActivityHistory),
+    ]);
+  },
+  clearManualActivityHistory(this: UserState) {
+    const currentData = getCurrentData(this);
+    currentData.manualActivityEpoch = Math.min(
+      2147483647,
+      sanitizeManualActivityEpoch(currentData.manualActivityEpoch) + 1
+    );
+    currentData.manualActivityHistory = [];
+  },
+} as const;
+export type UserActions = typeof actions;

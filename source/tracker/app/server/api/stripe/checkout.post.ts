@@ -1,0 +1,174 @@
+import { createError, defineEventHandler, readBody } from 'h3';
+import Stripe from 'stripe';
+import { adminSupabaseFetch, normalizeSupabaseUrl } from '@/server/utils/adminSupabase';
+import { createLogger } from '@/server/utils/logger';
+import {
+  validateCheckoutBody,
+  validateOneTimeAmount,
+} from '@/server/utils/stripeCheckoutValidation';
+import {
+  getSupporterBillingState,
+  SupporterCustomerLookupUnavailableError,
+} from '@/server/utils/supporterCustomerLookup';
+import type { SupporterBillingState } from '@/server/utils/supporterCustomerLookup';
+import type { H3Event } from 'h3';
+const logger = createLogger('StripeCheckout');
+export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig(event);
+  const stripeSecretKey = config.stripeSecretKey as string;
+  if (!stripeSecretKey) {
+    throw createError({ statusCode: 500, message: 'Stripe not configured' });
+  }
+  // Auth is enforced by the api-protection middleware (publicRoutes does NOT
+  // include /api/stripe/*), which sets event.context.auth on success.
+  // Always derive userId/email from the authenticated session, never the
+  // request body, to prevent attackers from creating Checkout Sessions for
+  // other users (impersonation -> client_reference_id mismatch -> stolen tier).
+  const authUser = (event.context as { auth?: { user?: { id?: string; email?: string } } }).auth
+    ?.user;
+  const userId = authUser?.id;
+  if (!userId) {
+    throw createError({ statusCode: 401, message: 'Authentication required' });
+  }
+  const email = authUser?.email;
+  const rawBody = await readBody(event);
+  const { mode, tier, interval, amount } = validateCheckoutBody(rawBody);
+  await requireSupporterBenefitsAvailable(event, userId);
+  const stripe = new Stripe(stripeSecretKey);
+  const appUrl = (config.public.appUrl as string) || 'https://tarkovtracker.org';
+  // Reuse the existing Stripe Customer for returning supporters so refund and
+  // dispute lookups against stripe_customer_id keep matching after re-subscribe.
+  // Falls back to customer_email for first-time supporters (Stripe creates one).
+  let billingState: SupporterBillingState | null;
+  try {
+    billingState = await getSupporterBillingState(event, userId, {
+      throwOnUnavailable: mode === 'subscription',
+    });
+  } catch (error) {
+    if (error instanceof SupporterCustomerLookupUnavailableError) {
+      logger.error('[Stripe Checkout] Supporter customer lookup unavailable', {
+        userId,
+        mode,
+        error,
+      });
+      throw createError({
+        statusCode: 503,
+        message: 'Unable to verify existing subscription',
+      });
+    }
+    throw error;
+  }
+  const existingCustomerId = billingState?.stripeCustomerId;
+  const customerFields: { customer?: string; customer_email?: string } = existingCustomerId
+    ? { customer: existingCustomerId }
+    : email
+      ? { customer_email: email }
+      : {};
+  if (mode === 'payment') {
+    const amountCents = validateOneTimeAmount(amount);
+    try {
+      const session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        client_reference_id: userId,
+        ...customerFields,
+        ...(existingCustomerId ? {} : { customer_creation: 'always' as const }),
+        metadata: { tier: 'supporter', type: 'one_time', user_id: userId },
+        payment_intent_data: { metadata: { user_id: userId } },
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: { name: 'TarkovTracker One-Time Support' },
+              unit_amount: amountCents,
+            },
+            quantity: 1,
+          },
+        ],
+        success_url: `${appUrl}/supporter?thanks=one_time`,
+        cancel_url: `${appUrl}/supporter`,
+      });
+      return { url: session.url };
+    } catch (err: unknown) {
+      logger.error('[Stripe Checkout] One-time session creation failed', { userId, err });
+      throw createError({ statusCode: 502, message: 'Failed to create checkout session' });
+    }
+  }
+  // Subscription mode
+  if (!tier || tier === 'supporter') {
+    throw createError({ statusCode: 400, message: 'Invalid tier' });
+  }
+  if (!interval) {
+    throw createError({ statusCode: 400, message: 'Invalid interval' });
+  }
+  if (
+    billingState?.stripeSubscriptionId &&
+    ['active', 'past_due', 'trialing'].includes(billingState.status ?? '')
+  ) {
+    throw createError({
+      statusCode: 409,
+      message: 'Manage your existing subscription in the billing portal',
+    });
+  }
+  // Price IDs are configured as env vars: STRIPE_PRICE_{TIER}_{INTERVAL}
+  const priceKey = `stripePrice${capitalize(tier)}${capitalize(interval)}` as keyof typeof config;
+  const priceId = config[priceKey] as string;
+  if (!priceId) {
+    throw createError({
+      statusCode: 500,
+      message: `Price not configured for ${tier}/${interval}`,
+    });
+  }
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      client_reference_id: userId,
+      ...customerFields,
+      metadata: { tier, interval, type: 'subscription', user_id: userId },
+      subscription_data: { metadata: { tier, interval, user_id: userId } },
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${appUrl}/supporter?thanks=${tier}`,
+      cancel_url: `${appUrl}/supporter`,
+    });
+    return { url: session.url };
+  } catch (err: unknown) {
+    logger.error('[Stripe Checkout] Subscription session creation failed', {
+      userId,
+      tier,
+      interval,
+      err,
+    });
+    throw createError({ statusCode: 502, message: 'Failed to create subscription' });
+  }
+});
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+async function getSupporterDisqualification(event: H3Event, userId: string): Promise<boolean> {
+  const config = useRuntimeConfig(event);
+  const supabaseUrl = normalizeSupabaseUrl(config.supabaseUrl);
+  const serviceKey = config.supabaseServiceKey as string;
+  if (!supabaseUrl || !serviceKey) throw new Error('Supporter eligibility is not configured');
+  const result = await adminSupabaseFetch<boolean>(
+    supabaseUrl,
+    serviceKey,
+    '/rest/v1/rpc/supporter_benefits_disqualified',
+    { method: 'POST', body: JSON.stringify({ p_user_id: userId }) }
+  );
+  if (typeof result !== 'boolean') throw new Error('Invalid supporter eligibility response');
+  return result;
+}
+async function requireSupporterBenefitsAvailable(event: H3Event, userId: string) {
+  let disqualified: boolean;
+  try {
+    disqualified = await getSupporterDisqualification(event, userId);
+  } catch (error) {
+    logger.error('[Stripe Checkout] Supporter eligibility unavailable', { userId, error });
+    throw createError({ statusCode: 503, message: 'Unable to verify supporter eligibility' });
+  }
+  if (disqualified) {
+    throw createError({
+      statusCode: 403,
+      message: 'Supporter benefits are unavailable for this account',
+    });
+  }
+}

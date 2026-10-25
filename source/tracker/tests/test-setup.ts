@@ -1,0 +1,141 @@
+import { enableAutoUnmount } from '@vue/test-utils';
+import 'fake-indexeddb/auto';
+import { afterAll, afterEach, vi } from 'vitest';
+// DOM emulators omit Web Locks. Preserve asynchronous, exclusive FIFO acquisition in tests.
+if (typeof navigator !== 'undefined') {
+  const queues = new Map<string, Promise<unknown>>();
+  Object.defineProperty(navigator, 'locks', {
+    configurable: true,
+    value: {
+      request: (name: string, _options: LockOptions, callback: () => unknown) => {
+        const result = (queues.get(name) ?? Promise.resolve()).then(callback);
+        queues.set(
+          name,
+          result.catch(() => {})
+        );
+        return result;
+      },
+    },
+  });
+}
+// ponytail: Vue hardcodes this experimental-Suspense notice (console.info, gated only on
+// non-prod) and Vitest's isolated forked workers reload Vue per file, so it spams every run.
+// Drop just that one line; pass everything else through.
+for (const method of ['info', 'log'] as const) {
+  const original = console[method].bind(console);
+  console[method] = (...args: unknown[]) => {
+    if (typeof args[0] === 'string' && args[0].includes('<Suspense> is an experimental feature')) {
+      return;
+    }
+    original(...args);
+  };
+}
+type FetchInput = string | Request | URL;
+type MockFetchResponse =
+  | { data: { playerLevels: unknown[] } }
+  | { data: { hideoutStations: unknown[] } }
+  | { data: { prestige: unknown[] } }
+  | { data: { items: unknown[] } }
+  | { data: { tasks: unknown[]; maps: unknown[]; traders: unknown[] } }
+  | { data: { tasks: unknown[] } }
+  | { data: { chapters: unknown[] } }
+  | { data: { members: unknown[] } }
+  | { data: { changelog: unknown[] } }
+  | { data: { kappa: { completed: number; total: number } } }
+  | null
+  | { data: { lastPurgeAt: null } }
+  | { editions: Record<string, unknown> }
+  | {
+      matcher: {
+        dynamic: Record<string, unknown>;
+        static: Record<string, unknown>;
+        wildcard: Record<string, unknown>;
+      };
+      prerendered: unknown[];
+      routes: { entries: () => unknown[] };
+    };
+const getFetchUrl = (input: FetchInput): string => {
+  if (typeof input === 'string') return input;
+  if (input instanceof URL) return input.toString();
+  return input.url;
+};
+const mockFetch = vi.fn(
+  async (input: FetchInput, _init?: RequestInit): Promise<MockFetchResponse> => {
+    const url = getFetchUrl(input);
+    if (url.includes('/api/tarkov/bootstrap')) {
+      return { data: { playerLevels: [] } };
+    }
+    if (url.includes('/api/tarkov/hideout')) {
+      return { data: { hideoutStations: [] } };
+    }
+    if (url.includes('/api/tarkov/prestige')) {
+      return { data: { prestige: [] } };
+    }
+    if (url.includes('/api/tarkov/items')) {
+      return { data: { items: [] } };
+    }
+    if (url.includes('/api/tarkov/tasks-core')) {
+      return { data: { tasks: [], maps: [], traders: [] } };
+    }
+    if (url.includes('/api/tarkov/tasks-objectives')) {
+      return { data: { tasks: [] } };
+    }
+    if (url.includes('/api/tarkov/tasks-rewards')) {
+      return { data: { tasks: [] } };
+    }
+    if (url.includes('/api/storyline')) {
+      return { data: { chapters: [] } };
+    }
+    if (url.includes('/api/tarkov/cache-meta')) {
+      return { data: { lastPurgeAt: null } };
+    }
+    if (url.includes('/api/team/members')) {
+      return { data: { members: [] } };
+    }
+    if (url.includes('/api/changelog')) {
+      return { data: { changelog: [] } };
+    }
+    if (url.includes('/api/streamer/')) {
+      return { data: { kappa: { completed: 0, total: 0 } } };
+    }
+    if (url.includes('/api/logs/client')) {
+      return null;
+    }
+    if (url.includes('tarkov-data-overlay') || url.includes('/overlay.json')) {
+      return { editions: {} };
+    }
+    if (url.includes('/_nuxt/builds/meta/')) {
+      // Mock Nuxt's build manifest requests during test initialization
+      return {
+        matcher: {
+          dynamic: {},
+          static: {},
+          wildcard: {},
+        },
+        prerendered: [],
+        routes: { entries: () => [] },
+      };
+    }
+    // Fail fast for unmatched URLs to maintain test isolation
+    throw new Error(`Unmocked fetch call to: ${url}. Add a mock for this URL in test-setup.ts`);
+  }
+);
+const delegator = vi.fn(async (input: FetchInput, init?: RequestInit): Promise<unknown> => {
+  const current = (globalThis as Record<string, unknown>).$fetch;
+  if (current && current !== delegator && vi.isMockFunction(current)) {
+    return (current as (i: FetchInput, init?: RequestInit) => unknown)(input, init);
+  }
+  return mockFetch(input, init);
+});
+vi.stubGlobal('$fetch', delegator);
+// Auto-unmount VTU wrappers after each test
+try {
+  enableAutoUnmount(afterEach);
+} catch (error) {
+  if (!(error instanceof Error && error.message.includes('cannot be called more than once'))) {
+    throw error;
+  }
+}
+afterAll(() => {
+  vi.restoreAllMocks();
+});

@@ -1,0 +1,95 @@
+﻿@page "/raw"
+@using System.Diagnostics
+@inject GameWatcher eft
+@inject IDialogService DialogService
+@inject LocalizationService LocalizationService
+@layout AppLayout
+@implements IDisposable
+
+
+<MudGrid Class="pa-0" Spacing="0" Style="position:relative;">
+	<MudItem xs="12">
+        <MudPaper Class="app-surface pa-2 ma-2 mx-4" Elevation="3">
+            <LogBoard>
+            </LogBoard>
+        </MudPaper>
+    </MudItem>
+    @if (DebugMode() || LogsFolderSet())
+    {
+        <div class="tm-menu-host">
+            <MudMenu AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.BottomRight" RelativeWidth="DropdownWidth.Adaptive" PopoverFixed="false" Modal="false" Dense="true" MaxHeight="280" Class="tm-menu" PopoverClass="tm-menu-popover" ListClass="tm-menu-list">
+                <ActivatorContent>
+                    <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" Class="tm-menu-activator" aria-label="Log actions" />
+                </ActivatorContent>
+                <ChildContent>
+                    @if(DebugMode())
+                    {
+                        <MudMenuItem @onclick="OpenCustomDialog">@LocalizationService.GetString("CustomLogData")</MudMenuItem>
+                        <MudMenuItem @onclick="OpenForceReadDialog">@LocalizationService.GetString("ReadPreviousLogs")</MudMenuItem>
+                    }
+                    @if(LogsFolderSet())
+                    {
+                        <MudMenuItem @onclick="OpenLogsFolder">@LocalizationService.GetString("OpenLogsFolder")</MudMenuItem>
+                    }
+                </ChildContent>
+            </MudMenu>
+        </div>
+    }
+</MudGrid>
+
+@code {
+    [CascadingParameter(Name="AppLayout")]
+    public AppLayout AppLayout { get; set; }
+
+    //private int messageCount = 0;
+
+    private void OpenCustomDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
+        DialogService.ShowAsync<CustomLogDialog>("Process custom log data", options);
+    }
+
+    private void OpenForceReadDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = false, BackdropClick = false, MaxWidth = MaxWidth.ExtraLarge, FullWidth = true };
+        DialogService.ShowAsync<ForceReadDialog>("Read past log files", options);
+    }
+
+    private void OpenLogsFolder()
+    {
+        Process.Start("explorer.exe", eft.CurrentLogsFolder);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            AppLayout.SetTitle(LocalizationService.GetString("RawLogs"));
+        }
+    }
+
+    public void Dispose()
+    {
+    }
+
+    private bool DebugMode()
+    {
+        return Debugger.IsAttached;
+    }
+
+    private bool LogsFolderSet()
+    {
+        return eft.CurrentLogsFolder != "";
+    }
+}

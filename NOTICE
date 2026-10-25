@@ -1,4 +1,4 @@
-Tarkov Personal Companion
+leaf0329 Tarkov Companion — Integrated Edition
 Copyright (C) 2026 leaf0329
 Source: https://github.com/leaf0329/tarkov-companion
 SPDX-License-Identifier: AGPL-3.0-only
@@ -15,8 +15,13 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-This grant covers the original code, build scripts and documentation
-that leaf0329 owns or is authorized to license, including the original
-components of release v1.0.2. It imposes no additional noncommercial
-restriction. Third-party works retain their own licenses and rights;
-see desktop/PORTABLE-NOTICES.md and the notices accompanying those works.
+This grant covers the original code, build scripts, documentation and
+integration changes that leaf0329 owns or is authorized to license.
+It imposes no additional noncommercial restriction. Third-party works
+retain their own licenses and rights; see THIRD-PARTY-NOTICES.md and the
+notices accompanying those works.
+
+Release v2.0.0 (2026-10-26) replaces the previous standalone application
+with the local integrated edition based on TarkovTracker, TarkovMonitor
+and tarkov.dev. The upstream license files and corresponding sources are
+included under source/. The original releases remain in Git history.

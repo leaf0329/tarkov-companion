@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const dir=path.resolve('data/acceptance'),logs=path.join(dir,'Logs'),shots=path.join(dir,'Screenshots');
+if(fs.existsSync(dir))throw Error('Existing acceptance data preserved; move it before preparing a new fixture.');
+const session=path.join(logs,'log_2026.10.18_22-00-00_1.2.5.0');
+fs.mkdirSync(session,{recursive:true});fs.mkdirSync(shots);
+const map='56f40101d2720b2a4d8b45d6',scene=JSON.parse(fs.readFileSync('data/maps.json')).data.maps[map].scenePath;
+const line=(offset,text)=>new Date(Date.now()-10000+offset).toISOString().replace('T',' ').replace('Z',' +00:00')+'|1.2.5.0.48146|Info|application|'+text+'\n';
+fs.writeFileSync(path.join(session,'application_000.log'),line(0,'Session mode: Regular')+line(10,'PrepareSelectedProfileLocally ProfileId:bbbbbbbbbbbbbbbbbbbbbbbb AccountId:456')+line(20,'scene preset path:'+scene)+line(30,'GameStarted:10(0) real:10(0) diff:0'));
+fs.writeFileSync(path.join(session,'push-notifications_000.log'),'');
+fs.writeFileSync(path.join(dir,'companion.json'),JSON.stringify({settings:{logsPath:logs,screenshotsPath:shots,hotkey:'F10',opacity:85,interval:1,autoScreenshot:false,cleanupScreenshots:false,follow:true},selectedProfile:'aaaaaaaaaaaaaaaaaaaaaaaa',profiles:{aaaaaaaaaaaaaaaaaaaaaaaa:{tasks:{'5b4795fb86f7745876267770':{status:'active',at:200,source:'fixture'}},objectives:{},ui:{}}},ui:{}},null,2));

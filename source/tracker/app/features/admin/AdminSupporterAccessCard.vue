@@ -1,0 +1,137 @@
+<script setup lang="ts">
+  import { useSupporter } from '@/composables/useSupporter';
+  import { useSystemStoreWithSupabase } from '@/stores/useSystemStore';
+  import {
+    ADMIN_ERROR_CODES,
+    ADMIN_ERROR_LOCALE_KEYS,
+    getAdminErrorCode,
+  } from '@/utils/adminErrors';
+  import { refreshSupabaseSession } from '@/utils/supabaseAuth';
+  const { $supabase } = useNuxtApp();
+  const { t } = useI18n({ useScope: 'global' });
+  const toast = useToast();
+  const { fetchStatus } = useSupporter();
+  const { systemStore } = useSystemStoreWithSupabase();
+  type SupporterTier = 'supporter' | 'scav' | 'timmy' | 'chad';
+  const targetUserId = ref($supabase.user?.id ?? '');
+  const tier = ref<SupporterTier>('chad');
+  const enabled = ref(true);
+  const isSaving = ref(false);
+  const tierOptions = computed<Array<{ label: string; value: SupporterTier }>>(() => [
+    { label: t('common.supporter'), value: 'supporter' },
+    { label: t('common.scav'), value: 'scav' },
+    { label: t('common.timmy'), value: 'timmy' },
+    { label: t('common.chad'), value: 'chad' },
+  ]);
+  const canSave = computed(() => {
+    return systemStore.isAdmin && targetUserId.value.trim().length > 0 && !isSaving.value;
+  });
+  const errorDescription = (error: unknown): string => {
+    const code = getAdminErrorCode(error);
+    return code
+      ? t(ADMIN_ERROR_LOCALE_KEYS[code], 'Could not update supporter access.')
+      : t('admin.error.supporter_update_failed');
+  };
+  const applySupporterOverride = async () => {
+    if (!canSave.value) return;
+    isSaving.value = true;
+    try {
+      const sessionResp = await $supabase.client.auth.getSession();
+      let token = sessionResp.data.session?.access_token ?? null;
+      if (!token) {
+        // A failed refresh means no usable token. Fall through to the
+        // authentication-required message instead of the generic failure.
+        const refreshed = await refreshSupabaseSession($supabase.client).catch(() => null);
+        token = refreshed?.access_token ?? null;
+      }
+      if (!token) {
+        toast.add({
+          title: t('common.update_failed', 'Update failed'),
+          description: t(
+            ADMIN_ERROR_LOCALE_KEYS[ADMIN_ERROR_CODES.AUTHENTICATION_REQUIRED],
+            'You must be signed in to continue.'
+          ),
+          color: 'error',
+          icon: 'i-mdi-alert-circle',
+        });
+        return;
+      }
+      await $fetch('/api/admin/supporter', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: {
+          enabled: enabled.value,
+          targetUserId: targetUserId.value.trim(),
+          tier: tier.value,
+        },
+      });
+      if (targetUserId.value.trim() === $supabase.user?.id) {
+        await fetchStatus(targetUserId.value.trim());
+      }
+      toast.add({
+        title: t('admin.supporter_override_saved_title'),
+        description: enabled.value
+          ? t('admin.supporter_override_enabled_description', { tier: tier.value })
+          : t('admin.supporter_override_disabled_description'),
+        color: 'success',
+        icon: 'i-mdi-check-circle',
+      });
+    } catch (error) {
+      toast.add({
+        title: t('common.update_failed', 'Update failed'),
+        description: errorDescription(error),
+        color: 'error',
+        icon: 'i-mdi-alert-circle',
+      });
+    } finally {
+      isSaving.value = false;
+    }
+  };
+</script>
+<template>
+  <GenericCard
+    icon="i-mdi-credit-card-check"
+    icon-color="success"
+    highlight-color="primary"
+    :fill-height="false"
+    :title="t('admin.supporter_override_title')"
+    title-classes="text-lg font-semibold"
+  >
+    <template #content>
+      <div class="space-y-4 px-4 py-4">
+        <p class="text-surface-300 text-sm">
+          {{ t('admin.supporter_override_description') }}
+        </p>
+        <UFormField name="targetUserId" :label="t('admin.supporter_target_user_label')">
+          <UInput
+            v-model="targetUserId"
+            class="w-full"
+            :placeholder="t('admin.supporter_target_user_placeholder')"
+          />
+        </UFormField>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <UFormField name="supporterTier" :label="t('admin.supporter_tier_label')">
+            <SelectMenuFixed v-model="tier" :items="tierOptions" value-key="value" />
+          </UFormField>
+          <div class="flex items-end">
+            <USwitch
+              v-model="enabled"
+              :label="enabled ? t('common.enabled', 'Enabled') : t('common.disabled', 'Disabled')"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <UButton
+            color="primary"
+            icon="i-mdi-content-save"
+            :disabled="!canSave"
+            :loading="isSaving"
+            @click="applySupporterOverride"
+          >
+            {{ t('common.apply') }}
+          </UButton>
+        </div>
+      </div>
+    </template>
+  </GenericCard>
+</template>

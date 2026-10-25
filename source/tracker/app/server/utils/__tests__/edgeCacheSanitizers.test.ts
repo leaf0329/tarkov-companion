@@ -1,0 +1,34 @@
+import { describe, expect, it } from 'vitest';
+import { sanitizeErrorMessage, sanitizeVariables } from '@/server/utils/edgeCacheSanitizers';
+describe('edge cache sanitizers', () => {
+  it('sanitizes host and path details from error messages', () => {
+    const urlMessage = 'query failed at https://api.example.com/private/file.sql';
+    const pathMessage = 'query failed at /var/tmp/private/file.sql';
+    expect(sanitizeErrorMessage(urlMessage)).toContain('[host]');
+    expect(sanitizeErrorMessage(pathMessage)).toContain('[path]');
+  });
+  it('redacts sensitive keys recursively', () => {
+    const result = sanitizeVariables({
+      accessToken: 'abc',
+      apiKey: 'abc',
+      clientSecret: 'abc',
+      idToken: 'abc',
+      nested: {
+        privateKey: 'abc',
+        token: 'abc',
+      },
+      userId: '42',
+    });
+    expect(result).toEqual({
+      accessToken: '[redacted]',
+      apiKey: '[redacted]',
+      clientSecret: '[redacted]',
+      idToken: '[redacted]',
+      nested: {
+        privateKey: '[redacted]',
+        token: '[redacted]',
+      },
+      userId: '[redacted]',
+    });
+  });
+});

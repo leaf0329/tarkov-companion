@@ -1,0 +1,575 @@
+// @vitest-environment happy-dom
+import { mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { invalidateStartupOwnership } from '@/stores/tarkov/startupOwnership';
+import type { GameMode } from '@/utils/constants';
+import type { TarkovDevImportResult } from '@/utils/tarkovDevProfileParser';
+const { importSession } = vi.hoisted(() => ({
+  importSession: { userId: 'user-1', loggedIn: true },
+}));
+mockNuxtImport('useNuxtApp', () => () => ({ $supabase: { user: importSession } }));
+vi.mock('@/utils/userScopedStorage', () => ({
+  getCurrentSupabaseUserId: () => importSession.userId,
+}));
+const mockFetch = vi.fn();
+const mockParseTarkovDevProfile = vi.fn();
+const mockSetTotalSkillLevel = vi.fn();
+const mockSetTotalXP = vi.fn();
+const { mockGetImportCooldownRemainingMs, mockRecordImportCompletion, mockUseRuntimeConfig } =
+  vi.hoisted(() => ({
+    mockGetImportCooldownRemainingMs: vi.fn(),
+    mockRecordImportCompletion: vi.fn(),
+    mockUseRuntimeConfig: vi.fn(),
+  }));
+mockNuxtImport('useRuntimeConfig', () => mockUseRuntimeConfig);
+mockNuxtImport('useI18n', () => () => ({ t: (key: string) => key }));
+vi.mock('@/utils/tarkovDevImportCooldown', () => ({
+  getImportCooldownRemainingMs: mockGetImportCooldownRemainingMs,
+  recordImportCompletion: mockRecordImportCompletion,
+}));
+const mockLogger = {
+  debug: vi.fn(),
+  error: vi.fn(),
+  info: vi.fn(),
+  warn: vi.fn(),
+};
+const tarkovStore = {
+  getCurrentGameMode: vi.fn<() => GameMode>(() => 'pvp'),
+  getTarkovUid: vi.fn<() => number | null>(),
+  saveProgressNow: vi.fn<() => Promise<boolean>>(),
+  setDisplayName: vi.fn(),
+  setGameEdition: vi.fn(),
+  setLevel: vi.fn(),
+  setPMCFaction: vi.fn(),
+  setPrestigeLevel: vi.fn(),
+  syncPvpPrestigeLevel: vi.fn(),
+  setTarkovUid: vi.fn(),
+  switchGameMode: vi.fn(),
+};
+const metadataStore = {
+  playerLevels: [
+    { exp: 0, level: 1 },
+    { exp: 1000, level: 5 },
+    { exp: 2500, level: 12 },
+  ],
+};
+vi.mock('@/composables/useSkillCalculation', () => ({
+  useSkillCalculation: () => ({
+    setTotalSkillLevel: mockSetTotalSkillLevel,
+  }),
+}));
+vi.mock('@/composables/useXpCalculation', () => ({
+  useXpCalculation: () => ({
+    setTotalXP: mockSetTotalXP,
+  }),
+}));
+vi.mock('@/stores/useMetadata', () => ({
+  useMetadataStore: () => metadataStore,
+}));
+vi.mock('@/stores/useTarkov', () => ({
+  useTarkovStore: () => tarkovStore,
+}));
+vi.mock('@/utils/logger', () => ({
+  logger: mockLogger,
+}));
+vi.mock('@/utils/tarkovDevProfileParser', () => ({
+  parseTarkovDevProfile: mockParseTarkovDevProfile,
+}));
+const createImportData = (
+  overrides: Partial<TarkovDevImportResult> = {}
+): TarkovDevImportResult => ({
+  displayName: 'TestPlayer',
+  gameEditionGuess: 4,
+  pmcFaction: 'USEC',
+  prestigeLevel: 2,
+  skills: {
+    Endurance: 10,
+    Strength: 15,
+  },
+  tarkovUid: 1234567,
+  totalXP: 3000,
+  updatedAt: null,
+  ...overrides,
+});
+const createFile = (text: string): File =>
+  ({
+    text: vi.fn().mockResolvedValue(text),
+  }) as unknown as File;
+const loadComposable = async () => {
+  const module = await import('@/composables/useTarkovDevImport');
+  return module.useTarkovDevImport();
+};
+describe('useTarkovDevImport', () => {
+  it.each(['account-switch', 'same-account-reset', 'logout-before-auth-watcher'])(
+    'does not finish or restore modes after %s',
+    async (transition) => {
+      mockParseTarkovDevProfile.mockReturnValue({ data: createImportData(), ok: true });
+      let resolve!: (saved: boolean) => void;
+      tarkovStore.saveProgressNow.mockImplementation(
+        () =>
+          new Promise<boolean>((done) => {
+            resolve = done;
+          })
+      );
+      const composable = await loadComposable();
+      await composable.parseFile(createFile('{}'));
+      const pending = composable.confirmImport('pve');
+      await Promise.resolve();
+      if (transition === 'account-switch') importSession.userId = 'user-2';
+      else if (transition === 'same-account-reset') invalidateStartupOwnership();
+      else importSession.loggedIn = false;
+      resolve(true);
+      await pending;
+      expect(composable.importState.value).toBe('preview');
+      expect(tarkovStore.switchGameMode).toHaveBeenCalledTimes(1);
+      expect(mockRecordImportCompletion).not.toHaveBeenCalled();
+    }
+  );
+  it.each(['cancel', 'new-preview'])(
+    'ignores a pending save completion after %s',
+    async (action) => {
+      mockParseTarkovDevProfile.mockReturnValue({ data: createImportData(), ok: true });
+      let resolve!: (saved: boolean) => void;
+      tarkovStore.saveProgressNow.mockImplementation(
+        () =>
+          new Promise<boolean>((done) => {
+            resolve = done;
+          })
+      );
+      const composable = await loadComposable();
+      await composable.parseFile(createFile('{}'));
+      const pending = composable.confirmImport('pvp');
+      if (action === 'cancel') composable.reset();
+      else await composable.parseFile(createFile('{}'));
+      resolve(true);
+      await pending;
+      expect(composable.importState.value).toBe(action === 'cancel' ? 'idle' : 'preview');
+    }
+  );
+  it('only confirms a preview once while its save is pending', async () => {
+    mockParseTarkovDevProfile.mockReturnValue({ data: createImportData(), ok: true });
+    let resolve!: (saved: boolean) => void;
+    tarkovStore.saveProgressNow.mockImplementation(
+      () =>
+        new Promise<boolean>((done) => {
+          resolve = done;
+        })
+    );
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{}'));
+    const pending = composable.confirmImport('pvp');
+    const duplicate = composable.confirmImport('pvp');
+    expect(tarkovStore.saveProgressNow).toHaveBeenCalledTimes(1);
+    resolve(true);
+    await Promise.all([pending, duplicate]);
+  });
+  beforeEach(() => {
+    importSession.userId = 'user-1';
+    importSession.loggedIn = true;
+    vi.resetAllMocks();
+    vi.stubGlobal('$fetch', mockFetch);
+    tarkovStore.getCurrentGameMode.mockReturnValue('pvp');
+    let linkedUid: number | null = null;
+    tarkovStore.setTarkovUid.mockImplementation((uid: number | null) => {
+      linkedUid = uid;
+    });
+    tarkovStore.getTarkovUid.mockImplementation(() => linkedUid);
+    tarkovStore.saveProgressNow.mockResolvedValue(true);
+    mockGetImportCooldownRemainingMs.mockReturnValue(0);
+    mockUseRuntimeConfig.mockReturnValue({
+      public: { tarkovDevImportCooldownMinutes: 60 },
+    });
+    metadataStore.playerLevels = [
+      { exp: 0, level: 1 },
+      { exp: 1000, level: 5 },
+      { exp: 2500, level: 12 },
+    ];
+  });
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+  it('sets preview state when file parses successfully', async () => {
+    const parsedData = createImportData();
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    expect(mockParseTarkovDevProfile).toHaveBeenCalledWith({ aid: 123 });
+    expect(composable.importState.value).toBe('preview');
+    expect(composable.previewData.value).toEqual(parsedData);
+    expect(composable.importError.value).toBeNull();
+  });
+  it('sets error state when parser returns validation error', async () => {
+    mockParseTarkovDevProfile.mockReturnValue({
+      error: 'Invalid tarkov.dev profile format',
+      ok: false,
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"foo":"bar"}'));
+    expect(composable.importState.value).toBe('error');
+    expect(composable.previewData.value).toBeNull();
+    expect(composable.importError.value).toBe('Invalid tarkov.dev profile format');
+  });
+  it('sets error state when JSON parsing throws', async () => {
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{invalid-json'));
+    expect(composable.importState.value).toBe('error');
+    expect(composable.importError.value).toBe('Failed to read or parse JSON file');
+    expect(mockLogger.error).toHaveBeenCalledWith(
+      '[TarkovDevImport] Parse error:',
+      expect.any(Error)
+    );
+  });
+  it('fetches and previews a tarkov.dev profile url', async () => {
+    const parsedData = createImportData({ tarkovUid: 8560316 });
+    mockFetch.mockResolvedValue({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    const composable = await loadComposable();
+    const source = await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(mockFetch).toHaveBeenCalledWith('/api/tarkov-dev/profile', {
+      query: { url: 'https://players.tarkov.dev/profile/8560316.json' },
+      retry: 0,
+    });
+    expect(mockParseTarkovDevProfile).toHaveBeenCalledWith({ aid: 8560316 });
+    expect(source).toEqual({
+      mode: 'pvp',
+      profileJsonUrl: 'https://players.tarkov.dev/profile/8560316.json',
+      tarkovUid: 8560316,
+    });
+    expect(composable.importState.value).toBe('preview');
+    expect(composable.previewData.value).toEqual(parsedData);
+    expect(composable.importError.value).toBeNull();
+  });
+  it('returns the pve public json source for a tarkov.dev pve profile url', async () => {
+    mockFetch.mockResolvedValue({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    const composable = await loadComposable();
+    const source = await composable.parseProfileUrl('https://tarkov.dev/players/pve/8560316');
+    expect(mockFetch).toHaveBeenCalledWith('/api/tarkov-dev/profile', {
+      query: { url: 'https://players.tarkov.dev/pve/8560316.json' },
+      retry: 0,
+    });
+    expect(source).toEqual({
+      mode: 'pve',
+      profileJsonUrl: 'https://players.tarkov.dev/pve/8560316.json',
+      tarkovUid: 8560316,
+    });
+  });
+  it('rejects invalid tarkov.dev profile urls before fetching', async () => {
+    const composable = await loadComposable();
+    const source = await composable.parseProfileUrl('https://example.com/players/regular/8560316');
+    expect(source).toBeNull();
+    expect(mockFetch).not.toHaveBeenCalled();
+    expect(composable.importState.value).toBe('error');
+    expect(composable.previewData.value).toBeNull();
+    expect(composable.importError.value).toBe(
+      'Paste a Tarkov.dev player profile URL like https://tarkov.dev/players/regular/8560316.'
+    );
+  });
+  it('sets error state when profile url fetching fails', async () => {
+    mockFetch.mockRejectedValue(new Error('not found'));
+    const composable = await loadComposable();
+    const source = await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(source).toBeNull();
+    expect(composable.importState.value).toBe('error');
+    expect(composable.importError.value).toBe(
+      'Unable to fetch Tarkov.dev profile. Open the profile on Tarkov.dev, then try again.'
+    );
+    expect(composable.importErrorCode.value).toBe('fetch_failed');
+    expect(mockLogger.error).toHaveBeenCalledWith(
+      '[TarkovDevImport] Profile URL fetch error:',
+      expect.any(Error)
+    );
+  });
+  it('sends the Turnstile token header when a token is provided', async () => {
+    mockFetch.mockResolvedValue({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316', {
+      turnstileToken: 'turnstile-token',
+    });
+    expect(mockFetch).toHaveBeenCalledWith('/api/tarkov-dev/profile', {
+      headers: { 'x-turnstile-token': 'turnstile-token' },
+      query: { url: 'https://players.tarkov.dev/profile/8560316.json' },
+      retry: 0,
+    });
+  });
+  it('blocks re-imports while the client cooldown is active', async () => {
+    mockGetImportCooldownRemainingMs.mockReturnValue(30 * 60_000);
+    const composable = await loadComposable();
+    const source = await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(source).toBeNull();
+    expect(mockFetch).not.toHaveBeenCalled();
+    expect(composable.importErrorCode.value).toBe('cooldown_active');
+    expect(composable.importErrorMeta.value).toEqual({ minutes: 30 });
+  });
+  it('maps upstream 404 responses to the profile_not_generated code', async () => {
+    mockFetch.mockRejectedValue(
+      Object.assign(new Error('not found'), {
+        data: { data: { code: 'profile_not_generated' } },
+        statusCode: 404,
+      })
+    );
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(composable.importErrorCode.value).toBe('profile_not_generated');
+  });
+  it('maps rate limit responses to a minutes hint', async () => {
+    mockFetch.mockRejectedValue(
+      Object.assign(new Error('too many requests'), {
+        data: { data: { code: 'rate_limited', retryAfterSeconds: 3600 } },
+        statusCode: 429,
+      })
+    );
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(composable.importErrorCode.value).toBe('rate_limited');
+    expect(composable.importErrorMeta.value).toEqual({ minutes: 60 });
+  });
+  it('requests a fresh copy after a stale-profile rejection', async () => {
+    mockFetch.mockRejectedValueOnce(
+      Object.assign(new Error('stale'), {
+        data: { data: { ageDays: 12, code: 'profile_stale' } },
+        statusCode: 422,
+      })
+    );
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(composable.importErrorCode.value).toBe('profile_stale');
+    expect(composable.importErrorMeta.value).toEqual({ days: 12 });
+    mockFetch.mockResolvedValueOnce({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(mockFetch).toHaveBeenLastCalledWith('/api/tarkov-dev/profile', {
+      query: { fresh: '1', url: 'https://players.tarkov.dev/profile/8560316.json' },
+      retry: 0,
+    });
+  });
+  it('clears a pending stale retry when the import flow is reset', async () => {
+    mockFetch.mockRejectedValueOnce(
+      Object.assign(new Error('stale'), {
+        data: { data: { ageDays: 12, code: 'profile_stale' } },
+        statusCode: 422,
+      })
+    );
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    composable.reset();
+    mockFetch.mockResolvedValueOnce({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    await composable.parseProfileUrl('https://tarkov.dev/players/regular/8560316');
+    expect(mockFetch).toHaveBeenLastCalledWith('/api/tarkov-dev/profile', {
+      query: { url: 'https://players.tarkov.dev/profile/8560316.json' },
+      retry: 0,
+    });
+  });
+  it('records the client cooldown after confirming a url import', async () => {
+    mockFetch.mockResolvedValue({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/pve/8560316');
+    await composable.confirmImport('pve');
+    expect(mockRecordImportCompletion).toHaveBeenCalledWith(8560316, 'pve', 60 * 60_000);
+  });
+  it('fetches and imports a seasonal pvp profile into seasonal progress', async () => {
+    mockFetch.mockResolvedValue({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/pvp-season/8560316');
+    await composable.confirmImport('seasonal');
+    expect(mockFetch).toHaveBeenCalledWith('/api/tarkov-dev/profile', {
+      query: { url: 'https://players.tarkov.dev/pvp-season/8560316.json' },
+      retry: 0,
+    });
+    expect(tarkovStore.switchGameMode).toHaveBeenNthCalledWith(1, 'seasonal');
+    expect(tarkovStore.setTarkovUid).toHaveBeenCalledWith(8560316);
+    expect(mockRecordImportCompletion).toHaveBeenCalledWith(8560316, 'seasonal', 60 * 60_000);
+    expect(tarkovStore.switchGameMode).toHaveBeenNthCalledWith(2, 'pvp');
+    expect(composable.importState.value).toBe('success');
+  });
+  it('reports a UID owned by another account instead of success', async () => {
+    mockFetch.mockResolvedValue({ aid: 8560316 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData({ tarkovUid: 8560316 }),
+      ok: true,
+    });
+    tarkovStore.saveProgressNow.mockImplementation(async () => {
+      tarkovStore.setTarkovUid(null);
+      return true;
+    });
+    const composable = await loadComposable();
+    await composable.parseProfileUrl('https://tarkov.dev/players/pve/8560316');
+    await composable.confirmImport('pve');
+    expect(composable.importState.value).toBe('error');
+    expect(composable.importErrorCode.value).toBe('tarkov_uid_conflict');
+    expect(mockRecordImportCompletion).not.toHaveBeenCalled();
+  });
+  it('does not report success before the import is saved', async () => {
+    mockParseTarkovDevProfile.mockReturnValue({ data: createImportData(), ok: true });
+    tarkovStore.saveProgressNow.mockResolvedValue(false);
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pvp');
+    expect(composable.importState.value).toBe('error');
+    expect(composable.importErrorCode.value).toBe('save_failed');
+  });
+  it('does not record a cooldown for file imports', async () => {
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: createImportData(),
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pvp');
+    expect(mockRecordImportCompletion).not.toHaveBeenCalled();
+  });
+  it('applies imported profile data and restores the original mode', async () => {
+    const parsedData = createImportData({
+      gameEditionGuess: 5,
+      totalXP: 2600,
+    });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    tarkovStore.getCurrentGameMode.mockReturnValue('pvp');
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pve', 6);
+    expect(tarkovStore.setTarkovUid).toHaveBeenCalledWith(parsedData.tarkovUid);
+    expect(tarkovStore.switchGameMode).toHaveBeenNthCalledWith(1, 'pve');
+    expect(tarkovStore.setPMCFaction).toHaveBeenCalledWith(parsedData.pmcFaction);
+    expect(tarkovStore.setDisplayName).toHaveBeenCalledWith(parsedData.displayName);
+    expect(tarkovStore.setPrestigeLevel).toHaveBeenCalledWith(parsedData.prestigeLevel);
+    expect(tarkovStore.syncPvpPrestigeLevel).not.toHaveBeenCalled();
+    const switchModeOrder = tarkovStore.switchGameMode.mock.invocationCallOrder[0];
+    const setPrestigeOrder = tarkovStore.setPrestigeLevel.mock.invocationCallOrder[0];
+    expect(switchModeOrder).toBeDefined();
+    expect(setPrestigeOrder).toBeDefined();
+    expect(switchModeOrder!).toBeLessThan(setPrestigeOrder!);
+    expect(mockSetTotalXP).toHaveBeenCalledWith(parsedData.totalXP);
+    expect(tarkovStore.setLevel).toHaveBeenCalledWith(12);
+    expect(mockSetTotalSkillLevel).toHaveBeenCalledWith('Endurance', 10);
+    expect(mockSetTotalSkillLevel).toHaveBeenCalledWith('Strength', 15);
+    expect(tarkovStore.setGameEdition).toHaveBeenCalledWith(6);
+    expect(tarkovStore.switchGameMode).toHaveBeenNthCalledWith(2, 'pvp');
+    expect(composable.importState.value).toBe('success');
+    expect(composable.importError.value).toBeNull();
+  });
+  it('uses guessed edition when no override is provided', async () => {
+    const parsedData = createImportData({ gameEditionGuess: 4 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pvp');
+    expect(tarkovStore.setGameEdition).toHaveBeenCalledWith(4);
+  });
+  it('defaults to level 1 when totalXP is zero', async () => {
+    const parsedData = createImportData({ totalXP: 0 });
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pvp');
+    expect(mockSetTotalXP).toHaveBeenCalledWith(0);
+    expect(tarkovStore.setLevel).toHaveBeenCalledWith(1);
+  });
+  it('sets error state when applying import data throws', async () => {
+    const parsedData = createImportData();
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    tarkovStore.setDisplayName.mockImplementationOnce(() => {
+      throw new Error('write failure');
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pvp');
+    expect(composable.importState.value).toBe('error');
+    expect(composable.importError.value).toBe('Failed to apply import data');
+    expect(mockLogger.error).toHaveBeenCalledWith(
+      '[TarkovDevImport] Import error:',
+      expect.any(Error)
+    );
+  });
+  it('restores original mode when import fails after switching mode', async () => {
+    const parsedData = createImportData();
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    tarkovStore.getCurrentGameMode.mockReturnValue('pvp');
+    tarkovStore.setDisplayName.mockImplementationOnce(() => {
+      throw new Error('write failure');
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pve');
+    expect(tarkovStore.switchGameMode).toHaveBeenNthCalledWith(1, 'pve');
+    expect(tarkovStore.switchGameMode).toHaveBeenNthCalledWith(2, 'pvp');
+    expect(composable.importState.value).toBe('error');
+    expect(composable.importError.value).toBe('Failed to apply import data');
+  });
+  it('keeps success state when mode restoration fails', async () => {
+    const parsedData = createImportData();
+    mockParseTarkovDevProfile.mockReturnValue({
+      data: parsedData,
+      ok: true,
+    });
+    tarkovStore.getCurrentGameMode.mockReturnValue('pvp');
+    tarkovStore.switchGameMode
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValueOnce(new Error('restore failure'));
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"aid":123}'));
+    await composable.confirmImport('pve');
+    expect(composable.importState.value).toBe('success');
+    expect(composable.importError.value).toBeNull();
+    expect(mockLogger.error).toHaveBeenCalledWith(
+      '[TarkovDevImport] Failed to restore original game mode:',
+      expect.any(Error)
+    );
+  });
+  it('resets preview and errors back to idle', async () => {
+    mockParseTarkovDevProfile.mockReturnValue({
+      error: 'Invalid tarkov.dev profile format',
+      ok: false,
+    });
+    const composable = await loadComposable();
+    await composable.parseFile(createFile('{"foo":"bar"}'));
+    expect(composable.importState.value).toBe('error');
+    composable.reset();
+    expect(composable.importState.value).toBe('idle');
+    expect(composable.previewData.value).toBeNull();
+    expect(composable.importError.value).toBeNull();
+  });
+});

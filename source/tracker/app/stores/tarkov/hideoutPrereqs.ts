@@ -1,0 +1,338 @@
+import { useToastI18n } from '@/composables/useToastI18n';
+import { actions, type UserProgressData, type UserState } from '@/stores/progressState';
+import { coerceGameMode } from '@/stores/tarkov/progressMerge';
+import { useMetadataStore } from '@/stores/useMetadata';
+import { usePreferencesStore } from '@/stores/usePreferences';
+import { SPECIAL_STATIONS } from '@/utils/constants';
+import { logger } from '@/utils/logger';
+import {
+  buildSkillKeyAliases,
+  collapseSkillOffsets,
+  getCanonicalSkillKey,
+  resolveSkillKey,
+} from '@/utils/skillHelpers';
+import { compareRequirement, MAX_TRADER_LEVEL } from '@/utils/taskRequirements';
+import type { GameEdition, HideoutStation, Task } from '@/types/tarkov';
+type TarkovStoreInstance = UserState & {
+  $state: UserState;
+  $patch(partialOrMutator: Partial<UserState> | ((state: UserState) => void)): void;
+};
+type HideoutModuleMeta = {
+  id: string;
+  stationId: string;
+  level: number;
+  stationLevelRequirements: HideoutStation['levels'][number]['stationLevelRequirements'];
+  skillRequirements: HideoutStation['levels'][number]['skillRequirements'];
+  traderRequirements: HideoutStation['levels'][number]['traderRequirements'];
+  itemRequirementIds: string[];
+};
+const buildHideoutModuleMeta = (stations: HideoutStation[]): HideoutModuleMeta[] => {
+  const modules: HideoutModuleMeta[] = [];
+  for (const station of stations) {
+    for (const level of station.levels ?? []) {
+      modules.push({
+        id: level.id,
+        stationId: station.id,
+        level: level.level ?? 0,
+        stationLevelRequirements: level.stationLevelRequirements ?? [],
+        skillRequirements: level.skillRequirements ?? [],
+        traderRequirements: level.traderRequirements ?? [],
+        itemRequirementIds: level.itemRequirements?.map((req) => req.id) ?? [],
+      });
+    }
+  }
+  return modules;
+};
+const getStationBaseLevel = (station: HideoutStation, edition: GameEdition | undefined) => {
+  const maxLevel = station.levels?.length ?? 0;
+  if (station.normalizedName === SPECIAL_STATIONS.STASH) {
+    return Math.min(edition?.defaultStashLevel ?? 0, maxLevel);
+  }
+  if (station.normalizedName === SPECIAL_STATIONS.CULTIST_CIRCLE) {
+    return Math.min(edition?.defaultCultistCircleLevel ?? 0, maxLevel);
+  }
+  return 0;
+};
+type HideoutCheckOptions = {
+  requireStationLevels: boolean;
+  requireSkillLevels: boolean;
+  requireTraderLoyalty: boolean;
+  skills: Record<string, number>;
+  skillKeyAliases: ReadonlyMap<string, string>;
+  traders: Record<string, { level?: number }>;
+};
+const checkStationReqsMet = (
+  module: HideoutModuleMeta,
+  stationLevels: Map<string, number>,
+  options: HideoutCheckOptions
+): boolean => {
+  if (!options.requireStationLevels) return true;
+  return (
+    module.stationLevelRequirements?.every((req) => {
+      const requiredLevel = stationLevels.get(req.station.id) ?? 0;
+      return requiredLevel >= req.level;
+    }) ?? true
+  );
+};
+const checkSkillReqsMet = (module: HideoutModuleMeta, options: HideoutCheckOptions): boolean => {
+  if (!options.requireSkillLevels) return true;
+  return (
+    module.skillRequirements?.every((req) => {
+      if (!req?.name || typeof req?.level !== 'number') return true;
+      const canonicalKey = getCanonicalSkillKey(req.name, req.skill?.id) ?? req.name;
+      const skillKey = resolveSkillKey(canonicalKey, options.skillKeyAliases);
+      const playerSkillLevel = options.skills?.[skillKey] ?? 0;
+      return playerSkillLevel >= req.level;
+    }) ?? true
+  );
+};
+const loyaltyLevels = Array.from({ length: MAX_TRADER_LEVEL }, (_, index) => index + 1);
+const checkTraderReqsMet = (module: HideoutModuleMeta, options: HideoutCheckOptions): boolean => {
+  if (!options.requireTraderLoyalty) return true;
+  return (
+    module.traderRequirements?.every((req) => {
+      if (!req?.trader?.id || typeof req?.value !== 'number') return true;
+      const playerTraderLevel = options.traders?.[req.trader.id]?.level ?? 1;
+      // Building is permanent when loyalty increases past an upper-bound requirement.
+      const compareMethod = req.compareMethod ?? '>=';
+      return (
+        compareRequirement(playerTraderLevel, compareMethod, req.value) ||
+        loyaltyLevels.some(
+          (level) =>
+            level <= playerTraderLevel && compareRequirement(level, compareMethod, req.value)
+        )
+      );
+    }) ?? true
+  );
+};
+const computeNextLevelsAndValidModules = (
+  stations: HideoutStation[],
+  modulesByStation: Map<string, HideoutModuleMeta[]>,
+  baseLevels: Map<string, number>,
+  stationLevels: Map<string, number>,
+  completedModuleIds: Set<string>,
+  options: HideoutCheckOptions
+): { nextLevels: Map<string, number>; nextValidModules: Set<string> } => {
+  const nextLevels = new Map(baseLevels);
+  const nextValidModules = new Set<string>();
+  for (const station of stations) {
+    const baseLevel = baseLevels.get(station.id) ?? 0;
+    let currentLevel = baseLevel;
+    const stationModules = modulesByStation.get(station.id) ?? [];
+    for (const module of stationModules) {
+      if (module.level <= baseLevel) {
+        if (completedModuleIds.has(module.id)) {
+          nextValidModules.add(module.id);
+        }
+        continue;
+      }
+      if (!completedModuleIds.has(module.id)) break;
+      const stationReqsMet = checkStationReqsMet(module, stationLevels, options);
+      const skillReqsMet = checkSkillReqsMet(module, options);
+      const traderReqsMet = checkTraderReqsMet(module, options);
+      if (stationReqsMet && skillReqsMet && traderReqsMet) {
+        currentLevel = module.level;
+        nextValidModules.add(module.id);
+      } else {
+        break;
+      }
+    }
+    nextLevels.set(station.id, currentLevel);
+  }
+  return { nextLevels, nextValidModules };
+};
+const resolveValidHideoutModules = (
+  modules: HideoutModuleMeta[],
+  stations: HideoutStation[],
+  completedModuleIds: Set<string>,
+  edition: GameEdition | undefined,
+  options: HideoutCheckOptions
+) => {
+  const modulesByStation = new Map<string, HideoutModuleMeta[]>();
+  for (const module of modules) {
+    const list = modulesByStation.get(module.stationId) ?? [];
+    list.push(module);
+    modulesByStation.set(module.stationId, list);
+  }
+  for (const list of modulesByStation.values()) {
+    list.sort((a, b) => a.level - b.level);
+  }
+  const baseLevels = new Map<string, number>();
+  for (const station of stations) {
+    baseLevels.set(station.id, getStationBaseLevel(station, edition));
+  }
+  let stationLevels = new Map(baseLevels);
+  let validModules = new Set<string>();
+  const maxIterations = Math.max(5, modules.length * 2);
+  let iterations = 0;
+  for (; iterations < maxIterations; iterations++) {
+    const { nextLevels, nextValidModules } = computeNextLevelsAndValidModules(
+      stations,
+      modulesByStation,
+      baseLevels,
+      stationLevels,
+      completedModuleIds,
+      options
+    );
+    const levelsStable =
+      stationLevels.size === nextLevels.size &&
+      Array.from(stationLevels.entries()).every(
+        ([stationId, level]) => nextLevels.get(stationId) === level
+      );
+    const modulesStable =
+      validModules.size === nextValidModules.size &&
+      Array.from(validModules).every((moduleId) => nextValidModules.has(moduleId));
+    stationLevels = nextLevels;
+    validModules = nextValidModules;
+    if (levelsStable && modulesStable) break;
+  }
+  if (iterations >= maxIterations) {
+    logger.warn('[TarkovStore] Hideout validation hit iteration cap.', {
+      iterations,
+      maxIterations,
+      validModulesCount: validModules.size,
+      stationLevels: Object.fromEntries(stationLevels.entries()),
+    });
+  }
+  return validModules;
+};
+const computeTotalSkills = (
+  currentData: UserProgressData,
+  tasks: Task[],
+  skillKeyAliases: ReadonlyMap<string, string>
+): Record<string, number> => {
+  const result: Record<string, number> = {};
+  const completions = currentData.taskCompletions ?? {};
+  for (const task of tasks) {
+    if (!completions[task.id]?.complete || completions[task.id]?.failed) continue;
+    const skillRewards = task.finishRewards?.skillLevelReward ?? [];
+    for (const reward of skillRewards) {
+      const skillKey = getCanonicalSkillKey(reward?.name, reward?.skill?.id);
+      if (!skillKey) continue;
+      result[skillKey] = (result[skillKey] ?? 0) + (reward.level ?? 0);
+    }
+  }
+  const offsets = currentData.skillOffsets ?? {};
+  const collapsedOffsets = collapseSkillOffsets(offsets, (skillName) =>
+    resolveSkillKey(skillName, skillKeyAliases)
+  );
+  collapsedOffsets.forEach((entry, skillKey) => {
+    result[skillKey] = (result[skillKey] ?? 0) + entry.offset;
+  });
+  return result;
+};
+const collectCompletedModuleIds = (currentData: UserProgressData): Set<string> =>
+  new Set(
+    Object.entries(currentData.hideoutModules ?? {})
+      .filter(([, state]) => state?.complete)
+      .map(([moduleId]) => moduleId)
+  );
+const collectRemovedModules = (
+  completedModuleIds: Set<string>,
+  validModules: Set<string>
+): Set<string> =>
+  new Set([...completedModuleIds].filter((moduleId) => !validModules.has(moduleId)));
+const collectModuleItemIds = (
+  removedModules: Set<string>,
+  modules: HideoutModuleMeta[]
+): Set<string> => {
+  const modulesById = new Map(modules.map((module) => [module.id, module]));
+  return new Set(
+    [...removedModules].flatMap((moduleId) => modulesById.get(moduleId)?.itemRequirementIds ?? [])
+  );
+};
+const uncompleteModules = (
+  store: TarkovStoreInstance,
+  removedModules: Set<string>,
+  modules: HideoutModuleMeta[]
+): Set<string> => {
+  for (const moduleId of removedModules) actions.setHideoutModuleUncomplete.call(store, moduleId);
+  return collectModuleItemIds(removedModules, modules);
+};
+const resetHideoutPartItems = (store: TarkovStoreInstance, itemIds: Set<string>) => {
+  if (!itemIds.size) return;
+  store.$patch((state) => {
+    const currentData = state[coerceGameMode(state.currentGameMode)];
+    const hideoutParts =
+      currentData.hideoutParts && typeof currentData.hideoutParts === 'object'
+        ? currentData.hideoutParts
+        : {};
+    currentData.hideoutParts = hideoutParts;
+    for (const itemId of itemIds) {
+      const existing = hideoutParts[itemId];
+      hideoutParts[itemId] = {
+        ...(existing && typeof existing === 'object' ? existing : {}),
+        complete: false,
+      };
+    }
+  });
+};
+type HideoutEnforcementContext = {
+  completedModuleIds: Set<string>;
+  currentData: UserProgressData;
+  metadataStore: ReturnType<typeof useMetadataStore>;
+  modules: HideoutModuleMeta[];
+  options: Pick<
+    HideoutCheckOptions,
+    'requireSkillLevels' | 'requireStationLevels' | 'requireTraderLoyalty'
+  >;
+  stations: HideoutStation[];
+};
+const getHideoutRequirementOptions = (): HideoutEnforcementContext['options'] | null => {
+  const preferences = usePreferencesStore();
+  const options = {
+    requireSkillLevels: preferences.getHideoutRequireSkillLevels,
+    requireStationLevels: preferences.getHideoutRequireStationLevels,
+    requireTraderLoyalty: preferences.getHideoutRequireTraderLoyalty,
+  };
+  return Object.values(options).some(Boolean) ? options : null;
+};
+const buildProgressEnforcementContext = (
+  store: TarkovStoreInstance,
+  metadataStore: ReturnType<typeof useMetadataStore>,
+  stations: HideoutStation[],
+  options: HideoutEnforcementContext['options']
+): HideoutEnforcementContext | null => {
+  const currentData = store[coerceGameMode(store.currentGameMode)];
+  const completedModuleIds = collectCompletedModuleIds(currentData);
+  if (!completedModuleIds.size) return null;
+  const modules = buildHideoutModuleMeta(stations);
+  if (!modules.length) return null;
+  return { completedModuleIds, currentData, metadataStore, modules, options, stations };
+};
+const buildHideoutEnforcementContext = (
+  store: TarkovStoreInstance
+): HideoutEnforcementContext | null => {
+  const metadataStore = useMetadataStore();
+  const stations = metadataStore.hideoutStations;
+  if (!stations.length) return null;
+  const options = getHideoutRequirementOptions();
+  if (!options) return null;
+  return buildProgressEnforcementContext(store, metadataStore, stations, options);
+};
+export const notifyHideoutPrereqEnforcement = (removedCount: number) => {
+  if (!removedCount || !import.meta.client) return;
+  try {
+    const toastI18n = useToastI18n();
+    toastI18n.showHideoutUpdated(removedCount);
+  } catch (error) {
+    logger.warn('[TarkovStore] Could not show hideout enforcement toast:', error);
+  }
+};
+export const enforceHideoutPrereqs = (store: TarkovStoreInstance): string[] => {
+  const context = buildHideoutEnforcementContext(store);
+  if (!context) return [];
+  const { completedModuleIds, currentData, metadataStore, modules, options, stations } = context;
+  const edition = metadataStore.editions.find((entry) => entry.value === store.gameEdition);
+  const skillKeyAliases = buildSkillKeyAliases(metadataStore.tasks);
+  const validModules = resolveValidHideoutModules(modules, stations, completedModuleIds, edition, {
+    ...options,
+    skills: computeTotalSkills(currentData, metadataStore.tasks, skillKeyAliases),
+    skillKeyAliases,
+    traders: currentData.traders ?? {},
+  });
+  const removedModules = collectRemovedModules(completedModuleIds, validModules);
+  if (!removedModules.size) return [];
+  resetHideoutPartItems(store, uncompleteModules(store, removedModules, modules));
+  return Array.from(removedModules);
+};

@@ -1,0 +1,15 @@
+.loot-tier-wrapper {
+    flex-flow: column wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loot-tier-text {
+    margin: 0.75rem;
+    text-align: center;
+}
+
+.loot-tier-main-wrapper {
+    height: auto;
+}

@@ -1,0 +1,913 @@
+import { describe, expect, it, vi } from 'vitest';
+import { ref } from 'vue';
+import type { TaskEvaluationMap } from '@/stores/taskAvailability';
+import type { Task } from '@/types/tarkov';
+const { trackEventMock, trackTaskActionMock } = vi.hoisted(() => ({
+  trackEventMock: vi.fn(),
+  trackTaskActionMock: vi.fn(),
+}));
+const createTarkovStore = (options: {
+  playerLevel?: number;
+  objectiveCounts?: Record<string, number>;
+  isTaskComplete?: boolean | ((taskId: string) => boolean);
+  isTaskFailed?: boolean;
+  taskCompletions?: Record<string, unknown>;
+  storyChapters?: Record<string, { complete: boolean }>;
+  completeStoryObjectives?: string[];
+  traderLevels?: Record<string, number>;
+  traderReputations?: Record<string, number>;
+  traders?: Array<{ id: string; name: string; normalizedName: string }>;
+}) => {
+  const objectiveCounts = new Map<string, number>(Object.entries(options.objectiveCounts ?? {}));
+  return {
+    confirmTaskAvailability: vi.fn(),
+    isStoryObjectiveComplete: vi.fn((chapterId: string, objectiveId: string) =>
+      (options.completeStoryObjectives ?? []).includes(`${chapterId}/${objectiveId}`)
+    ),
+    setStoryObjectiveComplete: vi.fn(),
+    setTaskComplete: vi.fn(),
+    setTaskFailed: vi.fn(),
+    setTaskUncompleted: vi.fn(),
+    setTaskObjectiveComplete: vi.fn(),
+    setTaskObjectiveUncomplete: vi.fn(),
+    setObjectiveCount: vi.fn((objectiveId: string, count: number) => {
+      objectiveCounts.set(objectiveId, count);
+    }),
+    getObjectiveCount: vi.fn((objectiveId: string) => objectiveCounts.get(objectiveId) ?? 0),
+    getCurrentGameMode: vi.fn(() => 'pvp'),
+    playerLevel: vi.fn(() => options.playerLevel ?? 1),
+    setLevel: vi.fn(),
+    getTraderLevel: vi.fn((traderId: string) => options.traderLevels?.[traderId] ?? 1),
+    setTraderLevel: vi.fn(),
+    getTraderReputation: vi.fn((traderId: string) => options.traderReputations?.[traderId] ?? 0),
+    setTraderReputation: vi.fn(),
+    isTaskComplete: vi.fn((taskId: string) => {
+      if (typeof options.isTaskComplete === 'function') {
+        return options.isTaskComplete(taskId);
+      }
+      if (typeof options.isTaskComplete === 'boolean') {
+        return options.isTaskComplete;
+      }
+      const completion = options.taskCompletions?.[taskId];
+      if (!completion || typeof completion !== 'object') {
+        return false;
+      }
+      return (
+        (completion as { complete?: boolean }).complete === true &&
+        (completion as { failed?: boolean }).failed !== true
+      );
+    }),
+    isTaskFailed: vi.fn(() => options.isTaskFailed ?? false),
+    getCurrentProgressData: vi.fn(() => ({
+      taskCompletions: options.taskCompletions ?? {},
+      storyChapters: options.storyChapters,
+    })),
+  };
+};
+const createMetadataStore = (
+  tasks: Task[],
+  traders: Array<{ id: string; name: string; normalizedName: string }> = []
+) => ({
+  taskById: new Map(tasks.map((task) => [task.id, task])),
+  tasks,
+  traders,
+});
+/** A locked self evaluation reporting the task's direct prerequisites, as the evaluator would. */
+const selfEvaluation = (task: Task): TaskEvaluationMap => {
+  const requirements = Array.isArray(task.taskRequirements) ? task.taskRequirements : [];
+  const blockers = requirements.length ? [{ type: 'prerequisite' as const, requirements }] : [];
+  return { [task.id]: { self: { available: false, blockers } } };
+};
+const setup = async (
+  task: Task,
+  tasks: Task[],
+  options: Parameters<typeof createTarkovStore>[0],
+  preferencesOverrides: Partial<{
+    getPinnedTaskIds: string[];
+    getTasksRequireTraderLevels: boolean;
+  }> = {},
+  evaluations: TaskEvaluationMap = selfEvaluation(task)
+) => {
+  const onAction = vi.fn();
+  const progressStore = { taskEvaluations: evaluations };
+  const tarkovStore = createTarkovStore(options);
+  const metadataStore = createMetadataStore(tasks, options.traders);
+  const togglePinnedTask = vi.fn();
+  const preferencesStore = {
+    getPinnedTaskIds: [],
+    getTasksRequireTraderLevels: true,
+    togglePinnedTask,
+    ...preferencesOverrides,
+  };
+  vi.resetModules();
+  vi.doMock('@/stores/useTarkov', () => ({
+    useTarkovStore: () => tarkovStore,
+  }));
+  vi.doMock('@/stores/useMetadata', () => ({
+    useMetadataStore: () => metadataStore,
+  }));
+  vi.doMock('@/stores/usePreferences', () => ({
+    usePreferencesStore: () => preferencesStore,
+  }));
+  vi.doMock('@/stores/useProgress', () => ({
+    useProgressStore: () => progressStore,
+  }));
+  vi.doMock('@/composables/useProductAnalytics', () => ({
+    useProductAnalytics: () => ({
+      trackTaskAction: trackTaskActionMock,
+    }),
+  }));
+  vi.doMock('vue-i18n', async () => ({
+    ...(await vi.importActual<typeof import('vue-i18n')>('vue-i18n')),
+    useI18n: () => ({
+      t: (_key: string, fallback?: string) => fallback ?? _key,
+    }),
+  }));
+  vi.doMock('@/composables/useAnalyticsEvents', () => ({
+    useAnalyticsEvents: () => ({
+      trackEvent: trackEventMock,
+    }),
+  }));
+  const { useTaskActions } = await import('@/composables/useTaskActions');
+  const taskRef = ref(task);
+  const actions = useTaskActions(() => taskRef.value, onAction);
+  return {
+    actions,
+    onAction,
+    taskRef,
+    tarkovStore,
+    togglePinnedTask,
+  };
+};
+describe('useTaskActions', () => {
+  it('confirms only the selected server-gated task without inventing counter contributors', async () => {
+    const task: Task = {
+      id: 'gated',
+      otherRequirements: [
+        {
+          type: 'globalVariable',
+          id: 'gate',
+          variableId: 'counter',
+          compareMethod: '>=',
+          value: 3,
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(task, [task, { id: 'possible-contributor' }], {});
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).toHaveBeenCalledWith(
+      task.id,
+      JSON.stringify(task.otherRequirements)
+    );
+    expect(tarkovStore.setTaskComplete).not.toHaveBeenCalled();
+    expect(tarkovStore.setTaskFailed).not.toHaveBeenCalled();
+  });
+  it('changes nothing when an unmet prerequisite has an ambiguous status', async () => {
+    const task: Task = {
+      id: 'ambiguous',
+      minPlayerLevel: 40,
+      taskRequirements: [{ task: { id: 'prior' }, status: ['active', 'complete'] }],
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const { actions, tarkovStore } = await setup(task, [task, { id: 'prior' }], {});
+    expect(actions.canMarkTaskAvailable()).toBe(false);
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+    expect(tarkovStore.setLevel).not.toHaveBeenCalled();
+  });
+  it('trusts the evaluator for an active prerequisite that is itself available', async () => {
+    // Review #979: the evaluator accepts an available active prerequisite recursively, so only
+    // the server gate is left and Mark available must stay possible.
+    const task: Task = {
+      id: 'target',
+      taskRequirements: [{ task: { id: 'prior' }, status: ['active'] }],
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const evaluations: TaskEvaluationMap = {
+      target: {
+        self: { available: false, blockers: [{ type: 'dialogue', requirementId: 'talk' }] },
+      },
+    };
+    const { actions, tarkovStore } = await setup(
+      task,
+      [task, { id: 'prior' }],
+      {},
+      {},
+      evaluations
+    );
+    expect(actions.canMarkTaskAvailable()).toBe(true);
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).toHaveBeenCalledWith(
+      'target',
+      JSON.stringify(task.otherRequirements)
+    );
+    expect(tarkovStore.setTaskComplete).not.toHaveBeenCalled();
+  });
+  it.each([
+    { type: 'unknown', taskId: 'missing', reason: 'task_reference' },
+    { type: 'unknown', reason: 'failed_requirement' },
+    { type: 'cycle', taskId: 'target' },
+    { type: 'global_variable', variableId: 'v', current: 0, required: 1 },
+    { type: 'prestige', current: 0, required: 1 },
+    { type: 'trader_unlock', taskId: 'intro' },
+    { type: 'failed_branch', taskId: 'other' },
+    { type: 'disabled', taskId: 'target' },
+    { type: 'faction', reason: 'BEAR' },
+  ] as const)('refuses when the evaluation has an unresolvable %j blocker', async (blocker) => {
+    const task: Task = {
+      id: 'target',
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const evaluations: TaskEvaluationMap = {
+      target: { self: { available: false, blockers: [{ ...blocker }] } },
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {}, {}, evaluations);
+    expect(actions.canMarkTaskAvailable()).toBe(false);
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+  });
+  it('records the story objective a story-gated task names', async () => {
+    const task: Task = {
+      id: 'story-gated',
+      otherRequirements: [
+        {
+          type: 'storyObjective',
+          id: 's',
+          storyChapter: { id: 'boreas' },
+          objective: { id: 'drives' },
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {});
+    expect(actions.canMarkTaskAvailable()).toBe(true);
+    actions.markTaskAvailable();
+    expect(tarkovStore.setStoryObjectiveComplete).toHaveBeenCalledWith('boreas', 'drives');
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+  });
+  const tourGated = (id: string, taskRequirements: Task['taskRequirements'] = []): Task => ({
+    id,
+    taskRequirements,
+    otherRequirements: [
+      {
+        type: 'storyObjective',
+        id: `overlay.${id}.tour.talk-to-therapist`,
+        storyChapter: { id: 'tour' },
+        objective: { id: 'talk-to-therapist' },
+      },
+    ],
+  });
+  it.each(['markTaskComplete', 'markTaskFailed'] as const)(
+    '%s records the story objective the task was gated on',
+    async (action) => {
+      const task = tourGated('first-in-line');
+      const { actions, tarkovStore } = await setup(task, [task], {});
+      actions[action]();
+      expect(tarkovStore.setStoryObjectiveComplete).toHaveBeenCalledWith(
+        'tour',
+        'talk-to-therapist'
+      );
+    }
+  );
+  it('reports only the story objectives Mark complete newly recorded', async () => {
+    const task = tourGated('first-in-line');
+    const fresh = await setup(task, [task], {});
+    fresh.actions.markTaskComplete();
+    expect(fresh.onAction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        recordedStoryObjectives: [{ chapterId: 'tour', objectiveId: 'talk-to-therapist' }],
+      })
+    );
+    const known = await setup(task, [task], {
+      completeStoryObjectives: ['tour/talk-to-therapist'],
+    });
+    known.actions.markTaskComplete();
+    expect(known.tarkovStore.setStoryObjectiveComplete).not.toHaveBeenCalled();
+    expect(known.onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ recordedStoryObjectives: [] })
+    );
+  });
+  it('records story gates of prerequisites Mark available completes', async () => {
+    const prior = tourGated('first-in-line');
+    const task: Task = {
+      id: 'follow-up',
+      taskRequirements: [{ task: { id: prior.id }, status: ['complete'] }],
+    };
+    const { actions, tarkovStore } = await setup(task, [task, prior], {});
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith(prior.id);
+    expect(tarkovStore.setStoryObjectiveComplete).toHaveBeenCalledWith('tour', 'talk-to-therapist');
+  });
+  it('leaves story progress alone when a task is manually uncompleted', async () => {
+    const task = tourGated('first-in-line');
+    const { actions, tarkovStore } = await setup(task, [task], { isTaskComplete: true });
+    actions.markTaskUncomplete();
+    expect(tarkovStore.setStoryObjectiveComplete).not.toHaveBeenCalled();
+  });
+  it('skips prerequisite backfill when the recorded story objective opens the story route', async () => {
+    const task: Task = {
+      id: 'story-routed',
+      taskRequirements: [{ task: { id: 'prior' }, status: ['complete'] }],
+      storyUnlocks: [{ id: 'boreas', name: 'Boreas' }],
+      otherRequirements: [
+        {
+          type: 'storyObjective',
+          id: 's',
+          storyChapter: { id: 'boreas' },
+          objective: { id: 'drives' },
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(task, [task, { id: 'prior' }], {});
+    expect(actions.canMarkTaskAvailable()).toBe(true);
+    actions.markTaskAvailable();
+    expect(tarkovStore.setStoryObjectiveComplete).toHaveBeenCalledWith('boreas', 'drives');
+    expect(tarkovStore.setTaskComplete).not.toHaveBeenCalled();
+  });
+  it.each([
+    [{ compareMethod: '<', current: 3, required: 2 }, 'trader_level', false],
+    [{ compareMethod: '=', current: 4, required: 2 }, 'trader_level', false],
+    [{ compareMethod: '>=', current: 1, required: 5 }, 'trader_level', false],
+    [{ compareMethod: '>', current: 0, required: 10 }, 'trader_reputation', false],
+    [{ compareMethod: '!=', current: 1, required: 1 }, 'trader_reputation', false],
+    [{ compareMethod: '>=', current: 1, required: 3 }, 'trader_level', true],
+    [{ compareMethod: '>', current: 1, required: 2 }, 'trader_level', true],
+    [{ compareMethod: '>=', current: 0, required: 0.2 }, 'trader_reputation', true],
+  ] as const)(
+    'only offers Mark available for raisable trader blockers: %j %s',
+    async (values, type, expected) => {
+      const task: Task = {
+        id: 'target',
+        otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+      };
+      const evaluations: TaskEvaluationMap = {
+        target: { self: { available: false, blockers: [{ type, ...values }] } },
+      };
+      const { actions } = await setup(task, [task], {}, {}, evaluations);
+      expect(actions.canMarkTaskAvailable()).toBe(expected);
+    }
+  );
+  it('withholds Mark available without a self evaluation', async () => {
+    const task: Task = {
+      id: 'target',
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {}, {}, {});
+    expect(actions.canMarkTaskAvailable()).toBe(false);
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+  });
+  it('withholds confirmation behind a corrupt status clock', async () => {
+    const task: Task = {
+      id: 'target',
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {
+      taskCompletions: { target: { complete: false, failed: false, timestamp: 4e13 } },
+    });
+    expect(actions.canMarkTaskAvailable()).toBe(false);
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+  });
+  it('allows the blockers Mark available can clear', async () => {
+    const task: Task = {
+      id: 'target',
+      minPlayerLevel: 20,
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const evaluations: TaskEvaluationMap = {
+      target: {
+        self: {
+          available: false,
+          blockers: [
+            { type: 'player_level', current: 1, required: 20 },
+            { type: 'dialogue', requirementId: 'talk' },
+          ],
+        },
+      },
+    };
+    const { actions } = await setup(task, [task], {}, {}, evaluations);
+    expect(actions.canMarkTaskAvailable()).toBe(true);
+  });
+  it('allows confirming over a derived trader-tier counter shortfall', async () => {
+    const task: Task = {
+      id: 'target',
+      otherRequirements: [
+        { type: 'globalVariable', id: 'g', variableId: 'tier', compareMethod: '>=', value: 3 },
+      ],
+    };
+    const evaluations: TaskEvaluationMap = {
+      target: {
+        self: {
+          available: false,
+          blockers: [{ type: 'task_counter', variableId: 'tier', current: 1, required: 3 }],
+        },
+      },
+    };
+    const { actions } = await setup(task, [task], {}, {}, evaluations);
+    expect(actions.canMarkTaskAvailable()).toBe(true);
+  });
+  it('still refuses when the evaluator reports an ambiguous unmet prerequisite', async () => {
+    const requirement = { task: { id: 'prior' }, status: ['active'] };
+    const task: Task = {
+      id: 'target',
+      taskRequirements: [requirement],
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    };
+    const evaluations: TaskEvaluationMap = {
+      target: {
+        self: {
+          available: false,
+          blockers: [{ type: 'prerequisite', requirements: [requirement] }],
+        },
+      },
+    };
+    const { actions } = await setup(task, [task, { id: 'prior' }], {}, {}, evaluations);
+    expect(actions.canMarkTaskAvailable()).toBe(false);
+  });
+  it('keeps a malformed prerequisite entry locked without throwing', async () => {
+    const task = {
+      id: 'malformed',
+      taskRequirements: [null],
+      otherRequirements: [{ type: 'dialogue', id: 'talk', traders: ['t'] }],
+    } as unknown as Task;
+    const { actions, tarkovStore } = await setup(task, [task], {});
+    expect(() => actions.markTaskAvailable()).not.toThrow();
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+  });
+  it('changes nothing for a task whose server gate cannot be confirmed', async () => {
+    const prerequisite: Task = { id: 'prior' };
+    const task: Task = {
+      id: 'unsupported',
+      minPlayerLevel: 40,
+      taskRequirements: [{ task: { id: 'prior' }, status: ['complete'] }],
+      otherRequirements: [{ type: 'unknown' }],
+    };
+    const { actions, tarkovStore } = await setup(task, [task, prerequisite], {});
+    actions.markTaskAvailable();
+    expect(tarkovStore.confirmTaskAvailability).not.toHaveBeenCalled();
+    expect(tarkovStore.setTaskComplete).not.toHaveBeenCalled();
+    expect(tarkovStore.setLevel).not.toHaveBeenCalled();
+  });
+  it('tracks each task action once with rich analytics metadata', async () => {
+    const task: Task = {
+      id: 'task-analytics',
+      name: 'Task Analytics',
+      objectives: [{ id: 'obj-analytics', count: 2 }],
+      requiredKeys: [
+        {
+          keys: [
+            { id: 'key-1' } as unknown as NonNullable<Task['requiredKeys']>[number]['keys'][number],
+          ],
+        },
+      ],
+      trader: {
+        name: 'Prapor',
+        normalizedName: 'prapor',
+      } as Task['trader'],
+    };
+    const { actions } = await setup(task, [task], {});
+    actions.markTaskComplete();
+    expect(trackTaskActionMock).toHaveBeenCalledTimes(1);
+    expect(trackTaskActionMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: 'complete',
+        analyticsParams: expect.objectContaining({
+          game_mode: 'pvp',
+          objective_count: 1,
+          task_has_required_keys: 'yes',
+          task_id: 'task-analytics',
+          task_name: 'Task Analytics',
+          task_trader: 'prapor',
+        }),
+      })
+    );
+    expect(trackEventMock).not.toHaveBeenCalled();
+  });
+  it('marks a task complete and handles alternatives', async () => {
+    const task: Task = {
+      id: 'task-main',
+      name: 'Main Task',
+      minPlayerLevel: 5,
+      objectives: [{ id: 'obj-main', count: 2 }],
+      alternatives: ['task-alt'],
+    };
+    const alternative: Task = {
+      id: 'task-alt',
+      name: 'Alt Task',
+      objectives: [{ id: 'obj-alt', count: 1 }],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task, alternative], {
+      playerLevel: 2,
+      objectiveCounts: { 'obj-alt': 1 },
+    });
+    actions.markTaskComplete();
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith('task-main');
+    expect(tarkovStore.setTaskObjectiveComplete).toHaveBeenCalledWith('obj-main');
+    expect(tarkovStore.setObjectiveCount).toHaveBeenCalledWith('obj-main', 2);
+    expect(tarkovStore.setTaskFailed).toHaveBeenCalledWith('task-alt');
+    expect(tarkovStore.setTaskObjectiveUncomplete).toHaveBeenCalledWith('obj-alt');
+    expect(tarkovStore.setObjectiveCount).toHaveBeenCalledWith('obj-alt', 0);
+    expect(tarkovStore.setLevel).toHaveBeenCalledWith(5);
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'complete', taskId: 'task-main' })
+    );
+  });
+  it('marks a task available and processes requirements', async () => {
+    const requirementTask: Task = {
+      id: 'task-req',
+      name: 'Requirement',
+      objectives: [{ id: 'obj-req', count: 1 }],
+    };
+    const predecessorTask: Task = {
+      id: 'task-pre',
+      name: 'Predecessor',
+      objectives: [{ id: 'obj-pre', count: 1 }],
+    };
+    const task: Task = {
+      id: 'task-main',
+      name: 'Main Task',
+      minPlayerLevel: 3,
+      taskRequirements: [
+        {
+          task: { id: 'task-req' },
+          // This requirement models a task that becomes available when another task fails
+          status: ['Failed'],
+        },
+      ],
+      predecessors: ['task-pre'],
+    };
+    const { actions, onAction, tarkovStore } = await setup(
+      task,
+      [task, requirementTask, predecessorTask],
+      {
+        playerLevel: 1,
+        objectiveCounts: { 'obj-req': 1 },
+      }
+    );
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTaskFailed).toHaveBeenCalledWith('task-req');
+    expect(tarkovStore.setTaskObjectiveUncomplete).toHaveBeenCalledWith('obj-req');
+    expect(tarkovStore.setObjectiveCount).toHaveBeenCalledWith('obj-req', 0);
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith('task-pre');
+    expect(tarkovStore.setTaskObjectiveComplete).toHaveBeenCalledWith('obj-pre');
+    expect(tarkovStore.setObjectiveCount).toHaveBeenCalledWith('obj-pre', 1);
+    expect(tarkovStore.setLevel).toHaveBeenCalledWith(3);
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'available', taskId: 'task-main' })
+    );
+  });
+  it('marks the Fence-gated Is This a Reference task available', async () => {
+    const fenceId = '579dc571d53a0658a154fbec';
+    const task: Task = {
+      id: '66d9cbb67b491f9d5304f6e6',
+      name: 'Is This a Reference?',
+      minPlayerLevel: 25,
+      taskRequirements: [],
+      traderRequirements: [
+        {
+          id: '66dace4d03b34844877a50fc',
+          trader: { id: fenceId, name: 'Fence' },
+          value: 1,
+          requirementType: 'reputation',
+          compareMethod: '>=',
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {
+      playerLevel: 28,
+      traderReputations: { [fenceId]: 0 },
+      traders: [{ id: fenceId, name: 'Fence', normalizedName: 'fence' }],
+    });
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTraderReputation).toHaveBeenCalledWith(fenceId, 1);
+  });
+  it('backfills trader loyalty and positive reputation without lowering met values', async () => {
+    const praporId = '54cb50c76803fa8b248b4571';
+    const skierId = '58330581ace78e27b8b10cee';
+    const task: Task = {
+      id: 'trader-gated-task',
+      traderLevelRequirements: [
+        { id: 'level-prapor', trader: { id: praporId, name: 'Prapor' }, level: 2 },
+        { id: 'level-skier', trader: { id: skierId, name: 'Skier' }, level: 2 },
+      ],
+      traderRequirements: [
+        {
+          id: 'rep-prapor',
+          trader: { id: praporId, name: 'Prapor' },
+          value: 0.5,
+          requirementType: 'reputation',
+          compareMethod: '>=',
+        },
+        {
+          id: 'rep-skier',
+          trader: { id: skierId, name: 'Skier' },
+          value: 0.2,
+          requirementType: 'reputation',
+          compareMethod: '>=',
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {
+      traderLevels: { [praporId]: 1, [skierId]: 3 },
+      traderReputations: { [praporId]: 0.2, [skierId]: 0.4 },
+    });
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTraderLevel).toHaveBeenCalledWith(praporId, 2);
+    expect(tarkovStore.setTraderLevel).not.toHaveBeenCalledWith(skierId, expect.any(Number));
+    expect(tarkovStore.setTraderReputation).toHaveBeenCalledWith(praporId, 0.5);
+    expect(tarkovStore.setTraderReputation).not.toHaveBeenCalledWith(skierId, expect.any(Number));
+  });
+  it('does not lower earned reputation to satisfy upper bounds', async () => {
+    const fenceId = '579dc571d53a0658a154fbec';
+    const praporId = '54cb50c76803fa8b248b4571';
+    const task: Task = {
+      id: 'low-karma-task',
+      traderRequirements: [
+        {
+          id: 'rep-fence',
+          trader: { id: fenceId, name: 'Fence' },
+          value: -2,
+          requirementType: 'reputation',
+          compareMethod: '<=',
+        },
+        {
+          id: 'rep-prapor',
+          trader: { id: praporId, name: 'Prapor' },
+          value: -1,
+          requirementType: 'reputation',
+          compareMethod: '<=',
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(task, [task], {
+      traderReputations: { [fenceId]: 0, [praporId]: 0 },
+      traders: [{ id: fenceId, name: 'Fence', normalizedName: 'fence' }],
+    });
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTraderReputation).not.toHaveBeenCalled();
+    expect(tarkovStore.setTraderReputation).not.toHaveBeenCalledWith(praporId, expect.any(Number));
+  });
+  it('does not backfill trader requirements when gating is disabled', async () => {
+    const fenceId = '579dc571d53a0658a154fbec';
+    const task: Task = {
+      id: 'optional-trader-gating-task',
+      traderLevelRequirements: [
+        { id: 'level-fence', trader: { id: fenceId, name: 'Fence' }, level: 2 },
+      ],
+      traderRequirements: [
+        {
+          id: 'rep-fence',
+          trader: { id: fenceId, name: 'Fence' },
+          value: 1,
+          requirementType: 'reputation',
+          compareMethod: '>=',
+        },
+      ],
+    };
+    const { actions, tarkovStore } = await setup(
+      task,
+      [task],
+      {
+        traderLevels: { [fenceId]: 1 },
+        traderReputations: { [fenceId]: 0 },
+        traders: [{ id: fenceId, name: 'Fence', normalizedName: 'fence' }],
+      },
+      { getTasksRequireTraderLevels: false }
+    );
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTraderLevel).not.toHaveBeenCalled();
+    expect(tarkovStore.setTraderReputation).not.toHaveBeenCalled();
+  });
+  it('marks a task failed and invokes onAction', async () => {
+    const task: Task = {
+      id: 'task-to-fail',
+      name: 'Task to Fail',
+      objectives: [{ id: 'obj-fail', count: 2 }],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task], {
+      objectiveCounts: { 'obj-fail': 2 },
+    });
+    actions.markTaskFailed();
+    expect(tarkovStore.setTaskFailed).toHaveBeenCalledWith('task-to-fail', { manual: true });
+    expect(tarkovStore.setTaskObjectiveUncomplete).toHaveBeenCalledWith('obj-fail');
+    expect(tarkovStore.setObjectiveCount).toHaveBeenCalledWith('obj-fail', 0);
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'fail', taskId: 'task-to-fail' })
+    );
+  });
+  it('tracks manual-fail metadata when resetting a failed task', async () => {
+    const alternative: Task = {
+      id: 'completed-alternative',
+      name: 'Completed Alternative',
+    };
+    const task: Task = {
+      id: 'task-reset-failed',
+      name: 'Task Reset Failed',
+      objectives: [{ id: 'obj-reset', count: 2 }],
+      alternatives: [alternative.id],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task, alternative], {
+      isTaskFailed: true,
+      taskCompletions: {
+        [alternative.id]: { complete: true, failed: false },
+        'task-reset-failed': { complete: true, failed: true, manual: true },
+      },
+    });
+    actions.markTaskUncomplete();
+    expect(tarkovStore.setTaskUncompleted).toHaveBeenCalledOnce();
+    expect(tarkovStore.setTaskUncompleted).toHaveBeenCalledWith('task-reset-failed');
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: 'reset_failed',
+        taskId: 'task-reset-failed',
+        wasManualFail: true,
+      })
+    );
+  });
+  it('emits undo payloads for completed, reset, and failed task actions', async () => {
+    const task: Task = {
+      id: 'task-undo-actions',
+      name: 'Task Undo Actions',
+    };
+    const { actions, onAction } = await setup(task, [task], {
+      isTaskFailed: true,
+      taskCompletions: {
+        'task-undo-actions': { complete: true, failed: true, manual: true },
+      },
+    });
+    actions.markTaskComplete(true);
+    actions.markTaskUncomplete(true);
+    actions.markTaskFailed(true);
+    expect(onAction).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        action: 'complete',
+        undoKey: 'page.tasks.questcard.undo_complete',
+      })
+    );
+    expect(onAction).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        action: 'reset_failed',
+        undoKey: 'page.tasks.questcard.undo_reset_failed',
+        wasManualFail: true,
+      })
+    );
+    expect(onAction).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        action: 'fail',
+        undoKey: 'page.tasks.questcard.undo_failed',
+      })
+    );
+  });
+  it('unpins a pinned task when completing', async () => {
+    const task: Task = {
+      id: 'task-pin-complete',
+      name: 'Pinned Task',
+      objectives: [{ id: 'obj-pin', count: 1 }],
+    };
+    const { actions, togglePinnedTask } = await setup(
+      task,
+      [task],
+      {},
+      {
+        getPinnedTaskIds: ['task-pin-complete'],
+      }
+    );
+    actions.markTaskComplete();
+    expect(togglePinnedTask).toHaveBeenCalledTimes(1);
+    expect(togglePinnedTask).toHaveBeenCalledWith('task-pin-complete');
+  });
+  it('unpins a pinned task when failing', async () => {
+    const task: Task = {
+      id: 'task-pin-fail',
+      name: 'Pinned Task',
+      objectives: [{ id: 'obj-pin-fail', count: 1 }],
+    };
+    const { actions, togglePinnedTask } = await setup(
+      task,
+      [task],
+      {},
+      {
+        getPinnedTaskIds: ['task-pin-fail'],
+      }
+    );
+    actions.markTaskFailed();
+    expect(togglePinnedTask).toHaveBeenCalledTimes(1);
+    expect(togglePinnedTask).toHaveBeenCalledWith('task-pin-fail');
+  });
+  it('marks a task uncompleted and resets objectives', async () => {
+    const task: Task = {
+      id: 'task-uncomplete',
+      name: 'Task to Uncomplete',
+      objectives: [{ id: 'obj-unc', count: 3 }],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task], {
+      objectiveCounts: { 'obj-unc': 3 },
+    });
+    actions.markTaskUncomplete();
+    expect(tarkovStore.setTaskUncompleted).toHaveBeenCalledWith('task-uncomplete');
+    expect(tarkovStore.setTaskObjectiveUncomplete).toHaveBeenCalledWith('obj-unc');
+    // markTaskUncomplete uses handleTaskObjectives which only calls setTaskObjectiveUncomplete, not setObjectiveCount
+    expect(tarkovStore.setObjectiveCount).not.toHaveBeenCalled();
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'uncomplete', taskId: 'task-uncomplete' })
+    );
+  });
+  it('handles tasks with no objectives gracefully', async () => {
+    const task: Task = {
+      id: 'task-no-obj',
+      name: 'Task No Objectives',
+      objectives: [],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task], {});
+    actions.markTaskComplete();
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith('task-no-obj');
+    expect(tarkovStore.setTaskObjectiveComplete).not.toHaveBeenCalled();
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'complete', taskId: 'task-no-obj' })
+    );
+  });
+  it('handles tasks with no alternatives gracefully', async () => {
+    const task: Task = {
+      id: 'task-no-alt',
+      name: 'Task No Alternatives',
+      objectives: [{ id: 'obj-no-alt', count: 1 }],
+      alternatives: undefined,
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task], {});
+    actions.markTaskComplete();
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith('task-no-alt');
+    expect(tarkovStore.setTaskFailed).not.toHaveBeenCalled();
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'complete', taskId: 'task-no-alt' })
+    );
+  });
+  it('does not fail already completed alternatives when marking complete', async () => {
+    const task: Task = {
+      id: 'task-main-complete-alt',
+      name: 'Main Task',
+      objectives: [{ id: 'obj-main-complete-alt', count: 1 }],
+      alternatives: ['task-alt-complete'],
+    };
+    const alternative: Task = {
+      id: 'task-alt-complete',
+      name: 'Completed Alt Task',
+      objectives: [{ id: 'obj-alt-complete', count: 1 }],
+    };
+    const { actions, tarkovStore } = await setup(task, [task, alternative], {
+      objectiveCounts: { 'obj-alt-complete': 1 },
+      isTaskComplete: (taskId) => taskId === 'task-alt-complete',
+    });
+    actions.markTaskComplete();
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith('task-main-complete-alt');
+    expect(tarkovStore.setTaskFailed).not.toHaveBeenCalledWith('task-alt-complete');
+    expect(tarkovStore.setTaskObjectiveUncomplete).not.toHaveBeenCalledWith('obj-alt-complete');
+    expect(tarkovStore.setObjectiveCount).not.toHaveBeenCalledWith('obj-alt-complete', 0);
+  });
+  it('handles tasks with null/undefined fields without exceptions (defensive runtime handling)', async () => {
+    // This test validates defensive handling of malformed/untyped external input.
+    // In practice, task data from external APIs may have missing or null fields
+    // despite TypeScript types. The unsafe assertions simulate this scenario.
+    const task: Task = {
+      id: 'task-null-fields',
+      name: 'Task with Null Fields',
+      objectives: undefined as unknown as Task['objectives'],
+      alternatives: null as unknown as Task['alternatives'],
+      predecessors: null as unknown as Task['predecessors'],
+      taskRequirements: null as unknown as Task['taskRequirements'],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task], {});
+    expect(() => actions.markTaskComplete()).not.toThrow();
+    expect(tarkovStore.setTaskComplete).toHaveBeenCalledWith('task-null-fields');
+    expect(onAction).toHaveBeenCalled();
+  });
+  it('handles marking available with no predecessors or requirements', async () => {
+    const task: Task = {
+      id: 'task-simple',
+      name: 'Simple Task',
+      objectives: [{ id: 'obj-simple', count: 1 }],
+    };
+    const { actions, onAction, tarkovStore } = await setup(task, [task], {});
+    actions.markTaskAvailable();
+    expect(tarkovStore.setTaskComplete).not.toHaveBeenCalled();
+    expect(tarkovStore.setTaskFailed).not.toHaveBeenCalled();
+    expect(onAction).toHaveBeenCalledWith(
+      expect.objectContaining({ action: 'available', taskId: 'task-simple' })
+    );
+  });
+});
+it('does not backfill prerequisites already bypassed by storyline progress', async () => {
+  const prerequisite: Task = { id: 'prior' };
+  const task: Task = {
+    id: 'target',
+    storyUnlocks: [{ id: 'chapter', name: 'Chapter' }],
+    taskRequirements: [{ task: { id: 'prior' }, status: ['complete'] }],
+  };
+  const { actions, tarkovStore } = await setup(task, [task, prerequisite], {
+    storyChapters: { chapter: { complete: true } },
+  });
+  actions.markTaskAvailable();
+  expect(tarkovStore.setTaskComplete).not.toHaveBeenCalledWith('prior');
+});

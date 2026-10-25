@@ -1,0 +1,261 @@
+/**
+ * Composable for calling Supabase Edge Functions
+ * Provides typed methods for common edge function operations
+ */
+import { getErrorStatus } from '@/utils/errors';
+import { logger } from '@/utils/logger';
+import { refreshSupabaseSession } from '@/utils/supabaseAuth';
+import type { PurgeCacheResponse } from '@/types/edge';
+import type { MemberProfile } from '@/types/tarkov';
+import type {
+  CreateTeamResponse,
+  DisbandTeamResponse,
+  JoinTeamResponse,
+  KickMemberResponse,
+  LeaveTeamResponse,
+} from '@/types/team';
+import type { GameMode } from '@/utils/constants';
+const TEAM_ID_REGEX = /^[a-zA-Z0-9-]{1,64}$/;
+const assertValidTeamId = (teamId: string) => {
+  if (!TEAM_ID_REGEX.test(teamId)) {
+    throw new Error('Invalid team id');
+  }
+};
+interface NormalizedFunctionError {
+  cause: unknown;
+  code: 'FUNCTION_HTTP_ERROR';
+  data: unknown;
+  functionName: string;
+  message: string;
+  name: 'SupabaseFunctionError';
+  status: number;
+  statusText: string;
+}
+const normalizeFunctionError = async <TError>(
+  fnName: string,
+  error: TError
+): Promise<TError | NormalizedFunctionError> => {
+  if (!error || typeof error !== 'object') {
+    return error;
+  }
+  const context = 'context' in error ? error.context : null;
+  if (!(context instanceof Response)) {
+    return error;
+  }
+  let data: unknown;
+  try {
+    data = await context.clone().json();
+  } catch {
+    try {
+      const text = await context.clone().text();
+      data = text.trim().length > 0 ? text : null;
+    } catch {
+      data = null;
+    }
+  }
+  return {
+    cause: error,
+    code: 'FUNCTION_HTTP_ERROR',
+    data,
+    functionName: fnName,
+    message:
+      'message' in error && typeof error.message === 'string'
+        ? error.message
+        : `Supabase function ${fnName} failed`,
+    name: 'SupabaseFunctionError',
+    status: context.status,
+    statusText: context.statusText,
+  };
+};
+export const useEdgeFunctions = () => {
+  const { $supabase } = useNuxtApp();
+  const getAuthToken = async () => {
+    const readySession = await $supabase.ready();
+    const token = readySession?.access_token;
+    if (token) {
+      return token;
+    }
+    const { data, error } = await $supabase.client.auth.getSession();
+    if (error) throw error;
+    const sessionToken = data.session?.access_token;
+    if (sessionToken) {
+      return sessionToken;
+    }
+    const refreshedSession = await refreshSupabaseSession($supabase.client);
+    const refreshedToken = refreshedSession?.access_token;
+    if (refreshedToken) {
+      return refreshedToken;
+    }
+    throw new Error('User not authenticated');
+  };
+  const invokeSupabaseFunction = async <T>(
+    fnName: string,
+    body: Record<string, unknown>,
+    method: 'POST' | 'GET' | 'DELETE' | 'PUT'
+  ) => {
+    await getAuthToken();
+    let { data, error } = await $supabase.client.functions.invoke<T>(fnName, {
+      body,
+      method,
+    });
+    if (!error) {
+      return data as T;
+    }
+    if (getErrorStatus(error) === 401) {
+      try {
+        const refreshedSession = await refreshSupabaseSession($supabase.client);
+        if (refreshedSession?.access_token) {
+          ({ data, error } = await $supabase.client.functions.invoke<T>(fnName, {
+            body,
+            method,
+          }));
+        }
+      } catch (refreshSessionError) {
+        logger.debug(`[EdgeFunctions] Session refresh failed during ${fnName}:`, {
+          refreshSessionError,
+        });
+      }
+    }
+    if (error) {
+      throw await normalizeFunctionError(fnName, error);
+    }
+    return data as T;
+  };
+  const callSupabaseFunction = async <T>(
+    fnName: string,
+    body: Record<string, unknown>,
+    method: 'POST' | 'GET' | 'DELETE' | 'PUT' = 'POST'
+  ) => {
+    return await invokeSupabaseFunction<T>(fnName, body, method);
+  };
+  const getTeamMembers = async (
+    teamId: string,
+    forceRefresh = false
+  ): Promise<{
+    members: string[];
+    profiles?: Record<string, MemberProfile>;
+  }> => {
+    assertValidTeamId(teamId);
+    const callTeamMembersApi = async (token: string) => {
+      return await $fetch<{
+        members: string[];
+        profiles?: Record<string, MemberProfile>;
+      }>(`/api/team/members`, {
+        method: 'GET',
+        query: forceRefresh ? { refresh: '1', teamId } : { teamId },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    };
+    const token = await getAuthToken();
+    try {
+      const result = await callTeamMembersApi(token);
+      return result;
+    } catch (error) {
+      if (getErrorStatus(error) !== 401) throw error;
+      const refreshedSession = await refreshSupabaseSession($supabase.client).catch(
+        (refreshSessionError: unknown) => {
+          logger.debug('[EdgeFunctions] Session refresh failed during team member fetch:', {
+            refreshSessionError,
+          });
+          return null;
+        }
+      );
+      const refreshedToken = refreshedSession?.access_token;
+      if (!refreshedToken) throw error;
+      return await callTeamMembersApi(refreshedToken);
+    }
+  };
+  /**
+   * Create a new team
+   * @param name Team name
+   * @param joinCode Team join/invite code
+   * @param maxMembers Maximum number of team members (2-10)
+   * @param gameMode Game mode for the team
+   */
+  const createTeam = async (
+    name: string,
+    joinCode: string,
+    maxMembers = 5,
+    gameMode: GameMode = 'pvp'
+  ): Promise<CreateTeamResponse> => {
+    if (!joinCode || joinCode.trim().length === 0) {
+      throw new Error('Join code cannot be empty');
+    }
+    return await callSupabaseFunction<CreateTeamResponse>('team-create', {
+      name,
+      join_code: joinCode,
+      maxMembers,
+      game_mode: gameMode,
+    });
+  };
+  /**
+   * Join an existing team
+   * @param teamId The ID of the team to join
+   * @param joinCode The team join/invite code
+   */
+  const joinTeam = async (teamId: string, joinCode: string): Promise<JoinTeamResponse> => {
+    assertValidTeamId(teamId);
+    return await callSupabaseFunction<JoinTeamResponse>('team-join', {
+      teamId,
+      join_code: joinCode,
+    });
+  };
+  /**
+   * Leave a team
+   * @param teamId The ID of the team to leave
+   */
+  const leaveTeam = async (teamId: string): Promise<LeaveTeamResponse> => {
+    assertValidTeamId(teamId);
+    return await callSupabaseFunction<LeaveTeamResponse>('team-leave', { teamId });
+  };
+  const disbandTeam = async (teamId: string): Promise<DisbandTeamResponse> => {
+    assertValidTeamId(teamId);
+    return await callSupabaseFunction<DisbandTeamResponse>('team-disband', { teamId });
+  };
+  /**
+   * Kick a member from a team (owner only)
+   * @param teamId The ID of the team
+   * @param memberId The ID of the member to kick
+   */
+  const kickTeamMember = async (teamId: string, memberId: string): Promise<KickMemberResponse> => {
+    assertValidTeamId(teamId);
+    return await callSupabaseFunction<KickMemberResponse>('team-kick', { teamId, memberId });
+  };
+  const createToken = async (payload: {
+    permissions: string[];
+    gameMode: GameMode;
+    note?: string | null;
+    tokenValue?: string;
+  }) => {
+    return await callSupabaseFunction<{ success?: boolean; tokenId?: string; tokenValue?: string }>(
+      'token-create',
+      payload
+    );
+  };
+  /**
+   * Purge Cloudflare cache (admin only)
+   * @param purgeType Type of cache purge: 'all' for entire zone, 'tarkov-data' for game data only
+   */
+  const purgeCache = async (
+    purgeType: 'all' | 'tarkov-data' = 'tarkov-data'
+  ): Promise<PurgeCacheResponse> => {
+    return await callSupabaseFunction<PurgeCacheResponse>('admin-cache-purge', {
+      purgeType,
+    });
+  };
+  return {
+    // Team management
+    createTeam,
+    joinTeam,
+    leaveTeam,
+    disbandTeam,
+    kickTeamMember,
+    getTeamMembers,
+    // API token management
+    createToken,
+    // Admin functions
+    purgeCache,
+  };
+};

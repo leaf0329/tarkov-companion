@@ -1,0 +1,104 @@
+name: branch-deploy
+
+on:
+  issue_comment:
+    types: [ created ]
+
+# Permissions needed for reacting and adding comments for IssueOps commands
+permissions:
+  pull-requests: write
+  deployments: write
+  contents: write
+  checks: read
+  statuses: read
+
+jobs:
+  deploy:
+    environment:
+      name: production
+      deployment: false
+    if: ${{ github.event.issue.pull_request }} # only run on pull request comments
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: github/branch-deploy@f0984057ffe1aa340aa017b6eafb894310aed88e # pin@v12.0.0
+        id: branch-deploy
+        with:
+          admins: GrantBirki,Razzmatazzz
+          environment_targets: production,development
+          environment_urls: production|https://tarkov.dev,development|disabled
+          sticky_locks: "true"
+          allow_forks: "true"
+
+      - name: checkout
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # pin@v6
+        with:
+          ref: ${{ steps.branch-deploy.outputs.sha }}
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # pin@v6.0.10
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # pin@v7.0.0
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+        with:
+          node-version-file: .node-version
+          cache: 'pnpm'
+
+      - name: install dependencies
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: env setup
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+        env:
+          PUBLIC_URL: ''
+        run: |
+          touch .env
+          echo PUBLIC_URL=$PUBLIC_URL >> .env
+
+      - name: build
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+        run: pnpm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.HIDEOUT_BOT_TOKEN }}
+
+      # deploy to the dev env and also save the stdout to a file
+      - name: deploy - dev
+        id: dev-deploy
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' &&
+          steps.branch-deploy.outputs.noop != 'true' &&
+          steps.branch-deploy.outputs.environment == 'development' }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # pin@v4.0.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          wranglerVersion: '4.101.0'
+          command: pages publish build/ --project-name=tarkov-dev --branch=preview
+
+      # fetch the dev url from stdout and save add it to the deploy message
+      - name: add development url to deploy message
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' &&
+          steps.branch-deploy.outputs.noop != 'true' &&
+          steps.branch-deploy.outputs.environment == 'development' }}
+        env:
+          DEPLOYMENT_URL: ${{ steps.dev-deploy.outputs.deployment-url }}
+          CMD_OUTPUT: ${{ steps.dev-deploy.outputs.command-output }}
+        run: |
+          echo "for debugging (cmd output): ${CMD_OUTPUT}"
+          echo ""
+          echo "DEPLOY_MESSAGE=${DEPLOYMENT_URL}" >> $GITHUB_ENV
+          echo "DEPLOY_MESSAGE=${DEPLOYMENT_URL}"
+
+      - name: deploy - prod
+        id: prod-deploy
+        if: ${{ steps.branch-deploy.outputs.continue == 'true' &&
+          steps.branch-deploy.outputs.noop != 'true' &&
+          steps.branch-deploy.outputs.environment == 'production' }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # pin@v4.0.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          wranglerVersion: '4.101.0'
+          command: pages publish build/ --project-name=tarkov-dev --branch=main

@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+const source=JSON.parse(fs.readFileSync('source/maps/src/data/maps.json','utf8'));
+const file='source/tracker/app/data/maps.json';
+const target=JSON.parse(fs.readFileSync(file,'utf8'));
+const ship=source.find(map=>map.normalizedName==='icebreaker').maps.find(map=>map.projection==='interactive');
+target.icebreaker={tile:{tilePath:ship.tilePath,tileSize:ship.tileSize,minZoom:ship.minZoom,maxZoom:ship.maxZoom,transform:ship.transform,coordinateRotation:ship.coordinateRotation,bounds:ship.bounds,floors:ship.layers.map(layer=>layer.name),defaultFloor:ship.layers.find(layer=>layer.show).name,floorTilePaths:Object.fromEntries(ship.layers.map(layer=>[layer.name,layer.tilePath]))}};
+const labs=source.find(map=>map.normalizedName==='the-lab').maps.find(map=>map.projection==='interactive');
+if(!labs.altMaps.includes('the-lab-dark'))throw Error('Upstream does not declare shared Labs geometry');
+target.thelabdark=structuredClone(target.lab);
+fs.writeFileSync(file,JSON.stringify(target,null,2)+'\n');
+console.log('Imported the upstream Icebreaker tile layers and documented Dark Labs geometry alias.');

@@ -1,0 +1,62 @@
+language: en-US
+knowledge_base:
+  code_guidelines:
+    filePatterns:
+      - 'docs/code-review.md'
+reviews:
+  auto_review:
+    enabled: true
+    # Disable automatic per-push reviews; request follow-up reviews explicitly.
+    auto_incremental_review: false
+    ignore_title_keywords:
+      - 'Crowdin'
+  path_filters:
+    - '!app/locales/cs.json'
+    - '!app/locales/de.json'
+    - '!app/locales/es.json'
+    - '!app/locales/fr.json'
+    - '!app/locales/it.json'
+    - '!app/locales/ja.json'
+    - '!app/locales/ko.json'
+    - '!app/locales/pl.json'
+    - '!app/locales/pt.json'
+    - '!app/locales/ru.json'
+    - '!app/locales/uk.json'
+    - '!app/locales/zh.json'
+  path_instructions:
+    - path: 'app/locales/en.json'
+      instructions: |
+        Review this as the source locale only. Check key names, structure, interpolation placeholders,
+        and whether source copy belongs in existing namespaces.
+    - path: '**/*.{ts,tsx,vue,js,jsx}'
+      instructions: |
+        IMPORTANT: If a suggestion conflicts with ESLint/Prettier/AGENTS.md rules, do not suggest it.
+        Treat those style suggestions as non-actionable.
+
+        Import ordering is enforced by ESLint (import-x/order + pathGroups).
+        Do not request alternate ordering when ESLint already passes.
+
+        Known conflict patterns to avoid suggesting:
+        - Moving type imports above utils/internal imports when that violates import-x/order.
+        - Adding a blank line after imports in app code (no-multiple-empty-lines has max: 0).
+        - Importing Vue auto-imported symbols from 'vue' in app code when restricted by no-restricted-imports.
+          Prefer existing project patterns (Nuxt auto-imports, `#imports`, or `globalThis.Ref` where used).
+
+        Nuxt auto-imports Vue runtime functions (ref, computed, watch, etc.) and composables.
+        Do NOT flag missing imports for these runtime usages in .vue files.
+
+        In this project, `useI18n` may be auto-imported in .vue files via Nuxt i18n integration.
+        Do not require explicit `import { useI18n } from 'vue-i18n'` unless typecheck fails.
+
+        SEO meta convention: this project uses `useSeoMeta` for all SEO properties (title, description, og:*, twitter:*).
+        Do not suggest replacing `useSeoMeta` with `useHead`. `useHead` is reserved for non-meta head elements
+        (htmlAttrs, link, script, style) only.
+  tools:
+    biome:
+      enabled: false
+    eslint:
+      # Disabled: ESLint is enforced in CI (`npm run lint`) and pre-commit (lint-staged).
+      # CodeRabbit's sandbox cannot reliably reproduce the generated `.nuxt/eslint.config.mjs`
+      # (gitignored, produced by `nuxt prepare`), so it intermittently skips with
+      # "missing config or dependency". CI is the source of truth for lint.
+      enabled: false
