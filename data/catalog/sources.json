@@ -1,66 +1,77 @@
 {
   "scope": "public game metadata only; no player progress or account identifiers sent",
+  "checkedAt": "2026-10-30",
   "records": [
     {
       "name": "bootstrap",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/bootstrap?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T04:59:39.378Z",
+      "fetchedAt": "2026-10-30T06:40:13.993Z",
       "bytes": 8024
     },
     {
       "name": "tasks-core",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/tasks-core?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:00:31.287Z",
-      "overlay": "1.138",
-      "bytes": 3473263
+      "fetchedAt": "2026-10-30T06:40:18.783Z",
+      "bytes": 3686475,
+      "overlay": "1.167"
     },
     {
       "name": "tasks-objectives",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/tasks-objectives?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:00:25.525Z",
-      "overlay": "1.140",
-      "bytes": 1387443
+      "fetchedAt": "2026-10-30T06:40:16.398Z",
+      "bytes": 1431077,
+      "overlay": "1.167"
     },
     {
       "name": "tasks-rewards",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/tasks-rewards?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:00:37.727Z",
-      "overlay": "1.140",
-      "bytes": 645260
+      "fetchedAt": "2026-10-30T06:40:21.409Z",
+      "bytes": 689393,
+      "overlay": "1.167"
     },
     {
       "name": "hideout",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/hideout?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:00:34.355Z",
-      "overlay": "1.142",
-      "bytes": 125871
+      "fetchedAt": "2026-10-30T06:40:20.365Z",
+      "bytes": 125839,
+      "overlay": "1.167"
     },
     {
       "name": "items-lite",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/items-lite?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:01:35.553Z",
-      "overlay": "1.141",
-      "bytes": 7759460
+      "fetchedAt": "2026-10-30T06:40:23.435Z",
+      "bytes": 7767056,
+      "overlay": "1.167"
     },
     {
       "name": "map-spawns",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/map-spawns?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:01:41.127Z",
-      "bytes": 414835
+      "fetchedAt": "2026-10-30T06:40:25.533Z",
+      "bytes": 446546
     },
     {
       "name": "editions",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/editions?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:02:23.976Z",
-      "overlay": "1.142",
-      "bytes": 100516
+      "fetchedAt": "2026-10-30T06:40:26.862Z",
+      "bytes": 100547,
+      "overlay": "1.167"
     },
     {
       "name": "prestige",
+      "language": "zh",
       "url": "https://tarkovtracker.org/api/tarkov/prestige?lang=zh&gameMode=pve",
-      "fetchedAt": "2026-10-13T05:01:36.863Z",
-      "overlay": "1.135",
-      "bytes": 56103
+      "fetchedAt": "2026-10-30T06:40:24.594Z",
+      "bytes": 56069,
+      "overlay": "1.167"
     }
-  ]
+  ],
+  "excluded": "Upstream placeholder_* records have no verified game IDs and are excluded. Halloween task guides are provided separately until identifiers and PvE availability are confirmed."
 }

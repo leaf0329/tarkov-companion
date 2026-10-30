@@ -4,12 +4,13 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = JSON.parse(fs.readFileSync(path.join(root, 'source/maps/src/data/maps.json')));
+const events = JSON.parse(fs.readFileSync(path.join(root, 'source/maps/src/data/companion-event-maps.json')));
 const definitions = JSON.parse(fs.readFileSync(path.join(root, 'source/tracker/app/data/maps.json')));
 const translations = JSON.parse(fs.readFileSync(path.join(root, 'source/tracker/app/data/companionLandmarkNames.json')));
-const aliases = { 'ground-zero': 'groundzero', 'streets-of-tarkov': 'streetsoftarkov', 'the-lab': 'lab' };
+const aliases = { 'ground-zero': 'groundzero', 'streets-of-tarkov': 'streetsoftarkov', 'the-lab': 'lab', 'infected-factory': 'infectedfactory', 'infected-lab': 'infectedlab' };
 const token = name => name.toLowerCase().replace(/[^a-z0-9]/g, '');
 const output = {};
-for (const map of source) {
+for (const map of [...source, ...events.maps]) {
   const layer = map.maps.find(candidate => candidate.projection === 'interactive');
   if (!layer) continue;
   const definition = definitions[aliases[map.normalizedName] ?? map.normalizedName];

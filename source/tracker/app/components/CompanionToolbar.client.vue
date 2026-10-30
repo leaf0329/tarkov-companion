@@ -1,10 +1,10 @@
 <template>
   <div v-if="state" data-testid="companion-toolbar" class="bg-surface-900 border-surface-700 flex flex-wrap items-center gap-2 border-b px-3 py-2 font-sans text-xs [-webkit-app-region:no-drag]" :class="{ 'sticky top-0 z-2000': overlay }">
     <span data-testid="companion-drag-handle" class="text-primary-400 mr-2 flex min-h-7 items-center font-semibold" :class="{ 'cursor-move select-none [-webkit-app-region:drag]': overlay }">leaf0329</span>
-    <span v-if="state.runtime.mode === 'pve' || isPvp" data-testid="companion-game-mode" class="bg-surface-800 rounded px-2 py-1 font-semibold">{{ isPvp ? 'PvP' : 'PvE' }}</span>
     <template v-if="!overlay">
       <NuxtLink to="/companion-map" class="hover:text-primary-400">{{ t('companion.map') }}</NuxtLink>
-      <NuxtLink v-if="!isPvp" to="/tasks" class="hover:text-primary-400">{{ t('companion.tasks') }}</NuxtLink>
+      <NuxtLink to="/tasks" class="hover:text-primary-400">{{ t('companion.tasks') }}</NuxtLink>
+      <NuxtLink to="/companion-events" class="hover:text-primary-400">{{ t('companion.event_guides') }}</NuxtLink>
       <NuxtLink to="/companion-settings" class="hover:text-primary-400">{{ t('companion.settings') }}</NuxtLink>
       <UButton size="xs" color="neutral" variant="outline" @click="windowBridge?.overlay()">{{ t('companion.overlay') }} · {{ state.settings.hotkey }}</UButton>
     </template>
@@ -20,7 +20,6 @@
   import type { CompanionSnapshot } from '@/types/companion';
   const { t } = useI18n();
   const state = useState<CompanionSnapshot | null>('companion');
-  const isPvp = computed(() => ['pvp', 'pvp-season'].includes(state.value?.runtime.mode ?? ''));
   const route = useRoute();
   const overlay = computed(() => route.query.overlay === '1');
   const windowBridge = window.companion;

@@ -7,5 +7,7 @@ target.icebreaker={tile:{tilePath:ship.tilePath,tileSize:ship.tileSize,minZoom:s
 const labs=source.find(map=>map.normalizedName==='the-lab').maps.find(map=>map.projection==='interactive');
 if(!labs.altMaps.includes('the-lab-dark'))throw Error('Upstream does not declare shared Labs geometry');
 target.thelabdark=structuredClone(target.lab);
+const events=JSON.parse(fs.readFileSync('source/maps/src/data/companion-event-maps.json','utf8'));
+for(const map of events.maps)target[map.normalizedName.replaceAll('-','')]=map.render;
 fs.writeFileSync(file,JSON.stringify(target,null,2)+'\n');
-console.log('Imported the upstream Icebreaker tile layers and documented Dark Labs geometry alias.');
+console.log('Imported Icebreaker, Dark Labs and verified event map configurations.');

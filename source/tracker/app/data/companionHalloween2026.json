@@ -1,0 +1,70 @@
+{
+  "title": "2026 万圣节活动任务攻略",
+  "checkedAt": "2026-10-30",
+  "scope": "以下为当前社区已发布的活动攻略，中文标题为便于查阅的译名。各任务的 PvE 开放情况及接取要求以游戏内为准。活动结束日期尚未公布；这些攻略不会自动改变任务进度。公开接口尚无可核对的活动任务编号，因此暂未加入自动跟踪列表。未核实的精确坐标不标成任务点。",
+  "tasks": [
+    {
+      "slug": "rumors",
+      "name": "万圣节：传闻 / Halloween: Rumors",
+      "trader": "配件商 Skier",
+      "maps": "工厂疫区 Infected Factory",
+      "prerequisite": "",
+      "objectives": [
+        "进入工厂疫区。",
+        "在工厂疫区消灭 10 名感染者。"
+      ],
+      "notes": [
+        "从游戏地图选择界面的活动分类进入。工厂疫区使用旧工厂布局；社区确认的撤离点为 0 号门和 3 号门，按本局游戏列表确认是否开放。"
+      ],
+      "source": "https://tarkov.help/en/quest/halloween-rumors"
+    },
+    {
+      "slug": "best-defense",
+      "name": "万圣节：最佳防御 / Halloween: The Best Defense",
+      "trader": "配件商 Skier",
+      "maps": "实验室疫区 Infected Lab",
+      "prerequisite": "Halloween: Rumors",
+      "objectives": [
+        "进入实验室疫区。",
+        "从实验室疫区幸存撤离。",
+        "找到秘密撤离的线索。",
+        "在实验室疫区消灭 10 名感染者。"
+      ],
+      "notes": [
+        "社区攻略列出的活动撤离为停车场与污水管道，分别涉及活动汽车钥匙或下水道地图。车辆钥匙的报告位置为休息区圆形会议室；地图还可能出现在服务器房的 PMC 尸体上。按游戏中的物品名称和撤离提示操作。"
+      ],
+      "source": "https://www.tarkovhead.com/en/quest/regular/halloween-better-defence"
+    },
+    {
+      "slug": "follow-up",
+      "name": "万圣节：后续检查 / Halloween: Follow-Up Examination",
+      "trader": "医生 Therapist",
+      "maps": "实验室疫区 / 工厂疫区",
+      "prerequisite": "Halloween: Rumors",
+      "objectives": [
+        "在任一疫区找到身穿防化服的死亡研究员。",
+        "使用医疗工具打开研究员尸体并取得血液样本。",
+        "带出并上交血液样本。"
+      ],
+      "notes": [
+        "准备医疗工具，采样时会消耗。社区报告的实验室位置包括蓝卡房附近路口、通向污水管道的隧道与主工作区；工厂位置包括医疗区域外和抽水站储罐附近。上述为候选区域，尚无核实过的精确坐标。"
+      ],
+      "source": "https://www.tarkovhead.com/en/quest/regular/halloween-control-check"
+    },
+    {
+      "slug": "unexpected-help",
+      "name": "万圣节：意外援助 / Halloween: Unexpected Help",
+      "trader": "配件商 Skier",
+      "maps": "灯塔 → 海关",
+      "prerequisite": "Halloween: Follow-Up Examination",
+      "objectives": [
+        "在灯塔污水处理厂找到并取得疫苗货物。",
+        "将疫苗货物藏到海关二层宿舍楼的指定房间。"
+      ],
+      "notes": [
+        "社区图文将疫苗位置标在污水处理厂 3 号楼二楼，将藏匿处标在二层宿舍 105 室，需相应房间钥匙。该页面的钥匙表同时出现“205”字样，与正文和配图冲突；房间号请按你的游戏任务目标核对，这里不据此添加精确标点。"
+      ],
+      "source": "https://www.tarkovhead.com/en/quest/regular/halloween-unexpected-help"
+    }
+  ]
+}

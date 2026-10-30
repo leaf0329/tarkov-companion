@@ -13,8 +13,17 @@ async function download(name){
  });
  const data=JSON.parse(fs.readFileSync(target+'.tmp','utf8'));
  if(!data.data)throw Error(name+': invalid metadata response');
+ if(Array.isArray(data.data.tasks))data.data.tasks=data.data.tasks.filter(task=>!task.id.startsWith('placeholder_'));
  const merged=applyScreenshotTaskSupplements(data,name,folder);
  if(merged!==data)fs.writeFileSync(target+'.tmp',JSON.stringify(merged));
+ else fs.writeFileSync(target+'.tmp',JSON.stringify(data));
+ if(name==='tasks-core'){
+  const maps=data.data.maps;
+  if(!Array.isArray(maps)||!maps.every(map=>typeof map.id==='string'&&typeof map.nameId==='string'))throw Error('tasks-core: invalid monitor map catalog');
+  const mapsFile=path.resolve('data/maps.json');
+  fs.writeFileSync(mapsFile+'.tmp',JSON.stringify({data:{maps:Object.fromEntries(maps.map(map=>[map.id,map]))}}));
+  fs.renameSync(mapsFile+'.tmp',mapsFile);
+ }
  fs.renameSync(target+'.tmp',target);
  return {name,url,fetchedAt:new Date().toISOString(),overlay:data.dataOverlay?.version,bytes:fs.statSync(target).size};
 }

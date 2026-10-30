@@ -1,12 +1,14 @@
 {
-  "checkedAt": "2026-10-25",
+  "checkedAt": "2026-10-30",
   "sources": [
     "https://tarkov.help/en/map/reserve/home",
     "https://tarkovflip.com/season/map/reserve",
     "https://tarkov.help/en/map/factory/home",
     "https://tarkov.help/en/map/customs/home",
     "https://tarkov.help/en/map/interchange/home",
-    "https://escapefromtarkov.fandom.com/wiki/The_Lab"
+    "https://escapefromtarkov.fandom.com/wiki/The_Lab",
+    "https://www.tarkovhead.com/en/quest/regular/halloween-better-defence",
+    "https://tarkov.help/en/quest/halloween-rumors"
   ],
   "extracts": {
     "1dd5cede4fa747d279b076872c45fc59a4c3b916": [
@@ -106,6 +108,18 @@
     ],
     "c936f6e98a38c78963a308892b708474c54f4718": [
       "old_gas"
+    ],
+    "event.2026.factory.gate0": [
+      "halloween_factory"
+    ],
+    "event.2026.factory.gate3": [
+      "halloween_factory"
+    ],
+    "event.2026.lab.parking": [
+      "halloween_car"
+    ],
+    "event.2026.lab.sewage": [
+      "halloween_sewage"
     ]
   }
 }

@@ -488,5 +488,116 @@
       "maxZoom": 6,
       "tileSize": 175
     }
+  },
+  "infectedfactory": {
+    "svg": {
+      "file": "Factory-PreRework.svg",
+      "floors": [
+        "Tunnels",
+        "Ground_Floor",
+        "2nd Floor",
+        "3rd Floor"
+      ],
+      "defaultFloor": "Ground_Floor",
+      "coordinateRotation": 90,
+      "transform": [
+        1.629,
+        119.9,
+        1.629,
+        139.3
+      ],
+      "bounds": [
+        [
+          79,
+          -64.5
+        ],
+        [
+          -66.5,
+          67.4
+        ]
+      ],
+      "minZoom": 1,
+      "maxZoom": 6
+    },
+    "extractsAdd": [
+      {
+        "id": "event.2026.factory.gate0",
+        "name": "0号门",
+        "faction": "pmc",
+        "position": {
+          "x": -63.67,
+          "y": 2.85,
+          "z": 55.88
+        }
+      },
+      {
+        "id": "event.2026.factory.gate3",
+        "name": "3号门",
+        "faction": "pmc",
+        "position": {
+          "x": 58.71,
+          "y": 1.59,
+          "z": 60.87
+        }
+      }
+    ]
+  },
+  "infectedlab": {
+    "tile": {
+      "tilePath": "https://assets.tarkov.dev/maps/labs_v4/1st/{z}/{x}/{y}.png",
+      "floorTilePaths": {
+        "Technical": "https://assets.tarkov.dev/maps/labs_v4/technical/{z}/{x}/{y}.png",
+        "First_Level": "https://assets.tarkov.dev/maps/labs_v4/1st/{z}/{x}/{y}.png",
+        "Second_Level": "https://assets.tarkov.dev/maps/labs_v4/2nd/{z}/{x}/{y}.png"
+      },
+      "floors": [
+        "Technical",
+        "First_Level",
+        "Second_Level"
+      ],
+      "defaultFloor": "First_Level",
+      "coordinateRotation": 270,
+      "transform": [
+        0.575,
+        281.2,
+        0.575,
+        193.7
+      ],
+      "bounds": [
+        [
+          -80,
+          -477
+        ],
+        [
+          -287,
+          -193
+        ]
+      ],
+      "minZoom": 2,
+      "maxZoom": 6,
+      "tileSize": 175
+    },
+    "extractsAdd": [
+      {
+        "id": "event.2026.lab.parking",
+        "name": "停车场大门",
+        "faction": "pmc",
+        "position": {
+          "x": -231.46,
+          "y": 6.19,
+          "z": -457.77
+        }
+      },
+      {
+        "id": "event.2026.lab.sewage",
+        "name": "污水管道",
+        "faction": "pmc",
+        "position": {
+          "x": -122.89,
+          "y": -3.66,
+          "z": -258.32
+        }
+      }
+    ]
   }
 }

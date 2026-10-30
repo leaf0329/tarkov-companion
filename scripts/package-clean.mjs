@@ -18,7 +18,7 @@ function include(file){
 for(const folder of ['runtime','node_modules','source','native','desktop','scripts','tests']){
  fs.cpSync(path.join(root,folder),path.join(app,folder),{recursive:true,dereference:true,filter:include});
 }
-for(const name of ['.gitignore','LICENSE','THIRD-PARTY-NOTICES.md','package.json','package-lock.json','启动整合助手.cmd','管理员启动.cmd','更新公开数据.cmd']){
+for(const name of ['.gitignore','README.md','CHANGELOG.md','NOTICE','LICENSE','THIRD-PARTY-NOTICES.md','package.json','package-lock.json','启动整合助手.cmd','管理员启动.cmd','更新公开数据.cmd']){
  fs.copyFileSync(path.join(root,name),path.join(app,name));
 }
 fs.copyFileSync(path.join(root,'runtime/launcher/launcher.exe'),path.join(output,'启动塔科夫助手.exe'));
@@ -45,6 +45,8 @@ const instructions=`# leaf0329 · 塔科夫助手纯净便携版
 5. 游戏截图键需要设为 Insert。首次使用默认关闭自动截图；需要定位时在主地图或小地图开启。读取后删除游戏截图的选项也默认关闭，可在本地设置中自行开启。
 
 同一任务的所有未完成目标点会同时显示。勾选完成一个目标只移除该目标的点位，其他目标继续显示。
+
+2026-10-30 更新：地图中可选择工厂疫区与实验室疫区。主窗口顶部“活动攻略”提供四项万圣节任务的完整目标、前置与社区来源，核对日期为 2026-10-30；尚未核实的编号、模式和精确坐标会注明，不改动个人进度。活动地图的装修和点位未逐处实战验收。
 
 地图工具栏的“钥匙房”按钮可开关当前楼层的钥匙房标点，点击钥匙可查看所需钥匙和楼层。点击撤离点名称或圆点，可查看撤离条件、阵营和所在楼层；未收录的限制会明确提示。以游戏本局撤离列表确认是否开放。
 

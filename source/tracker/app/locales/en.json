@@ -2760,7 +2760,14 @@
       "labs_medical": "Restore medical-elevator power in basement room G6, then call the elevator.",
       "labs_parking": "If this exit is available, activate the parking gate from the control room on the upper level and wait for it to open.",
       "labs_hangar": "If this exit is available, activate the hangar gate from cabin B24 on the upper level and wait for it to open.",
-      "labs_sewage": "Activate drainage and wait until the water level is low enough before entering the sewage conduit."
-    }
+      "labs_sewage": "Activate drainage and wait until the water level is low enough before entering the sewage conduit.",
+      "halloween_factory": "Halloween 2026: Gate 0 and Gate 3 are the community-confirmed exits. Check the in-game list and door requirements for this raid.",
+      "halloween_car": "Halloween 2026: obtain the event Car keys in this raid and use the Parking exit. Search the rounded conference room in the recreation area. The ordinary parking-button rule does not describe this event exit.",
+      "halloween_sewage": "Halloween 2026: obtain the event Collector map and use the Sewage Conduit. Reported item locations include the server room and the rounded conference room. Check the extraction prompt in game."
+    },
+    "event_guides": "Event guides",
+    "events_checked": "Sources checked: {date}",
+    "events_prerequisite": "Prerequisite",
+    "events_source": "Community source"
   }
 }
