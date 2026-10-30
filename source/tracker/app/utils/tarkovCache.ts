@@ -328,6 +328,8 @@ export async function getCachedData<T>(
   gameMode: string,
   lang: string = 'en'
 ): Promise<T | null> {
+  // The desktop catalog is cached on disk; browser copies can outlive a catalog update.
+  if (typeof window !== 'undefined' && window.companion) return null;
   try {
     const cacheKey = generateCacheKey(type, gameMode, lang);
     return executeDatabaseTransaction<CachedData<T> | undefined>(
@@ -369,6 +371,7 @@ export async function setCachedData<T>(
   data: T,
   ttl: number = CACHE_CONFIG.DEFAULT_TTL
 ): Promise<void> {
+  if (typeof window !== 'undefined' && window.companion) return;
   try {
     const cacheKey = generateCacheKey(type, gameMode, lang);
     // Compute accurate byte size only when perf logging is enabled

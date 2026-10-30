@@ -2,11 +2,11 @@
 
 Windows 本地助手，提供官方 PvE 任务与藏身处进度、任务树、截图定位地图和置顶小地图。PvP 提供实时地图，位置与朝向在每次游戏截图后更新。整合界面基于 TarkovTracker，日志解析基于 TarkovMonitor，地图配置与地点资料来自 tarkov.dev。
 
-**[下载 v2.1.0 纯净便携版](https://github.com/leaf0329/tarkov-companion/releases/tag/v2.1.0)** · [使用说明](使用说明.md) · [更新记录](CHANGELOG.md)
+**[下载 v2.1.1 纯净便携版](https://github.com/leaf0329/tarkov-companion/releases/tag/v2.1.1)** · [使用说明](使用说明.md) · [更新记录](CHANGELOG.md)
 
 ## 使用
 
-1. 下载 Release 附件 `leaf0329-Tarkov-Companion-2.1.0-win-x64.zip`，完整解压到可写文件夹或 U 盘。
+1. 下载 Release 附件 `leaf0329-Tarkov-Companion-2.1.1-win-x64.zip`，完整解压到可写文件夹或 U 盘。
 2. 双击外层的 **启动塔科夫助手.exe**，按 Windows 提示确认管理员权限。保留它与 `tarkov-integrated` 文件夹的相对位置；普通使用无需安装 Node.js 或 .NET SDK。
 3. 在“本地设置”选择游戏 Logs 和 Screenshots 目录，点击底部“保存全部设置”。游戏截图键设为 **Insert**。
 4. 默认 **F11** 显示或隐藏置顶小地图。自动截图和截图清理默认关闭，需要定位时可在地图顶部开启自动截图。
@@ -59,6 +59,8 @@ npm test
 前端整合源码已经包含补丁，正常构建直接使用当前源码。更细的上游开发说明见 `source/tracker/README.md` 和对应的 `package.json`。
 
 ## 验证
+
+2.1.1 修复从旧版升级后仍读取浏览器旧地图缓存的问题。本机版使用已有的磁盘公开资料缓存，不改动个人进度与目录设置。回归复现了“旧缓存 17 图、本地资料 19 图”，确认修正后两张疫区地图可见、可选择，刷新后仍正常；缓存回归测试、类型检查、相关文件 lint 和两份生产构建通过。
 
 本次更新已通过相关 33 项地图测试、资料刷新回归测试、Nuxt 类型检查、相关文件 ESLint 和翻译检查。本机版与 PvP/PvE 便携版生产构建通过；隔离的无界面浏览器检查覆盖两张疫区地图、玩家标记、楼层、活动撤离条件、380×320 小窗关闭详情，以及四项活动攻略。资料刷新回归检查确认新地图名单会传给日志定位组件，未核实的 placeholder_ 任务会被排除，个人存档保持原样。发布包另检查空白进度、必需运行组件和对应源码。
 
