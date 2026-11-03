@@ -152,6 +152,7 @@ export interface PreferencesState {
   // Map display settings
   showMapExtracts: boolean;
   mapShowKeyRooms: boolean;
+  mapShowTransits: boolean;
   mapMarkerColors: MapMarkerColors;
   mapZoomSpeed: number;
   mapPanSpeed: number;
@@ -245,6 +246,7 @@ export const preferencesDefaultState: PreferencesState = {
   // Map display settings
   showMapExtracts: true,
   mapShowKeyRooms: false,
+  mapShowTransits: true,
   mapMarkerColors: { ...MAP_MARKER_COLORS },
   mapZoomSpeed: 1,
   mapPanSpeed: 1,
@@ -650,6 +652,9 @@ export const usePreferencesStore = defineStore('preferences', {
     getMapShowKeyRooms: (state) => {
       return state.mapShowKeyRooms ?? false;
     },
+    getMapShowTransits: (state) => {
+      return state.mapShowTransits ?? true;
+    },
     getMapShowPinnedObjectives: (state) => {
       return state.mapShowPinnedObjectives ?? true;
     },
@@ -916,6 +921,9 @@ export const usePreferencesStore = defineStore('preferences', {
     setMapShowKeyRooms(show: boolean) {
       this.mapShowKeyRooms = show;
     },
+    setMapShowTransits(show: boolean) {
+      this.mapShowTransits = show;
+    },
     setMapShowPinnedObjectives(show: boolean) {
       this.mapShowPinnedObjectives = show;
     },
@@ -1074,6 +1082,7 @@ export const usePreferencesStore = defineStore('preferences', {
       'tasksRequireTraderLevels',
       'showMapExtracts',
       'mapShowKeyRooms',
+      'mapShowTransits',
       'mapMarkerColors',
       'mapZoomSpeed',
       'mapPanSpeed',

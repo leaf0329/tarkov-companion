@@ -101,6 +101,12 @@ export default defineNuxtPlugin({
     nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: { extract_rules: {"halloween_factory":"2026 万圣节活动：社区确认的工厂撤离点为 0 号门和 3 号门。请以本局撤离列表及门的实际要求为准。","halloween_car":"2026 万圣节活动：需要在本局取得活动“汽车钥匙”，从停车场撤离。可在休息区圆形会议室搜寻；请按游戏内提示使用活动物品。","halloween_sewage":"2026 万圣节活动：需要活动“下水道地图（Collector map）”，从污水管道撤离。社区报告的物品位置包括服务器房和圆形会议室；以游戏内撤离提示为准。"} } });
     nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: { event_guides: '活动攻略', events_checked: '资料核对日期：{date}', events_prerequisite: '前置任务', events_source: '查看社区原文' } });
     nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: { save_failed: '设置未保存，请重试' } });
+    nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: {
+      transits: '转移点', transit_to: '转移至{name}',
+      transit_unknown: '转移点（目的地暂未收录）', transit_conditions: '转移条件',
+      transit_conditions_unknown: '此处有额外条件，公开资料尚未提供文字说明，请核对游戏内的转移提示。',
+      transit_availability: '是否开放及实际要求，以本局游戏内的转移提示为准。',
+    } });
     watch(() => metadata.tasks.length, () => {
       if (snapshot.value) apply(snapshot.value, true);
     });

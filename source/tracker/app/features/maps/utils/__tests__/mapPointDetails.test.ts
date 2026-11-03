@@ -4,11 +4,12 @@ import mapData from '@/data/maps.json';
 import {
   createExtractDetails,
   createKeyRoomDetails,
+  createTransitDetails,
   getPointFloor,
   isPointOnSelectedFloor,
   type PointTranslate,
 } from '@/features/maps/utils/mapPointDetails';
-import type { MapExtract, TarkovMap } from '@/types/tarkov';
+import type { MapExtract, MapTransit, TarkovMap } from '@/types/tarkov';
 const messages = JSON.parse(readFileSync('app/locales/en.json', 'utf8')) as Record<string, unknown>;
 const t: PointTranslate = (key, values = {}) => {
   const message = key
@@ -20,6 +21,48 @@ const reserve = { id: 'reserve', name: 'Reserve', ...mapData.reserve } as Tarkov
 const customs = { id: 'customs', name: 'Customs', ...mapData.customs } as TarkovMap;
 const labs = { id: 'labs', name: 'Labs', ...mapData.lab } as unknown as TarkovMap;
 describe('map point floor and extraction details', () => {
+  it('shows a transit destination, its underground floor and readable conditions as text', () => {
+    const transit: MapTransit = {
+      id: '5',
+      description: 'STR_TRANSIT_5_DESC',
+      map: 'dark-lab',
+      position: { x: 200, y: -7.38, z: 82.4 },
+      conditions: 'Bring <img src=x> key',
+    };
+    const popup = createTransitDetails(
+      { id: 'streets', name: 'Streets', ...mapData.streetsoftarkov } as TarkovMap,
+      transit,
+      'Dark Labs',
+      t
+    );
+    expect(popup.dataset.transitId).toBe('5');
+    expect(popup.textContent).toContain('Transit to Dark Labs');
+    expect(popup.textContent).toContain('Underground');
+    expect(popup.textContent).toContain('Bring <img src=x> key');
+    expect(popup.querySelector('img')).toBeNull();
+    expect(popup.textContent).not.toContain('STR_TRANSIT');
+  });
+  it.each(['FAC_TRANSIT_14_COND', 'tr_lighthouse_icebreaker_cond', undefined])(
+    'does not display unresolved transit localization keys or claim unrestricted access: %s',
+    (conditions) => {
+      const popup = createTransitDetails(
+        customs,
+        {
+          id: 'special',
+          description: 'STR_TRANSIT_5_DESC',
+          map: 'missing',
+          position: { x: 0, y: 0, z: 0 },
+          conditions,
+        },
+        undefined,
+        t
+      );
+      expect(popup.textContent).toContain('destination not recorded');
+      expect(popup.textContent).toContain('in-game transit prompt');
+      expect(popup.textContent).not.toMatch(/_TRANSIT_|_cond/);
+      if (conditions) expect(popup.textContent).toContain('additional conditions');
+    }
+  );
   it('uses the building footprint as well as height, and leaves elevated outdoor terrain on the base layer', () => {
     expect(getPointFloor(customs, { x: 200, y: 6, z: 160 })).toBe('3rd Floor');
     expect(getPointFloor(customs, { x: 200, y: 6, z: -400 })).toBe('Ground_Level');

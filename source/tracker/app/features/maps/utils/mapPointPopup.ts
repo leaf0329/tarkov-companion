@@ -10,6 +10,18 @@ function toolbarInset(map: L.Map): number {
     toolbar.getBoundingClientRect().bottom - container.getBoundingClientRect().top + 8
   );
 }
+function rightControlsInset(map: L.Map): number {
+  const container = map.getContainer();
+  const zoomControl = container
+    .closest('[data-testid=map-surface]')
+    ?.querySelector('[data-testid=map-zoom-in]');
+  if (!zoomControl) return 8;
+  // These controls sit outside Leaflet's panes and can cover the popup close button.
+  return Math.max(
+    8,
+    container.getBoundingClientRect().right - zoomControl.getBoundingClientRect().left + 8
+  );
+}
 export function bindMapPointPopup(
   map: L.Map,
   library: typeof L,
@@ -25,7 +37,7 @@ export function bindMapPointPopup(
     // Keep the close control outside the scroll area and clear of a wrapping toolbar.
     popup.options.maxHeight = Math.max(40, map.getSize().y - top - 48);
     popup.options.autoPanPaddingTopLeft = library.point(8, top);
-    popup.options.autoPanPaddingBottomRight = library.point(8, 8);
+    popup.options.autoPanPaddingBottomRight = library.point(rightControlsInset(map), 8);
     popup.update();
   };
   layer.on('popupopen', () => {

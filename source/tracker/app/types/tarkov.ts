@@ -361,6 +361,14 @@ export interface MapSwitch {
   id: string;
   name: string;
 }
+export interface MapTransit {
+  id: string;
+  description: string;
+  /** Destination map ID. Transits are directional. */
+  map: string;
+  position: MapPosition;
+  conditions?: string | null;
+}
 export interface MapSvgConfig {
   file: string;
   floors: string[];
@@ -396,6 +404,7 @@ export interface TarkovMap {
   spawns?: MapSpawn[];
   /** Extraction points available on this map */
   extracts?: MapExtract[];
+  transits?: MapTransit[];
   locks?: MapLock[];
   switches?: MapSwitch[];
   /** Whether the map is unavailable for display */

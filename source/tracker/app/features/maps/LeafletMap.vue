@@ -70,6 +70,17 @@
           <div class="flex flex-wrap items-center gap-1">
             <button
               type="button"
+              data-testid="map-transits-toggle"
+              :aria-pressed="showTransits"
+              class="focus-visible:ring-primary-500 focus-visible:ring-offset-surface-850 flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              :class="showTransits ? MAP_BUTTON_ACTIVE_CLASS : MAP_BUTTON_INACTIVE_CLASS"
+              @click="showTransits = !showTransits"
+            >
+              <UIcon name="i-mdi-transit-connection-variant" class="h-4 w-4 shrink-0" />
+              <span class="whitespace-nowrap">{{ t('companion.transits') }}</span>
+            </button>
+            <button
+              type="button"
               data-testid="map-key-rooms-toggle"
               :aria-pressed="showKeyRooms"
               class="focus-visible:ring-primary-500 focus-visible:ring-offset-surface-850 flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -685,6 +696,7 @@
     mapObjectiveCategory,
     type MapObjectiveCategory,
   } from '@/composables/useMapObjectiveMarks';
+  import { useMapTransits } from '@/composables/useMapTransits';
   import {
     MAP_BUTTON_ACTIVE_CLASS,
     MAP_BUTTON_INACTIVE_CLASS,
@@ -809,6 +821,10 @@
     get: () => preferencesStore.getMapShowKeyRooms,
     set: (show: boolean) => preferencesStore.setMapShowKeyRooms(show),
   });
+  const showTransits = computed({
+    get: () => preferencesStore.getMapShowTransits,
+    set: (show: boolean) => preferencesStore.setMapShowTransits(show),
+  });
   const mapSurfaceRef = ref<HTMLElement | null>(null);
   const showKeyboardCursor = ref(false);
   const fullscreenToggleLabel = computed(() =>
@@ -896,6 +912,15 @@
   useCompanionPlayer(toRef(props, 'map'), mapInstance, leaflet);
   useCompanionPlaceNames(toRef(props, 'map'), mapInstance, leaflet, selectedFloor);
   useMapKeyRooms(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, showKeyRooms, itemName, t);
+  useMapTransits(
+    toRef(props, 'map'),
+    mapInstance,
+    leaflet,
+    selectedFloor,
+    showTransits,
+    (id) => mapMetadata.maps.find((map) => map.id === id)?.name,
+    t
+  );
   const ZONE_HOVER_DELTA = 0.16;
   const ZONE_HOVER_MAX = 0.6;
   const SPAWN_CLUSTER_ZOOM_THRESHOLD = 3.5;

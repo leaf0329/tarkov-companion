@@ -1,7 +1,7 @@
 import extractRules from '@/data/companionExtractRequirements.json';
 import floorData from '@/data/companionLandmarks.json';
 import { isCoopExtract } from '@/features/maps/composables/useLeafletMapControls';
-import type { MapExtract, MapLock, MapPosition, TarkovMap } from '@/types/tarkov';
+import type { MapExtract, MapLock, MapPosition, MapTransit, TarkovMap } from '@/types/tarkov';
 interface FloorExtent {
   height: number[];
   bounds?: Array<[number[], number[], string?]>;
@@ -177,5 +177,38 @@ export function createKeyRoomDetails(
   row(element, t('companion.required_key'), name);
   row(element, t('companion.point_floor'), getPointFloorLabel(map, lock.position, t));
   if (lock.needsPower) row(element, t('companion.activation_label'), t('companion.power_required'));
+  return element;
+}
+function isUntranslatedTransitText(text: string): boolean {
+  return /(?:_TRANSIT_\d+_(?:DESC|COND)|^tr_\w+_cond$)/i.test(text);
+}
+export function getTransitLabel(
+  transit: MapTransit,
+  destination: string | undefined,
+  t: PointTranslate
+): string {
+  if (destination) return t('companion.transit_to', { name: destination });
+  if (transit.description && !isUntranslatedTransitText(transit.description)) {
+    return transit.description;
+  }
+  return t('companion.transit_unknown');
+}
+export function createTransitDetails(
+  map: TarkovMap,
+  transit: MapTransit,
+  destination: string | undefined,
+  t: PointTranslate
+): HTMLElement {
+  const element = content(getTransitLabel(transit, destination, t));
+  element.dataset.testid = 'transit-details';
+  element.dataset.transitId = transit.id;
+  row(element, t('companion.point_floor'), getPointFloorLabel(map, transit.position, t));
+  const condition = transit.conditions?.trim();
+  const fallback = condition ? 'transit_conditions_unknown' : 'transit_availability';
+  row(
+    element,
+    t('companion.transit_conditions'),
+    condition && !isUntranslatedTransitText(condition) ? condition : t(`companion.${fallback}`)
+  );
   return element;
 }
