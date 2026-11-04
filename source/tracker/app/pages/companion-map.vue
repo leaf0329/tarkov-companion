@@ -10,16 +10,20 @@
         </NuxtLink>
       </aside>
       <div class="flex min-w-0 flex-1 flex-col">
-        <div class="border-surface-700 flex items-center gap-3 border-b p-2">
-          <SelectMenuFixed v-model="displayedMap" v-model:open="mapMenuOpen" :items="mapOptions" data-testid="companion-map-select" :data-value="displayedMap" :aria-label="t('companion.map')" class="max-w-48 [-webkit-app-region:no-drag]" :ui="{ base: 'h-8 px-2 py-1 text-sm' }" />
-          <label v-if="floors.length > 1" class="flex items-center gap-2 text-xs">
-            {{ t('maps.floors') }}
-            <SelectMenuFixed v-model="selectedFloor" v-model:open="floorMenuOpen" :items="floorOptions" data-testid="companion-floor-select" :data-value="selectedFloor" :aria-label="t('maps.floors')" class="max-w-48 [-webkit-app-region:no-drag]" :ui="{ base: 'h-8 px-2 py-1 text-sm' }" @update:model-value="mapRef?.setFloor($event as string)" />
+        <div data-testid="companion-map-controls" class="border-surface-700 flex shrink-0 items-center border-b" :class="overlay ? 'h-9 gap-1 px-2' : 'gap-3 p-2'">
+          <SelectMenuFixed v-model="displayedMap" v-model:open="mapMenuOpen" :items="mapOptions" data-testid="companion-map-select" :data-value="displayedMap" :aria-label="t('companion.map')" class="[-webkit-app-region:no-drag]" :class="overlay ? 'min-w-0 flex-1' : 'max-w-48'" :ui="{ base: overlay ? 'h-7 min-w-0 px-2 py-0 text-xs' : 'h-8 px-2 py-1 text-sm' }">
+            <template v-if="overlay" #default><span class="min-w-0 flex-1 truncate text-left">{{ mapData?.name }}</span></template>
+          </SelectMenuFixed>
+          <label v-if="floors.length > 1" class="flex items-center text-xs" :class="overlay ? 'min-w-0 flex-1' : 'gap-2'">
+            <span v-if="!overlay">{{ t('maps.floors') }}</span>
+            <SelectMenuFixed v-model="selectedFloor" v-model:open="floorMenuOpen" :items="floorOptions" data-testid="companion-floor-select" :data-value="selectedFloor" :aria-label="t('maps.floors')" class="[-webkit-app-region:no-drag]" :class="overlay ? 'w-full min-w-0' : 'max-w-48'" :ui="{ base: overlay ? 'h-7 min-w-0 px-2 py-0 text-xs' : 'h-8 px-2 py-1 text-sm' }" @update:model-value="mapRef?.setFloor($event as string)">
+              <template v-if="overlay" #default><span class="min-w-0 flex-1 truncate text-left">{{ selectedFloor.replace(/_/g, ' ') }}</span></template>
+            </SelectMenuFixed>
           </label>
           <AppTooltip :text="t('companion.controls_hint')"><span class="text-surface-400 cursor-help px-1 text-xs" tabindex="-1">?</span></AppTooltip>
           <span v-if="!overlay" class="text-surface-400 text-xs">{{ state?.runtime.capture?.message || t('companion.position_hint') }}</span>
         </div>
-        <LeafletMap v-if="mapData" ref="mapRef" :map="mapData" :marks="mapObjectiveMarks" :fill="true" :show-floor-controls="false" :show-controls-help="false" :show-legend="!overlay" class="min-h-0 flex-1" @floor-change="selectedFloor = $event" />
+        <LeafletMap v-if="mapData" ref="mapRef" :map="mapData" :marks="mapObjectiveMarks" :fill="true" :show-floor-controls="false" :show-controls-help="false" :show-legend="!overlay" :compact-controls="overlay" class="min-h-0 flex-1" @floor-change="selectedFloor = $event" />
         <div v-else class="text-surface-400 p-8">{{ t('companion.loading_maps') }}</div>
       </div>
     </div>

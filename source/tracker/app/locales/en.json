@@ -2710,6 +2710,7 @@
     "overview": "Show the full map (disables Follow)",
     "key_rooms": "Key rooms",
     "transits": "Transits",
+    "map_layers": "Layers",
     "transit_to": "Transit to {name}",
     "transit_unknown": "Transit point (destination not recorded)",
     "transit_conditions": "Transit conditions",

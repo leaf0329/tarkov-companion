@@ -6,6 +6,7 @@
     class="focus-visible:ring-primary-500 focus-visible:ring-offset-surface-900 @container relative isolate w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     :class="{ 'flex h-full min-h-0 flex-col': props.fill }"
     @pointerdown.capture="focusMapSurface"
+    @keydown.esc="closeMapLayersMenu"
   >
     <div
       v-if="isMapUnavailable"
@@ -27,8 +28,24 @@
     </div>
     <template v-else>
       <div
-        class="pointer-events-none absolute inset-x-2 top-2 z-1000 flex flex-wrap items-start justify-between gap-2"
+        class="pointer-events-none absolute inset-x-2 top-2 z-1000 flex gap-2"
+        :class="props.compactControls ? 'flex-col items-end' : 'flex-wrap items-start justify-between'"
+        :data-testid="props.compactControls ? 'map-toolbar' : undefined"
+        data-map-controls
       >
+        <button
+          v-if="props.compactControls"
+          type="button"
+          data-testid="map-layers-menu-toggle"
+          :aria-expanded="mapLayersOpen"
+          :aria-label="t('companion.map_layers')"
+          class="bg-surface-850/95 text-surface-100 pointer-events-auto flex h-7 items-center gap-1 rounded-md border border-white/10 px-2 text-xs shadow"
+          @click="toggleMapLayersMenu"
+        >
+          <UIcon name="i-mdi-layers-outline" class="h-4 w-4" />
+          {{ t('companion.map_layers') }}
+          <UIcon :name="mapLayersOpen ? 'i-mdi-chevron-up' : 'i-mdi-chevron-down'" class="h-3 w-3" />
+        </button>
         <AppTooltip
           v-if="hasMultipleFloors && props.showFloorControls"
           :text="t('maps.tooltips.switch_floor')"
@@ -64,8 +81,10 @@
           </div>
         </AppTooltip>
         <div
+          v-show="!props.compactControls || mapLayersOpen"
           class="bg-surface-850/95 pointer-events-auto order-first ml-auto flex max-w-full flex-wrap items-center gap-1 rounded-lg border border-white/8 p-1 shadow-lg @min-[30rem]:order-last"
-          data-testid="map-toolbar"
+          :class="{ 'order-last! max-h-[60vh] overflow-y-auto': props.compactControls }"
+          :data-testid="props.compactControls ? 'map-layers-panel' : 'map-toolbar'"
         >
           <div class="flex flex-wrap items-center gap-1">
             <button
@@ -598,9 +617,8 @@
           </div>
         </div>
       </div>
-      <div class="mt-2 flex shrink-0 flex-wrap items-start justify-between gap-x-4 gap-y-4">
+      <div v-if="props.showLegend" class="mt-2 flex shrink-0 flex-wrap items-start justify-between gap-x-4 gap-y-4">
         <div
-          v-if="props.showLegend"
           class="bg-surface-850/95 text-surface-300 flex flex-wrap items-center gap-4 rounded-lg border border-white/8 px-3 py-2 text-xs shadow-lg"
         >
           <div class="flex flex-wrap items-center gap-2">
@@ -793,6 +811,7 @@
     initialFloor?: string;
     showFloorControls?: boolean;
     showControlsHelp?: boolean;
+    compactControls?: boolean;
     taskVisibilityActions?: MapTaskVisibilityActions | null;
   }
   const props = withDefaults(defineProps<Props>(), {
@@ -809,6 +828,7 @@
     initialFloor: undefined,
     showFloorControls: true,
     showControlsHelp: true,
+    compactControls: false,
     taskVisibilityActions: null,
   });
   const emit = defineEmits<{ 'toggle-fullscreen': []; 'floor-change': [floor: string] }>();
@@ -959,6 +979,18 @@
   const mapColorsOpen = ref(false);
   const mapSettingsOpen = ref(false);
   const mapHelpOpen = ref(false);
+  const mapLayersOpen = ref(false);
+  const closeMapLayersMenu = () => {
+    mapLayersOpen.value = false;
+    mapColorsOpen.value = false;
+    mapSettingsOpen.value = false;
+    mapHelpOpen.value = false;
+  };
+  const toggleMapLayersMenu = () => {
+    if (mapLayersOpen.value) closeMapLayersMenu();
+    else mapLayersOpen.value = true;
+  };
+  watch(() => props.map.id, closeMapLayersMenu);
   const popoverTriggers = { colors: null, settings: null, help: null } as Record<
     'colors' | 'settings' | 'help',
     HTMLElement | null
@@ -1289,7 +1321,10 @@
     mapKeyboardLastTick = 0;
     mapKeyboardFrameId = window.requestAnimationFrame(runMapKeyboardLoop);
   };
-  const focusMapSurface = () => {
+  const focusMapSurface = (event: PointerEvent) => {
+    if (props.compactControls && !(event.target as Element).closest('[data-map-controls]')) {
+      closeMapLayersMenu();
+    }
     clearKeyboardCursorHover();
     showKeyboardCursor.value = false;
     mapSurfaceRef.value?.focus({ preventScroll: true });
@@ -1353,9 +1388,7 @@
   };
   useCompanionMapInteraction(mapInstance, () => {
     onMapWindowBlur();
-    mapColorsOpen.value = false;
-    mapSettingsOpen.value = false;
-    mapHelpOpen.value = false;
+    closeMapLayersMenu();
   });
   const baseZoomDelta = ref<number | null>(null);
   const baseZoomSnap = ref<number | null>(null);

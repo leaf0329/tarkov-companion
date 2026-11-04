@@ -102,7 +102,7 @@ export default defineNuxtPlugin({
     nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: { event_guides: '活动攻略', events_checked: '资料核对日期：{date}', events_prerequisite: '前置任务', events_source: '查看社区原文' } });
     nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: { save_failed: '设置未保存，请重试' } });
     nuxtApp.$i18n.mergeLocaleMessage('zh', { companion: {
-      transits: '转移点', transit_to: '转移至{name}',
+      transits: '转移点', map_layers: '图层', transit_to: '转移至{name}',
       transit_unknown: '转移点（目的地暂未收录）', transit_conditions: '转移条件',
       transit_conditions_unknown: '此处有额外条件，公开资料尚未提供文字说明，请核对游戏内的转移提示。',
       transit_availability: '是否开放及实际要求，以本局游戏内的转移提示为准。',
