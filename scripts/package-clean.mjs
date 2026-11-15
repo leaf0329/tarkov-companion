@@ -27,7 +27,7 @@ const data=path.join(app,'data');fs.mkdirSync(path.join(data,'catalog'),{recursi
 for(const name of ['maps.json','published-editions.json','published-prestige.json']){
  fs.copyFileSync(path.join(root,'data',name),path.join(data,name));
 }
-for(const name of ['bootstrap','editions','hideout','items-lite','map-spawns','prestige','screenshot-task-supplements','sources','tasks-core','tasks-objectives','tasks-rewards']){
+for(const name of ['bootstrap','editions','hideout','items-lite','map-spawns','prestige','screenshot-task-supplements','verified-pve-task-supplements','sources','tasks-core','tasks-objectives','tasks-rewards']){
  fs.copyFileSync(path.join(root,'data/catalog',name+'.json'),path.join(data,'catalog',name+'.json'));
 }
 const blank={settings:{logsPath:'',screenshotsPath:'',hotkey:'F11',opacity:85,interval:5,autoScreenshot:false,cleanupScreenshots:false,follow:true},selectedProfile:'',profiles:{},ui:{}};
@@ -45,6 +45,8 @@ const instructions=`# leaf0329 · 塔科夫助手纯净便携版
 5. 游戏截图键需要设为 Insert。首次使用默认关闭自动截图；需要定位时在主地图或小地图开启。读取后删除游戏截图的选项也默认关闭，可在本地设置中自行开启。
 
 同一任务的所有未完成目标点会同时显示。勾选完成一个目标只移除该目标的点位，其他目标继续显示。
+
+2026-11-15 更新（2.3.0）：补入「逐光而行」缺失的 10 项任务，并修正其与「邂逅」的前后置关系；另补 BTR 司机任务、「买票上船！」及 PvE 第 2–6 次转生的「新起点」。完整目标、钥匙选择关系和有来源的参考点位已附带。公开资料刷新会保留仍未由上游提供的真实任务补充。新位置尚未在真实战局逐点验收，未把临时活动或竞技场独立任务当作常驻任务导入。
 
 2026-10-30 更新：地图中可选择工厂疫区与实验室疫区。主窗口顶部“活动攻略”提供四项万圣节任务的完整目标、前置与社区来源，核对日期为 2026-10-30；尚未核实的编号、模式和精确坐标会注明，不改动个人进度。活动地图的装修和点位未逐处实战验收。
 

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {spawn} from 'node:child_process';
 import {applyScreenshotTaskSupplements} from './screenshot-task-supplements.mjs';
+import {applyTaskCatalogSupplements} from './task-catalog-supplements.mjs';
 const endpoints=['bootstrap','tasks-core','tasks-objectives','tasks-rewards','hideout','items-lite','map-spawns','editions','prestige'];
 const folder=path.resolve('data/catalog');fs.mkdirSync(folder,{recursive:true});
 async function download(name){
@@ -14,7 +15,8 @@ async function download(name){
  const data=JSON.parse(fs.readFileSync(target+'.tmp','utf8'));
  if(!data.data)throw Error(name+': invalid metadata response');
  if(Array.isArray(data.data.tasks))data.data.tasks=data.data.tasks.filter(task=>!task.id.startsWith('placeholder_'));
- const merged=applyScreenshotTaskSupplements(data,name,folder);
+ const verified=applyTaskCatalogSupplements(data,name,folder);
+ const merged=applyScreenshotTaskSupplements(verified,name,folder);
  if(merged!==data)fs.writeFileSync(target+'.tmp',JSON.stringify(merged));
  else fs.writeFileSync(target+'.tmp',JSON.stringify(data));
  if(name==='tasks-core'){

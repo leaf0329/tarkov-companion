@@ -13,3 +13,5 @@
 这是本机整合版；没有将第三方项目冒称为 leaf0329 原创。
 
 2026-10-30 活动资料：旧工厂 SVG 来自 the-hideout/tarkov-dev-svg-maps 的 172cd23f43f95a302d2f7157507a5d2959d153a0，存为 Factory-PreRework.svg；坐标框架参照 the-hideout/tarkov-dev 的 fd4e5e72605b8027d5316f5c6aa7f3d4ebec239c。素材继续遵循上述 SVG 项目的许可。活动地图与撤离来源记录位于 source/maps/src/data/companion-event-maps.json；活动攻略按 2026-10-30 的 Tarkov.Help、TarkovHead 社区图文概括，具体链接随各条目保留，没有复制攻略全文或照片。未核实的任务编号和坐标不冒充正式数据。
+
+2026-11-15 常驻 PvE 任务补充：任务编号、中文名称、目标条件及社区地图点位参照 EFT 中文 Wiki（https://www.eftarkov.com/task-tree），与 TarkovTracker 公开资料 1.177 对照；逐条来源和校准误差记录在 data/catalog/verified-pve-task-supplements.json。仅整理事实资料，未复制任务剧情、对话、攻略全文或图片。来源内容和游戏素材的权利仍归原权利人；项目代码许可不改变这些权利。地图像素点转换到游戏 X/Z 使用现有公开钥匙门坐标作校准，转换点的高度只是同层参考，未在真实战局逐点核实。灯塔 Shifting Balance 临时任务线未按常驻任务导入。

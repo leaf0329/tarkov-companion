@@ -1,0 +1,3610 @@
+{
+  "schemaVersion": 1,
+  "gameMode": "pve",
+  "verifiedAt": "2026-11-15",
+  "scope": "Permanent official PvE trader quests. Story chapters, standalone Arena tasks and unverified seasonal tasks are not imported.",
+  "mergePolicy": "Add missing real task IDs; replace Getting Acquainted to repair its predecessor. Keep later upstream real records for other tasks. Never read or write player progress.",
+  "objectiveIdPolicy": "Existing Getting Acquainted objective IDs are preserved. New local_* goal IDs support manual goal checking and are not game objective IDs. Task IDs are real game IDs.",
+  "replaceTaskIds": [
+    "625d700cc48e6c62a440fab5"
+  ],
+  "excludedTaskIds": [
+    "new_beginning_prestige_5",
+    "new_beginning_prestige_6",
+    "6a763df2161e4b45b1015663",
+    "6a763f35ce9a947b4d0918b6",
+    "6a764462e432ba0a190a7fe9",
+    "6a76466e752258ce02073d07",
+    "6a885ad91006f9d30a0ed61b"
+  ],
+  "exclusions": [
+    {
+      "reason": "Replace synthetic New Beginning rows with verified real PvE task IDs, without converting personal completion states.",
+      "ids": [
+        "new_beginning_prestige_5",
+        "new_beginning_prestige_6"
+      ]
+    },
+    {
+      "reason": "Shifting Balance was explicitly a temporary chain; these missing tasks are not imported as permanent quests.",
+      "ids": [
+        "6a763df2161e4b45b1015663",
+        "6a763f35ce9a947b4d0918b6",
+        "6a764462e432ba0a190a7fe9",
+        "6a76466e752258ce02073d07",
+        "6a885ad91006f9d30a0ed61b"
+      ],
+      "sources": [
+        "https://tarkov-market.com/events/shifting-balance",
+        "https://store.steampowered.com/news/app/3932890"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "625d700cc48e6c62a440fab5",
+      "name": "逐光而行 - 邂逅",
+      "url": "https://www.eftarkov.com/task/625d700cc48e6c62a440fab5",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Getting Acquainted",
+      "note": ""
+    },
+    {
+      "id": "6a764077161e4b45b101566e",
+      "name": "真实评价",
+      "url": "https://www.eftarkov.com/task/6a764077161e4b45b101566e",
+      "verifiedAt": "2026-11-15",
+      "englishName": "Honest Review",
+      "note": ""
+    },
+    {
+      "id": "6a76457a80a94c0cbf0b07ae",
+      "name": "我即 BTR",
+      "url": "https://www.eftarkov.com/task/6a76457a80a94c0cbf0b07ae",
+      "verifiedAt": "2026-11-15",
+      "englishName": "I'm Something of a BTR Myself",
+      "note": ""
+    },
+    {
+      "id": "6a880acc9216d0f5aa078305",
+      "name": "逐光而行 - 审慎信任",
+      "url": "https://www.eftarkov.com/task/6a880acc9216d0f5aa078305",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Trust but Verify",
+      "note": "Therapist、Skier、Peacekeeper、Mechanic、Ragman、Jaeger，这些商人好感3级后主动和Mechanic对话获得本任务"
+    },
+    {
+      "id": "6a880f5d9438980c42076efe",
+      "name": "逐光而行 - 虚假呼叫",
+      "url": "https://www.eftarkov.com/task/6a880f5d9438980c42076efe",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - False Call",
+      "note": "完成任务“逐光而行 - 审慎信任”后10-30分钟解锁此任务"
+    },
+    {
+      "id": "6a8814d20d25ca7b2908e13e",
+      "name": "逐光而行 - 斩断羽翼",
+      "url": "https://www.eftarkov.com/task/6a8814d20d25ca7b2908e13e",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Clip Their Wings",
+      "note": "完成任务“逐光而行 - 虚假呼叫”后10-15分钟解锁此任务"
+    },
+    {
+      "id": "6a8819620d25ca7b2908e14d",
+      "name": "逐光而行 - 狼子野心",
+      "url": "https://www.eftarkov.com/task/6a8819620d25ca7b2908e14d",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Dangerous Ambitions",
+      "note": ""
+    },
+    {
+      "id": "6a881bcf20dba6e9d70597a3",
+      "name": "逐光而行 - 一败涂地",
+      "url": "https://www.eftarkov.com/task/6a881bcf20dba6e9d70597a3",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Bite the Dust",
+      "note": ""
+    },
+    {
+      "id": "6a8820cb1f2b560baf0408a1",
+      "name": "逐光而行 - 抛掷石头有时",
+      "url": "https://www.eftarkov.com/task/6a8820cb1f2b560baf0408a1",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - A Time to Throw Stones",
+      "note": ""
+    },
+    {
+      "id": "6a88255e8636c03a2d09ba37",
+      "name": "逐光而行 - 光之暗面",
+      "url": "https://www.eftarkov.com/task/6a88255e8636c03a2d09ba37",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - The Other Side",
+      "note": ""
+    },
+    {
+      "id": "6a88270efbd24b6243010e6d",
+      "name": "逐光而行 - 谁打的电话？",
+      "url": "https://www.eftarkov.com/task/6a88270efbd24b6243010e6d",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Someone Called?",
+      "note": ""
+    },
+    {
+      "id": "6a884d69d35a46046d0e808a",
+      "name": "逐光而行 - 飞鸟坠落",
+      "url": "https://www.eftarkov.com/task/6a884d69d35a46046d0e808a",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - Fallen Bird",
+      "note": ""
+    },
+    {
+      "id": "6a8852bc184783d23e047902",
+      "name": "逐光而行 - 堆聚石头有时",
+      "url": "https://www.eftarkov.com/task/6a8852bc184783d23e047902",
+      "verifiedAt": "2026-11-15",
+      "englishName": "To the Light - A Time to Gather Stones",
+      "note": ""
+    },
+    {
+      "id": "6a8b8266f47489e5720a63b7",
+      "name": "买票上船！",
+      "url": "https://www.eftarkov.com/task/6a8b8266f47489e5720a63b7",
+      "verifiedAt": "2026-11-15",
+      "englishName": "Pay the Fare!",
+      "note": "在剧情【Boreas】中告诉 Mechanic 你找到了登船的交通工具即解锁本任务"
+    },
+    {
+      "id": "6aad73ddedf6e9696e0f60d4",
+      "name": "新起点（第2次转生）",
+      "url": "https://www.eftarkov.com/task/6aad73ddedf6e9696e0f60d4",
+      "verifiedAt": "2026-11-15",
+      "englishName": "New Beginning",
+      "note": "PVE转生任务，二转"
+    },
+    {
+      "id": "6aad73e67a336545ed0657f3",
+      "name": "新起点（第3次转生）",
+      "url": "https://www.eftarkov.com/task/6aad73e67a336545ed0657f3",
+      "verifiedAt": "2026-11-15",
+      "englishName": "New Beginning",
+      "note": "PVE转生任务，三转"
+    },
+    {
+      "id": "6aad74057a336545ed065807",
+      "name": "新起点（第4次转生）",
+      "url": "https://www.eftarkov.com/task/6aad74057a336545ed065807",
+      "verifiedAt": "2026-11-15",
+      "englishName": "New Beginning",
+      "note": "PVE转生任务，四转"
+    },
+    {
+      "id": "6aad740f5e7f204c2d088f42",
+      "name": "新起点（第5次转生）",
+      "url": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42",
+      "verifiedAt": "2026-11-15",
+      "englishName": "New Beginning",
+      "note": "PVE转生任务，五转"
+    },
+    {
+      "id": "6aad741ff8ee02b31009ca11",
+      "name": "新起点（第6次转生）",
+      "url": "https://www.eftarkov.com/task/6aad741ff8ee02b31009ca11",
+      "verifiedAt": "2026-11-15",
+      "englishName": "New Beginning",
+      "note": "PVE转生任务，六转"
+    }
+  ],
+  "coordinateProvenance": {
+    "method": "Community map pixels converted to game X/Z using shared key-door anchors in the installed public map catalog; exact public positions used for known extracts and transits. Y is a nearest same-floor reference for converted points, not a surveyed altitude.",
+    "gameValidation": "Not individually verified in a live raid.",
+    "maps": [
+      {
+        "mapId": "56f40101d2720b2a4d8b45d6",
+        "source": "https://www.eftarkov.com/map/56f40101d2720b2a4d8b45d6",
+        "anchors": 32,
+        "rmsMeters": 1.4,
+        "leaveOneOutMaxMeters": 6.43
+      },
+      {
+        "mapId": "5704e3c2d2720bac5b8b4567",
+        "source": "https://www.eftarkov.com/map/5704e3c2d2720bac5b8b4567",
+        "anchors": 7,
+        "rmsMeters": 1.42,
+        "leaveOneOutMaxMeters": 5.65
+      },
+      {
+        "mapId": "5704e4dad2720bb55b8b4567",
+        "source": "https://www.eftarkov.com/map/5704e4dad2720bb55b8b4567",
+        "anchors": 13,
+        "rmsMeters": 2.39,
+        "leaveOneOutMaxMeters": 7.82
+      },
+      {
+        "mapId": "5704e554d2720bac5b8b456e",
+        "source": "https://www.eftarkov.com/map/5704e554d2720bac5b8b456e",
+        "anchors": 28,
+        "rmsMeters": 0.81,
+        "leaveOneOutMaxMeters": 2.9
+      },
+      {
+        "mapId": "5704e5fad2720bc05b8b4567",
+        "source": "https://www.eftarkov.com/map/5704e5fad2720bc05b8b4567",
+        "anchors": 28,
+        "rmsMeters": 0.76,
+        "leaveOneOutMaxMeters": 1.65
+      },
+      {
+        "mapId": "5714dc692459777137212e12",
+        "source": "https://www.eftarkov.com/map/5714dc692459777137212e12",
+        "anchors": 40,
+        "rmsMeters": 1.75,
+        "leaveOneOutMaxMeters": 7.58
+      },
+      {
+        "mapId": "5b0fc42d86f7744a585f9105",
+        "source": "https://www.eftarkov.com/map/5b0fc42d86f7744a585f9105",
+        "anchors": 8,
+        "rmsMeters": 0.62,
+        "leaveOneOutMaxMeters": 1.24
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "625d700cc48e6c62a440fab5",
+      "name": "逐光而行 - 邂逅",
+      "normalizedName": "getting-acquainted",
+      "wikiLink": "https://www.eftarkov.com/task/625d700cc48e6c62a440fab5",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": {
+        "id": "5704e4dad2720bb55b8b4567",
+        "name": "Lighthouse"
+      },
+      "minPlayerLevel": 0,
+      "kappaRequired": false,
+      "lightkeeperRequired": false,
+      "factionName": "Any",
+      "experience": 32000,
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a88255e8636c03a2d09ba37",
+            "name": "逐光而行 - 光之暗面"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "6391e2f9e705511c8a4a1b85",
+          "description": "获得V3 U盘",
+          "type": "findQuestItem",
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "Lighthouse"
+            }
+          ],
+          "questItem": {
+            "id": "6331bb0d1aa9f42b804997a6",
+            "name": "Secure Flash drive V3",
+            "shortName": "V3 Flash"
+          },
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e4dad2720bb55b8b4567",
+                "name": "Lighthouse"
+              },
+              "positions": [
+                {
+                  "x": -122.0297,
+                  "y": 37.5548,
+                  "z": 94.43048
+                },
+                {
+                  "x": -116.7881,
+                  "y": 40.7411,
+                  "z": 88.89661
+                },
+                {
+                  "x": -64.5793,
+                  "y": 27.5448,
+                  "z": 112.52942
+                }
+              ]
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false
+        },
+        {
+          "id": "6391e31bfa894f0a866afdec",
+          "description": "使用 V3 U 盘重新写入无线电发射器",
+          "type": "findItem",
+          "items": [
+            {
+              "id": "62e910aaf957f2915e0a5e36",
+              "name": "Digital secure DSP radio transmitter",
+              "shortName": "DSPT"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1
+        },
+        {
+          "id": "6391e329c115f907b14700b1",
+          "description": "上交U盘",
+          "type": "giveQuestItem",
+          "questItem": {
+            "id": "6331bb0d1aa9f42b804997a6",
+            "name": "Secure Flash drive V3",
+            "shortName": "V3 Flash"
+          },
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false
+        },
+        {
+          "id": "63ab727b1287ef0b827d0c95",
+          "description": "前往灯塔",
+          "type": "visit",
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "Lighthouse"
+            }
+          ],
+          "zones": [
+            {
+              "map": {
+                "id": "5704e4dad2720bb55b8b4567",
+                "name": "Lighthouse"
+              },
+              "position": {
+                "x": 442.23,
+                "y": 24.11,
+                "z": 460.69
+              },
+              "outline": [
+                {
+                  "x": 429.81,
+                  "y": 18.26,
+                  "z": 447.88
+                },
+                {
+                  "x": 429.81,
+                  "y": 18.26,
+                  "z": 473.5
+                },
+                {
+                  "x": 454.66,
+                  "y": 18.26,
+                  "z": 473.5
+                },
+                {
+                  "x": 454.66,
+                  "y": 18.26,
+                  "z": 447.88
+                }
+              ],
+              "top": 29.97,
+              "bottom": 18.26
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false
+        }
+      ],
+      "failConditions": [],
+      "normalizedTraderRequirements": [],
+      "storyUnlocks": [],
+      "traderTaskGroup": 0
+    },
+    {
+      "id": "6a764077161e4b45b101566e",
+      "name": "真实评价",
+      "normalizedName": "honest-review",
+      "wikiLink": "https://www.eftarkov.com/task/6a764077161e4b45b101566e",
+      "trader": {
+        "id": "656f0f98d80a697f855d34b1",
+        "name": "BTR司机",
+        "imageLink": "https://assets.tarkov.dev/656f0f98d80a697f855d34b1.webp"
+      },
+      "map": {
+        "id": "5704e4dad2720bb55b8b4567",
+        "name": "Lighthouse"
+      },
+      "experience": 15000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "availableDelaySecondsMin": 15,
+      "availableDelaySecondsMax": 15,
+      "objectives": [
+        {
+          "id": "local_6a764077161e4b45b101566e_1",
+          "description": "查看灯塔村庄附近路口的情况",
+          "type": "visit",
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "Lighthouse"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e4dad2720bb55b8b4567",
+                "name": "灯塔"
+              },
+              "positions": [
+                {
+                  "x": -193.98,
+                  "y": 12.67,
+                  "z": -248.21
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a764077161e4b45b101566e_2",
+          "description": "查看灯塔主路上 UN 检查站周边的情况",
+          "type": "visit",
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "Lighthouse"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e4dad2720bb55b8b4567",
+                "name": "灯塔"
+              },
+              "positions": [
+                {
+                  "x": 15.67,
+                  "y": 12.67,
+                  "z": 131.98
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a764077161e4b45b101566e_3",
+          "description": "查看灯塔污水处理厂两栋主厂房中间停车区域的情况",
+          "type": "visit",
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "Lighthouse"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e4dad2720bb55b8b4567",
+                "name": "灯塔"
+              },
+              "positions": [
+                {
+                  "x": -162.43,
+                  "y": 5.94,
+                  "z": -749.57
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a764077161e4b45b101566e_4",
+          "description": "返回藏身处，再向 BTR 司机汇报",
+          "type": "extract",
+          "exitStatus": [
+            "Survived",
+            "Runner",
+            "Killed",
+            "MissingInAction",
+            "Left"
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false
+        },
+        {
+          "id": "local_6a764077161e4b45b101566e_5",
+          "description": "和 BTR 司机交流你的看法",
+          "optional": false,
+          "foundInRaid": false
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "taskRequirements": []
+    },
+    {
+      "id": "6a76457a80a94c0cbf0b07ae",
+      "name": "我即 BTR",
+      "normalizedName": "i-m-something-of-a-btr-myself",
+      "wikiLink": "https://www.eftarkov.com/task/6a76457a80a94c0cbf0b07ae",
+      "trader": {
+        "id": "656f0f98d80a697f855d34b1",
+        "name": "BTR司机",
+        "imageLink": "https://assets.tarkov.dev/656f0f98d80a697f855d34b1.webp"
+      },
+      "map": {
+        "id": "5704e4dad2720bb55b8b4567",
+        "name": "Lighthouse"
+      },
+      "experience": 30000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a764077161e4b45b101566e",
+            "name": "真实评价"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a76457a80a94c0cbf0b07ae_1",
+          "description": "在灯塔使用任意 7.62×54R 口径的武器消灭 Scav 15 名",
+          "type": "shoot",
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "Lighthouse"
+            }
+          ],
+          "shotType": "kill",
+          "optional": false,
+          "count": 15,
+          "foundInRaid": false
+        },
+        {
+          "id": "local_6a76457a80a94c0cbf0b07ae_2",
+          "description": "返回 BTR 司机处报告进展",
+          "optional": false,
+          "foundInRaid": false
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a880acc9216d0f5aa078305",
+      "name": "逐光而行 - 审慎信任",
+      "normalizedName": "to-the-light-trust-but-verify",
+      "wikiLink": "https://www.eftarkov.com/task/6a880acc9216d0f5aa078305",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": {
+        "id": "5b0fc42d86f7744a585f9105",
+        "name": "The Lab"
+      },
+      "experience": 35000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "otherRequirements": [
+        {
+          "type": "dialogue",
+          "id": "6a880acc9216d0f5aa078305_req_dialogue",
+          "traders": [
+            "5a7c2eca46aef81a7ca2145d"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a880acc9216d0f5aa078305_1",
+          "description": "同场战局：将装有假数据的硬盘藏在实验室一层武器测试区旁的服务器机房。接取后从邮件领取硬盘并带入战局。",
+          "type": "plantQuestItem",
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "The Lab"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5b0fc42d86f7744a585f9105",
+                "name": "实验室"
+              },
+              "positions": [
+                {
+                  "x": -183.15,
+                  "y": 1.04,
+                  "z": -330.19
+                }
+              ]
+            }
+          ],
+          "questItem": {
+            "id": "6a8993cab2713c27d90e9bb7",
+            "name": "装有假数据的硬盘",
+            "shortName": "装有假数据的硬盘"
+          },
+          "requiredKeys": [
+            [
+              {
+                "id": "5c94bbff86f7747ee735c08f",
+                "name": "TerraGroup实验室访问钥匙卡",
+                "shortName": "钥匙卡",
+                "iconLink": "https://assets.tarkov.dev/5c94bbff86f7747ee735c08f-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_Labs_access_keycard"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "local_6a880acc9216d0f5aa078305_2",
+          "description": "从“通风管道”撤离点离开实验室（在同场战局中完成）",
+          "type": "extract",
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "The Lab"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5b0fc42d86f7744a585f9105",
+                "name": "实验室"
+              },
+              "positions": [
+                {
+                  "x": -145.06,
+                  "y": -2.46,
+                  "z": -396.83
+                }
+              ]
+            }
+          ],
+          "requiredKeys": [
+            [
+              {
+                "id": "5c94bbff86f7747ee735c08f",
+                "name": "TerraGroup实验室访问钥匙卡",
+                "shortName": "钥匙卡",
+                "iconLink": "https://assets.tarkov.dev/5c94bbff86f7747ee735c08f-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_Labs_access_keycard"
+              }
+            ]
+          ]
+        }
+      ],
+      "failConditions": [],
+      "normalizedTraderRequirements": [
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.54cb57776803fa99248b456e.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "54cb57776803fa99248b456e",
+            "name": "Therapist"
+          }
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.58330581ace78e27b8b10cee.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "58330581ace78e27b8b10cee",
+            "name": "Skier"
+          }
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5935c25fb3acc3127c3d8cd9.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5935c25fb3acc3127c3d8cd9",
+            "name": "Peacekeeper"
+          }
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5a7c2eca46aef81a7ca2145d.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5a7c2eca46aef81a7ca2145d",
+            "name": "Mechanic"
+          }
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5ac3b934156ae10c4430e83c.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5ac3b934156ae10c4430e83c",
+            "name": "Ragman"
+          }
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5c0647fdd443bc2504c2d371.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5c0647fdd443bc2504c2d371",
+            "name": "Jaeger"
+          }
+        }
+      ],
+      "traderLevelRequirements": [
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.54cb57776803fa99248b456e.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "54cb57776803fa99248b456e",
+            "name": "Therapist"
+          },
+          "level": 3
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.58330581ace78e27b8b10cee.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "58330581ace78e27b8b10cee",
+            "name": "Skier"
+          },
+          "level": 3
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5935c25fb3acc3127c3d8cd9.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5935c25fb3acc3127c3d8cd9",
+            "name": "Peacekeeper"
+          },
+          "level": 3
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5a7c2eca46aef81a7ca2145d.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5a7c2eca46aef81a7ca2145d",
+            "name": "Mechanic"
+          },
+          "level": 3
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5ac3b934156ae10c4430e83c.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5ac3b934156ae10c4430e83c",
+            "name": "Ragman"
+          },
+          "level": 3
+        },
+        {
+          "id": "overlay.6a880acc9216d0f5aa078305.5c0647fdd443bc2504c2d371.level.>=.3",
+          "requirementType": "level",
+          "compareMethod": ">=",
+          "value": 3,
+          "trader": {
+            "id": "5c0647fdd443bc2504c2d371",
+            "name": "Jaeger"
+          },
+          "level": 3
+        }
+      ],
+      "storyUnlocks": [],
+      "taskRequirements": [],
+      "requiredKeys": [
+        {
+          "keys": [
+            {
+              "id": "5c94bbff86f7747ee735c08f",
+              "name": "TerraGroup实验室访问钥匙卡",
+              "shortName": "钥匙卡",
+              "iconLink": "https://assets.tarkov.dev/5c94bbff86f7747ee735c08f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_Labs_access_keycard"
+            }
+          ],
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "实验室"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6a880f5d9438980c42076efe",
+      "name": "逐光而行 - 虚假呼叫",
+      "normalizedName": "to-the-light-false-call",
+      "wikiLink": "https://www.eftarkov.com/task/6a880f5d9438980c42076efe",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": {
+        "id": "56f40101d2720b2a4d8b45d6",
+        "name": "Customs"
+      },
+      "experience": 30000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "availableDelaySecondsMin": 600,
+      "availableDelaySecondsMax": 1800,
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a880acc9216d0f5aa078305",
+            "name": "逐光而行 - 审慎信任"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a880f5d9438980c42076efe_1",
+          "description": "在海关于 21:00–06:00 期间消灭任意目标（在同场战局中完成）5 名",
+          "type": "shoot",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "Customs"
+            }
+          ],
+          "shotType": "kill",
+          "optional": false,
+          "count": 5,
+          "foundInRaid": false
+        },
+        {
+          "id": "local_6a880f5d9438980c42076efe_2",
+          "description": "在海关于 21:00–06:00 期间消灭 PMC 行动人员（在同场战局中完成）1 名",
+          "type": "shoot",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "Customs"
+            }
+          ],
+          "shotType": "kill",
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false
+        },
+        {
+          "id": "local_6a880f5d9438980c42076efe_3",
+          "description": "在海关大桥附近便利店的空调机组处藏匿一个 Wi-Fi 摄像头（在同场战局中完成）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "Customs"
+            }
+          ],
+          "items": [
+            {
+              "id": "5b4391a586f7745321235ab2",
+              "name": "WIFI摄像头",
+              "shortName": "摄像头",
+              "iconLink": "https://assets.tarkov.dev/5b4391a586f7745321235ab2-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/WI-FI_Camera"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "56f40101d2720b2a4d8b45d6",
+                "name": "海关"
+              },
+              "positions": [
+                {
+                  "x": 13.77,
+                  "y": 2.27,
+                  "z": 37.76
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a880f5d9438980c42076efe_4",
+          "description": "在海关向海岸线的转移点处发射一枚黄色信号弹（在同场战局中完成）",
+          "type": "useItem",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "Customs"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "56f40101d2720b2a4d8b45d6",
+                "name": "海关"
+              },
+              "positions": [
+                {
+                  "x": 25.95,
+                  "y": 0.82,
+                  "z": 136.42
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "id": "624c0b3340357b5f566e8766",
+              "name": "RSP-30 反应式信号弹（黄色）",
+              "shortName": "黄色信号棒",
+              "iconLink": "https://assets.tarkov.dev/624c0b3340357b5f566e8766-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RSP-30_reactive_signal_cartridge_(Yellow)"
+            },
+            {
+              "id": "62389be94d5d474bf712e709",
+              "name": "26x75燃烧照明信号弹（黄色）",
+              "shortName": "黄色信号弹",
+              "iconLink": "https://assets.tarkov.dev/62389be94d5d474bf712e709-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/26x75mm_flare_cartridge_(Yellow)"
+            }
+          ]
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a8814d20d25ca7b2908e13e",
+      "name": "逐光而行 - 斩断羽翼",
+      "normalizedName": "to-the-light-clip-their-wings",
+      "wikiLink": "https://www.eftarkov.com/task/6a8814d20d25ca7b2908e13e",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": null,
+      "experience": 45000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "availableDelaySecondsMin": 600,
+      "availableDelaySecondsMax": 900,
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a880f5d9438980c42076efe",
+            "name": "逐光而行 - 虚假呼叫"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a8814d20d25ca7b2908e13e_1",
+          "description": "在森林山顶气象站处安装信号干扰器（在同场战局中完成）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "5704e3c2d2720bac5b8b4567",
+              "name": "Woods"
+            }
+          ],
+          "items": [
+            {
+              "id": "5ac78a9b86f7741cca0bbd8d",
+              "name": "信号干扰器",
+              "shortName": "干扰器",
+              "iconLink": "https://assets.tarkov.dev/5ac78a9b86f7741cca0bbd8d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Signal_Jammer"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e3c2d2720bac5b8b4567",
+                "name": "森林"
+              },
+              "positions": [
+                {
+                  "x": -212.98,
+                  "y": 16.56,
+                  "z": -279.23
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a8814d20d25ca7b2908e13e_2",
+          "description": "在森林锯木厂警卫室内安装信号干扰器（在同场战局中完成）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "5704e3c2d2720bac5b8b4567",
+              "name": "Woods"
+            }
+          ],
+          "items": [
+            {
+              "id": "5ac78a9b86f7741cca0bbd8d",
+              "name": "信号干扰器",
+              "shortName": "干扰器",
+              "iconLink": "https://assets.tarkov.dev/5ac78a9b86f7741cca0bbd8d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Signal_Jammer"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e3c2d2720bac5b8b4567",
+                "name": "森林"
+              },
+              "positions": [
+                {
+                  "x": -27.12,
+                  "y": 8.69,
+                  "z": 45.38
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a8814d20d25ca7b2908e13e_3",
+          "description": "使用转移功能从森林转移到海关（在同场战局中完成）",
+          "type": "extract",
+          "maps": [
+            {
+              "id": "5704e3c2d2720bac5b8b4567",
+              "name": "森林"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e3c2d2720bac5b8b4567",
+                "name": "森林"
+              },
+              "positions": [
+                {
+                  "x": -150.37,
+                  "y": 1.11,
+                  "z": 403.41
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a8814d20d25ca7b2908e13e_4",
+          "description": "在海关主路旁的建筑工地二楼安装信号干扰器（在同场战局中完成）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "Customs"
+            }
+          ],
+          "items": [
+            {
+              "id": "5ac78a9b86f7741cca0bbd8d",
+              "name": "信号干扰器",
+              "shortName": "干扰器",
+              "iconLink": "https://assets.tarkov.dev/5ac78a9b86f7741cca0bbd8d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Signal_Jammer"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "56f40101d2720b2a4d8b45d6",
+                "name": "海关"
+              },
+              "positions": [
+                {
+                  "x": 227.74,
+                  "y": 4.74,
+                  "z": -21.19
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a8814d20d25ca7b2908e13e_5",
+          "description": "使用转移功能从海关转移到海岸线（在同场战局中完成）",
+          "type": "extract",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "海关"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "56f40101d2720b2a4d8b45d6",
+                "name": "海关"
+              },
+              "positions": [
+                {
+                  "x": 20.94,
+                  "y": -0.33,
+                  "z": 139.61
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6a8814d20d25ca7b2908e13e_6",
+          "description": "在海岸线疗养院行政大楼二楼档案室内安装信号干扰器（在同场战局中完成）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "5704e554d2720bac5b8b456e",
+              "name": "Shoreline"
+            }
+          ],
+          "items": [
+            {
+              "id": "5ac78a9b86f7741cca0bbd8d",
+              "name": "信号干扰器",
+              "shortName": "干扰器",
+              "iconLink": "https://assets.tarkov.dev/5ac78a9b86f7741cca0bbd8d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Signal_Jammer"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e554d2720bac5b8b456e",
+                "name": "海岸线"
+              },
+              "positions": [
+                {
+                  "x": -240,
+                  "y": 0.13,
+                  "z": -148.04
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a8819620d25ca7b2908e14d",
+      "name": "逐光而行 - 狼子野心",
+      "normalizedName": "to-the-light-dangerous-ambitions",
+      "wikiLink": "https://www.eftarkov.com/task/6a8819620d25ca7b2908e14d",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": null,
+      "experience": 10000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a884d69d35a46046d0e808a",
+            "name": "逐光而行 - 飞鸟坠落"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a8819620d25ca7b2908e14d_1",
+          "description": "将 Lightkeeper 的护身符交给 Peacekeeper",
+          "type": "giveQuestItem",
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "questItem": {
+            "id": "6a89a01424707bdeef0c54d7",
+            "name": "Lightkeeper 的护身符",
+            "shortName": "Lightkeeper 的护身符"
+          }
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a881bcf20dba6e9d70597a3",
+      "name": "逐光而行 - 一败涂地",
+      "normalizedName": "to-the-light-bite-the-dust",
+      "wikiLink": "https://www.eftarkov.com/task/6a881bcf20dba6e9d70597a3",
+      "trader": {
+        "id": "5935c25fb3acc3127c3d8cd9",
+        "name": "Peacekeeper",
+        "imageLink": "https://assets.tarkov.dev/5935c25fb3acc3127c3d8cd9.webp"
+      },
+      "map": null,
+      "experience": 10000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a884d69d35a46046d0e808a",
+            "name": "逐光而行 - 飞鸟坠落"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a881bcf20dba6e9d70597a3_1",
+          "description": "上交能够证明幕后扰乱者身份的证据",
+          "type": "giveQuestItem",
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "questItem": {
+            "id": "6a89a01424707bdeef0c54d7",
+            "name": "Lightkeeper 的护身符",
+            "shortName": "Lightkeeper 的护身符"
+          }
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a8820cb1f2b560baf0408a1",
+      "name": "逐光而行 - 抛掷石头有时",
+      "normalizedName": "to-the-light-a-time-to-throw-stones",
+      "wikiLink": "https://www.eftarkov.com/task/6a8820cb1f2b560baf0408a1",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": {
+        "id": "5b0fc42d86f7744a585f9105",
+        "name": "The Lab"
+      },
+      "experience": 55000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a881bcf20dba6e9d70597a3",
+            "name": "逐光而行 - 一败涂地"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a8820cb1f2b560baf0408a1_1",
+          "description": "单场战局中在实验室消灭 PMC 行动人员 2 名",
+          "type": "shoot",
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "The Lab"
+            }
+          ],
+          "shotType": "kill",
+          "optional": false,
+          "count": 2,
+          "foundInRaid": false
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a88255e8636c03a2d09ba37",
+      "name": "逐光而行 - 光之暗面",
+      "normalizedName": "to-the-light-the-other-side",
+      "wikiLink": "https://www.eftarkov.com/task/6a88255e8636c03a2d09ba37",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": null,
+      "experience": 65000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a8852bc184783d23e047902",
+            "name": "逐光而行 - 堆聚石头有时"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a88255e8636c03a2d09ba37_1",
+          "description": "在储备站将 TerraGroup“蓝色文件夹”材料藏匿在任意一个神秘符号房间内（RB-BK 地下、RB-VO 一层、RB-PKPM 地下三处任选其一，放置 1 份）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "5704e5fad2720bc05b8b4567",
+              "name": "Reserve"
+            }
+          ],
+          "items": [
+            {
+              "id": "6389c8c5dbfd5e4b95197e6b",
+              "name": "TerraGroup \"蓝色文件夹\" 材料",
+              "shortName": "蓝色文件夹",
+              "iconLink": "https://assets.tarkov.dev/6389c8c5dbfd5e4b95197e6b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_%22Blue_Folders%22_materials"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5704e5fad2720bc05b8b4567",
+                "name": "储备站"
+              },
+              "positions": [
+                {
+                  "x": -158.35,
+                  "y": -8.16,
+                  "z": 72.71
+                },
+                {
+                  "x": 189.58,
+                  "y": -5.8,
+                  "z": -223.84
+                },
+                {
+                  "x": -120.8,
+                  "y": -13.48,
+                  "z": 27.64
+                }
+              ]
+            }
+          ],
+          "requiredKeys": [
+            [
+              {
+                "id": "5d80c60f86f77440373c4ece",
+                "name": "RB-BK 符号钥匙",
+                "shortName": "RB-BK",
+                "iconLink": "https://assets.tarkov.dev/5d80c60f86f77440373c4ece-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RB-BK_marked_key"
+              },
+              {
+                "id": "5d80c62a86f7744036212b3f",
+                "name": "RB-VO 符号钥匙",
+                "shortName": "RB-VO",
+                "iconLink": "https://assets.tarkov.dev/5d80c62a86f7744036212b3f-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RB-VO_marked_key"
+              },
+              {
+                "id": "5ede7a8229445733cb4c18e2",
+                "name": "RB-PKPM 符号钥匙",
+                "shortName": "RB-PKPM",
+                "iconLink": "https://assets.tarkov.dev/5ede7a8229445733cb4c18e2-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RB-PKPM_marked_key"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "local_6a88255e8636c03a2d09ba37_2",
+          "description": "在塔科夫街区将 TerraGroup“蓝色文件夹”材料藏匿在任意一个神秘符号房间内（废弃工厂三层或神秘房间一层任选其一，放置 1 份）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "5714dc692459777137212e12",
+              "name": "Streets of Tarkov"
+            }
+          ],
+          "items": [
+            {
+              "id": "6389c8c5dbfd5e4b95197e6b",
+              "name": "TerraGroup \"蓝色文件夹\" 材料",
+              "shortName": "蓝色文件夹",
+              "iconLink": "https://assets.tarkov.dev/6389c8c5dbfd5e4b95197e6b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_%22Blue_Folders%22_materials"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5714dc692459777137212e12",
+                "name": "塔科夫街区"
+              },
+              "positions": [
+                {
+                  "x": -134.15,
+                  "y": 9.71,
+                  "z": 271.76
+                },
+                {
+                  "x": 185.99,
+                  "y": 0.85,
+                  "z": 227.29
+                }
+              ]
+            }
+          ],
+          "requiredKeys": [
+            [
+              {
+                "id": "63a3a93f8a56922e82001f5d",
+                "name": "废弃工厂符号钥匙",
+                "shortName": "废弃工厂",
+                "iconLink": "https://assets.tarkov.dev/63a3a93f8a56922e82001f5d-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Abandoned_factory_marked_key"
+              },
+              {
+                "id": "64ccc25f95763a1ae376e447",
+                "name": "神秘房间符号钥匙",
+                "shortName": "Chek. 13",
+                "iconLink": "https://assets.tarkov.dev/64ccc25f95763a1ae376e447-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mysterious_room_marked_key"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "local_6a88255e8636c03a2d09ba37_3",
+          "description": "在海关将 TerraGroup“蓝色文件夹”材料藏匿在宿舍 314 神秘符号房间内（三层，放置 1 份）",
+          "type": "plantItem",
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "Customs"
+            }
+          ],
+          "items": [
+            {
+              "id": "6389c8c5dbfd5e4b95197e6b",
+              "name": "TerraGroup \"蓝色文件夹\" 材料",
+              "shortName": "蓝色文件夹",
+              "iconLink": "https://assets.tarkov.dev/6389c8c5dbfd5e4b95197e6b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/TerraGroup_%22Blue_Folders%22_materials"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": false,
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "56f40101d2720b2a4d8b45d6",
+                "name": "海关"
+              },
+              "positions": [
+                {
+                  "x": 181.22,
+                  "y": 6.85,
+                  "z": 184.05
+                }
+              ]
+            }
+          ],
+          "requiredKeys": [
+            [
+              {
+                "id": "5780cf7f2459777de4559322",
+                "name": "宿舍楼 314 房间符号钥匙",
+                "shortName": "314钥匙",
+                "iconLink": "https://assets.tarkov.dev/5780cf7f2459777de4559322-icon.webp",
+                "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Dorm_room_314_marked_key"
+              }
+            ]
+          ]
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "requiredKeys": [
+        {
+          "keys": [
+            {
+              "id": "5d80c60f86f77440373c4ece",
+              "name": "RB-BK 符号钥匙",
+              "shortName": "RB-BK",
+              "iconLink": "https://assets.tarkov.dev/5d80c60f86f77440373c4ece-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RB-BK_marked_key"
+            },
+            {
+              "id": "5d80c62a86f7744036212b3f",
+              "name": "RB-VO 符号钥匙",
+              "shortName": "RB-VO",
+              "iconLink": "https://assets.tarkov.dev/5d80c62a86f7744036212b3f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RB-VO_marked_key"
+            },
+            {
+              "id": "5ede7a8229445733cb4c18e2",
+              "name": "RB-PKPM 符号钥匙",
+              "shortName": "RB-PKPM",
+              "iconLink": "https://assets.tarkov.dev/5ede7a8229445733cb4c18e2-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/RB-PKPM_marked_key"
+            }
+          ],
+          "maps": [
+            {
+              "id": "5704e5fad2720bc05b8b4567",
+              "name": "储备站"
+            }
+          ],
+          "anyOf": true
+        },
+        {
+          "keys": [
+            {
+              "id": "63a3a93f8a56922e82001f5d",
+              "name": "废弃工厂符号钥匙",
+              "shortName": "废弃工厂",
+              "iconLink": "https://assets.tarkov.dev/63a3a93f8a56922e82001f5d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Abandoned_factory_marked_key"
+            },
+            {
+              "id": "64ccc25f95763a1ae376e447",
+              "name": "神秘房间符号钥匙",
+              "shortName": "Chek. 13",
+              "iconLink": "https://assets.tarkov.dev/64ccc25f95763a1ae376e447-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mysterious_room_marked_key"
+            }
+          ],
+          "maps": [
+            {
+              "id": "5714dc692459777137212e12",
+              "name": "塔科夫街区"
+            }
+          ],
+          "anyOf": true
+        },
+        {
+          "keys": [
+            {
+              "id": "5780cf7f2459777de4559322",
+              "name": "宿舍楼 314 房间符号钥匙",
+              "shortName": "314钥匙",
+              "iconLink": "https://assets.tarkov.dev/5780cf7f2459777de4559322-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Dorm_room_314_marked_key"
+            }
+          ],
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "海关"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6a88270efbd24b6243010e6d",
+      "name": "逐光而行 - 谁打的电话？",
+      "normalizedName": "to-the-light-someone-called",
+      "wikiLink": "https://www.eftarkov.com/task/6a88270efbd24b6243010e6d",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": {
+        "id": "56f40101d2720b2a4d8b45d6",
+        "name": "Customs"
+      },
+      "experience": 10000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a880f5d9438980c42076efe",
+            "name": "逐光而行 - 虚假呼叫"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a88270efbd24b6243010e6d_1",
+          "description": "返回藏身处",
+          "optional": false,
+          "foundInRaid": false
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a884d69d35a46046d0e808a",
+      "name": "逐光而行 - 飞鸟坠落",
+      "normalizedName": "to-the-light-fallen-bird",
+      "wikiLink": "https://www.eftarkov.com/task/6a884d69d35a46046d0e808a",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": null,
+      "experience": 10000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a8814d20d25ca7b2908e13e",
+            "name": "逐光而行 - 斩断羽翼"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a884d69d35a46046d0e808a_1",
+          "description": "返回藏身处",
+          "optional": false,
+          "foundInRaid": false
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a8852bc184783d23e047902",
+      "name": "逐光而行 - 堆聚石头有时",
+      "normalizedName": "to-the-light-a-time-to-gather-stones",
+      "wikiLink": "https://www.eftarkov.com/task/6a8852bc184783d23e047902",
+      "trader": {
+        "id": "5a7c2eca46aef81a7ca2145d",
+        "name": "Mechanic",
+        "imageLink": "https://assets.tarkov.dev/5a7c2eca46aef81a7ca2145d.webp"
+      },
+      "map": null,
+      "experience": 25000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "taskRequirements": [
+        {
+          "task": {
+            "id": "6a8820cb1f2b560baf0408a1",
+            "name": "逐光而行 - 抛掷石头有时"
+          },
+          "status": [
+            "complete"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a8852bc184783d23e047902_1",
+          "description": "上交战局中找到的物品：PMC 狗牌（等级 30 级或更高）3 个",
+          "type": "giveItem",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "items": [
+            {
+              "id": "59f32bb586f774757e1e8442",
+              "name": "BEAR 狗牌",
+              "shortName": "BEAR",
+              "iconLink": "https://assets.tarkov.dev/59f32bb586f774757e1e8442-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Dogtag"
+            },
+            {
+              "id": "59f32c3b86f77472a31742f0",
+              "name": "USEC 狗牌",
+              "shortName": "USEC",
+              "iconLink": "https://assets.tarkov.dev/59f32c3b86f77472a31742f0-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Dogtag"
+            }
+          ],
+          "dogTagLevel": 30
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": []
+    },
+    {
+      "id": "6a8b8266f47489e5720a63b7",
+      "name": "买票上船！",
+      "normalizedName": "pay-the-fare",
+      "wikiLink": "https://www.eftarkov.com/task/6a8b8266f47489e5720a63b7",
+      "trader": {
+        "id": "5ac3b934156ae10c4430e83c",
+        "name": "Ragman",
+        "imageLink": "https://assets.tarkov.dev/5ac3b934156ae10c4430e83c.webp"
+      },
+      "map": null,
+      "experience": 30000,
+      "kappaRequired": false,
+      "factionName": "Any",
+      "otherRequirements": [
+        {
+          "type": "dialogue",
+          "id": "6a8b8266f47489e5720a63b7_req_dialogue",
+          "traders": [
+            "5a7c2eca46aef81a7ca2145d"
+          ]
+        }
+      ],
+      "objectives": [
+        {
+          "id": "local_6a8b8266f47489e5720a63b7_1",
+          "description": "在战局中找到管道扳手 1 个",
+          "type": "findItem",
+          "items": [
+            {
+              "id": "619cbfccbedcde2f5b3f7bdd",
+              "name": "管道扳手",
+              "shortName": "管道扳手",
+              "iconLink": "https://assets.tarkov.dev/619cbfccbedcde2f5b3f7bdd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Pipe_grip_wrench"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1
+        },
+        {
+          "id": "local_6a8b8266f47489e5720a63b7_2",
+          "description": "上交在战局中找到的管道扳手 1 个",
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "619cbfccbedcde2f5b3f7bdd",
+              "name": "管道扳手",
+              "shortName": "管道扳手",
+              "iconLink": "https://assets.tarkov.dev/619cbfccbedcde2f5b3f7bdd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Pipe_grip_wrench"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": true
+        },
+        {
+          "id": "local_6a8b8266f47489e5720a63b7_3",
+          "description": "在战局中找到棘轮扳手 1 个",
+          "type": "findItem",
+          "items": [
+            {
+              "id": "60391afc25aff57af81f7085",
+              "name": "棘轮扳手",
+              "shortName": "棘轮",
+              "iconLink": "https://assets.tarkov.dev/60391afc25aff57af81f7085-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ratchet_wrench"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1
+        },
+        {
+          "id": "local_6a8b8266f47489e5720a63b7_4",
+          "description": "上交在战局中找到的棘轮扳手 1 个",
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "60391afc25aff57af81f7085",
+              "name": "棘轮扳手",
+              "shortName": "棘轮",
+              "iconLink": "https://assets.tarkov.dev/60391afc25aff57af81f7085-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ratchet_wrench"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": true
+        },
+        {
+          "id": "local_6a8b8266f47489e5720a63b7_5",
+          "description": "在战局中找到电钻 1 个",
+          "type": "findItem",
+          "items": [
+            {
+              "id": "59e35de086f7741778269d84",
+              "name": "电钻",
+              "shortName": "电钻",
+              "iconLink": "https://assets.tarkov.dev/59e35de086f7741778269d84-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Electric_drill"
+            }
+          ],
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1
+        },
+        {
+          "id": "local_6a8b8266f47489e5720a63b7_6",
+          "description": "上交在战局中找到的电钻 1 个",
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "59e35de086f7741778269d84",
+              "name": "电钻",
+              "shortName": "电钻",
+              "iconLink": "https://assets.tarkov.dev/59e35de086f7741778269d84-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Electric_drill"
+            }
+          ],
+          "optional": false,
+          "count": 1,
+          "foundInRaid": true
+        }
+      ],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "taskRequirements": []
+    },
+    {
+      "id": "6aad73ddedf6e9696e0f60d4",
+      "name": "新起点（第2次转生）",
+      "trader": {
+        "id": "5ac3b934156ae10c4430e83c",
+        "name": "Ragman",
+        "imageLink": "https://assets.tarkov.dev/5ac3b934156ae10c4430e83c.webp"
+      },
+      "normalizedName": "new-beginning-pve-2",
+      "minPlayerLevel": 20,
+      "requiredPrestige": {
+        "name": "Prestige 1",
+        "prestigeLevel": 1
+      },
+      "factionName": "Any",
+      "kappaRequired": false,
+      "objectives": [
+        {
+          "id": "local_6aad73ddedf6e9696e0f60d4_1",
+          "description": "任意地图击杀 PMC 10 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 10,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any PMC operatives"
+          ]
+        },
+        {
+          "id": "local_6aad73ddedf6e9696e0f60d4_2",
+          "description": "从实验室幸存撤离",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "实验室"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad73ddedf6e9696e0f60d4_3",
+          "description": "上交在战局中找到物品：任意 PMC 玩偶 2 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 2,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c652d60d0ac437100fed7",
+              "name": "BEAR 干员玩偶",
+              "shortName": "BEAR",
+              "iconLink": "https://assets.tarkov.dev/655c652d60d0ac437100fed7-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BEAR_operative_figurine"
+            },
+            {
+              "id": "655c663a6689c676ce57af85",
+              "name": "USEC 干员玩偶",
+              "shortName": "USEC",
+              "iconLink": "https://assets.tarkov.dev/655c663a6689c676ce57af85-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/USEC_operative_figurine"
+            },
+            {
+              "id": "66572b8d80b1cd4b6a67847f",
+              "name": "Den 玩偶",
+              "shortName": "Den",
+              "iconLink": "https://assets.tarkov.dev/66572b8d80b1cd4b6a67847f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Den_figurine"
+            },
+            {
+              "id": "68f26124b84c6e1f8a09cfff",
+              "name": "无赖战士玩偶",
+              "shortName": "无赖战士",
+              "iconLink": "https://assets.tarkov.dev/68f26124b84c6e1f8a09cfff-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Walking_Tank_figurine"
+            },
+            {
+              "id": "6841b6b674a3c16f5e03d653",
+              "name": "PMC 起源玩偶",
+              "shortName": "起源",
+              "iconLink": "https://assets.tarkov.dev/6841b6b674a3c16f5e03d653-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/PMC_Origins_figurine"
+            },
+            {
+              "id": "68f11224197b61ffe703b16f",
+              "name": "硬汉 PMC 玩偶",
+              "shortName": "硬汉",
+              "iconLink": "https://assets.tarkov.dev/68f11224197b61ffe703b16f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Hardened_PMC_figurine"
+            },
+            {
+              "id": "697cddb414e932098005748d",
+              "name": "鸭子玩偶",
+              "shortName": "鸭子",
+              "iconLink": "https://assets.tarkov.dev/697cddb414e932098005748d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Duck_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad73ddedf6e9696e0f60d4_4",
+          "description": "上交在战局中找到物品：任意 Scav 玩偶 2 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 2,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c673673a43e23e857aebd",
+              "name": "Scav 玩偶",
+              "shortName": "Scav",
+              "iconLink": "https://assets.tarkov.dev/655c673673a43e23e857aebd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Scav_figurine"
+            },
+            {
+              "id": "655c67782a1356436041c9c5",
+              "name": "Ryzhy 玩偶",
+              "shortName": "Ryzhy",
+              "iconLink": "https://assets.tarkov.dev/655c67782a1356436041c9c5-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ryzhy_figurine"
+            },
+            {
+              "id": "655c66e40b2de553b618d4b8",
+              "name": "Mutkevich 政客玩偶",
+              "shortName": "Mutkevich",
+              "iconLink": "https://assets.tarkov.dev/655c66e40b2de553b618d4b8-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Politician_Mutkevich_figurine"
+            },
+            {
+              "id": "68f261f6928cd23ddf0471fd",
+              "name": "Mastichin 玩偶",
+              "shortName": "Mastichin",
+              "iconLink": "https://assets.tarkov.dev/68f261f6928cd23ddf0471fd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mastichin_figurine"
+            },
+            {
+              "id": "690c70a2a1461a01d605a1bd",
+              "name": "Elvisvista 玩偶",
+              "shortName": "Elvisvista",
+              "iconLink": "https://assets.tarkov.dev/690c70a2a1461a01d605a1bd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Elvisvista_figurine"
+            },
+            {
+              "id": "68f260d7b84c6e1f8a09cffd",
+              "name": "藏身处之猫玩偶",
+              "shortName": "猫",
+              "iconLink": "https://assets.tarkov.dev/68f260d7b84c6e1f8a09cffd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Hideout_Cat_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad73ddedf6e9696e0f60d4_5",
+          "description": "上交在战局中找到物品：任意 Boss 玩偶 2 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 2,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572c82ad599021091c6118",
+              "name": "Killa 玩偶",
+              "shortName": "Killa",
+              "iconLink": "https://assets.tarkov.dev/66572c82ad599021091c6118-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Killa_figurine"
+            },
+            {
+              "id": "66572cbdad599021091c611a",
+              "name": "Tagilla 玩偶",
+              "shortName": "Tagilla",
+              "iconLink": "https://assets.tarkov.dev/66572cbdad599021091c611a-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Tagilla_figurine"
+            },
+            {
+              "id": "66572be36a723f7f005a066e",
+              "name": "Reshala 玩偶",
+              "shortName": "Reshala",
+              "iconLink": "https://assets.tarkov.dev/66572be36a723f7f005a066e-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Reshala_figurine"
+            },
+            {
+              "id": "655c67ab0d37ca5135388f4b",
+              "name": "圣诞老人玩偶",
+              "shortName": "圣诞老人",
+              "iconLink": "https://assets.tarkov.dev/655c67ab0d37ca5135388f4b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ded_Moroz_figurine"
+            },
+            {
+              "id": "655c669103999d3c810c025b",
+              "name": "邪教徒玩偶",
+              "shortName": "邪教徒",
+              "iconLink": "https://assets.tarkov.dev/655c669103999d3c810c025b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Cultist_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad73ddedf6e9696e0f60d4_6",
+          "description": "上交在战局中找到物品：任意 商人 玩偶 2 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 2,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "68f25c64b2b53abd200b954f",
+              "name": "Prapor 玩偶",
+              "shortName": "Prapor",
+              "iconLink": "https://assets.tarkov.dev/68f25c64b2b53abd200b954f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Prapor_figurine"
+            },
+            {
+              "id": "68f25ce9b2b53abd200b9551",
+              "name": "Therapist 玩偶",
+              "shortName": "Therapist",
+              "iconLink": "https://assets.tarkov.dev/68f25ce9b2b53abd200b9551-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Therapist_figurine"
+            },
+            {
+              "id": "68f25da3b84c6e1f8a09cffb",
+              "name": "Fence 玩偶",
+              "shortName": "Fence",
+              "iconLink": "https://assets.tarkov.dev/68f25da3b84c6e1f8a09cffb-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Fence_figurine"
+            },
+            {
+              "id": "68f25eba19a2b503d70dc28f",
+              "name": "Skier 玩偶",
+              "shortName": "Skier",
+              "iconLink": "https://assets.tarkov.dev/68f25eba19a2b503d70dc28f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Skier_figurine"
+            },
+            {
+              "id": "68f25eef19a2b503d70dc291",
+              "name": "Peacekeeper 玩偶",
+              "shortName": "Peacekeeper",
+              "iconLink": "https://assets.tarkov.dev/68f25eef19a2b503d70dc291-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Peacekeeper_figurine"
+            },
+            {
+              "id": "68f25f1201fb9de974058be4",
+              "name": "Mechanic 玩偶",
+              "shortName": "Mechanic",
+              "iconLink": "https://assets.tarkov.dev/68f25f1201fb9de974058be4-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mechanic_figurine"
+            },
+            {
+              "id": "68f25f3a5d977110860c3350",
+              "name": "Ragman 玩偶",
+              "shortName": "Ragman",
+              "iconLink": "https://assets.tarkov.dev/68f25f3a5d977110860c3350-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ragman_figurine"
+            },
+            {
+              "id": "68f25faa22c8979ee308f4da",
+              "name": "Jaeger 玩偶",
+              "shortName": "Jaeger",
+              "iconLink": "https://assets.tarkov.dev/68f25faa22c8979ee308f4da-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Jaeger_figurine"
+            },
+            {
+              "id": "68f25fdf928cd23ddf0471fb",
+              "name": "Lightkeeper 玩偶",
+              "shortName": "Lightkeeper",
+              "iconLink": "https://assets.tarkov.dev/68f25fdf928cd23ddf0471fb-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Lightkeeper_figurine"
+            },
+            {
+              "id": "68f26063b2b53abd200b9553",
+              "name": "竞技场裁判玩偶",
+              "shortName": "裁判",
+              "iconLink": "https://assets.tarkov.dev/68f26063b2b53abd200b9553-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ref_figurine"
+            },
+            {
+              "id": "68f2608301fb9de974058be6",
+              "name": "BTR 模型",
+              "shortName": "BTR",
+              "iconLink": "https://assets.tarkov.dev/68f2608301fb9de974058be6-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BTR_figurine"
+            }
+          ]
+        }
+      ],
+      "taskRequirements": [],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "wikiLink": "https://www.eftarkov.com/task/6aad73ddedf6e9696e0f60d4"
+    },
+    {
+      "id": "6aad73e67a336545ed0657f3",
+      "name": "新起点（第3次转生）",
+      "trader": {
+        "id": "5ac3b934156ae10c4430e83c",
+        "name": "Ragman",
+        "imageLink": "https://assets.tarkov.dev/5ac3b934156ae10c4430e83c.webp"
+      },
+      "normalizedName": "new-beginning-pve-3",
+      "minPlayerLevel": 30,
+      "requiredPrestige": {
+        "name": "Prestige 2",
+        "prestigeLevel": 2
+      },
+      "factionName": "Any",
+      "kappaRequired": false,
+      "objectives": [
+        {
+          "id": "local_6aad73e67a336545ed0657f3_1",
+          "description": "任意地图击杀 PMC 15 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 15,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any PMC operatives"
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_2",
+          "description": "击杀掠夺者 20 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 20,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "Raider"
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_3",
+          "description": "以幸存状态撤离实验室",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "实验室"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_4",
+          "description": "以幸存状态撤离塔科夫街区",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dc692459777137212e12",
+              "name": "塔科夫街区"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_5",
+          "description": "上交在战局中找到物品：任意 PMC 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c652d60d0ac437100fed7",
+              "name": "BEAR 干员玩偶",
+              "shortName": "BEAR",
+              "iconLink": "https://assets.tarkov.dev/655c652d60d0ac437100fed7-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BEAR_operative_figurine"
+            },
+            {
+              "id": "655c663a6689c676ce57af85",
+              "name": "USEC 干员玩偶",
+              "shortName": "USEC",
+              "iconLink": "https://assets.tarkov.dev/655c663a6689c676ce57af85-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/USEC_operative_figurine"
+            },
+            {
+              "id": "66572b8d80b1cd4b6a67847f",
+              "name": "Den 玩偶",
+              "shortName": "Den",
+              "iconLink": "https://assets.tarkov.dev/66572b8d80b1cd4b6a67847f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Den_figurine"
+            },
+            {
+              "id": "68f26124b84c6e1f8a09cfff",
+              "name": "无赖战士玩偶",
+              "shortName": "无赖战士",
+              "iconLink": "https://assets.tarkov.dev/68f26124b84c6e1f8a09cfff-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Walking_Tank_figurine"
+            },
+            {
+              "id": "6841b6b674a3c16f5e03d653",
+              "name": "PMC 起源玩偶",
+              "shortName": "起源",
+              "iconLink": "https://assets.tarkov.dev/6841b6b674a3c16f5e03d653-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/PMC_Origins_figurine"
+            },
+            {
+              "id": "68f11224197b61ffe703b16f",
+              "name": "硬汉 PMC 玩偶",
+              "shortName": "硬汉",
+              "iconLink": "https://assets.tarkov.dev/68f11224197b61ffe703b16f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Hardened_PMC_figurine"
+            },
+            {
+              "id": "697cddb414e932098005748d",
+              "name": "鸭子玩偶",
+              "shortName": "鸭子",
+              "iconLink": "https://assets.tarkov.dev/697cddb414e932098005748d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Duck_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_6",
+          "description": "上交在战局中找到物品：任意 Scav 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c673673a43e23e857aebd",
+              "name": "Scav 玩偶",
+              "shortName": "Scav",
+              "iconLink": "https://assets.tarkov.dev/655c673673a43e23e857aebd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Scav_figurine"
+            },
+            {
+              "id": "655c67782a1356436041c9c5",
+              "name": "Ryzhy 玩偶",
+              "shortName": "Ryzhy",
+              "iconLink": "https://assets.tarkov.dev/655c67782a1356436041c9c5-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ryzhy_figurine"
+            },
+            {
+              "id": "655c66e40b2de553b618d4b8",
+              "name": "Mutkevich 政客玩偶",
+              "shortName": "Mutkevich",
+              "iconLink": "https://assets.tarkov.dev/655c66e40b2de553b618d4b8-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Politician_Mutkevich_figurine"
+            },
+            {
+              "id": "68f261f6928cd23ddf0471fd",
+              "name": "Mastichin 玩偶",
+              "shortName": "Mastichin",
+              "iconLink": "https://assets.tarkov.dev/68f261f6928cd23ddf0471fd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mastichin_figurine"
+            },
+            {
+              "id": "690c70a2a1461a01d605a1bd",
+              "name": "Elvisvista 玩偶",
+              "shortName": "Elvisvista",
+              "iconLink": "https://assets.tarkov.dev/690c70a2a1461a01d605a1bd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Elvisvista_figurine"
+            },
+            {
+              "id": "68f260d7b84c6e1f8a09cffd",
+              "name": "藏身处之猫玩偶",
+              "shortName": "猫",
+              "iconLink": "https://assets.tarkov.dev/68f260d7b84c6e1f8a09cffd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Hideout_Cat_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_7",
+          "description": "上交在战局中找到物品：任意 Boss 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572c82ad599021091c6118",
+              "name": "Killa 玩偶",
+              "shortName": "Killa",
+              "iconLink": "https://assets.tarkov.dev/66572c82ad599021091c6118-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Killa_figurine"
+            },
+            {
+              "id": "66572cbdad599021091c611a",
+              "name": "Tagilla 玩偶",
+              "shortName": "Tagilla",
+              "iconLink": "https://assets.tarkov.dev/66572cbdad599021091c611a-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Tagilla_figurine"
+            },
+            {
+              "id": "66572be36a723f7f005a066e",
+              "name": "Reshala 玩偶",
+              "shortName": "Reshala",
+              "iconLink": "https://assets.tarkov.dev/66572be36a723f7f005a066e-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Reshala_figurine"
+            },
+            {
+              "id": "655c67ab0d37ca5135388f4b",
+              "name": "圣诞老人玩偶",
+              "shortName": "圣诞老人",
+              "iconLink": "https://assets.tarkov.dev/655c67ab0d37ca5135388f4b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ded_Moroz_figurine"
+            },
+            {
+              "id": "655c669103999d3c810c025b",
+              "name": "邪教徒玩偶",
+              "shortName": "邪教徒",
+              "iconLink": "https://assets.tarkov.dev/655c669103999d3c810c025b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Cultist_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad73e67a336545ed0657f3_8",
+          "description": "上交在战局中找到物品：任意 商人 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "68f25c64b2b53abd200b954f",
+              "name": "Prapor 玩偶",
+              "shortName": "Prapor",
+              "iconLink": "https://assets.tarkov.dev/68f25c64b2b53abd200b954f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Prapor_figurine"
+            },
+            {
+              "id": "68f25ce9b2b53abd200b9551",
+              "name": "Therapist 玩偶",
+              "shortName": "Therapist",
+              "iconLink": "https://assets.tarkov.dev/68f25ce9b2b53abd200b9551-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Therapist_figurine"
+            },
+            {
+              "id": "68f25da3b84c6e1f8a09cffb",
+              "name": "Fence 玩偶",
+              "shortName": "Fence",
+              "iconLink": "https://assets.tarkov.dev/68f25da3b84c6e1f8a09cffb-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Fence_figurine"
+            },
+            {
+              "id": "68f25eba19a2b503d70dc28f",
+              "name": "Skier 玩偶",
+              "shortName": "Skier",
+              "iconLink": "https://assets.tarkov.dev/68f25eba19a2b503d70dc28f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Skier_figurine"
+            },
+            {
+              "id": "68f25eef19a2b503d70dc291",
+              "name": "Peacekeeper 玩偶",
+              "shortName": "Peacekeeper",
+              "iconLink": "https://assets.tarkov.dev/68f25eef19a2b503d70dc291-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Peacekeeper_figurine"
+            },
+            {
+              "id": "68f25f1201fb9de974058be4",
+              "name": "Mechanic 玩偶",
+              "shortName": "Mechanic",
+              "iconLink": "https://assets.tarkov.dev/68f25f1201fb9de974058be4-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mechanic_figurine"
+            },
+            {
+              "id": "68f25f3a5d977110860c3350",
+              "name": "Ragman 玩偶",
+              "shortName": "Ragman",
+              "iconLink": "https://assets.tarkov.dev/68f25f3a5d977110860c3350-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ragman_figurine"
+            },
+            {
+              "id": "68f25faa22c8979ee308f4da",
+              "name": "Jaeger 玩偶",
+              "shortName": "Jaeger",
+              "iconLink": "https://assets.tarkov.dev/68f25faa22c8979ee308f4da-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Jaeger_figurine"
+            },
+            {
+              "id": "68f25fdf928cd23ddf0471fb",
+              "name": "Lightkeeper 玩偶",
+              "shortName": "Lightkeeper",
+              "iconLink": "https://assets.tarkov.dev/68f25fdf928cd23ddf0471fb-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Lightkeeper_figurine"
+            },
+            {
+              "id": "68f26063b2b53abd200b9553",
+              "name": "竞技场裁判玩偶",
+              "shortName": "裁判",
+              "iconLink": "https://assets.tarkov.dev/68f26063b2b53abd200b9553-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ref_figurine"
+            },
+            {
+              "id": "68f2608301fb9de974058be6",
+              "name": "BTR 模型",
+              "shortName": "BTR",
+              "iconLink": "https://assets.tarkov.dev/68f2608301fb9de974058be6-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BTR_figurine"
+            }
+          ]
+        }
+      ],
+      "taskRequirements": [],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "wikiLink": "https://www.eftarkov.com/task/6aad73e67a336545ed0657f3"
+    },
+    {
+      "id": "6aad74057a336545ed065807",
+      "name": "新起点（第4次转生）",
+      "trader": {
+        "id": "5ac3b934156ae10c4430e83c",
+        "name": "Ragman",
+        "imageLink": "https://assets.tarkov.dev/5ac3b934156ae10c4430e83c.webp"
+      },
+      "normalizedName": "new-beginning-pve-4",
+      "minPlayerLevel": 35,
+      "requiredPrestige": {
+        "name": "Prestige 3",
+        "prestigeLevel": 3
+      },
+      "factionName": "Any",
+      "kappaRequired": false,
+      "objectives": [
+        {
+          "id": "local_6aad74057a336545ed065807_1",
+          "description": "任意地图击杀 PMC 20 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 20,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any PMC operatives"
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_2",
+          "description": "击杀游荡者 30 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 30,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "Rogue"
+          ],
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "灯塔"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_3",
+          "description": "以幸存状态撤离实验室",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "实验室"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_4",
+          "description": "使用转移功能从塔科夫街区转移到立交桥",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dc692459777137212e12",
+              "name": "塔科夫街区"
+            }
+          ],
+          "type": "extract",
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5714dc692459777137212e12",
+                "name": "塔科夫街区"
+              },
+              "positions": [
+                {
+                  "x": 290.55,
+                  "y": 4.39,
+                  "z": 501.98
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_5",
+          "description": "从立交桥幸存撤离",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dbc024597771384a510d",
+              "name": "立交桥"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_6",
+          "description": "上交在战局中找到物品：任意 PMC 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c652d60d0ac437100fed7",
+              "name": "BEAR 干员玩偶",
+              "shortName": "BEAR",
+              "iconLink": "https://assets.tarkov.dev/655c652d60d0ac437100fed7-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BEAR_operative_figurine"
+            },
+            {
+              "id": "655c663a6689c676ce57af85",
+              "name": "USEC 干员玩偶",
+              "shortName": "USEC",
+              "iconLink": "https://assets.tarkov.dev/655c663a6689c676ce57af85-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/USEC_operative_figurine"
+            },
+            {
+              "id": "66572b8d80b1cd4b6a67847f",
+              "name": "Den 玩偶",
+              "shortName": "Den",
+              "iconLink": "https://assets.tarkov.dev/66572b8d80b1cd4b6a67847f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Den_figurine"
+            },
+            {
+              "id": "68f26124b84c6e1f8a09cfff",
+              "name": "无赖战士玩偶",
+              "shortName": "无赖战士",
+              "iconLink": "https://assets.tarkov.dev/68f26124b84c6e1f8a09cfff-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Walking_Tank_figurine"
+            },
+            {
+              "id": "6841b6b674a3c16f5e03d653",
+              "name": "PMC 起源玩偶",
+              "shortName": "起源",
+              "iconLink": "https://assets.tarkov.dev/6841b6b674a3c16f5e03d653-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/PMC_Origins_figurine"
+            },
+            {
+              "id": "68f11224197b61ffe703b16f",
+              "name": "硬汉 PMC 玩偶",
+              "shortName": "硬汉",
+              "iconLink": "https://assets.tarkov.dev/68f11224197b61ffe703b16f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Hardened_PMC_figurine"
+            },
+            {
+              "id": "697cddb414e932098005748d",
+              "name": "鸭子玩偶",
+              "shortName": "鸭子",
+              "iconLink": "https://assets.tarkov.dev/697cddb414e932098005748d-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Duck_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_7",
+          "description": "上交在战局中找到物品：任意 Scav 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c673673a43e23e857aebd",
+              "name": "Scav 玩偶",
+              "shortName": "Scav",
+              "iconLink": "https://assets.tarkov.dev/655c673673a43e23e857aebd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Scav_figurine"
+            },
+            {
+              "id": "655c67782a1356436041c9c5",
+              "name": "Ryzhy 玩偶",
+              "shortName": "Ryzhy",
+              "iconLink": "https://assets.tarkov.dev/655c67782a1356436041c9c5-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ryzhy_figurine"
+            },
+            {
+              "id": "655c66e40b2de553b618d4b8",
+              "name": "Mutkevich 政客玩偶",
+              "shortName": "Mutkevich",
+              "iconLink": "https://assets.tarkov.dev/655c66e40b2de553b618d4b8-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Politician_Mutkevich_figurine"
+            },
+            {
+              "id": "68f261f6928cd23ddf0471fd",
+              "name": "Mastichin 玩偶",
+              "shortName": "Mastichin",
+              "iconLink": "https://assets.tarkov.dev/68f261f6928cd23ddf0471fd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mastichin_figurine"
+            },
+            {
+              "id": "690c70a2a1461a01d605a1bd",
+              "name": "Elvisvista 玩偶",
+              "shortName": "Elvisvista",
+              "iconLink": "https://assets.tarkov.dev/690c70a2a1461a01d605a1bd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Elvisvista_figurine"
+            },
+            {
+              "id": "68f260d7b84c6e1f8a09cffd",
+              "name": "藏身处之猫玩偶",
+              "shortName": "猫",
+              "iconLink": "https://assets.tarkov.dev/68f260d7b84c6e1f8a09cffd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Hideout_Cat_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_8",
+          "description": "上交在战局中找到物品：任意 Boss 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572c82ad599021091c6118",
+              "name": "Killa 玩偶",
+              "shortName": "Killa",
+              "iconLink": "https://assets.tarkov.dev/66572c82ad599021091c6118-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Killa_figurine"
+            },
+            {
+              "id": "66572cbdad599021091c611a",
+              "name": "Tagilla 玩偶",
+              "shortName": "Tagilla",
+              "iconLink": "https://assets.tarkov.dev/66572cbdad599021091c611a-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Tagilla_figurine"
+            },
+            {
+              "id": "66572be36a723f7f005a066e",
+              "name": "Reshala 玩偶",
+              "shortName": "Reshala",
+              "iconLink": "https://assets.tarkov.dev/66572be36a723f7f005a066e-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Reshala_figurine"
+            },
+            {
+              "id": "655c67ab0d37ca5135388f4b",
+              "name": "圣诞老人玩偶",
+              "shortName": "圣诞老人",
+              "iconLink": "https://assets.tarkov.dev/655c67ab0d37ca5135388f4b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ded_Moroz_figurine"
+            },
+            {
+              "id": "655c669103999d3c810c025b",
+              "name": "邪教徒玩偶",
+              "shortName": "邪教徒",
+              "iconLink": "https://assets.tarkov.dev/655c669103999d3c810c025b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Cultist_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad74057a336545ed065807_9",
+          "description": "上交在战局中找到物品：任意 商人 玩偶 3 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 3,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "68f25c64b2b53abd200b954f",
+              "name": "Prapor 玩偶",
+              "shortName": "Prapor",
+              "iconLink": "https://assets.tarkov.dev/68f25c64b2b53abd200b954f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Prapor_figurine"
+            },
+            {
+              "id": "68f25ce9b2b53abd200b9551",
+              "name": "Therapist 玩偶",
+              "shortName": "Therapist",
+              "iconLink": "https://assets.tarkov.dev/68f25ce9b2b53abd200b9551-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Therapist_figurine"
+            },
+            {
+              "id": "68f25da3b84c6e1f8a09cffb",
+              "name": "Fence 玩偶",
+              "shortName": "Fence",
+              "iconLink": "https://assets.tarkov.dev/68f25da3b84c6e1f8a09cffb-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Fence_figurine"
+            },
+            {
+              "id": "68f25eba19a2b503d70dc28f",
+              "name": "Skier 玩偶",
+              "shortName": "Skier",
+              "iconLink": "https://assets.tarkov.dev/68f25eba19a2b503d70dc28f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Skier_figurine"
+            },
+            {
+              "id": "68f25eef19a2b503d70dc291",
+              "name": "Peacekeeper 玩偶",
+              "shortName": "Peacekeeper",
+              "iconLink": "https://assets.tarkov.dev/68f25eef19a2b503d70dc291-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Peacekeeper_figurine"
+            },
+            {
+              "id": "68f25f1201fb9de974058be4",
+              "name": "Mechanic 玩偶",
+              "shortName": "Mechanic",
+              "iconLink": "https://assets.tarkov.dev/68f25f1201fb9de974058be4-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Mechanic_figurine"
+            },
+            {
+              "id": "68f25f3a5d977110860c3350",
+              "name": "Ragman 玩偶",
+              "shortName": "Ragman",
+              "iconLink": "https://assets.tarkov.dev/68f25f3a5d977110860c3350-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ragman_figurine"
+            },
+            {
+              "id": "68f25faa22c8979ee308f4da",
+              "name": "Jaeger 玩偶",
+              "shortName": "Jaeger",
+              "iconLink": "https://assets.tarkov.dev/68f25faa22c8979ee308f4da-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Jaeger_figurine"
+            },
+            {
+              "id": "68f25fdf928cd23ddf0471fb",
+              "name": "Lightkeeper 玩偶",
+              "shortName": "Lightkeeper",
+              "iconLink": "https://assets.tarkov.dev/68f25fdf928cd23ddf0471fb-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Lightkeeper_figurine"
+            },
+            {
+              "id": "68f26063b2b53abd200b9553",
+              "name": "竞技场裁判玩偶",
+              "shortName": "裁判",
+              "iconLink": "https://assets.tarkov.dev/68f26063b2b53abd200b9553-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ref_figurine"
+            },
+            {
+              "id": "68f2608301fb9de974058be6",
+              "name": "BTR 模型",
+              "shortName": "BTR",
+              "iconLink": "https://assets.tarkov.dev/68f2608301fb9de974058be6-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BTR_figurine"
+            }
+          ]
+        }
+      ],
+      "taskRequirements": [],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "wikiLink": "https://www.eftarkov.com/task/6aad74057a336545ed065807"
+    },
+    {
+      "id": "6aad740f5e7f204c2d088f42",
+      "name": "新起点（第5次转生）",
+      "trader": {
+        "id": "5ac3b934156ae10c4430e83c",
+        "name": "Ragman",
+        "imageLink": "https://assets.tarkov.dev/5ac3b934156ae10c4430e83c.webp"
+      },
+      "normalizedName": "new-beginning-pve-5",
+      "minPlayerLevel": 45,
+      "requiredPrestige": {
+        "name": "Prestige 4",
+        "prestigeLevel": 4
+      },
+      "factionName": "Any",
+      "kappaRequired": false,
+      "objectives": [
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_1",
+          "description": "任意地图击杀 PMC 45 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 45,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any PMC operatives"
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_2",
+          "description": "击杀游荡者 100 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 100,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "Rogue"
+          ],
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "灯塔"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_3",
+          "description": "消灭任意 Boss 1 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any boss"
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_4",
+          "description": "以幸存状态撤离实验室",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "实验室"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_5",
+          "description": "使用转移功能从塔科夫街区转移到立交桥",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dc692459777137212e12",
+              "name": "塔科夫街区"
+            }
+          ],
+          "type": "extract",
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5714dc692459777137212e12",
+                "name": "塔科夫街区"
+              },
+              "positions": [
+                {
+                  "x": 290.55,
+                  "y": 4.39,
+                  "z": 501.98
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_6",
+          "description": "使用转移功能从立交桥转移到海关",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dbc024597771384a510d",
+              "name": "立交桥"
+            }
+          ],
+          "type": "extract",
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5714dbc024597771384a510d",
+                "name": "立交桥"
+              },
+              "positions": [
+                {
+                  "x": 280.26,
+                  "y": 23.28,
+                  "z": 435.08
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_7",
+          "description": "以幸存状态撤离海关",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "海关"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_8",
+          "description": "上交战局中找到的物品：BEAR 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c652d60d0ac437100fed7",
+              "name": "BEAR 干员玩偶",
+              "shortName": "BEAR",
+              "iconLink": "https://assets.tarkov.dev/655c652d60d0ac437100fed7-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BEAR_operative_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_9",
+          "description": "上交战局中找到的物品：Mutkevich 政客玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c66e40b2de553b618d4b8",
+              "name": "Mutkevich 政客玩偶",
+              "shortName": "Mutkevich",
+              "iconLink": "https://assets.tarkov.dev/655c66e40b2de553b618d4b8-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Politician_Mutkevich_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_10",
+          "description": "上交战局中找到的物品：Killa 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572c82ad599021091c6118",
+              "name": "Killa 玩偶",
+              "shortName": "Killa",
+              "iconLink": "https://assets.tarkov.dev/66572c82ad599021091c6118-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Killa_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_11",
+          "description": "上交战局中找到的物品：Reshala 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572be36a723f7f005a066e",
+              "name": "Reshala 玩偶",
+              "shortName": "Reshala",
+              "iconLink": "https://assets.tarkov.dev/66572be36a723f7f005a066e-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Reshala_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_12",
+          "description": "上交战局中找到的物品：Ryzhy 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c67782a1356436041c9c5",
+              "name": "Ryzhy 玩偶",
+              "shortName": "Ryzhy",
+              "iconLink": "https://assets.tarkov.dev/655c67782a1356436041c9c5-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ryzhy_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_13",
+          "description": "上交战局中找到的物品：Scav 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c673673a43e23e857aebd",
+              "name": "Scav 玩偶",
+              "shortName": "Scav",
+              "iconLink": "https://assets.tarkov.dev/655c673673a43e23e857aebd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Scav_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_14",
+          "description": "上交战局中找到的物品：Tagilla 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572cbdad599021091c611a",
+              "name": "Tagilla 玩偶",
+              "shortName": "Tagilla",
+              "iconLink": "https://assets.tarkov.dev/66572cbdad599021091c611a-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Tagilla_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_15",
+          "description": "上交战局中找到的物品：USEC 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c663a6689c676ce57af85",
+              "name": "USEC 干员玩偶",
+              "shortName": "USEC",
+              "iconLink": "https://assets.tarkov.dev/655c663a6689c676ce57af85-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/USEC_operative_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_16",
+          "description": "上交战局中找到的物品：邪教徒玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c669103999d3c810c025b",
+              "name": "邪教徒玩偶",
+              "shortName": "邪教徒",
+              "iconLink": "https://assets.tarkov.dev/655c669103999d3c810c025b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Cultist_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad740f5e7f204c2d088f42_17",
+          "description": "上交战局中找到的物品：Den 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572b8d80b1cd4b6a67847f",
+              "name": "Den 玩偶",
+              "shortName": "Den",
+              "iconLink": "https://assets.tarkov.dev/66572b8d80b1cd4b6a67847f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Den_figurine"
+            }
+          ]
+        }
+      ],
+      "taskRequirements": [],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "wikiLink": "https://www.eftarkov.com/task/6aad740f5e7f204c2d088f42"
+    },
+    {
+      "id": "6aad741ff8ee02b31009ca11",
+      "name": "新起点（第6次转生）",
+      "trader": {
+        "id": "5ac3b934156ae10c4430e83c",
+        "name": "Ragman",
+        "imageLink": "https://assets.tarkov.dev/5ac3b934156ae10c4430e83c.webp"
+      },
+      "normalizedName": "new-beginning-pve-6",
+      "minPlayerLevel": 45,
+      "requiredPrestige": {
+        "name": "Prestige 5",
+        "prestigeLevel": 5
+      },
+      "factionName": "Any",
+      "kappaRequired": false,
+      "objectives": [
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_1",
+          "description": "任意地图击杀 PMC 50 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 50,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any PMC operatives"
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_2",
+          "description": "击杀游荡者 100 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 100,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "Rogue"
+          ],
+          "maps": [
+            {
+              "id": "5704e4dad2720bb55b8b4567",
+              "name": "灯塔"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_3",
+          "description": "爆头消灭任意 Boss 1 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "any boss"
+          ],
+          "bodyParts": [
+            "Head"
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_4",
+          "description": "消灭邪教徒 5 名",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 5,
+          "type": "shoot",
+          "shotType": "kill",
+          "targetNames": [
+            "Cultist"
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_5",
+          "description": "以幸存状态撤离实验室",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5b0fc42d86f7744a585f9105",
+              "name": "实验室"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_6",
+          "description": "使用转移功能从塔科夫街区转移到立交桥",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dc692459777137212e12",
+              "name": "塔科夫街区"
+            }
+          ],
+          "type": "extract",
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5714dc692459777137212e12",
+                "name": "塔科夫街区"
+              },
+              "positions": [
+                {
+                  "x": 290.55,
+                  "y": 4.39,
+                  "z": 501.98
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_7",
+          "description": "使用转移功能从立交桥转移到海关",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5714dbc024597771384a510d",
+              "name": "立交桥"
+            }
+          ],
+          "type": "extract",
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "5714dbc024597771384a510d",
+                "name": "立交桥"
+              },
+              "positions": [
+                {
+                  "x": 280.26,
+                  "y": 23.28,
+                  "z": 435.08
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_8",
+          "description": "使用转移功能从海关转移到储备站",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "56f40101d2720b2a4d8b45d6",
+              "name": "海关"
+            }
+          ],
+          "type": "extract",
+          "possibleLocations": [
+            {
+              "map": {
+                "id": "56f40101d2720b2a4d8b45d6",
+                "name": "海关"
+              },
+              "positions": [
+                {
+                  "x": 650.64,
+                  "y": 1.59,
+                  "z": 124.94
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_9",
+          "description": "以幸存状态撤离储备站",
+          "optional": false,
+          "foundInRaid": false,
+          "count": 1,
+          "maps": [
+            {
+              "id": "5704e5fad2720bc05b8b4567",
+              "name": "储备站"
+            }
+          ],
+          "type": "extract",
+          "exitStatus": [
+            "Survived"
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_10",
+          "description": "上交战局中找到的物品：BEAR 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c652d60d0ac437100fed7",
+              "name": "BEAR 干员玩偶",
+              "shortName": "BEAR",
+              "iconLink": "https://assets.tarkov.dev/655c652d60d0ac437100fed7-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/BEAR_operative_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_11",
+          "description": "上交战局中找到的物品：Mutkevich 政客玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c66e40b2de553b618d4b8",
+              "name": "Mutkevich 政客玩偶",
+              "shortName": "Mutkevich",
+              "iconLink": "https://assets.tarkov.dev/655c66e40b2de553b618d4b8-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Politician_Mutkevich_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_12",
+          "description": "上交战局中找到的物品：Killa 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572c82ad599021091c6118",
+              "name": "Killa 玩偶",
+              "shortName": "Killa",
+              "iconLink": "https://assets.tarkov.dev/66572c82ad599021091c6118-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Killa_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_13",
+          "description": "上交战局中找到的物品：Reshala 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572be36a723f7f005a066e",
+              "name": "Reshala 玩偶",
+              "shortName": "Reshala",
+              "iconLink": "https://assets.tarkov.dev/66572be36a723f7f005a066e-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Reshala_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_14",
+          "description": "上交战局中找到的物品：Ryzhy 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c67782a1356436041c9c5",
+              "name": "Ryzhy 玩偶",
+              "shortName": "Ryzhy",
+              "iconLink": "https://assets.tarkov.dev/655c67782a1356436041c9c5-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Ryzhy_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_15",
+          "description": "上交战局中找到的物品：Scav 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c673673a43e23e857aebd",
+              "name": "Scav 玩偶",
+              "shortName": "Scav",
+              "iconLink": "https://assets.tarkov.dev/655c673673a43e23e857aebd-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Scav_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_16",
+          "description": "上交战局中找到的物品：Tagilla 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572cbdad599021091c611a",
+              "name": "Tagilla 玩偶",
+              "shortName": "Tagilla",
+              "iconLink": "https://assets.tarkov.dev/66572cbdad599021091c611a-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Tagilla_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_17",
+          "description": "上交战局中找到的物品：USEC 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c663a6689c676ce57af85",
+              "name": "USEC 干员玩偶",
+              "shortName": "USEC",
+              "iconLink": "https://assets.tarkov.dev/655c663a6689c676ce57af85-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/USEC_operative_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_18",
+          "description": "上交战局中找到的物品：邪教徒玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "655c669103999d3c810c025b",
+              "name": "邪教徒玩偶",
+              "shortName": "邪教徒",
+              "iconLink": "https://assets.tarkov.dev/655c669103999d3c810c025b-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Cultist_figurine"
+            }
+          ]
+        },
+        {
+          "id": "local_6aad741ff8ee02b31009ca11_19",
+          "description": "上交战局中找到的物品：Den 玩偶 1 个",
+          "optional": false,
+          "foundInRaid": true,
+          "count": 1,
+          "type": "giveItem",
+          "items": [
+            {
+              "id": "66572b8d80b1cd4b6a67847f",
+              "name": "Den 玩偶",
+              "shortName": "Den",
+              "iconLink": "https://assets.tarkov.dev/66572b8d80b1cd4b6a67847f-icon.webp",
+              "wikiLink": "https://escapefromtarkov.fandom.com/wiki/Den_figurine"
+            }
+          ]
+        }
+      ],
+      "taskRequirements": [],
+      "failConditions": [],
+      "storyUnlocks": [],
+      "wikiLink": "https://www.eftarkov.com/task/6aad741ff8ee02b31009ca11"
+    }
+  ]
+}

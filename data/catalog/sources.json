@@ -1,6 +1,6 @@
 {
   "scope": "public game metadata only; no player progress or account identifiers sent",
-  "checkedAt": "2026-10-30",
+  "checkedAt": "2026-11-15",
   "records": [
     {
       "name": "bootstrap",
@@ -73,5 +73,15 @@
       "overlay": "1.167"
     }
   ],
-  "excluded": "Upstream placeholder_* records have no verified game IDs and are excluded. Halloween task guides are provided separately until identifiers and PvE availability are confirmed."
+  "excluded": "Unverified placeholder_* rows, standalone Arena chores, and Shifting Balance temporary quests are not imported as permanent quests. Seasonal guides retain their own verification dates.",
+  "taskSupplement": {
+    "name": "verified-pve-task-supplements",
+    "verifiedAt": "2026-11-15",
+    "upstreamCompared": "TarkovTracker overlay 1.177",
+    "addedRealTaskIds": 18,
+    "correctedExistingTaskIds": 1,
+    "source": "https://www.eftarkov.com/task-tree",
+    "details": "verified-pve-task-supplements.json",
+    "note": "Other public datasets retain their own fetchedAt dates. No live player data was sent to any source."
+  }
 }
