@@ -324,6 +324,8 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
     if (tileLayer.value) tileLayer.value.options.minZoom = minimum;
   };
   const renderKeyRef = computed<string | undefined>(() => {
+    const preferredTile = getTileConfig();
+    if (preferredTile) return JSON.stringify({ type: 'tile', tilePath: preferredTile.tilePath, tileFallbacks: preferredTile.tileFallbacks, maxNativeZoom: preferredTile.maxNativeZoom });
     const svgConfig = getSvgConfig();
     if (svgConfig) {
       return JSON.stringify({
@@ -332,16 +334,6 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
         floors: svgConfig.floors,
         defaultFloor: svgConfig.defaultFloor,
         svgBounds: svgConfig.svgBounds ?? null,
-      });
-    }
-    const tileConfig = getTileConfig();
-    if (tileConfig) {
-      return JSON.stringify({
-        type: 'tile',
-        tilePath: tileConfig.tilePath,
-        tileFallbacks: tileConfig.tileFallbacks ?? null,
-        minZoom: tileConfig.minZoom ?? null,
-        maxZoom: tileConfig.maxZoom ?? null,
       });
     }
     return undefined;
@@ -451,8 +443,13 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
     if (!isLayerLoadOperationActive(initToken, loadToken)) return;
     const leafletMap = mapInstance.value;
     if (!leafletMap) return;
+    if (svgLayer.value) {
+      leafletMap.removeLayer(svgLayer.value);
+      svgLayer.value = null;
+    }
     if (tileLayer.value) {
-      tileLayer.value.off();
+      // Leaflet's remove event detaches map listeners; clearing every listener first leaves a dead layer on zoom.
+      tileLayer.value.off('tileerror');
       leafletMap.removeLayer(tileLayer.value);
       tileLayer.value = null;
     }
@@ -464,6 +461,7 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
         minZoom: isCompanionMap() ? leafletMap.getMinZoom() : (tileConfig.minZoom ?? 1),
         minNativeZoom: isCompanionMap() ? (tileConfig.minZoom ?? 1) : undefined,
         maxZoom: tileConfig.maxZoom ?? 6,
+        maxNativeZoom: tileConfig.maxNativeZoom,
         noWrap: true,
         bounds,
         pane: 'mapBackground',
@@ -502,11 +500,6 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
       if (layer && isLayerLoadOperationActive(initToken, loadToken)) {
         attachTileErrorHandler(0);
         layer.addTo(leafletMap);
-      }
-      if (!isLayerLoadOperationActive(initToken, loadToken)) return;
-      if (svgLayer.value) {
-        leafletMap.removeLayer(svgLayer.value);
-        svgLayer.value = null;
       }
     } catch (error) {
       if (tileLayer.value && leafletMap.hasLayer(tileLayer.value)) {
@@ -810,6 +803,8 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
       crsKey.value = getCrsKey(renderConfig);
       // Create map instance with custom CRS
       const mapOptions = getLeafletMapOptions(leaflet.value, renderConfig);
+      // A screenshot can replace the map before Leaflet's pending zoom transition finishes.
+      if (isCompanionMap()) mapOptions.zoomAnimation = false;
       mapInstance.value = leaflet.value.map(containerRef.value, mapOptions);
       // Create a custom pane for the map background to ensure it stays behind markers
       const backgroundPane = mapInstance.value.createPane('mapBackground');
@@ -932,7 +927,7 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
   // Watch for map changes
   watch(
     () => map.value,
-    async (newMap) => {
+    async (newMap, previousMap) => {
       // Handle unavailable maps - destroy instance and skip initialization
       if (!newMap || newMap.unavailable === true) {
         destroy();
@@ -957,7 +952,10 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
         return;
       }
       // Update floor selection
-      selectedFloor.value = resolveInitialFloor(newSvgConfig, newTileConfig);
+      const nextFloors = newSvgConfig?.floors ?? newTileConfig?.floors ?? [];
+      if (newMap.id !== previousMap?.id || !nextFloors.includes(selectedFloor.value)) {
+        selectedFloor.value = resolveInitialFloor(newSvgConfig, newTileConfig);
+      }
       const nextRenderKey = getRenderKey() ?? '';
       if (nextRenderKey !== renderKey.value) {
         const loadToken = createMapLayerLoadToken();
@@ -966,7 +964,8 @@ export function useLeafletMap(options: UseLeafletMapOptions): UseLeafletMapRetur
           renderKey.value = nextRenderKey;
           await loadMapLayer(undefined, loadToken);
           if (!isMapLayerLoadActive(loadToken)) return;
-          refreshView();
+          if (newMap.id !== previousMap?.id) refreshView();
+          else updateOverviewZoom();
         } finally {
           if (isMapLayerLoadActive(loadToken)) {
             isLoading.value = false;

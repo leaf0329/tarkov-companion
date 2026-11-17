@@ -391,6 +391,7 @@ export interface MapTileConfig {
   bounds: [[number, number], [number, number]];
   minZoom?: number;
   maxZoom?: number;
+  maxNativeZoom?: number;
   tileSize?: number;
   floors?: string[];
   defaultFloor?: string;

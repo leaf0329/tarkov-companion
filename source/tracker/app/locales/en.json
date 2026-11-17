@@ -2775,6 +2775,28 @@
     "event_guides": "Event guides",
     "events_checked": "Sources checked: {date}",
     "events_prerequisite": "Prerequisite",
-    "events_source": "Community source"
+    "events_source": "Community source",
+    "cultists": "Cultists",
+    "cultist_time_label": "Raid time",
+    "cultist_reference": "Red circles are approximate search areas derived from published locations. They do not indicate a spawn in this raid or a live NPC position.",
+    "cultist_any_scav": "This variant can use Scav spawn locations. The circle covers recorded positions on this floor; it is not one fixed spawn.",
+    "cultist_single_point": "Only one position is recorded on this floor. The 15 m circle is a nearby search reference.",
+    "cultist_sources_date": "Coordinates checked",
+    "cultist_source": "View source",
+    "detailed_maps": "Detailed map",
+    "detailed_map_reference": "Illustrated map; printed loot and extract notes may be older than current game data.",
+    "cultist_locations": {
+      "stronghold": "Cultists — Stronghold area",
+      "woods_west": "Cultists — west of the sawmill",
+      "woods_village": "Cultists — abandoned village",
+      "resort": "Cultists — Health Resort area",
+      "sunken_village": "Cultists — northeast of Sunken Village",
+      "factory": "Cultists — Night Factory",
+      "ground_zero": "Cultists — Ground Zero level 21+"
+    },
+    "reference_map": "Map reference",
+    "reference_map_title": "Map reference · {name}",
+    "reference_map_hint": "Unregistered original image for terrain reference. Live position, quests and Cultist circles remain on the main map.",
+    "detailed_floor_fallback": "This floor uses the original map because no calibrated illustrated floor is available."
   }
 }

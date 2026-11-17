@@ -38,7 +38,7 @@ function placeElement(label: PlaceName): HTMLElement {
   }
   return element;
 }
-export function useCompanionPlaceNames(map: Ref<TarkovMap>, instance: Ref<L.Map | null>, library: Ref<typeof L | null>, floor: Ref<string>): void {
+export function useCompanionPlaceNames(map: Ref<TarkovMap>, instance: Ref<L.Map | null>, library: Ref<typeof L | null>, floor: Ref<string>, enabled: Ref<boolean> = ref(true)): void {
   if (!(import.meta.client && window.companion)) return;
   const asset = computed(() => {
     if (typeof map.value.svg === 'object') return map.value.svg.file;
@@ -66,10 +66,11 @@ export function useCompanionPlaceNames(map: Ref<TarkovMap>, instance: Ref<L.Map 
     markers = [];
   };
   const context = () => {
+    if (!enabled.value) return null;
     if (!instance.value || !library.value || !definition.value) return null;
     return { map: instance.value, L: library.value, data: definition.value };
   };
-  watch([instance, library, definition], () => {
+  watch([instance, library, definition, enabled], () => {
     clear();
     const next = context();
     if (!next) return;

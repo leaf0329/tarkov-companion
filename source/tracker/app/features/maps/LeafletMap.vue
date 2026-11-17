@@ -110,6 +110,17 @@
               <span class="whitespace-nowrap">{{ t('companion.key_rooms') }}</span>
             </button>
             <button
+              type="button"
+              data-testid="map-cultists-toggle"
+              :aria-pressed="showCultists"
+              class="focus-visible:ring-primary-500 focus-visible:ring-offset-surface-850 flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              :class="showCultists ? MAP_BUTTON_ACTIVE_CLASS : MAP_BUTTON_INACTIVE_CLASS"
+              @click="showCultists = !showCultists"
+            >
+              <UIcon name="i-mdi-circle-outline" class="h-4 w-4 shrink-0 text-red-400" />
+              <span class="whitespace-nowrap">{{ t('companion.cultists') }}</span>
+            </button>
+            <button
               v-if="props.showExtractToggle"
               type="button"
               :aria-pressed="showPmcExtracts"
@@ -119,6 +130,30 @@
             >
               <UIcon name="i-mdi-shield-account-outline" class="h-4 w-4 shrink-0" />
               <span class="whitespace-nowrap">{{ t('maps.factions.pmc') }}</span>
+            </button>
+            <button
+              v-if="detailedDefinition"
+              type="button"
+              data-testid="map-detailed-toggle"
+              :aria-pressed="useDetailedMaps"
+              :title="t(useDetailedMaps && !detailedActive ? 'companion.detailed_floor_fallback' : 'companion.detailed_map_reference')"
+              class="focus-visible:ring-primary-500 focus-visible:ring-offset-surface-850 flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              :class="useDetailedMaps ? MAP_BUTTON_ACTIVE_CLASS : MAP_BUTTON_INACTIVE_CLASS"
+              @click="useDetailedMaps = !useDetailedMaps"
+            >
+              <UIcon name="i-mdi-image-outline" class="h-4 w-4 shrink-0" />
+              <span class="whitespace-nowrap">{{ t('companion.detailed_maps') }}</span>
+            </button>
+            <button
+              v-if="referenceDefinition"
+              type="button"
+              data-testid="map-reference-open"
+              class="focus-visible:ring-primary-500 flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium focus:outline-none focus-visible:ring-2"
+              :class="MAP_BUTTON_INACTIVE_CLASS"
+              @click="referenceOpen = true"
+            >
+              <UIcon name="i-mdi-image-outline" class="h-4 w-4 shrink-0" />
+              <span class="whitespace-nowrap">{{ t('companion.reference_map') }}</span>
             </button>
             <button
               v-if="props.showExtractToggle"
@@ -700,6 +735,7 @@
         </div>
       </div>
     </template>
+    <CompanionReferenceMap v-if="referenceDefinition && referenceOpen" v-model:open="referenceOpen" :definition="referenceDefinition" :name="props.map.name" />
   </div>
 </template>
 <script setup lang="ts">
@@ -709,6 +745,7 @@
   import { useCompanionPlaceNames } from '@/composables/useCompanionPlaceNames';
   import { useCompanionPlayer } from '@/composables/useCompanionPlayer';
   import { type MapViewState, useLeafletMap, withoutZoomSnap } from '@/composables/useLeafletMap';
+  import { useMapCultists } from '@/composables/useMapCultists';
   import { useMapKeyRooms } from '@/composables/useMapKeyRooms';
   import {
     mapObjectiveCategory,
@@ -730,6 +767,7 @@
   import LeafletObjectiveStack from '@/features/maps/LeafletObjectiveStack.vue';
   import LeafletObjectiveTooltip from '@/features/maps/LeafletObjectiveTooltip.vue';
   import { renderCompanionMarkers } from '@/features/maps/utils/companionMarkers';
+  import { detailedMapFor, referenceMapFor, withDetailedMap } from '@/features/maps/utils/detailedMaps';
   import { createExtractDetails } from '@/features/maps/utils/mapPointDetails';
   import { bindMapPointPopup } from '@/features/maps/utils/mapPointPopup';
   import { getMarksHash, type MapMark } from '@/features/maps/utils/marksHash';
@@ -845,6 +883,23 @@
     get: () => preferencesStore.getMapShowTransits,
     set: (show: boolean) => preferencesStore.setMapShowTransits(show),
   });
+  const showCultists = computed({
+    get: () => preferencesStore.getMapShowCultists,
+    set: (show: boolean) => preferencesStore.setMapShowCultists(show),
+  });
+  const useDetailedMaps = computed({
+    get: () => preferencesStore.getMapUseDetailedMaps,
+    set: (enabled: boolean) => preferencesStore.setMapUseDetailedMaps(enabled),
+  });
+  const detailedFloor = ref(props.initialFloor ?? '');
+  const detailedDefinition = computed(() => detailedMapFor(props.map));
+  const referenceDefinition = computed(() => referenceMapFor(props.map));
+  const referenceOpen = ref(false);
+  const renderMap = computed(() => {
+    const config = typeof props.map.svg === 'object' ? props.map.svg : props.map.tile;
+    return withDetailedMap(props.map, detailedFloor.value || config?.defaultFloor || '', useDetailedMaps.value);
+  });
+  const detailedActive = computed(() => renderMap.value !== props.map);
   const mapSurfaceRef = ref<HTMLElement | null>(null);
   const showKeyboardCursor = ref(false);
   const fullscreenToggleLabel = computed(() =>
@@ -925,13 +980,16 @@
   } = useLeafletMap({
     enableIdleDetection: !(import.meta.client && Boolean(window.companion)),
     containerRef: mapContainer,
-    map: toRef(props, 'map'),
+    map: renderMap,
     initialView: props.initialView ?? null,
     initialFloor: props.initialFloor,
   });
-  useCompanionPlayer(toRef(props, 'map'), mapInstance, leaflet);
-  useCompanionPlaceNames(toRef(props, 'map'), mapInstance, leaflet, selectedFloor);
+  useCompanionPlayer(toRef(props, 'map'), mapInstance, leaflet, setFloor);
+  watch(selectedFloor, (floor) => { detailedFloor.value = floor; });
+  watch(() => props.map.id, () => { detailedFloor.value = ''; referenceOpen.value = false; });
+  useCompanionPlaceNames(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, computed(() => !detailedActive.value));
   useMapKeyRooms(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, showKeyRooms, itemName, t);
+  useMapCultists(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, showCultists, t);
   useMapTransits(
     toRef(props, 'map'),
     mapInstance,

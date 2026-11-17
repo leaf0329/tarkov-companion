@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-11-18",
+  "maps": [
+    {
+      "key": "factory",
+      "mapId": "55f2d3fd4bdc2d5f408b4567",
+      "maxNativeZoom": 4,
+      "floors": [
+        "Ground_Floor",
+        "Tunnels",
+        "3rd Floor",
+        "2nd Floor"
+      ]
+    },
+    {
+      "key": "groundzero",
+      "mapId": "653e6760052c01c1c805532f",
+      "maxNativeZoom": 4,
+      "floors": [
+        "Ground_Level"
+      ]
+    },
+    {
+      "key": "labyrinth",
+      "mapId": "6733700029c367a3d40b02af",
+      "maxNativeZoom": 4,
+      "floors": [
+        ""
+      ]
+    },
+    {
+      "key": "interchange",
+      "mapId": "5714dbc024597771384a510d",
+      "maxNativeZoom": 4,
+      "floors": [
+        "Ground_Level",
+        "3rd Floor",
+        "2nd Floor"
+      ]
+    },
+    {
+      "key": "lighthouse",
+      "mapId": "5704e4dad2720bb55b8b4567",
+      "maxNativeZoom": 4,
+      "floors": [
+        "Ground_Level"
+      ]
+    },
+    {
+      "key": "lab",
+      "mapId": "5b0fc42d86f7744a585f9105",
+      "maxNativeZoom": 4,
+      "floors": [
+        "Technical",
+        "Second_Level",
+        "First_Level"
+      ]
+    }
+  ],
+  "referenceImages": [
+    {
+      "key": "customs",
+      "mapId": "56f40101d2720b2a4d8b45d6",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "海关正式版.jpg",
+      "width": 4961,
+      "height": 3508
+    },
+    {
+      "key": "woods",
+      "mapId": "5704e3c2d2720bac5b8b4567",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "森林0.16 s.png",
+      "width": 3508,
+      "height": 2480
+    },
+    {
+      "key": "shoreline",
+      "mapId": "5704e554d2720bac5b8b456e",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "海岸线 正式版.jpg",
+      "width": 4961,
+      "height": 3508
+    },
+    {
+      "key": "reserve",
+      "mapId": "5704e5fad2720bc05b8b4567",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "储备站中文正式版.jpg",
+      "width": 4961,
+      "height": 3508
+    },
+    {
+      "key": "streetsoftarkov",
+      "mapId": "5714dc692459777137212e12",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "街区0.16.jpg",
+      "width": 7605,
+      "height": 4841
+    }
+  ]
+}

@@ -153,6 +153,8 @@ export interface PreferencesState {
   showMapExtracts: boolean;
   mapShowKeyRooms: boolean;
   mapShowTransits: boolean;
+  mapShowCultists: boolean;
+  mapUseDetailedMaps: boolean;
   mapMarkerColors: MapMarkerColors;
   mapZoomSpeed: number;
   mapPanSpeed: number;
@@ -247,6 +249,8 @@ export const preferencesDefaultState: PreferencesState = {
   showMapExtracts: true,
   mapShowKeyRooms: false,
   mapShowTransits: true,
+  mapShowCultists: false,
+  mapUseDetailedMaps: true,
   mapMarkerColors: { ...MAP_MARKER_COLORS },
   mapZoomSpeed: 1,
   mapPanSpeed: 1,
@@ -655,6 +659,8 @@ export const usePreferencesStore = defineStore('preferences', {
     getMapShowTransits: (state) => {
       return state.mapShowTransits ?? true;
     },
+    getMapShowCultists: (state) => state.mapShowCultists ?? false,
+    getMapUseDetailedMaps: (state) => state.mapUseDetailedMaps ?? true,
     getMapShowPinnedObjectives: (state) => {
       return state.mapShowPinnedObjectives ?? true;
     },
@@ -924,6 +930,12 @@ export const usePreferencesStore = defineStore('preferences', {
     setMapShowTransits(show: boolean) {
       this.mapShowTransits = show;
     },
+    setMapShowCultists(show: boolean) {
+      this.mapShowCultists = show;
+    },
+    setMapUseDetailedMaps(show: boolean) {
+      this.mapUseDetailedMaps = show;
+    },
     setMapShowPinnedObjectives(show: boolean) {
       this.mapShowPinnedObjectives = show;
     },
@@ -1083,6 +1095,8 @@ export const usePreferencesStore = defineStore('preferences', {
       'showMapExtracts',
       'mapShowKeyRooms',
       'mapShowTransits',
+      'mapShowCultists',
+      'mapUseDetailedMaps',
       'mapMarkerColors',
       'mapZoomSpeed',
       'mapPanSpeed',

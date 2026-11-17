@@ -1,0 +1,744 @@
+{
+  "checkedAt": "2026-11-18",
+  "scope": "Six illustrated basemaps with per-floor calibration. Five unregistered illustrated maps are available in a separate reference viewer without live markers. Unsupported floors retain their original map.",
+  "license": "Third-party imagery retains original rights; RE3MR images are CC BY-NC-SA 4.0. Original integration and build code is AGPL-3.0-only.",
+  "sources": {
+    "customs.jpg": {
+      "file": "海关正式版.jpg",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "woods.png": {
+      "file": "森林0.16 s.png",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "shoreline.jpg": {
+      "file": "海岸线 正式版.jpg",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "reserve.jpg": {
+      "file": "储备站中文正式版.jpg",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "streets.jpg": {
+      "file": "街区0.16.jpg",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "factory.png": {
+      "file": "工厂.png",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "groundzero.png": {
+      "file": "中心区0.16.png",
+      "credit": "xTychoYT / MR茼蒿"
+    },
+    "lab.png": {
+      "file": "实验室正式版.png",
+      "credit": "FatalBulletHit / MR茼蒿"
+    },
+    "labyrinth.jpg": {
+      "file": "迷宫高清-带刷点图片.jpg",
+      "credit": "MR茼蒿 / EFT 中文 Wiki"
+    },
+    "interchange.jpg": {
+      "file": "立交桥正式版中文.jpg",
+      "credit": "MR茼蒿 / RE3MR"
+    },
+    "interchange-plan.png": {
+      "file": "立交桥商场内部.png",
+      "credit": "EFT 中文 Wiki / 妙妙工具箱几何校准资料"
+    },
+    "lighthouse.png": {
+      "file": "lighthouse-re3mr-v1.7.png",
+      "credit": "RE3MR v1.7"
+    }
+  },
+  "maps": [
+    {
+      "key": "factory",
+      "mapId": "55f2d3fd4bdc2d5f408b4567",
+      "maxNativeZoom": 4,
+      "sourceName": "工厂.png",
+      "credit": "MR茼蒿 / RE3MR",
+      "floors": {
+        "Ground_Floor": {
+          "image": "factory.png",
+          "anchors": [
+            [
+              58.71,
+              60.87,
+              100,
+              480,
+              "Gate 3"
+            ],
+            [
+              -63.67,
+              55.88,
+              155,
+              1550,
+              "Gate 0"
+            ],
+            [
+              -17.53,
+              -61.27,
+              1150,
+              1135,
+              "Medical gate"
+            ],
+            [
+              23.76,
+              68.94,
+              50,
+              800,
+              "Courtyard gate"
+            ]
+          ],
+          "matrix": [
+            -0.07264728174410451,
+            -8.489559893544143,
+            627.8408260006441,
+            -8.721822098133806,
+            0.13592789100907143,
+            989.7911414663204
+          ],
+          "rmsMeters": 0.92,
+          "residuals": [
+            {
+              "anchor": "Gate 3",
+              "meters": 1.06
+            },
+            {
+              "anchor": "Gate 0",
+              "meters": 0.48
+            },
+            {
+              "anchor": "Medical gate",
+              "meters": 0.11
+            },
+            {
+              "anchor": "Courtyard gate",
+              "meters": 1.43
+            }
+          ],
+          "crop": [
+            0,
+            300,
+            1300,
+            1600
+          ],
+          "exclude": [
+            [
+              250,
+              1490,
+              1250,
+              1630
+            ]
+          ]
+        },
+        "Tunnels": {
+          "image": "factory.png",
+          "anchors": [
+            [
+              73.89,
+              -29.08,
+              2050,
+              335,
+              "Cellars"
+            ],
+            [
+              48.03,
+              -28.86,
+              2050,
+              555,
+              "Smugglers passage"
+            ],
+            [
+              -15.72,
+              40.11,
+              1405,
+              1100,
+              "Monitoring bunker gate"
+            ],
+            [
+              -27.01,
+              -42.75,
+              2150,
+              1215,
+              "Lab transit"
+            ]
+          ],
+          "matrix": [
+            0.259108213647738,
+            -9.036617938221873,
+            1771.7607264659387,
+            -8.710649582579617,
+            -0.19487489837856842,
+            970.7477047751768
+          ],
+          "rmsMeters": 0.41,
+          "residuals": [
+            {
+              "anchor": "Cellars",
+              "meters": 0.48
+            },
+            {
+              "anchor": "Smugglers passage",
+              "meters": 0.65
+            },
+            {
+              "anchor": "Monitoring bunker gate",
+              "meters": 0.03
+            },
+            {
+              "anchor": "Lab transit",
+              "meters": 0.14
+            }
+          ],
+          "crop": [
+            1250,
+            300,
+            2480,
+            1600
+          ],
+          "exclude": [
+            [
+              1300,
+              1490,
+              2480,
+              1630
+            ]
+          ]
+        },
+        "3rd Floor": {
+          "image": "factory.png",
+          "matrix": [
+            -0.07264728174410451,
+            -8.489559893544143,
+            630.0490306717968,
+            -8.721822098133806,
+            0.13592789100907143,
+            2257.0516486776896
+          ],
+          "note": "Shared plan scale with separate office/shaft alignment; third-floor office window and exit-key door anchor the upper plan.",
+          "crop": [
+            0,
+            1630,
+            1300,
+            2800
+          ]
+        },
+        "2nd Floor": {
+          "image": "factory.png",
+          "matrix": [
+            -0.07264728174410451,
+            -8.489559893544143,
+            1757.049030671797,
+            -8.721822098133806,
+            0.13592789100907143,
+            2257.0516486776896
+          ],
+          "note": "Shared plan scale with separate office/shaft alignment; third-floor office window and exit-key door anchor the upper plan.",
+          "crop": [
+            1250,
+            1630,
+            2480,
+            2800
+          ]
+        }
+      }
+    },
+    {
+      "key": "groundzero",
+      "mapId": "653e6760052c01c1c805532f",
+      "maxNativeZoom": 4,
+      "sourceName": "中心区0.16.png",
+      "credit": "xTychoYT / MR茼蒿",
+      "floors": {
+        "Ground_Level": {
+          "image": "groundzero.png",
+          "matrix": [
+            -7.364412617463245,
+            -0.12914442877537063,
+            6966.3632291093945,
+            0.13697767290562324,
+            7.265593621842535,
+            1105.866475159762
+          ],
+          "postHomography": [
+            [
+              0.6735671790024714,
+              0.006041799850347384,
+              -2738.7263488493345
+            ],
+            [
+              -0.004697575340710529,
+              0.6813603854390046,
+              782.1834357957468
+            ],
+            [
+              -2.0084333625924663e-06,
+              5.542876156406107e-06,
+              0.9999999999999999
+            ]
+          ],
+          "note": "Image registration verified against shared floor-plan features; the underlying world calibration is retained.",
+          "crop": [
+            800,
+            870,
+            2480,
+            3508
+          ]
+        }
+      }
+    },
+    {
+      "key": "labyrinth",
+      "mapId": "6733700029c367a3d40b02af",
+      "maxNativeZoom": 4,
+      "sourceName": "迷宫高清-带刷点图片.jpg",
+      "credit": "MR茼蒿 / EFT 中文 Wiki",
+      "floors": {
+        "": {
+          "image": "labyrinth.jpg",
+          "tps": {
+            "game_points": [
+              [
+                25.06,
+                40.78
+              ],
+              [
+                1.14,
+                61.27
+              ],
+              [
+                -39.24,
+                42.85
+              ],
+              [
+                -29.73,
+                -13.16
+              ],
+              [
+                -8.75,
+                -22.84
+              ]
+            ],
+            "img_points": [
+              [
+                2471.9896677798824,
+                2251.139639964077
+              ],
+              [
+                3067.566115153853,
+                1572.9811406642182
+              ],
+              [
+                2531.437494863155,
+                379.33628794153174
+              ],
+              [
+                902.8203653008454,
+                644.8716895006039
+              ],
+              [
+                622.1115122241118,
+                1279.6277446560998
+              ]
+            ]
+          },
+          "postHomography": [
+            [
+              1.875442018546773,
+              -0.114597559716371,
+              2570.1824896907783
+            ],
+            [
+              -0.019349588414175802,
+              1.8580631894643984,
+              1349.4892296583562
+            ],
+            [
+              -3.984489294329047e-06,
+              -1.461604519779106e-05,
+              1
+            ]
+          ],
+          "note": "Image registration verified against shared floor-plan features; the underlying world calibration is retained.",
+          "crop": [
+            3300,
+            1300,
+            10000,
+            6500
+          ]
+        }
+      }
+    },
+    {
+      "key": "interchange",
+      "mapId": "5714dbc024597771384a510d",
+      "maxNativeZoom": 4,
+      "sourceName": "立交桥正式版中文.jpg",
+      "credit": "MR茼蒿 / RE3MR",
+      "floors": {
+        "Ground_Level": {
+          "image": "interchange.jpg",
+          "tps": {
+            "game_points": [
+              [
+                -274.97,
+                221.69
+              ],
+              [
+                -193.21,
+                -360.71
+              ],
+              [
+                277.41,
+                -376.45
+              ],
+              [
+                508.64,
+                94.54
+              ],
+              [
+                281.25,
+                416.84
+              ]
+            ],
+            "img_points": [
+              [
+                4490.210416014679,
+                4231.456658551196
+              ],
+              [
+                4060.8294751563176,
+                1134.6778781956396
+              ],
+              [
+                1575.9818530152047,
+                1036.6513325595897
+              ],
+              [
+                401.13885355480693,
+                3545.133727204886
+              ],
+              [
+                1567.1459910425751,
+                5094.239987989874
+              ]
+            ]
+          }
+        },
+        "3rd Floor": {
+          "image": "interchange-plan.png",
+          "matrix": [
+            -10.578044016425455,
+            0.7522382098248954,
+            5358.918228035054,
+            -0.23517598140112025,
+            11.181555245213334,
+            3737.494763611935
+          ],
+          "crop": [
+            4054,
+            1514,
+            6301,
+            4914
+          ]
+        },
+        "2nd Floor": {
+          "image": "interchange-plan.png",
+          "matrix": [
+            -11.59169798416707,
+            0.029987178879707737,
+            1425.1651330036054,
+            0.021888770279968377,
+            11.648472878267217,
+            3762.465102678446
+          ],
+          "crop": [
+            205,
+            78,
+            3859,
+            6174
+          ]
+        }
+      }
+    },
+    {
+      "key": "lighthouse",
+      "mapId": "5704e4dad2720bb55b8b4567",
+      "maxNativeZoom": 4,
+      "sourceName": "lighthouse-re3mr-v1.7.png",
+      "credit": "RE3MR v1.7",
+      "floors": {
+        "Ground_Level": {
+          "image": "lighthouse.png",
+          "matrix": [
+            -5.11712,
+            0.041856,
+            5400.021248,
+            0.08,
+            4.141312,
+            4372.267648
+          ],
+          "note": "RE3MR v1.7 post-1.1.5 layout; published first-pass affine is approximately 20 m accurate. Source: David04-09/tarkov-companion src/maps/mapConfig.ts."
+        }
+      }
+    },
+    {
+      "key": "lab",
+      "mapId": "5b0fc42d86f7744a585f9105",
+      "maxNativeZoom": 4,
+      "sourceName": "实验室正式版.png",
+      "credit": "FatalBulletHit / MR茼蒿",
+      "floors": {
+        "Technical": {
+          "image": "lab.png",
+          "anchors": [
+            [
+              -112.3,
+              -344.04,
+              1360,
+              4570,
+              "Medical elevator"
+            ],
+            [
+              -145.06,
+              -396.83,
+              1280,
+              4280,
+              "Ventilation shaft"
+            ],
+            [
+              -282.69,
+              -334.73,
+              2190,
+              4020,
+              "Main elevator"
+            ],
+            [
+              -122.89,
+              -258.32,
+              1855,
+              4740,
+              "Sewage conduit"
+            ]
+          ],
+          "matrix": [
+            -4.513612897972629,
+            4.907332555840325,
+            2559.683627076139,
+            3.2717157207626006,
+            2.7573026294140934,
+            5864.243085837605
+          ],
+          "rmsMeters": 3.75,
+          "residuals": [
+            {
+              "anchor": "Medical elevator",
+              "meters": 5.68
+            },
+            {
+              "anchor": "Ventilation shaft",
+              "meters": 4.03
+            },
+            {
+              "anchor": "Main elevator",
+              "meters": 0.94
+            },
+            {
+              "anchor": "Sewage conduit",
+              "meters": 2.59
+            }
+          ],
+          "crop": [
+            700,
+            3650,
+            2500,
+            4880
+          ]
+        },
+        "Second_Level": {
+          "image": "lab.png",
+          "anchors": [
+            [
+              -257.22,
+              -322.93,
+              2105,
+              1225,
+              "Red keycard door"
+            ],
+            [
+              -261.99,
+              -317.24,
+              2165,
+              1220,
+              "Violet keycard door"
+            ],
+            [
+              -135.9,
+              -346.97,
+              1475,
+              1540,
+              "Green keycard door"
+            ],
+            [
+              -212.69,
+              -376.54,
+              1665,
+              1188,
+              "Yellow keycard door"
+            ],
+            [
+              -111.79,
+              -408.55,
+              1075,
+              1405,
+              "Cargo elevator"
+            ]
+          ],
+          "matrix": [
+            -4.304978874615318,
+            4.787803766922679,
+            2550.5950428137926,
+            3.283258599367003,
+            3.4052167916041434,
+            3165.8149291877066
+          ],
+          "rmsMeters": 0.97,
+          "residuals": [
+            {
+              "anchor": "Red keycard door",
+              "meters": 1.32
+            },
+            {
+              "anchor": "Violet keycard door",
+              "meters": 1.46
+            },
+            {
+              "anchor": "Green keycard door",
+              "meters": 0.4
+            },
+            {
+              "anchor": "Yellow keycard door",
+              "meters": 0.61
+            },
+            {
+              "anchor": "Cargo elevator",
+              "meters": 0.55
+            }
+          ],
+          "crop": [
+            600,
+            700,
+            2700,
+            1950
+          ]
+        },
+        "First_Level": {
+          "image": "lab.png",
+          "anchors": [
+            [
+              -123.23,
+              -406.52,
+              1150,
+              2860,
+              "Blue keycard door"
+            ],
+            [
+              -130.8,
+              -349.3,
+              1405,
+              3010,
+              "Black keycard door"
+            ],
+            [
+              -170.49,
+              -218.87,
+              2100,
+              3225,
+              "Hangar gate"
+            ],
+            [
+              -282.69,
+              -334.73,
+              1900,
+              2450,
+              "Main elevator shaft projection"
+            ]
+          ],
+          "matrix": [
+            -2.7770672379995323,
+            4.384149506792813,
+            2582.9308314497475,
+            3.920191018260334,
+            2.9165521320949583,
+            4534.097495707914
+          ],
+          "rmsMeters": 1.61,
+          "residuals": [
+            {
+              "anchor": "Blue keycard door",
+              "meters": 1.82
+            },
+            {
+              "anchor": "Black keycard door",
+              "meters": 2.51
+            },
+            {
+              "anchor": "Hangar gate",
+              "meters": 0.81
+            },
+            {
+              "anchor": "Main elevator shaft projection",
+              "meters": 0.12
+            }
+          ],
+          "crop": [
+            500,
+            2200,
+            2700,
+            3510
+          ]
+        }
+      }
+    }
+  ],
+  "referenceImages": [
+    {
+      "key": "customs",
+      "mapId": "56f40101d2720b2a4d8b45d6",
+      "image": "customs.jpg",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "海关正式版.jpg"
+    },
+    {
+      "key": "woods",
+      "mapId": "5704e3c2d2720bac5b8b4567",
+      "image": "woods.png",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "森林0.16 s.png"
+    },
+    {
+      "key": "shoreline",
+      "mapId": "5704e554d2720bac5b8b456e",
+      "image": "shoreline.jpg",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "海岸线 正式版.jpg"
+    },
+    {
+      "key": "reserve",
+      "mapId": "5704e5fad2720bc05b8b4567",
+      "image": "reserve.jpg",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "储备站中文正式版.jpg"
+    },
+    {
+      "key": "streetsoftarkov",
+      "mapId": "5714dc692459777137212e12",
+      "image": "streets.jpg",
+      "credit": "MR茼蒿 / RE3MR",
+      "sourceName": "街区0.16.jpg"
+    }
+  ]
+}

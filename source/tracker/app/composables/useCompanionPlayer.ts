@@ -1,3 +1,4 @@
+import { getPointFloor } from '@/features/maps/utils/mapPointDetails';
 import { gameToLatLng } from '@/utils/mapCoordinates';
 import type { CompanionSnapshot } from '@/types/companion';
 import type { TarkovMap } from '@/types/tarkov';
@@ -6,7 +7,8 @@ import type { ShallowRef } from 'vue';
 export function useCompanionPlayer(
   map: Ref<TarkovMap>,
   instance: ShallowRef<L.Map | null>,
-  leaflet: ShallowRef<typeof L | null>
+  leaflet: ShallowRef<typeof L | null>,
+  selectFloor?: (floor: string) => void
 ): void {
   const state = useState<CompanionSnapshot | null>('companion');
   let marker: L.Marker | null = null;
@@ -31,6 +33,8 @@ export function useCompanionPlayer(
       if (arrow) arrow.style.transform = `rotate(${rotation}deg)`;
     }
     if (!state.value?.settings.follow) { centered = false; return; }
+    const playerFloor = getPointFloor(map.value, point);
+    if (playerFloor) selectFloor?.(playerFloor);
     const followMinimum = svg?.minZoom ?? map.value.tile?.minZoom ?? 1;
     if (!centered) next.setView(latLng, Math.max(next.getZoom(), followMinimum + 1.5), { animate: false });
     else next.panTo(latLng, { animate: false });

@@ -1,6 +1,7 @@
 import extractRules from '@/data/companionExtractRequirements.json';
 import floorData from '@/data/companionLandmarks.json';
 import { isCoopExtract } from '@/features/maps/composables/useLeafletMapControls';
+import type { CultistCircle } from '@/features/maps/utils/cultistAreas';
 import type { MapExtract, MapLock, MapPosition, MapTransit, TarkovMap } from '@/types/tarkov';
 interface FloorExtent {
   height: number[];
@@ -210,5 +211,23 @@ export function createTransitDetails(
     t('companion.transit_conditions'),
     condition && !isUntranslatedTransitText(condition) ? condition : t(`companion.${fallback}`)
   );
+  return element;
+}
+export function createCultistDetails(circle: CultistCircle, t: PointTranslate): HTMLElement {
+  const element = content(t('companion.cultist_locations.' + circle.area.location));
+  element.dataset.testid = 'cultist-details';
+  element.dataset.areaId = circle.area.id;
+  row(element, t('companion.cultist_time_label'), '22:00–07:00');
+  row(element, '', t('companion.cultist_reference'));
+  if (circle.area.anyScavSpawn) row(element, '', t('companion.cultist_any_scav'));
+  if (circle.singlePoint) row(element, '', t('companion.cultist_single_point'));
+  row(element, t('companion.cultist_sources_date'), circle.area.sourceDate);
+  const source = document.createElement('a');
+  source.href = circle.area.source;
+  source.target = '_blank';
+  source.rel = 'noopener noreferrer';
+  source.textContent = t('companion.cultist_source');
+  source.className = 'text-xs! text-sky-200!';
+  element.appendChild(source);
   return element;
 }
