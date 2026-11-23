@@ -154,6 +154,7 @@ export interface PreferencesState {
   mapShowKeyRooms: boolean;
   mapShowTransits: boolean;
   mapShowCultists: boolean;
+  mapShowSeasonDocuments: boolean;
   mapUseDetailedMaps: boolean;
   mapMarkerColors: MapMarkerColors;
   mapZoomSpeed: number;
@@ -250,6 +251,7 @@ export const preferencesDefaultState: PreferencesState = {
   mapShowKeyRooms: false,
   mapShowTransits: true,
   mapShowCultists: false,
+  mapShowSeasonDocuments: false,
   mapUseDetailedMaps: true,
   mapMarkerColors: { ...MAP_MARKER_COLORS },
   mapZoomSpeed: 1,
@@ -660,6 +662,7 @@ export const usePreferencesStore = defineStore('preferences', {
       return state.mapShowTransits ?? true;
     },
     getMapShowCultists: (state) => state.mapShowCultists ?? false,
+    getMapShowSeasonDocuments: (state) => state.mapShowSeasonDocuments ?? false,
     getMapUseDetailedMaps: (state) => state.mapUseDetailedMaps ?? true,
     getMapShowPinnedObjectives: (state) => {
       return state.mapShowPinnedObjectives ?? true;
@@ -933,6 +936,9 @@ export const usePreferencesStore = defineStore('preferences', {
     setMapShowCultists(show: boolean) {
       this.mapShowCultists = show;
     },
+    setMapShowSeasonDocuments(show: boolean) {
+      this.mapShowSeasonDocuments = show;
+    },
     setMapUseDetailedMaps(show: boolean) {
       this.mapUseDetailedMaps = show;
     },
@@ -1096,6 +1102,7 @@ export const usePreferencesStore = defineStore('preferences', {
       'mapShowKeyRooms',
       'mapShowTransits',
       'mapShowCultists',
+      'mapShowSeasonDocuments',
       'mapUseDetailedMaps',
       'mapMarkerColors',
       'mapZoomSpeed',

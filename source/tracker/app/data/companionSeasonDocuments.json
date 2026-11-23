@@ -1,0 +1,3804 @@
+{
+  "season": 1,
+  "seasonName": "KORD BREACH",
+  "checkedAt": "2026-11-23",
+  "types": [
+    {
+      "key": "pmc",
+      "id": "6a317b9692cfdcddcb02a58e",
+      "color": "#f8fafc"
+    },
+    {
+      "key": "financial",
+      "id": "6a31807f17005505b70d5827",
+      "color": "#facc15"
+    },
+    {
+      "key": "project",
+      "id": "6a3181f178450ec91c0ea1aa",
+      "color": "#fb923c"
+    },
+    {
+      "key": "blueprints",
+      "id": "6a31824878450ec91c0ea1ae",
+      "color": "#22d3ee"
+    },
+    {
+      "key": "test",
+      "id": "6a31828557705071410ca00e",
+      "color": "#a78bfa"
+    },
+    {
+      "key": "user",
+      "id": "6a3182b72fd891345e047eef",
+      "color": "#60a5fa"
+    },
+    {
+      "key": "medical",
+      "id": "6a3182dc6cd8de21cf0a3a7d",
+      "color": "#4ade80"
+    },
+    {
+      "key": "technical",
+      "id": "6a31830dde69ceafd805afa0",
+      "color": "#f87171"
+    }
+  ],
+  "source": {
+    "label": "tarkov.dev / TarkovTracker",
+    "url": "https://tarkovtracker.org/api/tarkov/tasks-core?lang=zh&gameMode=pve",
+    "version": "1.185",
+    "pvpPositionsVerified": true
+  },
+  "maps": [
+    {
+      "mapIds": [
+        "55f2d3fd4bdc2d5f408b4567",
+        "59fc81d786f774390775787e"
+      ],
+      "spawns": [
+        {
+          "id": "factory-1",
+          "position": {
+            "x": 23.08,
+            "y": 9.121,
+            "z": 37.914
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-2",
+          "position": {
+            "x": -18.848,
+            "y": -2.274,
+            "z": 47.019
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-3",
+          "position": {
+            "x": -1.272,
+            "y": -2.466,
+            "z": 49.039
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-4",
+          "position": {
+            "x": -21.322,
+            "y": 3.05,
+            "z": 29.466
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-5",
+          "position": {
+            "x": 73.714,
+            "y": 0.636,
+            "z": -34.413
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-6",
+          "position": {
+            "x": 55.694,
+            "y": 0.758,
+            "z": 24.55
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-7",
+          "position": {
+            "x": 28.791,
+            "y": 8.819,
+            "z": 36.963
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-8",
+          "position": {
+            "x": 13.302,
+            "y": 1.186,
+            "z": 42.809
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-9",
+          "position": {
+            "x": 27.088,
+            "y": 1.762,
+            "z": 41.015
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa",
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-10",
+          "position": {
+            "x": 25.968,
+            "y": 4.117,
+            "z": -18.99
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-11",
+          "position": {
+            "x": 30.529,
+            "y": 0.818,
+            "z": -34.902
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-12",
+          "position": {
+            "x": 36.719,
+            "y": 0.25,
+            "z": -35.36
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-13",
+          "position": {
+            "x": 41.579,
+            "y": 0.248,
+            "z": -15.488
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-14",
+          "position": {
+            "x": 12.055,
+            "y": 8.102,
+            "z": 40.817
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "factory-15",
+          "position": {
+            "x": 11.985,
+            "y": 8.084,
+            "z": 37.959
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-16",
+          "position": {
+            "x": -21.072,
+            "y": -1.82,
+            "z": 48.715
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-17",
+          "position": {
+            "x": -15.315,
+            "y": 1.01,
+            "z": -26.71
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-18",
+          "position": {
+            "x": 47.294,
+            "y": 1.128,
+            "z": -46.077
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-19",
+          "position": {
+            "x": 54.363,
+            "y": 1.572,
+            "z": 22.039
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-20",
+          "position": {
+            "x": 19.458,
+            "y": -2.513,
+            "z": -22.224
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-21",
+          "position": {
+            "x": 26.513,
+            "y": 8.601,
+            "z": 34.62
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-22",
+          "position": {
+            "x": 28.009,
+            "y": 9.396,
+            "z": 40.587
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-23",
+          "position": {
+            "x": 13.221,
+            "y": 1.408,
+            "z": 38.554
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-24",
+          "position": {
+            "x": 27.636,
+            "y": 4.414,
+            "z": -35.663
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-25",
+          "position": {
+            "x": 25.713,
+            "y": 0.426,
+            "z": -34.936
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-26",
+          "position": {
+            "x": 33.817,
+            "y": 0.746,
+            "z": -35.832
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-27",
+          "position": {
+            "x": 32.242,
+            "y": 0.804,
+            "z": 17.515
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "factory-28",
+          "position": {
+            "x": 21.387,
+            "y": 8.617,
+            "z": 39.537
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "56f40101d2720b2a4d8b45d6"
+      ],
+      "spawns": [
+        {
+          "id": "customs-1",
+          "position": {
+            "x": 77.669,
+            "y": 5.458,
+            "z": -154.577
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-2",
+          "position": {
+            "x": -204.009,
+            "y": 7.849,
+            "z": -109.545
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-3",
+          "position": {
+            "x": -205.275,
+            "y": 2.513,
+            "z": -32.772
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-4",
+          "position": {
+            "x": 90.152,
+            "y": 8.195,
+            "z": -54.084
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-5",
+          "position": {
+            "x": 203.43,
+            "y": 2.513,
+            "z": -121.9
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-6",
+          "position": {
+            "x": 464.27,
+            "y": 3.507,
+            "z": -62.709
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-7",
+          "position": {
+            "x": 64.258,
+            "y": 2.376,
+            "z": -106.896
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-8",
+          "position": {
+            "x": 68.326,
+            "y": 8.815,
+            "z": -63.543
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-9",
+          "position": {
+            "x": 227.169,
+            "y": 2.891,
+            "z": 161.088
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-10",
+          "position": {
+            "x": 317.568,
+            "y": 2.306,
+            "z": -186.194
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-11",
+          "position": {
+            "x": 264.694,
+            "y": 13.652,
+            "z": -75.73
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-12",
+          "position": {
+            "x": 224.079,
+            "y": 0.978,
+            "z": 140.917
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-13",
+          "position": {
+            "x": 170.985,
+            "y": 6.541,
+            "z": 154.7
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "customs-14",
+          "position": {
+            "x": 173.382,
+            "y": 3.503,
+            "z": 182.902
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827",
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-15",
+          "position": {
+            "x": 78.635,
+            "y": 5.224,
+            "z": -159.245
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827",
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-16",
+          "position": {
+            "x": -202.764,
+            "y": 7.371,
+            "z": -104.913
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-17",
+          "position": {
+            "x": -185.166,
+            "y": 1.759,
+            "z": -184.338
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-18",
+          "position": {
+            "x": 90.379,
+            "y": 8.12,
+            "z": -59.921
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-19",
+          "position": {
+            "x": 197.148,
+            "y": 3.276,
+            "z": -101.671
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-20",
+          "position": {
+            "x": 106.355,
+            "y": 2.622,
+            "z": -87.035
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-21",
+          "position": {
+            "x": 78.537,
+            "y": 4.984,
+            "z": -164.523
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-22",
+          "position": {
+            "x": 63.228,
+            "y": 7.943,
+            "z": -64.703
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-23",
+          "position": {
+            "x": 68.58,
+            "y": 1.494,
+            "z": -169.429
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-24",
+          "position": {
+            "x": 236.988,
+            "y": 2.912,
+            "z": 158.705
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-25",
+          "position": {
+            "x": 316.009,
+            "y": 1.665,
+            "z": -179.937
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-26",
+          "position": {
+            "x": 580.135,
+            "y": 6.898,
+            "z": -50.111
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-27",
+          "position": {
+            "x": 224.276,
+            "y": 2.031,
+            "z": 138.258
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "customs-28",
+          "position": {
+            "x": 25.375,
+            "y": 5.405,
+            "z": -58.786
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5704e3c2d2720bac5b8b4567"
+      ],
+      "spawns": [
+        {
+          "id": "woods-1",
+          "position": {
+            "x": -274.568,
+            "y": 7.456,
+            "z": -405.073
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-2",
+          "position": {
+            "x": 295.201,
+            "y": 23.343,
+            "z": -506.864
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-3",
+          "position": {
+            "x": 371.645,
+            "y": -10.434,
+            "z": 122.86
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-4",
+          "position": {
+            "x": -46.053,
+            "y": 20.685,
+            "z": -251.741
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-5",
+          "position": {
+            "x": -248.667,
+            "y": 12.293,
+            "z": -24.455
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-6",
+          "position": {
+            "x": -153.068,
+            "y": 51.926,
+            "z": -275.218
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-7",
+          "position": {
+            "x": -475.173,
+            "y": 13.954,
+            "z": -178.176
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-8",
+          "position": {
+            "x": -675.621,
+            "y": 11.081,
+            "z": 132.787
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-9",
+          "position": {
+            "x": -210.476,
+            "y": -0.803,
+            "z": 217.724
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-10",
+          "position": {
+            "x": -1.62,
+            "y": -0.716,
+            "z": -81.385
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-11",
+          "position": {
+            "x": -54.908,
+            "y": 8.869,
+            "z": -501.345
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-12",
+          "position": {
+            "x": -128.821,
+            "y": 10.634,
+            "z": -689.115
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-13",
+          "position": {
+            "x": 140.772,
+            "y": 27.903,
+            "z": -725.739
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-14",
+          "position": {
+            "x": 226.69,
+            "y": 25.482,
+            "z": -712.236
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-15",
+          "position": {
+            "x": -459.04,
+            "y": 15.535,
+            "z": -364.489
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "woods-16",
+          "position": {
+            "x": 280.042,
+            "y": 23.452,
+            "z": -434.161
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-17",
+          "position": {
+            "x": -201.935,
+            "y": -1.737,
+            "z": 232.115
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-18",
+          "position": {
+            "x": -544.892,
+            "y": 18.915,
+            "z": -199.924
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-19",
+          "position": {
+            "x": -512.709,
+            "y": 16.949,
+            "z": -177.957
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-20",
+          "position": {
+            "x": -456.036,
+            "y": 15.954,
+            "z": -366.536
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-21",
+          "position": {
+            "x": -513.044,
+            "y": 19.167,
+            "z": -394.168
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-22",
+          "position": {
+            "x": 270.319,
+            "y": 23.149,
+            "z": -439.882
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-23",
+          "position": {
+            "x": 284.057,
+            "y": 23.642,
+            "z": -517.192
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-24",
+          "position": {
+            "x": 272.19,
+            "y": 23.949,
+            "z": -511.402
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-25",
+          "position": {
+            "x": 241.46,
+            "y": -1.794,
+            "z": -80.686
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-26",
+          "position": {
+            "x": 238.563,
+            "y": -0.88,
+            "z": -71.043
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-27",
+          "position": {
+            "x": 58.347,
+            "y": -1.729,
+            "z": -51.006
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-28",
+          "position": {
+            "x": -26.999,
+            "y": -2.322,
+            "z": 47.45
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-29",
+          "position": {
+            "x": -189.846,
+            "y": -1.865,
+            "z": 208.396
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "woods-30",
+          "position": {
+            "x": 310.065,
+            "y": 23.208,
+            "z": -462.871
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5704e4dad2720bb55b8b4567"
+      ],
+      "spawns": [
+        {
+          "id": "lighthouse-1",
+          "position": {
+            "x": -72.162,
+            "y": 10.098,
+            "z": -279.417
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-2",
+          "position": {
+            "x": 133.929,
+            "y": 6.254,
+            "z": 290.776
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-3",
+          "position": {
+            "x": -67.088,
+            "y": 28.45,
+            "z": 109.634
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-4",
+          "position": {
+            "x": -119.324,
+            "y": 39.893,
+            "z": 94.203
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-5",
+          "position": {
+            "x": -84.679,
+            "y": 24.456,
+            "z": -71.46
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-6",
+          "position": {
+            "x": -81.386,
+            "y": 19.132,
+            "z": -84.404
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-7",
+          "position": {
+            "x": -60.662,
+            "y": 20.334,
+            "z": -130.275
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-8",
+          "position": {
+            "x": -188.792,
+            "y": 13.58,
+            "z": -199.308
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-9",
+          "position": {
+            "x": -95.052,
+            "y": 14.553,
+            "z": -741.944
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-10",
+          "position": {
+            "x": -175.281,
+            "y": 8.732,
+            "z": -650.859
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-11",
+          "position": {
+            "x": -172.074,
+            "y": 5.646,
+            "z": -497.346
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-12",
+          "position": {
+            "x": -100.088,
+            "y": 0.761,
+            "z": -492.193
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-13",
+          "position": {
+            "x": 48.193,
+            "y": 6.279,
+            "z": -551.917
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-14",
+          "position": {
+            "x": 33.9,
+            "y": 12.203,
+            "z": -849.272
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-15",
+          "position": {
+            "x": 135.927,
+            "y": 3.789,
+            "z": -187.394
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e",
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-16",
+          "position": {
+            "x": 53.197,
+            "y": 8.841,
+            "z": -638.142
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "lighthouse-17",
+          "position": {
+            "x": -75.044,
+            "y": 9.376,
+            "z": -295.701
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-18",
+          "position": {
+            "x": 127.729,
+            "y": 6.497,
+            "z": 289.512
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-19",
+          "position": {
+            "x": -64.741,
+            "y": 27.671,
+            "z": 112.904
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-20",
+          "position": {
+            "x": -121.771,
+            "y": 39.879,
+            "z": 103.747
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-21",
+          "position": {
+            "x": -122.278,
+            "y": 40.992,
+            "z": 82.097
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-22",
+          "position": {
+            "x": -117.91,
+            "y": 21.87,
+            "z": -21.249
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-23",
+          "position": {
+            "x": -85.92,
+            "y": 22.603,
+            "z": -74.232
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-24",
+          "position": {
+            "x": -186.245,
+            "y": 16.214,
+            "z": -211.221
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-25",
+          "position": {
+            "x": -65.759,
+            "y": 5.825,
+            "z": -734.386
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-26",
+          "position": {
+            "x": -178.775,
+            "y": 8.207,
+            "z": -649.131
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-27",
+          "position": {
+            "x": -92.544,
+            "y": 1.021,
+            "z": -489.82
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-28",
+          "position": {
+            "x": 52.606,
+            "y": 5.58,
+            "z": -553.584
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-29",
+          "position": {
+            "x": 34.547,
+            "y": 12.999,
+            "z": -845.737
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-30",
+          "position": {
+            "x": 142.887,
+            "y": 3.79,
+            "z": -130.939
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "lighthouse-31",
+          "position": {
+            "x": 50.165,
+            "y": 9.106,
+            "z": -637.138
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5704e554d2720bac5b8b456e"
+      ],
+      "spawns": [
+        {
+          "id": "shoreline-1",
+          "position": {
+            "x": -312.038,
+            "y": 0.177,
+            "z": -77.923
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-2",
+          "position": {
+            "x": -536.442,
+            "y": -17.173,
+            "z": -336.176
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-3",
+          "position": {
+            "x": -212.29,
+            "y": -17.228,
+            "z": 19.796
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-4",
+          "position": {
+            "x": -241.172,
+            "y": -40.192,
+            "z": 203.333
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-5",
+          "position": {
+            "x": -183.001,
+            "y": -54.87,
+            "z": 376.339
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-6",
+          "position": {
+            "x": -511.193,
+            "y": -13.631,
+            "z": 263.981
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-7",
+          "position": {
+            "x": -274.281,
+            "y": -0.284,
+            "z": -140.296
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-8",
+          "position": {
+            "x": -219.125,
+            "y": -0.823,
+            "z": -87.037
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-9",
+          "position": {
+            "x": -181.014,
+            "y": 2.096,
+            "z": -80.392
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-10",
+          "position": {
+            "x": 93.597,
+            "y": -47.491,
+            "z": 116.553
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-11",
+          "position": {
+            "x": 412.844,
+            "y": -54.07,
+            "z": 160.932
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-12",
+          "position": {
+            "x": -318.987,
+            "y": -60.631,
+            "z": 483.07
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-13",
+          "position": {
+            "x": -707.488,
+            "y": -26.554,
+            "z": 96.733
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-14",
+          "position": {
+            "x": -627.602,
+            "y": -25.827,
+            "z": -232.543
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-15",
+          "position": {
+            "x": -270.354,
+            "y": 2.573,
+            "z": -102.663
+          },
+          "documentIds": [
+            "6a31830dde69ceafd805afa0"
+          ]
+        },
+        {
+          "id": "shoreline-16",
+          "position": {
+            "x": -196.972,
+            "y": -0.28,
+            "z": -77.005
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-17",
+          "position": {
+            "x": 97.793,
+            "y": -48.144,
+            "z": 97.177
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-18",
+          "position": {
+            "x": -319.39,
+            "y": -61.89,
+            "z": 496.452
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-19",
+          "position": {
+            "x": -180.717,
+            "y": -54.724,
+            "z": 374.104
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-20",
+          "position": {
+            "x": -707.731,
+            "y": -26.548,
+            "z": 99.081
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-21",
+          "position": {
+            "x": 279.465,
+            "y": -54.959,
+            "z": 180.732
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-22",
+          "position": {
+            "x": -239.008,
+            "y": -0.778,
+            "z": -146.895
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-23",
+          "position": {
+            "x": -348.041,
+            "y": 2.463,
+            "z": -89.67
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-24",
+          "position": {
+            "x": -328.97,
+            "y": -0.164,
+            "z": -89.186
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-25",
+          "position": {
+            "x": -612.591,
+            "y": -29.378,
+            "z": -180.023
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-26",
+          "position": {
+            "x": -520.237,
+            "y": -15.876,
+            "z": -340.097
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-27",
+          "position": {
+            "x": -512.655,
+            "y": -21.762,
+            "z": 236.524
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-28",
+          "position": {
+            "x": -135.744,
+            "y": -21.079,
+            "z": -14.637
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-29",
+          "position": {
+            "x": 441.97,
+            "y": -53.262,
+            "z": 154.013
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        },
+        {
+          "id": "shoreline-30",
+          "position": {
+            "x": -231.254,
+            "y": 2.863,
+            "z": -102.677
+          },
+          "documentIds": [
+            "6a31828557705071410ca00e"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5704e5fad2720bc05b8b4567"
+      ],
+      "spawns": [
+        {
+          "id": "reserve-1",
+          "position": {
+            "x": 80.653,
+            "y": -0.992,
+            "z": -13.668
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-2",
+          "position": {
+            "x": -159.575,
+            "y": -2.492,
+            "z": 0.251
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-3",
+          "position": {
+            "x": -127.835,
+            "y": -8.551,
+            "z": -22.563
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-4",
+          "position": {
+            "x": 60.913,
+            "y": -4.171,
+            "z": -114.945
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-5",
+          "position": {
+            "x": 27.885,
+            "y": -5.057,
+            "z": -94.017
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-6",
+          "position": {
+            "x": -41.855,
+            "y": 19.68,
+            "z": 174.125
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-7",
+          "position": {
+            "x": 147.951,
+            "y": -6.029,
+            "z": -234.937
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-8",
+          "position": {
+            "x": 60.077,
+            "y": -5.609,
+            "z": 102.996
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-9",
+          "position": {
+            "x": -4.085,
+            "y": 22.644,
+            "z": 176.191
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e",
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-10",
+          "position": {
+            "x": -16.144,
+            "y": 23.271,
+            "z": 177.461
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-11",
+          "position": {
+            "x": -10.164,
+            "y": 23.378,
+            "z": 195.561
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-12",
+          "position": {
+            "x": -42.898,
+            "y": -13.922,
+            "z": 133.715
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-13",
+          "position": {
+            "x": -122.115,
+            "y": 2.389,
+            "z": 93.528
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-14",
+          "position": {
+            "x": -161.031,
+            "y": 0.296,
+            "z": 68.398
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-15",
+          "position": {
+            "x": -164.698,
+            "y": 0.285,
+            "z": 35.848
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-16",
+          "position": {
+            "x": 14.911,
+            "y": 0.274,
+            "z": -29.419
+          },
+          "documentIds": [
+            "6a317b9692cfdcddcb02a58e"
+          ]
+        },
+        {
+          "id": "reserve-17",
+          "position": {
+            "x": 77.48,
+            "y": -0.67,
+            "z": -18.13
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-18",
+          "position": {
+            "x": -163.567,
+            "y": 2.909,
+            "z": 31.309
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-19",
+          "position": {
+            "x": -154.953,
+            "y": -3.201,
+            "z": 72.992
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-20",
+          "position": {
+            "x": -123.09,
+            "y": -2.768,
+            "z": 95.75
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-21",
+          "position": {
+            "x": -86.863,
+            "y": -2.807,
+            "z": 82.855
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-22",
+          "position": {
+            "x": -116.083,
+            "y": -14.507,
+            "z": 33.149
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-23",
+          "position": {
+            "x": -108.028,
+            "y": -14.322,
+            "z": 17.446
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-24",
+          "position": {
+            "x": 58.42,
+            "y": -5.586,
+            "z": 99.27
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-25",
+          "position": {
+            "x": -14.824,
+            "y": 22.581,
+            "z": 172.238
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-26",
+          "position": {
+            "x": -43.367,
+            "y": 18.783,
+            "z": 185.675
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-27",
+          "position": {
+            "x": -54.391,
+            "y": -0.492,
+            "z": 37.109
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-28",
+          "position": {
+            "x": -61.609,
+            "y": -0.493,
+            "z": 13.29
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-29",
+          "position": {
+            "x": -129.032,
+            "y": -2.427,
+            "z": -16.583
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-30",
+          "position": {
+            "x": -173.378,
+            "y": 0.414,
+            "z": -10.607
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        },
+        {
+          "id": "reserve-31",
+          "position": {
+            "x": 13.586,
+            "y": -0.01,
+            "z": -27.373
+          },
+          "documentIds": [
+            "6a3181f178450ec91c0ea1aa"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5714dbc024597771384a510d"
+      ],
+      "spawns": [
+        {
+          "id": "interchange-1",
+          "position": {
+            "x": 1.043,
+            "y": 27.965,
+            "z": -302.932
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-2",
+          "position": {
+            "x": -59.813,
+            "y": 28.035,
+            "z": -49.774
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-3",
+          "position": {
+            "x": -66.128,
+            "y": 27.955,
+            "z": 40.945
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-4",
+          "position": {
+            "x": -63.782,
+            "y": 28.114,
+            "z": 53.049
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-5",
+          "position": {
+            "x": 86.573,
+            "y": 27.574,
+            "z": 104.21
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-6",
+          "position": {
+            "x": 429.381,
+            "y": 28.053,
+            "z": 163.886
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-7",
+          "position": {
+            "x": 137.953,
+            "y": 25.629,
+            "z": 268.102
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-8",
+          "position": {
+            "x": -204.187,
+            "y": 18.357,
+            "z": -358.223
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-9",
+          "position": {
+            "x": -201.6,
+            "y": 22.623,
+            "z": -360.761
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-10",
+          "position": {
+            "x": -64.725,
+            "y": 27.964,
+            "z": -162.513
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-11",
+          "position": {
+            "x": -77.953,
+            "y": 27.964,
+            "z": -152.925
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-12",
+          "position": {
+            "x": -21.736,
+            "y": 28.188,
+            "z": -166.97
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-13",
+          "position": {
+            "x": 24.717,
+            "y": 28.101,
+            "z": -136.551
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-14",
+          "position": {
+            "x": 27.912,
+            "y": 37.689,
+            "z": -134.008
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-15",
+          "position": {
+            "x": -11.639,
+            "y": 37.173,
+            "z": -99.031
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-16",
+          "position": {
+            "x": 40.27,
+            "y": 27.763,
+            "z": -205.803
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "interchange-17",
+          "position": {
+            "x": -25.148,
+            "y": 27.287,
+            "z": -199.413
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-18",
+          "position": {
+            "x": -84.893,
+            "y": 27.92,
+            "z": 112.884
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-19",
+          "position": {
+            "x": -46.729,
+            "y": 27.965,
+            "z": 126.372
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-20",
+          "position": {
+            "x": 89.761,
+            "y": 27.94,
+            "z": 114.94
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-21",
+          "position": {
+            "x": 85.666,
+            "y": 28.183,
+            "z": 98.715
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-22",
+          "position": {
+            "x": 478.969,
+            "y": 29.25,
+            "z": 80.516
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-23",
+          "position": {
+            "x": -78.817,
+            "y": 27.951,
+            "z": -148.369
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-24",
+          "position": {
+            "x": -68.578,
+            "y": 27.595,
+            "z": -159.754
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-25",
+          "position": {
+            "x": -63.49,
+            "y": 27.862,
+            "z": -105.296
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-26",
+          "position": {
+            "x": 98.154,
+            "y": 27.284,
+            "z": -87.128
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-27",
+          "position": {
+            "x": 64.783,
+            "y": 28.406,
+            "z": -28.897
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-28",
+          "position": {
+            "x": -68.351,
+            "y": 28.314,
+            "z": 53.108
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-29",
+          "position": {
+            "x": -79.085,
+            "y": 27.942,
+            "z": 45.961
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-30",
+          "position": {
+            "x": -91.31,
+            "y": 27.942,
+            "z": 110.605
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "interchange-31",
+          "position": {
+            "x": 3.147,
+            "y": 28.023,
+            "z": -293.44
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5714dc692459777137212e12"
+      ],
+      "spawns": [
+        {
+          "id": "streets-of-tarkov-1",
+          "position": {
+            "x": 220.723,
+            "y": 9.559,
+            "z": 397.415
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-2",
+          "position": {
+            "x": 129.25,
+            "y": 4.047,
+            "z": -55.803
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-3",
+          "position": {
+            "x": 168.818,
+            "y": 1.65,
+            "z": 165.299
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-4",
+          "position": {
+            "x": 158.945,
+            "y": 1.484,
+            "z": 149.495
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-5",
+          "position": {
+            "x": 71.846,
+            "y": 1.135,
+            "z": -23.613
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-6",
+          "position": {
+            "x": -163.534,
+            "y": 6.95,
+            "z": 228.012
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-7",
+          "position": {
+            "x": -181.961,
+            "y": 3.579,
+            "z": 220.931
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-8",
+          "position": {
+            "x": 146.793,
+            "y": 3.194,
+            "z": -17.515
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-9",
+          "position": {
+            "x": 60.075,
+            "y": 1.22,
+            "z": -62.516
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-10",
+          "position": {
+            "x": 54.803,
+            "y": 1.03,
+            "z": -72.554
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-11",
+          "position": {
+            "x": -41.512,
+            "y": 6.389,
+            "z": -45.617
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-12",
+          "position": {
+            "x": -88.756,
+            "y": 5.855,
+            "z": 72.109
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-13",
+          "position": {
+            "x": 139.718,
+            "y": 4.721,
+            "z": 355.094
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-14",
+          "position": {
+            "x": 136.639,
+            "y": 6.667,
+            "z": 370.818
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-15",
+          "position": {
+            "x": -31.395,
+            "y": 7.516,
+            "z": -113.871
+          },
+          "documentIds": [
+            "6a31807f17005505b70d5827"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-16",
+          "position": {
+            "x": 116.283,
+            "y": 5.241,
+            "z": -42.343
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-17",
+          "position": {
+            "x": 139.567,
+            "y": 7.328,
+            "z": 376.776
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-18",
+          "position": {
+            "x": 170.844,
+            "y": 2.088,
+            "z": 160.528
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-19",
+          "position": {
+            "x": 84.547,
+            "y": 1.751,
+            "z": -26.174
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-20",
+          "position": {
+            "x": -170.892,
+            "y": 7.014,
+            "z": 223.751
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-21",
+          "position": {
+            "x": 135.204,
+            "y": -2.673,
+            "z": 2.83
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-22",
+          "position": {
+            "x": 137.302,
+            "y": 4.085,
+            "z": -18.494
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-23",
+          "position": {
+            "x": 65.721,
+            "y": 1.256,
+            "z": -59.416
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-24",
+          "position": {
+            "x": 58.791,
+            "y": 1.207,
+            "z": -72.778
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-25",
+          "position": {
+            "x": -26.405,
+            "y": 5.88,
+            "z": -36.141
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-26",
+          "position": {
+            "x": -69.494,
+            "y": 5.911,
+            "z": 46.379
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-27",
+          "position": {
+            "x": 46.8,
+            "y": 1.096,
+            "z": 34.47
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-28",
+          "position": {
+            "x": -53.272,
+            "y": 1.892,
+            "z": 61.173
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-29",
+          "position": {
+            "x": 151.775,
+            "y": 3.511,
+            "z": 344.69
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "streets-of-tarkov-30",
+          "position": {
+            "x": -38.067,
+            "y": 7.517,
+            "z": -110.913
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "5b0fc42d86f7744a585f9105"
+      ],
+      "spawns": [
+        {
+          "id": "the-lab-1",
+          "position": {
+            "x": -131.957,
+            "y": 5.088,
+            "z": -377.934
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-2",
+          "position": {
+            "x": -86.691,
+            "y": 1.493,
+            "z": -432.886
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-3",
+          "position": {
+            "x": -109.142,
+            "y": 1.267,
+            "z": -443.7
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-4",
+          "position": {
+            "x": -128.619,
+            "y": 0.965,
+            "z": -392.697
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-5",
+          "position": {
+            "x": -139.641,
+            "y": 0.869,
+            "z": -389.392
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-6",
+          "position": {
+            "x": -125.765,
+            "y": 0.324,
+            "z": -352.36
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-7",
+          "position": {
+            "x": -230.216,
+            "y": 5.018,
+            "z": -345.019
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-8",
+          "position": {
+            "x": -233.613,
+            "y": 5.275,
+            "z": -312.345
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-9",
+          "position": {
+            "x": -183.696,
+            "y": 1.047,
+            "z": -362.996
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-10",
+          "position": {
+            "x": -114.4,
+            "y": 4.829,
+            "z": -364.459
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-11",
+          "position": {
+            "x": -124.056,
+            "y": 5.29,
+            "z": -393.868
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-12",
+          "position": {
+            "x": -139.765,
+            "y": 4.106,
+            "z": -388.849
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-13",
+          "position": {
+            "x": -122.677,
+            "y": 5.404,
+            "z": -397.779
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-14",
+          "position": {
+            "x": -134.921,
+            "y": 5.266,
+            "z": -407.738
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-15",
+          "position": {
+            "x": -134.579,
+            "y": 0.968,
+            "z": -410.855
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-16",
+          "position": {
+            "x": -138.181,
+            "y": 0.684,
+            "z": -401.666
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-17",
+          "position": {
+            "x": -133.684,
+            "y": 0.933,
+            "z": -397.665
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-18",
+          "position": {
+            "x": -121.861,
+            "y": 4.987,
+            "z": -360.918
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-lab-19",
+          "position": {
+            "x": -263.788,
+            "y": 0.622,
+            "z": -343.904
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-20",
+          "position": {
+            "x": -163.132,
+            "y": 4.937,
+            "z": -347.642
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-21",
+          "position": {
+            "x": -171.878,
+            "y": 1.08,
+            "z": -344.869
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-22",
+          "position": {
+            "x": -216.033,
+            "y": 4.893,
+            "z": -382.15
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-23",
+          "position": {
+            "x": -244.068,
+            "y": 5.013,
+            "z": -382.464
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-24",
+          "position": {
+            "x": -225.92,
+            "y": 4.702,
+            "z": -308.566
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-25",
+          "position": {
+            "x": -139.449,
+            "y": 5.177,
+            "z": -283.299
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-26",
+          "position": {
+            "x": -171.468,
+            "y": 5.073,
+            "z": -285.034
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-27",
+          "position": {
+            "x": -119.291,
+            "y": 0.908,
+            "z": -445.157
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-28",
+          "position": {
+            "x": -265.668,
+            "y": 5.241,
+            "z": -369.381
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-29",
+          "position": {
+            "x": -252.204,
+            "y": 5.019,
+            "z": -367.715
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-30",
+          "position": {
+            "x": -268.738,
+            "y": 4.958,
+            "z": -326.098
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-31",
+          "position": {
+            "x": -193.755,
+            "y": 4.974,
+            "z": -401.765
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-32",
+          "position": {
+            "x": -187.352,
+            "y": 4.666,
+            "z": -407.278
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-33",
+          "position": {
+            "x": -142.739,
+            "y": 4.722,
+            "z": -409.538
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-34",
+          "position": {
+            "x": -148.827,
+            "y": 5.163,
+            "z": -393.606
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-35",
+          "position": {
+            "x": -172.529,
+            "y": 4.641,
+            "z": -342.282
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "the-lab-36",
+          "position": {
+            "x": -230.485,
+            "y": 4.848,
+            "z": -341.365
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "653e6760052c01c1c805532f",
+        "65b8d6f5cdde2479cb2a3125"
+      ],
+      "spawns": [
+        {
+          "id": "ground-zero-1",
+          "position": {
+            "x": -4.881,
+            "y": 30.101,
+            "z": 62.842
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-2",
+          "position": {
+            "x": 49.551,
+            "y": 23.379,
+            "z": 252.44
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-3",
+          "position": {
+            "x": 81.256,
+            "y": 23.347,
+            "z": 129.995
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-4",
+          "position": {
+            "x": 101.881,
+            "y": 25.324,
+            "z": 153.829
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-5",
+          "position": {
+            "x": 82.063,
+            "y": 13.949,
+            "z": 136.265
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-6",
+          "position": {
+            "x": 79.443,
+            "y": 13.993,
+            "z": -39.301
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-7",
+          "position": {
+            "x": -10.012,
+            "y": 30.812,
+            "z": 77.535
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-8",
+          "position": {
+            "x": 148.627,
+            "y": 23.163,
+            "z": -85.116
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-9",
+          "position": {
+            "x": 112.639,
+            "y": 23.442,
+            "z": -77.324
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-10",
+          "position": {
+            "x": -19.246,
+            "y": 30.175,
+            "z": 44.33
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-11",
+          "position": {
+            "x": -6.549,
+            "y": 30.478,
+            "z": 51.504
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-12",
+          "position": {
+            "x": 102.465,
+            "y": 29.449,
+            "z": 116.747
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-13",
+          "position": {
+            "x": 148.626,
+            "y": 23.267,
+            "z": 239.11
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-14",
+          "position": {
+            "x": 21.5,
+            "y": 23.36,
+            "z": 340.64
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-15",
+          "position": {
+            "x": 20.741,
+            "y": 24.86,
+            "z": 68.506
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "ground-zero-16",
+          "position": {
+            "x": 13.617,
+            "y": 25.089,
+            "z": 65.544
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-17",
+          "position": {
+            "x": 35.635,
+            "y": 23.973,
+            "z": 138.122
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-18",
+          "position": {
+            "x": 55.256,
+            "y": 24.331,
+            "z": 152.51
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-19",
+          "position": {
+            "x": 61.876,
+            "y": 31.893,
+            "z": 150.505
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-20",
+          "position": {
+            "x": 121.562,
+            "y": 29.594,
+            "z": 151.823
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-21",
+          "position": {
+            "x": 95.102,
+            "y": 23.322,
+            "z": 204.732
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-22",
+          "position": {
+            "x": -22.395,
+            "y": 30.335,
+            "z": 79.91
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-23",
+          "position": {
+            "x": -3.446,
+            "y": 30.683,
+            "z": 70.217
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-24",
+          "position": {
+            "x": -37.017,
+            "y": 30.515,
+            "z": 64.963
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-25",
+          "position": {
+            "x": -45.05,
+            "y": 30.381,
+            "z": 66.688
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-26",
+          "position": {
+            "x": -9.919,
+            "y": 30.496,
+            "z": 53.968
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-27",
+          "position": {
+            "x": -12.381,
+            "y": 30.687,
+            "z": 40.107
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-28",
+          "position": {
+            "x": -28.058,
+            "y": 30.142,
+            "z": 82.224
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-29",
+          "position": {
+            "x": 11.405,
+            "y": 23.96,
+            "z": -44.887
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        },
+        {
+          "id": "ground-zero-30",
+          "position": {
+            "x": 197.242,
+            "y": 17.197,
+            "z": 43.646
+          },
+          "documentIds": [
+            "6a3182b72fd891345e047eef"
+          ]
+        }
+      ]
+    },
+    {
+      "mapIds": [
+        "6733700029c367a3d40b02af"
+      ],
+      "spawns": [
+        {
+          "id": "the-labyrinth-1",
+          "position": {
+            "x": -6.51,
+            "y": 0.748,
+            "z": 35.674
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-2",
+          "position": {
+            "x": -4.734,
+            "y": 0.219,
+            "z": 10.185
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-3",
+          "position": {
+            "x": -1.721,
+            "y": 0.264,
+            "z": 35.816
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-4",
+          "position": {
+            "x": 7.964,
+            "y": 0.846,
+            "z": 4.321
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-5",
+          "position": {
+            "x": -24.956,
+            "y": 0.54,
+            "z": 40.085
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-6",
+          "position": {
+            "x": 0.264,
+            "y": 0.953,
+            "z": 54.576
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae",
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-7",
+          "position": {
+            "x": 12.274,
+            "y": 0.235,
+            "z": 33.599
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-8",
+          "position": {
+            "x": -26.682,
+            "y": 0.457,
+            "z": 9.773
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-9",
+          "position": {
+            "x": 7.856,
+            "y": 0.686,
+            "z": -11.078
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae",
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-10",
+          "position": {
+            "x": 14.288,
+            "y": 0.303,
+            "z": 9.438
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-11",
+          "position": {
+            "x": 12.304,
+            "y": 1.017,
+            "z": 19.15
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-12",
+          "position": {
+            "x": 15.01,
+            "y": 0.982,
+            "z": 16.511
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-13",
+          "position": {
+            "x": -9.111,
+            "y": 0.957,
+            "z": 30.449
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-14",
+          "position": {
+            "x": -5.44,
+            "y": 0.695,
+            "z": 26.742
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-15",
+          "position": {
+            "x": -7.468,
+            "y": 0.345,
+            "z": 30.627
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-16",
+          "position": {
+            "x": -16.893,
+            "y": 0.045,
+            "z": 34.948
+          },
+          "documentIds": [
+            "6a3182dc6cd8de21cf0a3a7d"
+          ]
+        },
+        {
+          "id": "the-labyrinth-17",
+          "position": {
+            "x": 16.544,
+            "y": 0.047,
+            "z": 3.904
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-18",
+          "position": {
+            "x": -15.028,
+            "y": 0.351,
+            "z": 51.257
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-19",
+          "position": {
+            "x": -27.572,
+            "y": 0.173,
+            "z": 35.811
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-20",
+          "position": {
+            "x": -0.143,
+            "y": 0.151,
+            "z": -0.022
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-21",
+          "position": {
+            "x": 3.733,
+            "y": 1.07,
+            "z": 28.703
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-22",
+          "position": {
+            "x": 18.9,
+            "y": 0.86,
+            "z": 4.421
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-23",
+          "position": {
+            "x": 9.44,
+            "y": 0.971,
+            "z": 2.975
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-24",
+          "position": {
+            "x": 12.309,
+            "y": 0.439,
+            "z": 4.602
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-25",
+          "position": {
+            "x": -10.973,
+            "y": 1.037,
+            "z": 26.574
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-26",
+          "position": {
+            "x": -7.345,
+            "y": 0.317,
+            "z": 23.269
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-27",
+          "position": {
+            "x": 11.268,
+            "y": 0.219,
+            "z": 31.41
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        },
+        {
+          "id": "the-labyrinth-28",
+          "position": {
+            "x": -16.293,
+            "y": 1.179,
+            "z": 8.622
+          },
+          "documentIds": [
+            "6a31824878450ec91c0ea1ae"
+          ]
+        }
+      ]
+    }
+  ]
+}

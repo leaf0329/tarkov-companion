@@ -7,9 +7,9 @@ import { getCurrentSupabaseUserId, parseUserScopedStorage } from '@/utils/userSc
 import type { usePreferencesStore } from '@/stores/usePreferences';
 type LayerPreferences = Pick<
   ReturnType<typeof usePreferencesStore>,
-  'mapShowCultists' | 'mapUseDetailedMaps'
+  'mapShowCultists' | 'mapUseDetailedMaps' | 'mapShowSeasonDocuments'
 >;
-const keys = ['mapShowCultists', 'mapUseDetailedMaps'] as const;
+const keys = ['mapShowCultists', 'mapUseDetailedMaps', 'mapShowSeasonDocuments'] as const;
 export function syncCompanionMapPreferences(
   event: StorageEvent,
   preferences: LayerPreferences

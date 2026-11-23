@@ -2797,6 +2797,22 @@
     "reference_map": "Map reference",
     "reference_map_title": "Map reference · {name}",
     "reference_map_hint": "Unregistered original image for terrain reference. Live position, quests and Cultist circles remain on the main map.",
-    "detailed_floor_fallback": "This floor uses the original map because no calibrated illustrated floor is available."
+    "detailed_floor_fallback": "This floor uses the original map because no calibrated illustrated floor is available.",
+    "season_documents": "Season 1 documents",
+    "season_documents_empty": "No verified Season 1 document positions on this map.",
+    "season_document_reference": "Published reference spawn positions. A dot does not confirm that a document has spawned in this raid.",
+    "season_document_mixed": "A multicolour dot groups several document types at the same reference position.",
+    "season_document_checked": "Positions checked",
+    "season_document_source": "Source",
+    "season_document_types": {
+      "pmc": "PMC personnel files",
+      "financial": "Financial documents",
+      "project": "Project documentation",
+      "blueprints": "Blueprints and technical documentation",
+      "test": "Test documentation",
+      "user": "User documentation",
+      "medical": "Medical documents",
+      "technical": "Technical documentation"
+    }
   }
 }

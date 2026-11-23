@@ -121,6 +121,17 @@
               <span class="whitespace-nowrap">{{ t('companion.cultists') }}</span>
             </button>
             <button
+              type="button"
+              data-testid="map-season-documents-toggle"
+              :aria-pressed="showSeasonDocuments"
+              class="focus-visible:ring-primary-500 focus-visible:ring-offset-surface-850 flex h-8 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              :class="showSeasonDocuments ? MAP_BUTTON_ACTIVE_CLASS : MAP_BUTTON_INACTIVE_CLASS"
+              @click="showSeasonDocuments = !showSeasonDocuments"
+            >
+              <UIcon name="i-mdi-file-document-outline" class="h-4 w-4 shrink-0" />
+              <span class="whitespace-nowrap">{{ t('companion.season_documents') }}</span>
+            </button>
+            <button
               v-if="props.showExtractToggle"
               type="button"
               :aria-pressed="showPmcExtracts"
@@ -538,6 +549,13 @@
               </UPopover>
             </AppTooltip>
           </div>
+          <div v-if="showSeasonDocuments" data-testid="season-documents-legend" class="flex w-full flex-wrap gap-x-3 gap-y-1 border-t border-white/10 px-2 py-1 text-[10px] text-surface-200">
+            <span v-for="document in visibleDocumentTypes" :key="document.id" class="flex items-center gap-1">
+              <span class="h-2 w-2 rounded-full border border-black/50" :style="{ backgroundColor: document.color }" />
+              {{ t('companion.season_document_types.' + document.key) }}
+            </span>
+            <span v-if="!visibleDocumentTypes.length">{{ t('companion.season_documents_empty') }}</span>
+          </div>
         </div>
       </div>
       <div
@@ -751,6 +769,7 @@
     mapObjectiveCategory,
     type MapObjectiveCategory,
   } from '@/composables/useMapObjectiveMarks';
+  import { useMapSeasonDocuments } from '@/composables/useMapSeasonDocuments';
   import { useMapTransits } from '@/composables/useMapTransits';
   import {
     MAP_BUTTON_ACTIVE_CLASS,
@@ -783,6 +802,7 @@
     type ObjectivePopupControl,
     type ObjectiveStackEntry,
   } from '@/features/maps/utils/objectiveStack';
+  import { getMapSeasonDocumentTypes } from '@/features/maps/utils/seasonDocuments';
   import { useMetadataStore } from '@/stores/useMetadata';
   import { usePreferencesStore } from '@/stores/usePreferences';
   import { logger } from '@/utils/logger';
@@ -887,6 +907,11 @@
     get: () => preferencesStore.getMapShowCultists,
     set: (show: boolean) => preferencesStore.setMapShowCultists(show),
   });
+  const showSeasonDocuments = computed({
+    get: () => preferencesStore.getMapShowSeasonDocuments,
+    set: (show: boolean) => preferencesStore.setMapShowSeasonDocuments(show),
+  });
+  const visibleDocumentTypes = computed(() => getMapSeasonDocumentTypes(props.map));
   const useDetailedMaps = computed({
     get: () => preferencesStore.getMapUseDetailedMaps,
     set: (enabled: boolean) => preferencesStore.setMapUseDetailedMaps(enabled),
@@ -990,6 +1015,7 @@
   useCompanionPlaceNames(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, computed(() => !detailedActive.value));
   useMapKeyRooms(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, showKeyRooms, itemName, t);
   useMapCultists(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, showCultists, t);
+  useMapSeasonDocuments(toRef(props, 'map'), mapInstance, leaflet, selectedFloor, showSeasonDocuments, t);
   useMapTransits(
     toRef(props, 'map'),
     mapInstance,

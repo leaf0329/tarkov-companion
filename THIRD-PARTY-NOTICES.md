@@ -22,3 +22,5 @@
 - RE3MR 地图（https://reemr.se/ ，许可说明 https://reemr.se/about/）继续遵循作者的 CC BY-NC-SA 4.0；本次对其中部分图片进行了裁切、几何配准和瓦片化。原图、衍生瓦片及其他第三方图像各自保留原许可，本项目代码的 AGPL 不改变它们的使用限制。
 - 灯塔使用 RE3MR v1.7 原图；数值校准事实参照 David04-09/tarkov-companion 的 src/maps/mapConfig.ts（https://github.com/David04-09/tarkov-companion/blob/main/src/maps/mapConfig.ts），该来源将其标注为约 20 米精度的初步对齐。未复制该项目的界面或运行代码。
 - 邪教徒范围由 EFT 中文 Wiki 社区图的区域轮廓和 TarkovTracker 公开 API 的 sectantPriest 刷新坐标整理；逐项来源和日期保存在 source/tracker/app/data/companionCultistAreas.json。普通 PvE/PvP 坐标于 2026-11-18 核对，时段参照 Cultists Wiki（https://escapefromtarkov.fandom.com/wiki/Cultists）。红圈为公开范围的包围参考，不是游戏内实时检测结果；未混入节日三人组。
+
+2026-11-23 第一赛季文件点位：8 类物品的真实编号和参考位置来自 TarkovTracker 公开 `/api/tarkov/tasks-core` 数据（https://tarkovtracker.org/api/tarkov/tasks-core?lang=zh&gameMode=pve），上游为 tarkov.dev，核对资料版本 1.185；逐项位置和来源保存在 source/tracker/app/data/companionSeasonDocuments.json，已对照 PvP 位置。公开接口把同一参考位置的可见物品分组合并，多类文件用多色点保留。文件类别与地图分布对照 TarkovHead 第一赛季页（https://www.tarkovhead.com/en/season/kord-breach-season-1-1）；未复制社区截图、攻略正文或运行代码。游戏资料与图片的权利仍归原权利人；本项目代码的 AGPL 不改变这些权利。破冰船因上游缺少文件位置、社区坐标及楼层存在冲突而暂不导入。

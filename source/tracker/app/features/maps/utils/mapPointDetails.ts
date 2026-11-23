@@ -1,7 +1,9 @@
 import extractRules from '@/data/companionExtractRequirements.json';
 import floorData from '@/data/companionLandmarks.json';
+import seasonDocumentData from '@/data/companionSeasonDocuments.json';
 import { isCoopExtract } from '@/features/maps/composables/useLeafletMapControls';
 import type { CultistCircle } from '@/features/maps/utils/cultistAreas';
+import type { SeasonDocumentPoint } from '@/features/maps/utils/seasonDocuments';
 import type { MapExtract, MapLock, MapPosition, MapTransit, TarkovMap } from '@/types/tarkov';
 interface FloorExtent {
   height: number[];
@@ -227,6 +229,32 @@ export function createCultistDetails(circle: CultistCircle, t: PointTranslate): 
   source.target = '_blank';
   source.rel = 'noopener noreferrer';
   source.textContent = t('companion.cultist_source');
+  source.className = 'text-xs! text-sky-200!';
+  element.appendChild(source);
+  return element;
+}
+export function createSeasonDocumentDetails(map: TarkovMap, point: SeasonDocumentPoint, t: PointTranslate): HTMLElement {
+  const element = content(t('companion.season_documents'));
+  element.dataset.testid = 'season-document-details';
+  element.dataset.spawnId = point.id;
+  for (const fileType of point.documents) {
+    const line = document.createElement('div');
+    line.className = 'mb-2 flex items-center gap-2 text-sm';
+    const dot = document.createElement('span');
+    dot.className = 'h-2.5 w-2.5 shrink-0 rounded-full';
+    dot.style.backgroundColor = fileType.color;
+    line.append(dot, document.createTextNode(t('companion.season_document_types.' + fileType.key)));
+    element.appendChild(line);
+  }
+  row(element, t('companion.point_floor'), getPointFloorLabel(map, point.position, t));
+  if (point.documents.length > 1) row(element, '', t('companion.season_document_mixed'));
+  row(element, '', t('companion.season_document_reference'));
+  row(element, t('companion.season_document_checked'), seasonDocumentData.checkedAt);
+  const source = document.createElement('a');
+  source.href = point.source.url;
+  source.target = '_blank';
+  source.rel = 'noopener noreferrer';
+  source.textContent = t('companion.season_document_source') + ' · ' + point.source.label;
   source.className = 'text-xs! text-sky-200!';
   element.appendChild(source);
   return element;
